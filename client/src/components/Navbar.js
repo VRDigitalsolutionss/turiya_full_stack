@@ -875,7 +875,7 @@ const Navbar = () => {
                   </li>
                 </ul>
 
-
+     
                 {/* ========================================================================= */}
 
                 <ul
@@ -892,32 +892,32 @@ const Navbar = () => {
                   </p>
 
                   <li className="my-3">
-                    <Link to="/blockausbildung-im-ueberblick">
+                    <Link to="/blockausbildung-im-ueberblick"  onClick={handleCancel}>
                       Blockausbildung / Überblick
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-100h">
+                    <Link to="/yogalehrer-ausbildung-100h"  onClick={handleCancel}>
                       100h Yoga Ausbildung / Modul 1
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogamodule2">
+                    <Link to="/yogalehrer-ausbildung-module-200h"  onClick={handleCancel}>
                       +200h Yoga Ausbildung / Modul 2
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogamodule3">
+                    <Link to="/yogalehrer-ausbildung-300h"  onClick={handleCancel}>
                       +300h Yoga Ausbildung / Modul 3
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogamodule4">
+                    <Link to="/yogalehrer-ausbildung-400h"  onClick={handleCancel}>
                       +400h Yoga Ausbildung / Modul 4
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogamodule5">
+                    <Link to="/yogalehrer-ausbildung-500h"  onClick={handleCancel}>
                       +500h Yoga Ausbildung / Modul 5
                     </Link>
                   </li>
@@ -937,33 +937,40 @@ const Navbar = () => {
                   </p>
 
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-200h">
+                    <Link to="/yogalehrer-ausbildung-200h"  onClick={handleCancel}>
                       200H AYA Yogalehrer Ausbildung
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-in-sampurna-seminarhaus">
+                    <Link to="/yogalehrer-ausbildung-in-sampurna-seminarhaus"  onClick={handleCancel}>
                       200H AYA Yogalehrer Ausbildung Sampurna Seminarhaus
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yoga_Traning_Goa">
+                    <Link to="/yogalehrer-ausbildung-goa-indien"  onClick={handleCancel}>
                       200H AYA Yogalehrer Ausbildung Goa Indien
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/200h-yogalehrer-ausbildung-mallorca">
+                    <Link to="/200h-yogalehrer-ausbildung-mallorca"  onClick={handleCancel}>
                       200H/AYA Yogalehrer Ausbildung I Mallorca
                     </Link>
                   </li>
 
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-himalaya-indien">
+                    <Link to="/yogalehrer-ausbildung-himalaya-indien"  onClick={handleCancel}>
                       Yogalehrerausbildung Himalaya Indien
                     </Link>
                   </li>
 
-
+                  {categoryData &&
+                        categoryData.map((item, index) => {
+                          return (
+                            <li className="my-3">
+                              <Link to={replaceSpacesWithUnderscores(item.category)} onClick={handleCancel}>{item.category}</Link>
+                            </li>
+                          );
+                        })}
 
              
                 </ul>

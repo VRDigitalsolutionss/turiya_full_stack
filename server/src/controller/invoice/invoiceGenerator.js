@@ -618,7 +618,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     // Step 2: Generate PDF for the invoice
     const invoicePath = path.join(__dirname, "invoice.pdf");
-    const contractPath = path.join(__dirname, "contract.pdf");
+    const contractPath = path.join(__dirname, "rechnung.pdf");
 
     const additionalPdfPath1 = path.join(
       __dirname,
@@ -748,7 +748,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       </html>`,
       attachments: [
         { filename: "invoice.pdf", path: invoicePath },
-        { filename: "contract.pdf", path: contractPath },
+        { filename: "rechnung.pdf", path: contractPath },
         {
           filename: "AGB_Turiya_Yoga_Frankfurt_2021.pdf", // Name to appear in the email
           path: additionalPdfPath1, // Path to the first additional PDF
