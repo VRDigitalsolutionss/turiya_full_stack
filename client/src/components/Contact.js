@@ -51,48 +51,48 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     console.log("Form Data:", formData);
-
-
-    const payload = {
-        "name": formData.first_name + " " + formData.last_name,
-        "number": formData.phone,
-        "email": formData.email,
-      "message": formData.message
-   
-    };
-
-    validateForm();
-    console.log("errors", errors);
-    console.log('payload', payload);
-
-
-
-   
-
-      axios.post(BASE_URL + '/add_query/',payload).then((response) => {
-        console.log("response of contact", response)
-        Swal.fire({
-          title: "Danke!",
-          text: "Erfolgreich übermittelt!",
-          icon: "success"
+  
+    // Validate the form
+    const isValid = validateForm();
+  console.log("validateForm:", isValid);
+    if (!errors.length > 0 && formData.captcha_input == captchaCode ) {
+      const payload = {
+        name: formData.first_name + " " + formData.last_name,
+        number: formData.phone,
+        email: formData.email,
+        message: formData.message,
+      };
+  
+      axios
+        .post(BASE_URL + '/add_query/', payload)
+        .then((response) => {
+          console.log("Response of contact:", response);
+          Swal.fire({
+            title: "Danke!",
+            text: "Erfolgreich übermittelt!",
+            icon: "success",
+          });
+          if (response.status === 201) {
+            // Reset the form fields
+            setFormData({
+              first_name: "",
+              last_name: "",
+              email: "",
+              phone: "",
+              message: "",
+              captcha_input: "",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log("Error of contact:", error);
         });
-        if (response.status == 201) {
-          setFormData({
-            first_name: "",
-            last_name: "",
-            email: "",
-            phone: "",
-            message: "",
-            captcha_input: "",
-          })
-        }
-      }).catch((error) => {
-        console.log("error of contact",error)
-      })
-
-    
+    } else {
+      console.log("Validation errors:", errors);
+  
+    }
   };
 
   

@@ -410,6 +410,101 @@ const BannerGlobalTableWrapper = () => {
                       );
                     })}
                 </tbody>
+
+                <tbody class="table-body mobile"  style={{ backgroundColor: "#EDEDED" }}>
+
+
+                {data &&
+                    data.map((item, index) => {
+                      console.log("row of upcoming courses", item);
+
+                      return (
+                        item.Place && item.Place !== '0' ? (
+                          <tr style={{ backgroundColor: "#EDEDED" }} key={index}>
+                            <th style={{ backgroundColor: "#EDEDED" }}>
+                              {item.Ausbildung}
+                            </th>
+                            <td style={{ backgroundColor: "#EDEDED" }}>
+                              <i className="bx bxs-calendar me-1" />
+                              {formatDate(item.StartDate)} &nbsp;-&nbsp;
+                              <i className="bx bxs-calendar me-1" />
+                              {formatDate(item.EndDate)}{" "}
+                            </td>
+                            <td style={{ backgroundColor: "#EDEDED" }}>
+                              <button type="button" className="location border-none" style={{ border: 'none' }}
+
+                              onClick={() => ManagePageRedirect(item.Location)}
+
+
+                              >
+                                <i className="bx bxs-map me-1" />
+
+                                {item.Location}
+                                {/* Goa, Indien */}
+                              </button>
+                            </td>
+                            <td style={{ backgroundColor: "#EDEDED" }}>
+                              {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
+                              {item.Offerprice > 0 ? (
+                                <>
+                                  <span
+                                    style={{
+                                      color:
+                                        item.Offerprice > 0 ? "red" : "inherit",
+                                    }}>
+                                    €{" "}
+                                    {item.Offerprice > 0 ? item.Offerprice : item.price}
+                                  </span>
+
+
+                                </>
+                              ) : null}
+
+                              <span
+                                // style={{
+                                //   color: item.Offerprice > 0 ? "red" : "inherit",
+                                // }}
+                                className="ms-2"
+                              >
+                                {item.Offerprice > 0 ? (
+                                  <del>€{item.price} </del>
+                                ) : (
+                                  <span>€{item.price}</span>
+                                )}
+                              </span>
+
+                            </td>
+
+                            <td
+                              style={{
+                                backgroundColor: "#EDEDED",
+                                color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                              }}>
+                              {item.Place <= 3
+                                ? `only Noch ${item.Place} Plätze frei`
+                                : `Noch ${item.Place} Plätze frei`}
+                            </td>
+
+                            <td style={{ backgroundColor: "#EDEDED" }}>
+                              <button
+                                onClick={() => handletriggerDialogBox(item._id)}
+                                style={{
+                                  backgroundColor:
+                                    item.Place <= 3 ? "#FF5722" : "#9BBB59",
+                                  border: "0px solid",
+                                }}
+                                className="table-btn triggerDialogBox"
+                                data-id={9}>
+                                ANMELDEN
+                              </button>{" "}
+                            </td>
+                          </tr>
+                        ) : null
+
+                      );
+                    })}
+                </tbody>
+
               </table>
 
               <hr className="my-3" />
