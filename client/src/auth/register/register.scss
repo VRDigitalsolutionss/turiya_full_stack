@@ -1,0 +1,148 @@
+.registration--heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.registration--heading h1 {
+    font-family: "tabitha";
+    font-weight: 400 !important;
+    font-style: normal !important;
+    color: #9a9a9a !important;
+    margin: 0 !important;
+    font-size: 4.5em;
+    line-height: 1.25em;
+    text-align: center;
+}
+
+.registration--heading p {
+    font-size: 15px;
+    color: #212529;
+}
+
+.registration_box {
+    padding: 24px;
+    margin-top: 60px;
+}
+
+.registration_box__flex {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+}
+
+.registration_box__flex .modal_input {
+    width: 100%;
+}
+
+/* forgot-login-box */
+
+.forgot-login-box .border {
+    padding: 3rem;
+}
+
+.forgot-login-box h3 {
+    font-size: 32px;
+    font-family: "tubitha";
+    color: var(--main-color);
+    font-weight: 500;
+}
+
+.forgot-login-box p {
+    color: #444;
+    line-height: 1.2;
+}
+
+.forgot-email {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 3rem;
+}
+
+.forgot-email label {
+    color: #555;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.send {
+    margin-top: 1rem;
+}
+
+@media(max-width:992px) {
+    .registration--heading h1 {
+        font-size: 42px;
+    }
+    .registration_box {
+        margin-top: 30px;
+    }
+}
+
+@media(max-width:768px) {
+    .registration_box__flex {
+        gap: 0;
+        flex-direction: column;
+    }
+    .registration_box__flex .modal_input {
+        margin-bottom: 14px;
+    }
+    .forgot-login-box .border {
+        padding: 1rem;
+    }
+    .forgot-login-box p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .forgot-email {
+        margin-top: 2rem;
+    }
+}
+
+@media(max-width:576px) {
+    .registration--heading h1 {
+        font-size: 30px;
+    }
+    .registration_box {
+        padding: 14px;
+    }
+}
+
+.register_heading{
+    font-family: "tabitha";
+}
+
+// .custom-swal {
+//     width: 100%; /* Adjust this as needed */
+//   }
+  
+  @media (max-width: 768px) { /* Target mobile devices */
+    .custom-swal {
+      width: 90%; /* Set width for smaller screens */
+    }
+  }
+
+
+
+  /* General styles for SweetAlert2 */
+.custom-swal .swal2-title {
+    // font-size: 16px; /* Default title font size */
+  }
+  
+  .custom-swal .swal2-html-container {
+    // font-size: 17px; /* Default text font size */
+  }
+  
+  /* Mobile-specific styles */
+  @media (max-width: 768px) {
+    .custom-swal .swal2-title {
+      font-size: 17px; /* Title font size for mobile */
+    }
+  
+    .custom-swal .swal2-html-container {
+      font-size: 12px; /* Text font size for mobile */
+    }
+  }
+  

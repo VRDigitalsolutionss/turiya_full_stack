@@ -1,0 +1,33 @@
+.example-style {
+    animation: fade-in 3s;
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 100;
+    }
+  }
+
+  .modal_header{
+    font-size: 20px;
+    text-transform: capitalize;
+    color: #818487;
+    font-family: 'Roboto';
+}
+
+.modal_contact_details{
+  padding-left: 12px;
+  li{
+    list-style-type: none;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #818487;
+    font-family: 'Roboto';
+  }
+  .icon{
+    margin-right: 12px;
+  }
+}

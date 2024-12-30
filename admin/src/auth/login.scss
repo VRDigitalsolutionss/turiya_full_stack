@@ -1,0 +1,114 @@
+
+
+
+
+.authentication-bg {
+    background-image: url('https://www.turiyayoga.de/admin/assets/images/auth-bg.jpg');
+    background-size: cover;
+    height: 100vh;
+}
+.authentication-bg .account-pages {
+-webkit-box-align: center;
+-ms-flex-align: center;
+align-items: center;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+min-height: 100vh
+}
+
+.authentication-bg .auth-brand .logo-light {
+display: none
+}
+
+.authentication-bg .auth-brand .logo-dark {
+display: block
+}
+
+.authentication-bg .account-pages .card {
+border-radius: .5rem
+}
+
+.authentication-bg .account-pages .card .logout-icon {
+width: 140px !important
+}
+
+
+.login_card{
+    width: 562px;
+    margin: 0 auto;
+    padding: 11px 62px;
+    padding-bottom: 20px;
+
+    .login_header{
+        font-size: 22px;
+    color: #6c7589;
+    font-family: 'Roboto';
+    }
+
+    .form-label{
+        font-size: 14px;
+        font-weight: 500;
+        color: #9EC54E;
+        margin-bottom: 10px;
+    }
+}
+
+.btn-login {
+    background: #d0ea9a;
+    color: black;
+
+
+    &:hover {
+        color: white;
+        background-color: #9EC54E !important;
+        border-color: #9EC54E !important;
+    }
+}
+
+.btn-reset-password{
+    color: white;
+    background-color: #3bc0c3;
+    border-color: #3bc0c3;
+    &:hover{
+      
+            color:white;
+            background-color: #2b9a9c;
+       
+    }
+}
+
+.reset_card{
+    width: 562px;
+    margin: 0 auto;
+    padding: 11px 62px;
+    padding-bottom: 20px;
+
+
+    .login_header{
+        font-size: 22px;
+    color: #6c7589;
+    font-family: 'Roboto';
+    }
+
+    .form-label{
+        font-size: 14px;
+        font-weight: 500;
+        color: #6c7589;
+        margin-bottom: 10px;
+    }
+}
+
+.logout_card{
+    width: 600px;
+    margin: 0 auto;
+    .text-muted {
+       
+
+        font-size: 15px;
+    }
+    h4{
+        color: rgb(33 37 41 / 75%);
+        font-size: 20px;
+    }
+}
