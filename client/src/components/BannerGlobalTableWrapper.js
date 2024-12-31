@@ -258,7 +258,7 @@ const BannerGlobalTableWrapper = () => {
     } else if (location == 'Himalaya Indien') {
       navigate('/yogalehrer-ausbildung-himalaya-indien')
     } else if (location == 'Berlin') {
-      navigate('/YOGALEHRERAUSBILDUNG_BERLIN')
+      navigate('/YOGALEHRERAUSBILDUNG-BERLIN')
     } else{
       alert("Page is under development. Sorry for the inconvenience.")
     }
