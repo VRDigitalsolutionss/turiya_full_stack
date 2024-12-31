@@ -8,7 +8,7 @@ const { registerController } = require('../controller/registerController');
 const { resetPasswordController } = require('../controller/resetPasswordController');
 const { getUserDetailById } = require('../controller/loginnewController');
 const { addOtherAddress, getOtherAddress } = require('../controller/addOtherAddress');
-const { getRegisteredUser } = require('../controller/register2');
+const { getRegisteredUser, getallRegisteredUser } = require('../controller/register2');
 const verifyEmail = require('../controller/verifyEmail');
 // const { getUserDetailById } = require('../controller/loginnewController');
 
@@ -23,5 +23,5 @@ authRoute.get('/getUserDetailById/:id', getUserDetailById);
 authRoute.post('/add_otherAddress',  addOtherAddress);
 authRoute.get('/get_otherAddress/:registeredUserId', getOtherAddress);
 authRoute.get('/getRegisteredUser', getRegisteredUser);
-
+authRoute.get('/getallRegisteredUser', getallRegisteredUser);
 module.exports = authRoute

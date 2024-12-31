@@ -8,7 +8,7 @@ const BilingDetails = () => {
   const userAuthId = localStorage.getItem("turiya_auth_id");
   const [registerId, setregisterAuthId] = useState("");
   const navigate = useNavigate();
-
+const [address,setAddress] = useState("");
 
   const fetchOtherAddress = () => {
     axios
@@ -33,16 +33,21 @@ const BilingDetails = () => {
   console.log("course data", courseData);
   const [taxAmount, setTaxAmount] = useState("");
 
+
+
   function calculatePriceWithTax(price) {
-    const price_number = Number(price);
-    const taxRate = 0.19;
-    const taxAmount = price_number * taxRate;
 
-    const finalPrice = price_number + taxAmount;
-    return finalPrice;
+
+    if (userDetails.invoiceType  !== "Private_Invoice") {
+      const price_number = Number(price);
+      const taxRate = 0.19;
+      const taxAmount = price_number * taxRate;
+      const finalPrice = price_number + taxAmount;
+      return finalPrice;
+    } else {
+      return price;
+    }
   }
-
-
 
   const fetchCourseById = () => {
     if (id) {
@@ -61,8 +66,10 @@ const BilingDetails = () => {
     }
   };
 
+
+
   const taxCalculationnew = () => {
-  console.log("taxCalculationnew", courseData.price)
+  console.log("taxCalculationnew", courseData)
     if (userDetails && userDetails.userType == "company") {
       const price = courseData.price;
       const price_number = Number(price);
@@ -122,7 +129,7 @@ function getTodayDate() {
     const custumer_num = generateCustomerNumber();
     const order_num = generateOrderNumber();
     const due_date = getTodayDate();
-    const taxCalculationnewv = taxCalculationnew();
+    const taxCalculationnewv = calculatePriceWithTax();
     // generateInvoiceNumber();
     // generateCustomerNumber();
     // generateOrderNumber();
@@ -141,6 +148,7 @@ function getTodayDate() {
       email: userDetails.email,
       user_type:userDetails.userType,
       price: courseData.Offerprice ? courseData.Offerprice : courseData.price,
+
       courseData: courseData,
      userDetails:userDetails
     };
@@ -164,9 +172,13 @@ function getTodayDate() {
       .then((response) => {
         console.log("response of billing user", response.data);
         console.log("response of otherAddress", response.data.otherAddress);
+
+
         if (response.data.otherAddress) {
           setUserDetail(response.data);
+          setAddress(response.data.otherAddress)
         } else {
+          setAddress(response.data.otherAddress)
           setUserDetail(response.data);
         }
       })
@@ -204,7 +216,7 @@ function getTodayDate() {
                   <span>
                     <i className="bx bxs-calendar" /> {courseData.StartDate}
                   </span>
-                  <p> € {courseData && courseData.price}</p>
+                  <p> € {courseData && courseData.price }</p>
                 </div>
                 <div className="cart_details__list">
                   <span> {courseData.Location}</span>
@@ -225,10 +237,13 @@ function getTodayDate() {
                   <h6 />
                   <p>€0.00</p>
                 </div>
+
+              {  console.log("userDetails",userDetails)}
                 {
          
               
-                  userDetails.userType !== "Private_Invoice" ? <div className="cart_details__heading">
+                  userDetails.invoiceType
+                  !== "Private_Invoice" ? <div className="cart_details__heading">
                   <h6>VAT (19%)</h6>
                   <p> {(Number(courseData.price) * 0.19).toFixed(2)} </p>
                 </div>:null
@@ -255,7 +270,7 @@ function getTodayDate() {
 
                 <div className="cart_details__heading">
                   <p>TOTAL</p>
-                  <p>€{calculatePriceWithTax(courseData.price)}</p>
+                  <p>€{calculatePriceWithTax(courseData && courseData.Offerprice?courseData.Offerprice:courseData.price)}</p>
                 </div>
                 <div className="box-row">
                   <div className="row">
@@ -275,38 +290,120 @@ function getTodayDate() {
                             </li>
                             <li>
                               Company Name:
-                              {userDetails && userDetails?.otherAddress !== null
-                                ? userDetails?.otherAddress?.company
-                                : userDetails?.company}{" "}
+                              {userDetails && userDetails.company}{" "}
                             </li>
-                            <li>Email:&nbsp; {userDetails?.email} </li>
+
+                           
+
+
+                            <li>Email:&nbsp; {userDetails &&  userDetails.email} </li>
                             <li>
                               Gender:&nbsp; {userDetails && userDetails?.gender}
                             </li>
                             <li>
-                              Number:&nbsp; {userDetails && userDetails?.phone}
+                              Number:&nbsp; {userDetails &&  userDetails.phone}
                             </li>
                             <li>
                               Address:&nbsp;{" "}
-                              {userDetails && userDetails?.otherAddress !== null
-                                ? userDetails?.otherAddress?.address
-                                : userDetails?.address}
+                              {userDetails && userDetails.address}
                             </li>
-                            <li>City:&nbsp; {userDetails?.city}</li>
+                            <li>City:&nbsp; 
+
+                            {userDetails &&  userDetails.city}
+
+                            </li>
                             <li>
                               Pincode:&nbsp;{" "}
-                              {userDetails && userDetails?.postal_code}
+                  
+                              {userDetails &&  userDetails.postal_code}
+
                             </li>
-                            <li>State:&nbsp; {userDetails?.federal_state}</li>
+                            <li>State:&nbsp; 
+
+                            {userDetails && userDetails.federal_state}
+
+
+                            </li>
 
                             <li>
                               Country:&nbsp;{" "}
-                              {userDetails && userDetails?.country}
+
+
+                              {userDetails &&  userDetails.country}
                             </li>
                           </ul>
                         </div>
                       </div>
                     </div>
+
+                    {userDetails && userDetails.otherAddress.email ? (
+                        <div className="col-md-6">
+                        <div className="cart_details__box-left">
+                          <div className="box-title">
+                            <h6>Billing information </h6>
+                          </div>
+  
+                          <div className="box-desc">
+                            <ul>
+                              <li>
+                                Name:
+                                {userDetails?.First_name +
+                                  "" +
+                                  userDetails?.Last_name}{" "}
+                              </li>
+                              <li>
+                                Company Name:
+                                {userDetails && userDetails?.otherAddress !== null
+                                  ? userDetails?.otherAddress?.company
+                                  : userDetails?.company}{" "}
+                              </li>
+  
+                             
+  
+  
+                              <li>Email:&nbsp; {userDetails &&  userDetails.otherAddress.email?userDetails.otherAddress.email:userDetails.email} </li>
+                              <li>
+                                Gender:&nbsp; {userDetails && userDetails?.gender}
+                              </li>
+                              <li>
+                                Number:&nbsp; {userDetails &&  userDetails.otherAddress.phone?userDetails.otherAddress.phone:userDetails.phone}
+                              </li>
+                              <li>
+                                Address:&nbsp;{" "}
+                                {userDetails && userDetails.otherAddress !== null
+                                  ? userDetails?.otherAddress?.address
+                                  : userDetails?.address}
+                              </li>
+                              <li>City:&nbsp; 
+  
+                              {userDetails &&  userDetails.otherAddress.city?userDetails.otherAddress.city:userDetails.city}
+  
+                              </li>
+                              <li>
+                                Pincode:&nbsp;{" "}
+                    
+                                {userDetails &&  userDetails.otherAddress.postal_code?userDetails.otherAddress.postal_code:userDetails.postal_code}
+  
+                              </li>
+                              <li>State:&nbsp; 
+  
+                              {userDetails &&  userDetails.otherAddress.federal_state?userDetails.otherAddress.federal_state:userDetails.federal_state}
+  
+  
+                              </li>
+  
+                              <li>
+                                Country:&nbsp;{" "}
+  
+  
+                                {userDetails &&  userDetails.otherAddress.country?userDetails.otherAddress.country:userDetails.country}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div> 
+                ):null}
+                 
                   </div>
                 </div>
                 <div className="info">

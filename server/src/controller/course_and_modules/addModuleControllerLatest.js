@@ -442,20 +442,47 @@ const getUpcoming_course2 = async (req, res) => {
   }
 };
 
-
 const getUpcoming_course = async (req, res) => {
   try {
-    // Step 1: Get today's date in 'YYYY-MM-DD' format
+    // Step 1: Get today's date in 'YYYY-MM-DD' format and split it into components
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(today.getDate()).padStart(2, '0');
-    const formattedToday = `${year}-${month}-${day}`; // e.g., '2024-11-08'
+    const month = today.getMonth() + 1; // Months are zero-based, so add 1
+    const day = today.getDate();
+
+    // Step 2: Format today's date as 'YYYY-MM-DD' for comparison
+    const formattedToday = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
     console.log("Formatted Today:", formattedToday); // For debugging purposes
 
-    // Step 2: Query to exclude modules where both StartDate and EndDate have passed
-    const modules = await Module.find({
+    // Step 3: Query to get all the modules, even expired ones, to check and update them later
+    const modules = await Module.find()
+      .populate('meal') // Populate 'meal' reference if needed
+      .populate('room'); // Populate 'room' reference if needed
+
+    // Step 4: Loop through modules to check if offerEndDate is less than today's date
+    for (let module of modules) {
+      if (module.offerEndDate) {
+        // Split offerEndDate (YYYY-MM-DD) into year, month, and day
+        const [offerYear, offerMonth, offerDay] = module.offerEndDate.split('-').map(Number);
+
+        // Compare year, month, and day components
+        if (
+          offerYear < year ||
+          (offerYear === year && offerMonth < month) ||
+          (offerYear === year && offerMonth === month && offerDay < day)
+        ) {
+          module.offerPrice = "";  // Set offerPrice to an empty string
+          module.offerEndDate = ""; // Set offerEndDate to an empty string
+          
+          // Step 5: Save the updated module to the database
+          await module.save(); // Save the updated module to the database
+        }
+      }
+    }
+
+    // Step 6: After updating expired offers, query the modules again for upcoming ones
+    const upcomingModules = await Module.find({
       $or: [
         { EndDate: { $gte: formattedToday } },    // EndDate is today or in the future
         { StartDate: { $gte: formattedToday } }   // StartDate is today or in the future
@@ -464,10 +491,10 @@ const getUpcoming_course = async (req, res) => {
     .populate('meal') // Populate 'meal' reference if needed
     .populate('room'); // Populate 'room' reference if needed
 
-    // Step 3: Send the filtered modules as a response
+    // Step 7: Send the filtered modules as a response
     res.status(200).json({
       success: true, 
-      data: modules
+      data: upcomingModules
     });
 
   } catch (error) {
@@ -479,6 +506,63 @@ const getUpcoming_course = async (req, res) => {
     });
   }
 };
+
+
+// const getUpcoming_course = async (req, res) => {
+//   try {
+//     // Step 1: Get today's date in 'YYYY-MM-DD' format
+//     const today = new Date();
+//     const year = today.getFullYear();
+//     const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+//     const day = String(today.getDate()).padStart(2, '0');
+//     const formattedToday = `${year}-${month}-${day}`; // e.g., '2024-11-08'
+
+//     console.log("Formatted Today:", formattedToday); // For debugging purposes
+
+//     // Step 2: Query to exclude modules where both StartDate and EndDate have passed
+//     const modules = await Module.find({
+//       $or: [
+//         { EndDate: { $gte: formattedToday } },    // EndDate is today or in the future
+//         { StartDate: { $gte: formattedToday } }   // StartDate is today or in the future
+//       ]
+//     })
+//     .populate('meal') // Populate 'meal' reference if needed
+//     .populate('room'); // Populate 'room' reference if needed
+
+//     for (let module of modules) {
+//       if (module.offerEndDate) {
+//         // Split offerEndDate (YYYY-MM-DD) into year, month, and day
+//         const [offerYear, offerMonth, offerDay] = module.offerEndDate.split('-').map(Number);
+
+//         // Compare year, month, and day components
+//         if (
+//           offerYear < year ||
+//           (offerYear === year && offerMonth < month) ||
+//           (offerYear === year && offerMonth === month && offerDay < day)
+//         ) {
+//           module.offerPrice = "";  // Set offerPrice to an empty string
+//           module.offerEndDate = ""; // Set offerEndDate to an empty string
+          
+//           // Step 5: Save the updated module to the database
+//           await module.save(); // Save the updated module
+//         }
+//       }
+//     }
+//     // Step 3: Send the filtered modules as a response
+//     res.status(200).json({
+//       success: true, 
+//       data: modules
+//     });
+
+//   } catch (error) {
+//     console.error("Error fetching modules:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Server Error",
+//       error: error.message
+//     });
+//   }
+// };
 
 const getComingSoonCourses = async (req, res) => {
   try {

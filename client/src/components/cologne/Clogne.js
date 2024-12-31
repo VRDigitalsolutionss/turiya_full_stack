@@ -459,7 +459,7 @@ const [earlyData, setEarlyData] = useState("");
               </div>
               
 
-              <div className="col-lg-3 mb-3">
+              <div className="col-lg-3">
               <div className="about_wrapper__right mb-3">
               {
                     closestUpcomingCourse[0] ? (
@@ -469,9 +469,11 @@ const [earlyData, setEarlyData] = useState("");
                         <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
                       <div className="price-tag">
                       <h6>
-                          <i className="bx bxs-purchase-tag" />
+                              <i className="bx bxs-purchase-tag" />
+                              
+{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
                             {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].price}</del></sub>
+                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
                         </h6>
                       </div>
                       <div className="about-date">
@@ -492,16 +494,16 @@ const [earlyData, setEarlyData] = useState("");
                              :null
                             } */}
                             {
-                            formatDate( closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null )
+                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
                             }
                            <span className="my-2">-</span>  
                             {
-                             formatDate (closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null)
+                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
                             }
 
                         </p>
                       </div>
-                
+                 
                       <div className="about-contact">
                         <a href="tel:+4906920134987">
                           <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
@@ -533,7 +535,7 @@ const [earlyData, setEarlyData] = useState("");
                     )
                   }
               </div>
-            </div>
+              </div>
 
 
             {/* .postcontent end */}
@@ -636,7 +638,16 @@ const [earlyData, setEarlyData] = useState("");
                                 <span>€{item.price}</span>
                               )}
                             </span>
-                           
+                            <br />
+                              {item.OfferEndDate ? (
+                                <>
+                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
+{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
+</small>
+                                
+                                </>
+                            ):null}
+ 
                           </td>
              
                           <td

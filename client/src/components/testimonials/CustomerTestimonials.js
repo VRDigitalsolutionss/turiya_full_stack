@@ -212,12 +212,14 @@ const CustomerTestimonialsp = () => {
                       <div>
 
                   
-                        <h3>* {closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
+                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
                       <div className="price-tag">
                       <h6>
-                          <i className="bx bxs-purchase-tag" />
+                              <i className="bx bxs-purchase-tag" />
+                              
+{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
                             {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].price}</del></sub>
+                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
                         </h6>
                       </div>
                       <div className="about-date">

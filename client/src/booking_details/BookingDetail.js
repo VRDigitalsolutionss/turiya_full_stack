@@ -105,10 +105,35 @@ const BookingDetail = () => {
     }
   };
 
-  const generateInvoice = () => {
 
+  const updateInvoiceType = () => {
+
+const userid = localStorage.getItem("turiya_auth_id");
+    const payload = {
+      "userId": userid,
+      "invoiceType": invoiceType,
+    };
+    axios
+      .put(`${BASE_URL}/addInvoiceType`, payload)
+      .then((response) => {
+        console.log("response of update user type", response);
+        // if (response.status == 200) {
+      }).catch((error) => {
+        console.log("error of update user type", error);
+      })
+  }
+
+
+  const generateInvoice = () => {
+    
     if (id) {
-      addOtherAddress();
+
+     
+      
+      updateInvoiceType();
+      if (addressType == 'Other_Address') {
+        addOtherAddress();
+      }
       navigate(`/bilingDetails/${id}`);
     } else {
       console.log("id not found")
@@ -212,7 +237,7 @@ const BookingDetail = () => {
                     <div className="cart_left__heading">
                       <h6> {courseData && courseData.Ausbildung}</h6>
                       <div className="del cart-price">
-                        <p>€ {courseData && courseData.price} </p>
+                        <p>€ {courseData && courseData.Offerprice?courseData.Offerprice:courseData.price} </p>
                       </div>
                     </div>
 
@@ -238,7 +263,7 @@ const BookingDetail = () => {
                     </div>
                     <div className="cart-total">
                       <h6>TOTAL</h6>
-                      <p>€ {calculatePriceWithTax(courseData.price)}</p>
+                      <p>€ {calculatePriceWithTax(courseData && courseData.Offerprice?courseData.Offerprice:courseData.price)}</p>
                     </div>
                   </div>
                 </div>

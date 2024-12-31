@@ -505,7 +505,7 @@ console.log("upcomingCourse",upcomingCourse)
               
               </div>
          
-              <div className="col-lg-3 mb-3">
+              <div className="col-lg-3">
               <div className="about_wrapper__right mb-3">
               {
                     closestUpcomingCourse[0] ? (
@@ -515,9 +515,11 @@ console.log("upcomingCourse",upcomingCourse)
                         <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
                       <div className="price-tag">
                       <h6>
-                          <i className="bx bxs-purchase-tag" />
+                              <i className="bx bxs-purchase-tag" />
+                              
+{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
                             {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].price}</del></sub>
+                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
                         </h6>
                       </div>
                       <div className="about-date">
@@ -538,17 +540,16 @@ console.log("upcomingCourse",upcomingCourse)
                              :null
                             } */}
                             {
-                           formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null )  
+                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
                             }
                            <span className="my-2">-</span>  
                             {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null)
-                              
+                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
                             }
 
                         </p>
                       </div>
-                      
+                 
                       <div className="about-contact">
                         <a href="tel:+4906920134987">
                           <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
@@ -580,7 +581,7 @@ console.log("upcomingCourse",upcomingCourse)
                     )
                   }
               </div>
-            </div>
+              </div>
 
 
             {/* .postcontent end */}
@@ -684,6 +685,18 @@ console.log("upcomingCourse",upcomingCourse)
                               )}
                             </span>
                            
+                            <br />
+                              {item.OfferEndDate ? (
+                                <>
+                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
+{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
+</small>
+                                
+                                </>
+                            ):null}
+   
+
+
                           </td>
              
                           <td
@@ -717,6 +730,110 @@ console.log("upcomingCourse",upcomingCourse)
                       );
                     })}
                 </tbody>
+
+                <tbody class="table-body mobile" style={{ backgroundColor: "#EDEDED" }}>
+                {upcomingCourse &&
+                    upcomingCourse.map((item, index) => {
+                      console.log("row of upcoming courses", item);
+
+                     
+
+                      return (
+                        item.Place &&  item.Place !== '0' ? (
+                          <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
+                          <th style={{ backgroundColor: "#F9F9F9" }}>
+                            {item.Ausbildung}
+                          </th>
+                          <td style={{ backgroundColor: "#F9F9F9" }}>
+                            <i className="bx bxs-calendar me-1" />
+                            {formatDate(item.StartDate)} &nbsp;-&nbsp;
+                            <i className="bx bxs-calendar me-1" />
+                            {formatDate(item.EndDate)}{" "}
+                          </td>
+                          <td style={{ backgroundColor: "#F9F9F9" }}>
+                            <a href="#" className="location">
+                              <i className="bx bxs-map me-1" />
+
+                              {item.Location}
+                              {/* Goa, Indien */}
+                            </a>
+                          </td>
+                          <td style={{ backgroundColor: "#F9F9F9" }}>
+                            {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
+                              {item.Offerprice > 0 ? (
+                                <>
+                                
+                               
+                              <span
+                                style={{
+                                  color:
+                                    item.Offerprice > 0 ? "red" : "inherit",
+                                }}>
+                                 €{" "}
+                                {item.Offerprice > 0 ? item.Offerprice : item.price }
+                                  </span>
+                                  
+                                
+                                  </>
+                            ) : null}
+                           
+                            <span
+                            // style={{
+                            //   color: item.Offerprice > 0 ? "red" : "inherit",
+                                // }}
+                                className="ms-2"
+                            >
+                              {item.Offerprice > 0 ? (
+                                <del>€{item.price} </del>
+                              ) : (
+                                <span>€{item.price}</span>
+                              )}
+                            </span>
+                            <br />
+                              {item.OfferEndDate ? (
+                                <>
+                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
+{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
+</small>
+                                
+                                </>
+                            ):null}
+ 
+                          </td>
+             
+                          <td
+                            style={{
+                              backgroundColor: "#F9F9F9",
+                              color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                            }}>
+                            {item.Place <= 3
+                              ? `only Noch ${item.Place} Plätze frei`
+                              : `Noch ${item.Place} Plätze frei`}
+                          </td>
+
+                          <td style={{ backgroundColor: "#F9F9F9" }}>
+                            <button
+                              onClick={() => handletriggerDialogBox(item._id)}
+                              style={{
+                                // background-color: #FF5722;
+
+                                backgroundColor:
+                                  item.Place <= 3 ? "#FF5722" : "#9BBB59",
+                                border: "0px solid",
+                              }}
+                              className="table-btn triggerDialogBox"
+                              data-id={9}>
+                              ANMELDEN
+                            </button>{" "}
+                          </td>
+                        </tr>
+                       ):null
+                   
+                      );
+                    })}
+                </tbody>
+
+
               </table>
 
       

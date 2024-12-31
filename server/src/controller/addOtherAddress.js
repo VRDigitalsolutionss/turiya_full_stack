@@ -16,7 +16,13 @@ const addOtherAddress = async (req, res) => {
       return res.status(404).json({ message: "Registered User not found" });
     }
 
-    // Step 2: Create the OtherAddress
+    // Step 2: Check if the user already has an 'otherAddress'
+    if (user.otherAddress) {
+      // Delete the previous address if it exists
+      await OtherAddress.findByIdAndDelete(user.otherAddress);
+    }
+
+    // Step 3: Create the new OtherAddress
     const newAddress = await OtherAddress.create({
       userType,
       company,
@@ -31,7 +37,7 @@ const addOtherAddress = async (req, res) => {
       postal_code
     });
 
-    // Step 3: Update RegisteredUser with reference to OtherAddress
+    // Step 4: Update RegisteredUser with reference to the new OtherAddress
     user.otherAddress = newAddress._id;
     await user.save();
 
@@ -45,6 +51,7 @@ const addOtherAddress = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
+
 
 // Get OtherAddress for a Registered User
 const getOtherAddress = async (req, res) => {

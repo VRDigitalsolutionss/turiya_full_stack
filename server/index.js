@@ -38,6 +38,7 @@ const registerRoute = require("./src/routes/registerRoute");
 const invoicegenerateRoutes = require("./src/routes/invoice");
 const cartRoute = require("./src/routes/cartRoute");
 const profileRoute = require("./src/routes/profileRoute");
+const addInvoiceTypeRoutes = require("./src/routes/addInvoiceRoute");
 // const test = require('./uploads')
 app.use(cors());
 app.use(express.json());
@@ -85,6 +86,8 @@ app.use("/api", faqLatestRoute);
 app.use("/api", invoicegenerateRoutes);
 app.use("/api", cartRoute);
 app.use("/api", profileRoute);
+app.use("/api", addInvoiceTypeRoutes);
+
 
 const port = process.env.PORT || 5001;
 app.listen(port, () => {

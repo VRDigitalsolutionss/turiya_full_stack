@@ -55,6 +55,8 @@ const getAgreement = async (req, res) => {
 };
 
 const generateInvoicesAndSendEmail = async (req, res) => {
+
+  console.log("req.body", req.body);
   try {
     const {
       productNumber,
@@ -106,6 +108,29 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     // HTML template for Invoice PDF (similar to the image)
     console.log("req.body", req.body);
+    function formatDate(dateString) {
+      // Split the input date into an array [year, month, day]
+      const [year, month, day] = dateString.split("-");
+  
+      // Return the date in the desired format: dd.mm.yyyy
+      return `${day}.${month}.${year}`;
+    }
+
+
+
+    function calculatePriceWithTax(price) {
+
+
+      if (req.body.userDetails.invoiceType  !== "Private_Invoice") {
+        const price_number = Number(price);
+        const taxRate = 0.19;
+        const taxAmount = price_number * taxRate;
+        const finalPrice = price_number + taxAmount;
+        return finalPrice;
+      } else {
+        return price;
+      }
+    }
 
     const invoiceHTML = `
   <!DOCTYPE html>
@@ -219,7 +244,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <div style="flex: 1;">
         <strong style="margin-bottom:20px"> ${req.body.customerName}</strong><br>
          ${req.body.customerAddress}<br>
-        Delhi NCT India-110018
+       
     </div>
 
     <!-- Right Column -->
@@ -239,7 +264,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
 
     <!-- Content -->
-    <h1>Rechnung vom  ${req.body.dueDate}</h1>
+    <h1>Rechnung vom  ${formatDate(req.body.dueDate)}</h1>
     <p>Hallo ${req.body.customerName},</p>
     <p>vielen Dank für deine Anmeldung bei Turiya Yoga. gerne bestätigen wir deine Buchung wie folgt.</p>
 
@@ -264,9 +289,10 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                 <td>${req.body.productDescription}</td>
                 <td>${req.body.quantity}</td>
                 <td>Stk.</td>
-                <td>${req.body.totalPrice}€</td>
-                <td>zzgl. 0%</td>
-                <td>${req.body.totalPrice}€</td>
+                <td>${req.body.price}€</td>
+                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'}
+                               </td>
+                <td>${calculatePriceWithTax(req.body.price)}€</td>
             </tr>
 
         </tbody>
@@ -274,9 +300,9 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     <!-- Totals -->
     <div class="totals">
-        <strong>Zwischensumme:  ${req.body.price} €</strong>
-        <p>0% USt aus 0.00€: 0.00 €</p>
-        <strong>Gesamtbetrag: <u> ${req.body.totalPrice}€</u></strong>
+        <strong>Zwischensumme:  ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price} €</strong>
+        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'} USt aus ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price}€</p>
+        <strong>Gesamtbetrag: <u> ${calculatePriceWithTax(req.body.price)}€</u></strong>
     </div>
 
     <p style="margin-top: 20px;">Zahlbar sofort rein netto.<br>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
@@ -450,7 +476,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
     <!-- Left Column -->
     <div style="flex: 1;">
-    <h1>Vereinbarung vom 23-10-24</h1>
+    <h1>Vereinbarung vom ${formatDate(req.body.dueDate)}</h1>
     <h1>Informationen zur Rechnungsstellung</h1>
    
       
@@ -463,7 +489,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
 <h2 >${req.body.customerName}</h2>
 <p style="margin-bottom: 20px;">${req.body.customerAddress}</p>
-      Delhi NCT India-110018
+    
     </div>
 
     <!-- Right Column -->
@@ -494,23 +520,27 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
 
             <tr>
+ 
                 <td>1</td>
                 <td>${req.body.productDescription}</td>
                 <td>${req.body.quantity}</td>
                 <td>Stk.</td>
-                <td>${req.body.totalPrice}€</td>
-                <td>zzgl. 0%</td>
-                <td>${req.body.totalPrice}€</td>
+                <td>${req.body.price}€</td>
+                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'}
+                               </td>
+                <td>${calculatePriceWithTax(req.body.price)}€</td>
+        
             </tr>
         </tbody>
     </table>
 
     <!-- Totals -->
     <div class="totals">
-        <strong>Zwischensumme:  ${req.body.price}€</strong>
-        <p>0% USt aus 0.00€: 0.00 €</p>
-        <strong>Gesamtbetrag: <u>${req.body.totalPrice} €</u></strong>
+        <strong>Zwischensumme:  ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price} €</strong>
+        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'} USt aus ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price}€</p>
+        <strong>Gesamtbetrag: <u> ${calculatePriceWithTax(req.body.price)}€</u></strong>
     </div>
+
 
     <p style="margin-top: 20px;">Zahlbar sofort rein netto.<br>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
 
