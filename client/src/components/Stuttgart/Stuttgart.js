@@ -409,6 +409,16 @@ console.log("upcomingCourse",upcomingCourse)
     return `${day}.${month}.${year}`;
   }
 
+    
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
 
   return (
       <>
@@ -469,11 +479,27 @@ console.log("upcomingCourse",upcomingCourse)
                       <div className="price-tag">
                       <h6>
                               <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
+                              {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                                <>
+                                  {closestUpcomingCourse[0].Offerprice}€
+                                  <sub>
+                                    <del
+                                      style={{
+                                        color: "rgb(255, 87, 34)",
+                                        fontSize: "17px",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {closestUpcomingCourse[0].price}
+                                    </del>
+                                  </sub>
+                                </>
+                              ) : (
+                                <>
+                                  {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                                </>
+                              )}
+                            </h6>
                       </div>
                       <div className="about-date">
                         <p>

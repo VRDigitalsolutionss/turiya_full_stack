@@ -108,7 +108,7 @@ const YogaTraningMallorca = () => {
         // "http://127.0.0.1:7000/api/module_webpages_by_category/200H/AYA Yogalehrer Ausbildung I Mallorca"
 
         BASE_URL +
-          `/module_webpages_by_category/200H Yogalehrerausbildung auf Mallorca`
+        `/module_webpages_by_category/200H Yogalehrerausbildung auf Mallorca`
       )
       .then((response) => {
         console.log(
@@ -125,7 +125,7 @@ const YogaTraningMallorca = () => {
           var imageUrlcustum =
             data && data.yogaTeamSlideImage
               ? BASE_URL_IMAGE +
-                `/images/modulewebpage/${data.yogaTeamSlideImage}`
+              `/images/modulewebpage/${data.yogaTeamSlideImage}`
               : ""; // Fallback image or empty string
 
           setBannerImg(imageUrlcustum);
@@ -222,6 +222,53 @@ const YogaTraningMallorca = () => {
     return `${day}.${month}.${year}`;
   }
 
+  const originalVideo1 = "https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a";
+  const originalVideo2 = "https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a";
+
+  // Define videoId states for each modal
+  const [videoId1, setVideoId1] = useState(originalVideo1);
+  const [videoId2, setVideoId2] = useState(originalVideo2);
+
+  useEffect(() => {
+    // Function to handle resetting videoId for a specific modal
+    const attachModalEvent = (modalId, setVideoId, originalVideo) => {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        const handleModalClose = () => setVideoId(null);
+        modal.addEventListener("hidden.bs.modal", handleModalClose);
+
+        // Cleanup event listener on component unmount
+        return () => modal.removeEventListener("hidden.bs.modal", handleModalClose);
+      }
+    };
+
+    // Attach event listeners to modals
+    const cleanup1 = attachModalEvent("exampleModal1", setVideoId1, originalVideo1);
+    const cleanup2 = attachModalEvent("exampleModal2", setVideoId2, originalVideo2);
+
+    return () => {
+      if (cleanup1) cleanup1();
+      if (cleanup2) cleanup2();
+    };
+  }, []);
+
+  // Reset videoId when null
+  useEffect(() => {
+    if (!videoId1) setVideoId1(originalVideo1);
+    if (!videoId2) setVideoId2(originalVideo2);
+  }, [videoId1, videoId2]);
+
+  
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
+
   return (
     <>
       {/* <SimpleBanner
@@ -283,29 +330,26 @@ const YogaTraningMallorca = () => {
                       <div className="price-tag">
                         <h6>
                           <i className="bx bxs-purchase-tag" />
-                          {console.log(
-                            "closest upcoming price",
-                            closestUpcomingCourse[0].Offerprice,
-                            closestUpcomingCourse[0].price
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                            <>
+                              {closestUpcomingCourse[0].Offerprice}€
+                              <sub>
+                                <del
+                                  style={{
+                                    color: "rgb(255, 87, 34)",
+                                    fontSize: "17px",
+                                    marginLeft: "10px",
+                                  }}
+                                >
+                                  {closestUpcomingCourse[0].price}
+                                </del>
+                              </sub>
+                            </>
+                          ) : (
+                            <>
+                              {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                            </>
                           )}
-                          {closestUpcomingCourse[0] &&
-                          closestUpcomingCourse[0].Offerprice
-                            ? closestUpcomingCourse[0].Offerprice
-                            : closestUpcomingCourse[0].price}
-                          €
-                          <sub>
-                            <del
-                              style={{
-                                color: "rgb(255, 87, 34)",
-                                fontSize: "17px",
-                                marginLeft: "10px",
-                              }}>
-                              {closestUpcomingCourse[0] &&
-                              closestUpcomingCourse[0].Offerprice
-                                ? closestUpcomingCourse[0].price
-                                : null}
-                            </del>
-                          </sub>
                         </h6>
                       </div>
                       <div className="about-date">
@@ -921,7 +965,7 @@ const YogaTraningMallorca = () => {
                         id="youtube-video"
                         width={560}
                         height={315}
-                        src="https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"
+                        src={videoId1}
                         title="YouTube video player"
                         frameBorder={0}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -956,7 +1000,7 @@ const YogaTraningMallorca = () => {
                         id="youtube-video"
                         width={560}
                         height={315}
-                        src="https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"
+                        src={videoId2}
                         title="YouTube video player"
                         frameBorder={0}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

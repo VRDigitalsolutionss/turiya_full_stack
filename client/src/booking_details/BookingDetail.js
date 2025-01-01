@@ -66,12 +66,12 @@ const BookingDetail = () => {
     }
   };
 
-  
+
   const addOtherAddress = () => {
 
 
 
-   
+
     const payload = {
       "registeredUserId": formData.registeredUserId,
       "userType": formData.userType,
@@ -108,7 +108,7 @@ const BookingDetail = () => {
 
   const updateInvoiceType = () => {
 
-const userid = localStorage.getItem("turiya_auth_id");
+    const userid = localStorage.getItem("turiya_auth_id");
     const payload = {
       "userId": userid,
       "invoiceType": invoiceType,
@@ -125,11 +125,11 @@ const userid = localStorage.getItem("turiya_auth_id");
 
 
   const generateInvoice = () => {
-    
+
     if (id) {
 
-     
-      
+
+
       updateInvoiceType();
       if (addressType == 'Other_Address') {
         addOtherAddress();
@@ -172,18 +172,7 @@ const userid = localStorage.getItem("turiya_auth_id");
   };
 
   // ========================================================================
-
-  function calculatePriceWithTax(price) {
-    if (invoiceType === "Company_invoice") {
-      const price_number = Number(price);
-      const taxRate = 0.19;
-      const taxAmount = price_number * taxRate;
-      const finalPrice = price_number + taxAmount;
-      return finalPrice;
-    } else {
-      return price;
-    }
-  }
+  
 
   const originalPrice = 2699;
   const finalPrice = calculatePriceWithTax(originalPrice);
@@ -195,49 +184,52 @@ const userid = localStorage.getItem("turiya_auth_id");
   // const finalPrice = calculatePriceWithTax(originalPrice, invoiceType);
   // console.log("Final price with tax:", finalPrice);
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
+  function calculatePriceWithTax(price, offerEndDate, offerPrice) {
+    const isOfferStillValid = isOfferValid(offerEndDate) && offerPrice > 0;
+  
+    const priceToCalculate = isOfferStillValid ? offerPrice : price;
+  
+    if (invoiceType !== "Private_Invoice") {
+      const price_number = Number(priceToCalculate);
+      const taxRate = 0.19; // 19% tax rate
+      const taxAmount = price_number * taxRate;
+      const finalPrice = price_number + taxAmount;
+      return finalPrice;
+    } else {
+      return priceToCalculate;
+    }
+  }
+
+
   return (
     <>
       <div className="BookingDetail">
         <div className="global_content">
           <div className="container">
             <div className="row">
-              {/* <button type="button" className="btn btn-primary" onClick={generateInvoice}>Generate invoice</button> */}
               <div className="col-lg-4">
-                {/* <div className="cart_wrapper__left">
-                  <h3>Auftragsrüberblick</h3>
-                  <div className="cart_wrapper__left-box">
-                    <div className="cart_left__heading">
-                      <h6>* All Inklusive 60H Senioren YLA</h6>
-                      <div className="del cart-price">
-                        <p>€1449</p>
-                      </div>
-                    </div>
-                    
-                    <div className="cart-list">
-                      <ul>
-                        <li>
-                          <i className="bx bxs-calendar" /> 2024-12-11
-                        </li>
-                        <li>Goa, Indien</li>
-                        <li>Noch 6 Plätze frei</li>
-                      </ul>
-                    </div>
-                    <div className="cart-total">
-                      <h6>TOTAL</h6>
-                      <p>€1449</p>
-                    </div>
-                  </div>
-                              </div> */}
-
-                {/* ========================================== */}
-
                 <div className="cart_wrapper__left">
                   <h3>Auftragsrüberblick</h3>
                   <div className="cart_wrapper__left-box">
                     <div className="cart_left__heading">
                       <h6> {courseData && courseData.Ausbildung}</h6>
                       <div className="del cart-price">
-                        <p>€ {courseData && courseData.Offerprice?courseData.Offerprice:courseData.price} </p>
+                        <p>{isOfferValid(courseData.OfferEndDate) && courseData.Offerprice > 0 ? (
+                          <span>
+                            € {courseData.Offerprice}
+                          </span>
+                        ) : (
+                          <span>€{courseData.price}</span>
+                        )} </p>
                       </div>
                     </div>
 
@@ -248,7 +240,7 @@ const userid = localStorage.getItem("turiya_auth_id");
                           <i className="bx bxs-calendar me-2" />
                           {courseData.StartDate}
                         </li>
-                        <li>Goa, Indien {courseData.Location}</li>
+                        <li>{courseData.Location}</li>
                         <li>
                           {" "}
                           {"Noch" +
@@ -263,7 +255,14 @@ const userid = localStorage.getItem("turiya_auth_id");
                     </div>
                     <div className="cart-total">
                       <h6>TOTAL</h6>
-                      <p>€ {calculatePriceWithTax(courseData && courseData.Offerprice?courseData.Offerprice:courseData.price)}</p>
+                      <p>
+                        €{" "}
+                        {calculatePriceWithTax(
+                          courseData.price,
+                          courseData.OfferEndDate,
+                          courseData.Offerprice   
+                        )}
+                      </p>
                     </div>
                   </div>
                 </div>
