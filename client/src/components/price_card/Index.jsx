@@ -49,6 +49,7 @@ const PriceCard = ({
         {/* <p>{offerPrice}</p> */}
       </div>
       <div className="about-date">
+        
         {location ? <p><i className="bx bxs-map" />{location}</p> : null}
        {date ? <p><i className="bx bxs-calendar" /> {formatDateRange(date)}</p> :null}
       </div>
