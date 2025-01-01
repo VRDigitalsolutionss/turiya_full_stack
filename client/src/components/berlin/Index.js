@@ -545,8 +545,19 @@ const Berlin = () => {
                             )}
                           </h6>
                         </div>
-                        <div className="about-date">
-                          <p>
+                          <div className="about-date">
+                            
+                        <p>
+
+Das Angebot endet am   
+<i className="bx bxs-calendar" />
+{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
+
+
+                          </p>
+                          
+                          
+                        <p>
                             <i className="bx bxs-map" />
                             {
                               closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null

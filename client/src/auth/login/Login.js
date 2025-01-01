@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config";
+import { IoCloseSharp } from "react-icons/io5";
 // Login component with embedded modal
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -98,6 +99,11 @@ const Login = () => {
     }
   };
 
+  const handleClose = () => {
+    setShowModal(false);
+    navigate("/"); // Redirect to the register page
+  }
+
   return (
     <div className="login-container">
       <div
@@ -108,6 +114,9 @@ const Login = () => {
           className="custom-modal-content"
           onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
         >
+          <div className="div d-flex justify-content-end">
+         < IoCloseSharp style={{fontSize:'20px',fontWeight:'500',cursor:"pointer"}} onClick={handleClose}/>
+          </div>
           {/* ========================================== */}
           <form method="POST" id="user_login_form" onSubmit={handleSubmit}>
             <div className="modal_input">

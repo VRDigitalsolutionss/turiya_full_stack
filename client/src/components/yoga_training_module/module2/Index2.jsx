@@ -338,7 +338,15 @@ auf höchstem Niveau"
                             <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
                         </h6>
                       </div>
-                      <div className="about-date">
+                        <div className="about-date">
+                        <p>
+
+Das Angebot endet am   
+<i className="bx bxs-calendar" />
+{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
+
+
+</p>
                         <p>
                             <i className="bx bxs-map" />
                             {
