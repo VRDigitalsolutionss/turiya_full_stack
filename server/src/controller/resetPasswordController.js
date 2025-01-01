@@ -1,35 +1,36 @@
-const User = require("../model/User");
+const RegisteredUser = require("../model/Register");
 
 require("dotenv").config();
- // Make sure the User model is correctly imported
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const resetPasswordController = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { token, newPassword } = req.body;
 
-    // Validate the request body
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+    if(!token){
+      return res.status(400).send("Token is required")
     }
 
-    // Find the user by email and update the password
-    const user = await User.findOneAndUpdate(
-      { email: email },
-      { password: password }, // Update the password
-      { new: true } // Return the updated user
-    );
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const decoded = jwt.verify(token, process.env.secretKey);
+    if(!decoded){
+      return res.status(400).send("Invalid or expired token")
     }
 
-    return res.status(200).json({ message: "Password updated successfully" });
+    const user = await RegisteredUser.findOne({ email: decoded.email });
+    if (!user) return res.status(404).send("User not found");
+
+    // Update password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.create_password = hashedPassword;
+    await user.save();
+
+    res.status(200).send("Password reset successfully");
   } catch (error) {
     console.error("Error updating password:", error);
-    return res.status(500).json({
-      message: "Internal server error",
-      error: error.message,
-    });
+    return res.status(500).send(
+      error.message
+    );
   }
 };
 
