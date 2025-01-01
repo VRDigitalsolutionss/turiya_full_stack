@@ -90,25 +90,25 @@ const ManageAddModule = () => {
       axios
         .get(BASE_URL + `/getModuleById/${id}`)
         .then((response) => {
-          console.log("response", response.data.data);
-
+          console.log("response of module", response.data.data);
+    
           // Destructure the data to map it to the formData state
           const {
             modulecategory,
             modulesubcategory,
             moduleheading,
             modulesubheading,
-            ausbildung,
-            startDate,
-            endDate,
-            location,
+            Ausbildung,
+            StartDate,
+            EndDate,
+            Location,
             price,
-            offerPrice,
-            offerEndDate,
-            place,
-            aboutCourse,
-            homepage_cardcontent,
-            images,
+            OfferPrice,
+            OfferEndDate,
+            Place,
+            AboutCourse,
+            Homepage_cardcontent,
+            Images,
             redirectUrl,
           } = response.data.data;
 
@@ -118,17 +118,17 @@ const ManageAddModule = () => {
             moduleCategory2: modulesubcategory || "", // If you want to use this
             coursesHeading: moduleheading || "",
             coursesSubHeading: modulesubheading || "",
-            ausbildung: ausbildung || "",
-            startDate: startDate || "",
-            endDate: endDate || "",
-            location: location || "",
+            ausbildung: Ausbildung || "",
+            startDate: StartDate || "",
+            endDate: EndDate || "",
+            location: Location || "",
             price: price || "",
-            offerPrice: offerPrice || "",
-            offerEndDate: offerEndDate || "",
-            place: place || "",
-            aboutCourse: aboutCourse || "",
-            homePageContent: homepage_cardcontent || "", // Rich text content
-            image: images || null, // If images is null, it will remain null
+            offerPrice: OfferPrice || "",
+            offerEndDate: OfferEndDate || "",
+            place: Place || "",
+            aboutCourse: AboutCourse || "",
+            homePageContent: Homepage_cardcontent || "", // Rich text content
+            image: Images || null, // If images is null, it will remain null
             redirectUrl: redirectUrl || "", // If redirectUrl is null, it will remain null
           });
         })

@@ -24,7 +24,9 @@ function Invoice() {
   const [data, setData] = useState([]);
 
   const fetchData = () => {
-    axios.get(BASE_URL + '/all_invoices').then((response) => {
+    axios.get(BASE_URL + '/get_purchasedModule').then((response) => {
+
+      console.log("all invoice data", response);
       setData(response.data.data);
     }).catch((error) => {
       console.log(error);
@@ -164,6 +166,19 @@ function Invoice() {
     })
   }
 
+  function formatRegistrationDate(inputDate) {
+    // Create a new Date object from the input string
+    const date = new Date(inputDate);
+
+    // Extract the day, month, and year
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure 2 digits
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month, add 1 (0-indexed)
+    const year = String(date.getFullYear()).slice(-2); // Get last 2 digits of the year
+
+    // Return the formatted date
+    return `${day}-${month}-${year}`;
+  }
+
 
   const handleDownloadDetial = (row) => {
     const doc = new jsPDF();
@@ -247,9 +262,33 @@ function Invoice() {
             {currentItems.length > 0 ? (
               currentItems.map((row, rowIndex) => (
                 <tr key={rowIndex}>
-                  <td className="text-center">{row._id} <br /><span className="text-danger" style={{ fontSize: "12px" }}>Private Invoice</span> <br />{formatDate(row.createdAt)}</td>
-                  <td>{row.product_details}</td>
-                  <td>{row.customer_details}<br />{row.email}</td>
+
+                  <td className="text-center"><span style={{fontSize:"12px"}}>{row._id} </span><br />
+                    <span className="text-danger" style={{ fontSize: "12px" }}>Private Invoice</span>
+                    <br /><span style={{fontSize:"12px"}}>{formatDate(row.createdAt)}</span></td>
+                  <td className="text-center">
+                    <span style={{fontSize:"12px"}}>{row.courseData.Ausbildung}</span><br/>
+                    <span style={{fontSize:"12px"}}>{row.courseData.Location
+                    }</span><br />
+                      <span style={{fontSize:"12px"}}>{formatRegistrationDate(row.courseData.createdAt)
+                    }</span>
+
+
+               
+                  </td>
+                  <td className="text-center">
+                  <span style={{fontSize:"12px"}}>{row.userDetails.First_name
+                    }</span><br />
+                      <span style={{fontSize:"12px"}}>{row.userDetails.email
+                    }</span><br />
+                      <span style={{fontSize:"12px"}}>{row.userDetails.phone
+                    }</span><br />
+                    
+                   
+                  
+                  
+                  
+                  </td>
                   <td className="text-center"><span className="text-danger" style={{ fontSize: "12px" }}>Overdue By 0 Days</span><br />{row.amount_due} €<br/><button type="button" className="btn btn-outline-danger btn-sm mt-2">paid</button></td>
                  
                   <td>

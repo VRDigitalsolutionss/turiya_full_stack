@@ -150,7 +150,7 @@ const Navbar = () => {
   // ===================================
 
   const replaceSpacesWithUnderscores = (category) => {
-    return category.replace(/\s+/g, "_");
+    return category.replace(/\s+/g, "-");
   };
 
   const [categoryData, setcategoryData] = useState("");
@@ -474,7 +474,7 @@ const Navbar = () => {
                         <Link to="/senioren-yoga">60H Senioren Yoga</Link>
                       </li>
                       <li>
-                        <Link to="/hybride_yogalehrer_ausbildung">
+                        <Link to="/hybride-yogalehrer-ausbildung">
                           Hybride Wochenend Yogalehrer Ausbildung
                         </Link>
                       </li>

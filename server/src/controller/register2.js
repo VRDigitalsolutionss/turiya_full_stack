@@ -101,5 +101,26 @@ const getRegisteredUser = (req,res) => {
 }
 
 
+const getallRegisteredUser = (req,res) => {
+  RegisteredUser.find().then((users) => {
 
-module.exports = { registerController ,getRegisteredUser};
+    if (users.length > 0) {
+      res.status(200).json({
+        msg: "User details",
+        data: users
+      });
+    } else {
+      res.status(400).json({
+        msg: "User details",
+        data: 'user not found'
+      });
+    }
+
+  }).catch((error) => {
+    res.status(400).json({
+      msg: "error",
+      error: error
+    });
+  })
+}
+module.exports = { getallRegisteredUser,registerController ,getRegisteredUser};

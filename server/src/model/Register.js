@@ -5,6 +5,7 @@ const registerschema = new mongoose.Schema({
         type: String,
         trim: true,   
     },
+
     company: {
         type: String,
         trim: true,    
@@ -69,7 +70,11 @@ const registerschema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "OtherAddress", // Reference to OtherAddress model
         required: false,
-      },
+    },
+    invoiceType: {          // Add this new field
+        type: String,        // It can be a string or any other type you need (e.g., Enum for specific invoice types)
+        trim: true,
+    },
 }, {
     timestamps: true, 
 });
