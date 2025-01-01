@@ -120,6 +120,42 @@ const Index = () => {
     return `${day}.${month}.${year}`;
   }
 
+  const originalVideo = "https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"
+
+  const [videoId, setVideoId] = useState(originalVideo);
+
+  useEffect(() => {
+    const modal = document.getElementById("exampleModal_himalaya");
+
+    if (modal) {
+      const handleModalClose = () => setVideoId(null);
+
+      // Attach event listener for modal close
+      modal.addEventListener("hidden.bs.modal", handleModalClose);
+
+      // Cleanup event listener on component unmount
+      return () => modal.removeEventListener("hidden.bs.modal", handleModalClose);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Reset videoId when null
+    if (!videoId) {
+      setVideoId(originalVideo);
+    }
+  }, [videoId]);
+
+
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
+
   return (
     <>
       {/* <SimpleBanner
@@ -187,24 +223,40 @@ const Index = () => {
               </div>
 
               <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
+                <div className="about_wrapper__right mb-3">
+                  {
                     closestUpcomingCourse[0] ? (
                       <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
-                      </div>
-                        <div className="about-date">
-                        <p>
+
+                        <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                        <div className="price-tag">
+                          <h6>
+                            <i className="bx bxs-purchase-tag" />
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                              <>
+                                {closestUpcomingCourse[0].Offerprice}€
+                                <sub>
+                                  <del
+                                    style={{
+                                      color: "rgb(255, 87, 34)",
+                                      fontSize: "17px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {closestUpcomingCourse[0].price}
+                                  </del>
+                                </sub>
+                              </>
+                            ) : (
+                              <>
+                                {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                              </>
+                            )}
+                          </h6>
+                        </div>
+                          <div className="about-date">
+                          <p>
 
 Das Angebot endet am   
 <i className="bx bxs-calendar" />
@@ -215,13 +267,13 @@ Das Angebot endet am
                         <p>
                             <i className="bx bxs-map" />
                             {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
+                              closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
                             }
-                       
-                        </p>
-                        <p>
+
+                          </p>
+                          <p>
                             <i className="bx bxs-calendar" />
-                            
+
 
 
                             {/* {
@@ -229,47 +281,47 @@ Das Angebot endet am
                              :null
                             } */}
                             {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
                             }
-                           <span className="my-2">-</span>  
+                            <span className="my-2">-</span>
                             {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
                             }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                          </p>
+                        </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im Schulungspreis
+                            enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                            einfach an. Wir helfen Ihnen gerne weiter.
+                          </p>
                         </div>
-                        
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+
                     )
                   }
-              </div>
+                </div>
               </div>
             </div>
           </div>
@@ -573,7 +625,7 @@ Das Angebot endet am
                       <iframe
                         width={560}
                         height={315}
-                        src="https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"
+                        src={videoId}
                         title="YouTube video player"
                         frameBorder={0}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

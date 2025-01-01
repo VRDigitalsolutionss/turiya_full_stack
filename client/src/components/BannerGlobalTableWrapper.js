@@ -202,6 +202,15 @@ const BannerGlobalTableWrapper = () => {
     return `${day}.${month}.${year}`;
   }
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
   // Example usage:
   const formattedDate = formatDate("2025-01-09");
   console.log(formattedDate); // Output: 09.01.2025
@@ -259,7 +268,7 @@ const BannerGlobalTableWrapper = () => {
       navigate('/yogalehrer-ausbildung-himalaya-indien')
     } else if (location == 'Berlin') {
       navigate('/YOGALEHRERAUSBILDUNG-BERLIN')
-    } else{
+    } else {
       alert("Page is under development. Sorry for the inconvenience.")
     }
   }
@@ -339,7 +348,7 @@ const BannerGlobalTableWrapper = () => {
                             <td style={{ backgroundColor: "#EDEDED" }}>
                               <button type="button" className="location border-none" style={{ border: 'none' }}
 
-                              onClick={() => ManagePageRedirect(item.Location)}
+                                onClick={() => ManagePageRedirect(item.Location)}
 
 
                               >
@@ -349,49 +358,28 @@ const BannerGlobalTableWrapper = () => {
                                 {/* Goa, Indien */}
                               </button>
                             </td>
-                            <td style={{ backgroundColor: "#EDEDED" }}>
-                              {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
-                              {item.Offerprice > 0 ? (
+                             <td style={{ backgroundColor: "#EDEDED" }}>
+                              {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
                                 <>
                                   <span
                                     style={{
-                                      color:
-                                        item.Offerprice > 0 ? "red" : "inherit",
-                                    }}>
-                                    €{" "}
-                                    {item.Offerprice > 0 ? item.Offerprice : item.price}
+                                      color: "red",
+                                    }}
+                                  >
+                                    € {item.Offerprice}
                                   </span>
-
-
+                                  <span className="ms-2">
+                                    <del>€{item.price}</del>
+                                  </span>
+                                  <br />
+                                  <small>
+                                    Das Angebot endet am<br/>
+                                    <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
+                                  </small>
                                 </>
-                              ) : null}
-
-                              <span
-                                // style={{
-                                //   color: item.Offerprice > 0 ? "red" : "inherit",
-                                // }}
-                                className="ms-2"
-                              >
-                                {item.Offerprice > 0 ? (
-                                  <del>€{item.price} </del>
-                                ) : (
-                                  <span>€{item.price}</span>
-                                )}
-                              </span>
-                      
-                              <br />
-                              {item.OfferEndDate ? (
-                                <>
-                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
-{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
-</small>
-                                
-                                </>
-                            ):null}
- 
-                           
-                              
-                          
+                              ) : (
+                                <span>€{item.price}</span>
+                              )}
                             </td>
 
                             <td
@@ -424,10 +412,10 @@ const BannerGlobalTableWrapper = () => {
                     })}
                 </tbody>
 
-                <tbody class="table-body mobile"  style={{ backgroundColor: "#EDEDED" }}>
+                <tbody class="table-body mobile" style={{ backgroundColor: "#EDEDED" }}>
 
 
-                {data &&
+                  {data &&
                     data.map((item, index) => {
                       console.log("row of upcoming courses", item);
 
@@ -446,7 +434,7 @@ const BannerGlobalTableWrapper = () => {
                             <td style={{ backgroundColor: "#EDEDED" }}>
                               <button type="button" className="location border-none" style={{ border: 'none' }}
 
-                              onClick={() => ManagePageRedirect(item.Location)}
+                                onClick={() => ManagePageRedirect(item.Location)}
 
 
                               >
@@ -457,44 +445,27 @@ const BannerGlobalTableWrapper = () => {
                               </button>
                             </td>
                             <td style={{ backgroundColor: "#EDEDED" }}>
-                              {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
-                              {item.Offerprice > 0 ? (
+                              {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
                                 <>
                                   <span
                                     style={{
-                                      color:
-                                        item.Offerprice > 0 ? "red" : "inherit",
-                                    }}>
-                                    €{" "}
-                                    {item.Offerprice > 0 ? item.Offerprice : item.price}
+                                      color: "red",
+                                    }}
+                                  >
+                                    € {item.Offerprice}
                                   </span>
-
-
+                                  <span className="ms-2">
+                                    <del>€{item.price}</del>
+                                  </span>
+                                  <br />
+                                  <small>
+                                    Das Angebot endet am{" "}
+                                    <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
+                                  </small>
                                 </>
-                              ) : null}
-
-                              <span
-                                // style={{
-                                //   color: item.Offerprice > 0 ? "red" : "inherit",
-                                // }}
-                                className="ms-2"
-                              >
-                                {item.Offerprice > 0 ? (
-                                  <del>€{item.price} </del>
-                                ) : (
-                                  <span>€{item.price}</span>
-                                )}
-                              </span>
-                              <br />
-                              {item.OfferEndDate ? (
-                                <>
-                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
-{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
-</small>
-                                
-                                </>
-                            ):null}
- 
+                              ) : (
+                                <span>€{item.price}</span>
+                              )}
                             </td>
 
                             <td

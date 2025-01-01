@@ -37,7 +37,7 @@ const BannerGlobalWrapper5 = () => {
     const cleanup3 = attachModalEvent("exampleModal3", setVideoId3, originalVideo3);
     const cleanup4 = attachModalEvent("exampleModal4", setVideoId4, originalVideo4);
     const cleanup5 = attachModalEvent("exampleModal5", setVideoId5, originalVideo5);
-    const cleanup6 = attachModalEvent("exampleModal6", setVideoId6, originalVideo6);
+    const cleanup6 = attachModalEvent("exampleModalLabel6", setVideoId6, originalVideo6);
 
     return () => {
       if (cleanup1) cleanup1();
