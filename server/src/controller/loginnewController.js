@@ -9,10 +9,10 @@ const RegisteredUser = require("../model/Register");
 //     // console.log("LoginController",req.body);
 //     RegisteredUser.findOne({ email: req.body.email })
 //         .then((user) => {
-        
-           
+
+
 //             if (user !== null) {
-          
+
 
 
 //                 console.log("req.body.password", req.body.password);
@@ -20,7 +20,7 @@ const RegisteredUser = require("../model/Register");
 //         if (bcrypt.compareSync(req.body.password, user.create_password)) {
 
 
-        
+
 //           const token = jwt.sign({ user: req.body.email }, "rishuam", {
 //             expiresIn: "1d",
 //           });
@@ -63,7 +63,7 @@ const loginController = (req, res) => {
   RegisteredUser.findOne({ email: req.body.email })
     .then((user) => {
       if (user !== null) {
-      
+
         // console.log("Request body password:", req.body.password);
         // console.log("User password (hashed):", user.create_password);
 
@@ -76,14 +76,18 @@ const loginController = (req, res) => {
             expiresIn: "1d",
           });
 
-          console.log("Generated Token:", token);
+          const verificationToken = jwt.sign(
+            { email: req.body.email }, // Payload
+            process.env.secretKey, // Secret key
+            { expiresIn: '1h' } // Expiration time (optional, here set to 1 hour)
+          );
 
-          if(user.isVerified===false){
+          if (user.isVerified === false) {
             sendConfirmationEmail(user.email, user.First_name, user.Last_name, verificationToken);
             res.status(200).json({
               msg: "Your email is not verified. Please check your email, we have sent you an verification email",
               isVerified: false
-            })              
+            })
           }
 
           // Respond with the token
@@ -176,8 +180,9 @@ const getUserDetailById = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
-  }}
+  }
+}
 
 
 
-module.exports = { loginController,getUserDetailById };
+module.exports = { loginController, getUserDetailById };
