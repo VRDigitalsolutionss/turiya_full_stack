@@ -21,7 +21,7 @@ const Index = () => {
 
 
 
- const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+  const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
 
   const fetchNextUpcomingCourse = () => {
     axios
@@ -37,11 +37,11 @@ const Index = () => {
 
 
   const [isloginOpen, setisloginOpen] = useState(false);
-  
+
 
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const navigate = useNavigate();
-  
+
 
 
 
@@ -53,24 +53,24 @@ const Index = () => {
 
   const [earlyData, setEarlyData] = useState("");
 
-const [upcomingCourse,setUpcomingCourse] = useState("");
+  const [upcomingCourse, setUpcomingCourse] = useState("");
 
   const getUpcomingCourse = () => {
     axios
-    .get(BASE_URL + "/getModuleByLocation/Goa, Indien")
-    .then((response) => {
-      console.log("response of Goa courses", response.data);
-      const data = response.data.data;
-      setUpcomingCourse(data)
-    })
-    .catch((error) => {
-      console.error("Error fetching data: ", error);
-    });
+      .get(BASE_URL + "/getModuleByLocation/Goa, Indien")
+      .then((response) => {
+        console.log("response of Goa courses", response.data);
+        const data = response.data.data;
+        setUpcomingCourse(data)
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
   }
 
 
 
-console.log("upcoming courses",upcomingCourse)
+  console.log("upcoming courses", upcomingCourse)
   useEffect(() => {
     getUpcomingCourse();
     fetchNextUpcomingCourse();
@@ -78,12 +78,12 @@ console.log("upcoming courses",upcomingCourse)
 
   const fetchEarlyBirdData = () => {
     axios
-.get(BASE_URL +"/getClosestUpcomingCourseswithNull")
+      .get(BASE_URL + "/getClosestUpcomingCourseswithNull")
       .then((response) => {
         console.log("respnse of fetchEarlyBirdData", response.data.data[0]);
         const data = response.data.data[0];
         const startDate = data && data.StartDate;
-        console.log("start date",data)
+        console.log("start date", data)
         setEarlyData(response.data.data[0]);
       })
       .catch((error) => {
@@ -140,7 +140,7 @@ console.log("upcoming courses",upcomingCourse)
 
     const auth_token = localStorage.getItem("turiya_auth_token");
 
-    console.log("course id: handletriggerDialogBox" + courseid,auth_token);
+    console.log("course id: handletriggerDialogBox" + courseid, auth_token);
     if (auth_token) {
       // navigate("/course_booking");
       reducePlace(courseid);
@@ -212,7 +212,7 @@ console.log("upcoming courses",upcomingCourse)
     }, 0);
   }, []);
 
-  
+
   function formatDate(dateString) {
     // Split the input date into an array [year, month, day]
     const [year, month, day] = dateString.split("-");
@@ -220,7 +220,16 @@ console.log("upcoming courses",upcomingCourse)
     // Return the date in the desired format: dd.mm.yyyy
     return `${day}.${month}.${year}`;
   }
-  
+
+
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
 
 
   return (
@@ -272,33 +281,49 @@ console.log("upcoming courses",upcomingCourse)
               </div>
 
               <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
+                <div className="about_wrapper__right mb-3">
+                  {
                     closestUpcomingCourse[0] ? (
                       <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
-                      </div>
-                      <div className="about-date">
-                        <p>
+
+                        <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                        <div className="price-tag">
+                          <h6>
+                            <i className="bx bxs-purchase-tag" />
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                              <>
+                                {closestUpcomingCourse[0].Offerprice}€
+                                <sub>
+                                  <del
+                                    style={{
+                                      color: "rgb(255, 87, 34)",
+                                      fontSize: "17px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {closestUpcomingCourse[0].price}
+                                  </del>
+                                </sub>
+                              </>
+                            ) : (
+                              <>
+                                {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                              </>
+                            )}
+                          </h6>
+                        </div>
+                        <div className="about-date">
+                          <p>
                             <i className="bx bxs-map" />
                             {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
+                              closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
                             }
-                       
-                        </p>
-                        <p>
+
+                          </p>
+                          <p>
                             <i className="bx bxs-calendar" />
-                            
+
 
 
                             {/* {
@@ -306,47 +331,47 @@ console.log("upcoming courses",upcomingCourse)
                              :null
                             } */}
                             {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
                             }
-                           <span className="my-2">-</span>  
+                            <span className="my-2">-</span>
                             {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
                             }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                          </p>
+                        </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im Schulungspreis
+                            enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                            einfach an. Wir helfen Ihnen gerne weiter.
+                          </p>
                         </div>
-                        
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+
                     )
                   }
-              </div>
+                </div>
               </div>
 
             </div>
@@ -601,51 +626,51 @@ console.log("upcoming courses",upcomingCourse)
           </div>
         </section>
       </div>
-      <div style={{backgroundColor:'#F9F9F9',paddingTop:"30px",paddingBottom:"30px"}}>
-          <div className="container">
-            <div className="table-responsive index-table" style={{backgroundColor:'#F9F9F9'}}>
-              <table
-                className="table custom-table aos-init"
-                data-aos="zoom-in-up">
-                <thead style={{ backgroundColor: "#F9F9F9" }}>
-                  <tr
-                    className="table-heading"
-                    style={{ backgroundColor: "#F9F9F9" }}>
-                    <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
-                      Ausbildungsorte
-                    </th>
-                    <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
-                      Datum
-                    </th>
-                    <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
-                      Ort
-                    </th>
-                    <th
-                      scope="col"
-                      className="germany-price"
-                      style={{ backgroundColor: "#F9F9F9" }}>
-                      Preis/Frühbucher
-                    </th>
-                    <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
-                      Freie Plätze
-                    </th>
-                    <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
-                      Kontakt
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  className="table-body desktop"
+      <div style={{ backgroundColor: '#F9F9F9', paddingTop: "30px", paddingBottom: "30px" }}>
+        <div className="container">
+          <div className="table-responsive index-table" style={{ backgroundColor: '#F9F9F9' }}>
+            <table
+              className="table custom-table aos-init"
+              data-aos="zoom-in-up">
+              <thead style={{ backgroundColor: "#F9F9F9" }}>
+                <tr
+                  className="table-heading"
                   style={{ backgroundColor: "#F9F9F9" }}>
-                  {upcomingCourse &&
-                    upcomingCourse.map((item, index) => {
-                      console.log("row of upcoming courses", item);
+                  <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
+                    Ausbildungsorte
+                  </th>
+                  <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
+                    Datum
+                  </th>
+                  <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
+                    Ort
+                  </th>
+                  <th
+                    scope="col"
+                    className="germany-price"
+                    style={{ backgroundColor: "#F9F9F9" }}>
+                    Preis/Frühbucher
+                  </th>
+                  <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
+                    Freie Plätze
+                  </th>
+                  <th scope="col" style={{ backgroundColor: "#F9F9F9" }}>
+                    Kontakt
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                className="table-body desktop"
+                style={{ backgroundColor: "#F9F9F9" }}>
+                {upcomingCourse &&
+                  upcomingCourse.map((item, index) => {
+                    console.log("row of upcoming courses", item);
 
-                     
 
-                      return (
-                        item.Place &&  item.Place !== '0' ? (
-                          <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
+
+                    return (
+                      item.Place && item.Place !== '0' ? (
+                        <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
                           <th style={{ backgroundColor: "#F9F9F9" }}>
                             {item.Ausbildung}
                           </th>
@@ -665,28 +690,28 @@ console.log("upcoming courses",upcomingCourse)
                           </td>
                           <td style={{ backgroundColor: "#F9F9F9" }}>
                             {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
-                              {item.Offerprice > 0 ? (
-                                <>
-                                
-                               
-                              <span
-                                style={{
-                                  color:
-                                    item.Offerprice > 0 ? "red" : "inherit",
-                                }}>
-                                 €{" "}
-                                {item.Offerprice > 0 ? item.Offerprice : item.price }
-                                  </span>
-                                  
-                                
-                                  </>
+                            {item.Offerprice > 0 ? (
+                              <>
+
+
+                                <span
+                                  style={{
+                                    color:
+                                      item.Offerprice > 0 ? "red" : "inherit",
+                                  }}>
+                                  €{" "}
+                                  {item.Offerprice > 0 ? item.Offerprice : item.price}
+                                </span>
+
+
+                              </>
                             ) : null}
-                           
+
                             <span
-                            // style={{
-                            //   color: item.Offerprice > 0 ? "red" : "inherit",
-                                // }}
-                                className="ms-2"
+                              // style={{
+                              //   color: item.Offerprice > 0 ? "red" : "inherit",
+                              // }}
+                              className="ms-2"
                             >
                               {item.Offerprice > 0 ? (
                                 <del>€{item.price} </del>
@@ -695,17 +720,17 @@ console.log("upcoming courses",upcomingCourse)
                               )}
                             </span>
                             <br />
-                              {item.OfferEndDate ? (
-                                <>
-                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
-{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
-</small>
-                                
-                                </>
-                            ):null}
- 
+                            {item.OfferEndDate ? (
+                              <>
+                                <small>Das Angebot endet am </small><small><br /><i class="bx bxs-calendar"></i>
+                                  {formatDate(item.OfferEndDate ? item.OfferEndDate : null)}
+                                </small>
+
+                              </>
+                            ) : null}
+
                           </td>
-             
+
                           <td
                             style={{
                               backgroundColor: "#F9F9F9",
@@ -732,23 +757,23 @@ console.log("upcoming courses",upcomingCourse)
                             </button>{" "}
                           </td>
                         </tr>
-                       ):null
-                   
-                      );
-                    })}
+                      ) : null
+
+                    );
+                  })}
               </tbody>
-              
 
-              <tbody class="table-body mobile"  style={{ backgroundColor: "#EDEDED" }}>
-              {upcomingCourse &&
-                    upcomingCourse.map((item, index) => {
-                      console.log("row of upcoming courses", item);
 
-                     
+              <tbody class="table-body mobile" style={{ backgroundColor: "#EDEDED" }}>
+                {upcomingCourse &&
+                  upcomingCourse.map((item, index) => {
+                    console.log("row of upcoming courses", item);
 
-                      return (
-                        item.Place &&  item.Place !== '0' ? (
-                          <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
+
+
+                    return (
+                      item.Place && item.Place !== '0' ? (
+                        <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
                           <th style={{ backgroundColor: "#F9F9F9" }}>
                             {item.Ausbildung}
                           </th>
@@ -768,28 +793,28 @@ console.log("upcoming courses",upcomingCourse)
                           </td>
                           <td style={{ backgroundColor: "#F9F9F9" }}>
                             {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
-                              {item.Offerprice > 0 ? (
-                                <>
-                                
-                               
-                              <span
-                                style={{
-                                  color:
-                                    item.Offerprice > 0 ? "red" : "inherit",
-                                }}>
-                                 €{" "}
-                                {item.Offerprice > 0 ? item.Offerprice : item.price }
-                                  </span>
-                                  
-                                
-                                  </>
+                            {item.Offerprice > 0 ? (
+                              <>
+
+
+                                <span
+                                  style={{
+                                    color:
+                                      item.Offerprice > 0 ? "red" : "inherit",
+                                  }}>
+                                  €{" "}
+                                  {item.Offerprice > 0 ? item.Offerprice : item.price}
+                                </span>
+
+
+                              </>
                             ) : null}
-                           
+
                             <span
-                            // style={{
-                            //   color: item.Offerprice > 0 ? "red" : "inherit",
-                                // }}
-                                className="ms-2"
+                              // style={{
+                              //   color: item.Offerprice > 0 ? "red" : "inherit",
+                              // }}
+                              className="ms-2"
                             >
                               {item.Offerprice > 0 ? (
                                 <del>€{item.price} </del>
@@ -798,17 +823,17 @@ console.log("upcoming courses",upcomingCourse)
                               )}
                             </span>
                             <br />
-                              {item.OfferEndDate ? (
-                                <>
-                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
-{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
-</small>
-                                
-                                </>
-                            ):null}
- 
+                            {item.OfferEndDate ? (
+                              <>
+                                <small>Das Angebot endet am </small><small><br /><i class="bx bxs-calendar"></i>
+                                  {formatDate(item.OfferEndDate ? item.OfferEndDate : null)}
+                                </small>
+
+                              </>
+                            ) : null}
+
                           </td>
-             
+
                           <td
                             style={{
                               backgroundColor: "#F9F9F9",
@@ -835,19 +860,19 @@ console.log("upcoming courses",upcomingCourse)
                             </button>{" "}
                           </td>
                         </tr>
-                       ):null
-                   
-                      );
-                    })}
-              </tbody>
-              </table>
+                      ) : null
 
-      
-             
-            </div>
-        
+                    );
+                  })}
+              </tbody>
+            </table>
+
+
+
           </div>
+
         </div>
+      </div>
       <Testimonial />
       <Contact />
       <NewsShelter />

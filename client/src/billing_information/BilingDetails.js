@@ -8,7 +8,7 @@ const BilingDetails = () => {
   const userAuthId = localStorage.getItem("turiya_auth_id");
   const [registerId, setregisterAuthId] = useState("");
   const navigate = useNavigate();
-const [address,setAddress] = useState("");
+  const [address, setAddress] = useState("");
 
   const fetchOtherAddress = () => {
     axios
@@ -34,21 +34,6 @@ const [address,setAddress] = useState("");
   const [taxAmount, setTaxAmount] = useState("");
 
 
-
-  function calculatePriceWithTax(price) {
-
-
-    if (userDetails.invoiceType  !== "Private_Invoice") {
-      const price_number = Number(price);
-      const taxRate = 0.19;
-      const taxAmount = price_number * taxRate;
-      const finalPrice = price_number + taxAmount;
-      return finalPrice;
-    } else {
-      return price;
-    }
-  }
-
   const fetchCourseById = () => {
     if (id) {
       axios
@@ -69,18 +54,18 @@ const [address,setAddress] = useState("");
 
 
   const taxCalculationnew = () => {
-  console.log("taxCalculationnew", courseData)
+    console.log("taxCalculationnew", courseData)
     if (userDetails && userDetails.userType == "company") {
       const price = courseData.price;
       const price_number = Number(price);
       const taxRate = 0.19;
       const taxAmount = price_number * taxRate;
-  
+
       const finalPrice = price_number + taxAmount;
       return finalPrice;
-      } else {
-        return courseData.price;
-      }
+    } else {
+      return courseData.price;
+    }
   }
 
   const generateInvoiceNumber = () => {
@@ -90,11 +75,11 @@ const [address,setAddress] = useState("");
     const randomNumber = Math.floor(1000 + Math.random() * 9000);
     return `TY-WEB-REG ${randomNumber}-${month}-${year}`;
   };
-  
+
   const generateCustomerNumber = () => {
     return Math.floor(70000 + Math.random() * 10000).toString(); // Generates a random 5-digit number
   };
-  
+
 
   const generateOrderNumber = () => {
     const timestamp = Date.now(); // Use current timestamp for uniqueness
@@ -102,21 +87,21 @@ const [address,setAddress] = useState("");
     return `TY${timestamp}${randomSuffix}`;
   };
 
-// Function to generate the due date in "YYYY-MM-DD" format
-// Function to generate today's date in "YYYY-MM-DD" format
-function getTodayDate() {
-  const today = new Date();
+  // Function to generate the due date in "YYYY-MM-DD" format
+  // Function to generate today's date in "YYYY-MM-DD" format
+  function getTodayDate() {
+    const today = new Date();
 
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-  const day = String(today.getDate()).padStart(2, "0");
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${day}`;
-}
+    return `${year}-${month}-${day}`;
+  }
 
-  
 
-  
+
+
 
 
   const fetchModuleDetails = (e) => {
@@ -129,47 +114,49 @@ function getTodayDate() {
     const custumer_num = generateCustomerNumber();
     const order_num = generateOrderNumber();
     const due_date = getTodayDate();
-    const taxCalculationnewv = calculatePriceWithTax();
+    const taxCalculationnewv = calculatePriceWithTax( courseData.price, courseData.OfferEndDate, courseData.Offerprice );
     // generateInvoiceNumber();
     // generateCustomerNumber();
     // generateOrderNumber();
 
+    console.log("taxCalculationnew", taxCalculationnewv)
     const payload = {
-      productnumber:courseData._id,
-      invoiceNumber:invoice_num,
+      productnumber: courseData._id,
+      invoiceNumber: invoice_num,
       customerNumber: userDetails._id,
       orderNumber: order_num,
       dueDate: due_date,
-      customerName: userDetails.company?userDetails.company:userDetails.First_name,
-      customerAddress:userDetails.address,
+      customerName: userDetails.company ? userDetails.company : userDetails.First_name,
+      customerAddress: userDetails.address,
       productDescription: courseData.Ausbildung,
       quantity: 1,
-      totalPrice:taxCalculationnewv,
+      totalPrice: taxCalculationnewv,
       email: userDetails.email,
-      user_type:userDetails.userType,
+      user_type: userDetails.userType,
       price: courseData.Offerprice ? courseData.Offerprice : courseData.price,
 
       courseData: courseData,
-     userDetails:userDetails
+      userDetails: userDetails
     };
 
 
     console.log("total price", payload)
-    axios
-      .post(`${BASE_URL}/generateInvoice`, payload)
-      .then((response) => {
-        console.log("response of invoice", response.data.data);
-        navigate('/thank-you');
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    // axios
+    //   .post(`${BASE_URL}/generateInvoice`, payload)
+    //   .then((response) => {
+    //     console.log("response of invoice", response.data.data);
+    //     navigate('/thank-you');
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
   };
 
   const fetchData = () => {
     axios
       .get(`${BASE_URL}/getUserDetailById/${login_id}`)
       .then((response) => {
+        console.log("drfdsfsresponse", response)
         console.log("response of billing user", response.data);
         console.log("response of otherAddress", response.data.otherAddress);
 
@@ -183,7 +170,7 @@ function getTodayDate() {
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log(error);
       });
   };
 
@@ -193,9 +180,30 @@ function getTodayDate() {
   }, []);
 
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
 
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
 
-  console.log("course data userType", userDetails);
+    return today <= offerEnd;
+  }
+
+  function calculatePriceWithTax(price, offerEndDate, offerPrice) {
+    const isOfferStillValid = isOfferValid(offerEndDate) && offerPrice > 0;
+
+    const priceToCalculate = isOfferStillValid ? offerPrice : price;
+
+    if (userDetails.invoiceType !== "Private_Invoice") {
+      const price_number = Number(priceToCalculate);
+      const taxRate = 0.19;
+      const taxAmount = price_number * taxRate;
+      const finalPrice = price_number + taxAmount;
+      return finalPrice;
+    } else {
+      return priceToCalculate;
+    }
+  }
 
 
   return (
@@ -215,8 +223,13 @@ function getTodayDate() {
                 <div className="cart_details__heading">
                   <span>
                     <i className="bx bxs-calendar" /> {courseData.StartDate}
-                  </span>
-                  <p> € {courseData && courseData.price }</p>
+                  </span>{isOfferValid(courseData.OfferEndDate) && courseData.Offerprice > 0 ? (
+                    <p>
+                      € {courseData.Offerprice}
+                    </p>
+                  ) : (
+                    <p>€{courseData.price}</p>
+                  )}
                 </div>
                 <div className="cart_details__list">
                   <span> {courseData.Location}</span>
@@ -237,19 +250,17 @@ function getTodayDate() {
                   <h6 />
                   <p>€0.00</p>
                 </div>
-
-              {  console.log("userDetails",userDetails)}
                 {
-         
-              
+
+
                   userDetails.invoiceType
-                  !== "Private_Invoice" ? <div className="cart_details__heading">
-                  <h6>VAT (19%)</h6>
-                  <p> {(Number(courseData.price) * 0.19).toFixed(2)} </p>
-                </div>:null
+                    !== "Private_Invoice" ? <div className="cart_details__heading">
+                    <h6>VAT (19%)</h6>
+                    <p> {(Number(courseData.price) * 0.19).toFixed(2)} </p>
+                  </div> : null
                 }
-                
-                
+
+
                 {/* {courseData &&
                 courseData.otherAddress.userType !== "Private_Invoice" ? (
                   <div className="cart_details__heading">
@@ -258,8 +269,8 @@ function getTodayDate() {
                   </div>
                 ) : null} */}
 
-                
-                  {/* {courseData &&
+
+                {/* {courseData &&
                 courseData.otherAddress.userType !== "Private_Invoice" ? (
                   <div className="cart_details__heading">
                     <h6>VAT (19%)</h6>
@@ -270,7 +281,14 @@ function getTodayDate() {
 
                 <div className="cart_details__heading">
                   <p>TOTAL</p>
-                  <p>€{calculatePriceWithTax(courseData && courseData.Offerprice?courseData.Offerprice:courseData.price)}</p>
+                  <p>
+                    €{" "}
+                    {calculatePriceWithTax(
+                      courseData.price,
+                      courseData.OfferEndDate,
+                      courseData.Offerprice
+                    )}
+                  </p>
                 </div>
                 <div className="box-row">
                   <div className="row">
@@ -293,34 +311,34 @@ function getTodayDate() {
                               {userDetails && userDetails.company}{" "}
                             </li>
 
-                           
 
 
-                            <li>Email:&nbsp; {userDetails &&  userDetails.email} </li>
+
+                            <li>Email:&nbsp; {userDetails && userDetails.email} </li>
                             <li>
                               Gender:&nbsp; {userDetails && userDetails?.gender}
                             </li>
                             <li>
-                              Number:&nbsp; {userDetails &&  userDetails.phone}
+                              Number:&nbsp; {userDetails && userDetails.phone}
                             </li>
                             <li>
                               Address:&nbsp;{" "}
                               {userDetails && userDetails.address}
                             </li>
-                            <li>City:&nbsp; 
+                            <li>City:&nbsp;
 
-                            {userDetails &&  userDetails.city}
+                              {userDetails && userDetails.city}
 
                             </li>
                             <li>
                               Pincode:&nbsp;{" "}
-                  
-                              {userDetails &&  userDetails.postal_code}
+
+                              {userDetails && userDetails.postal_code}
 
                             </li>
-                            <li>State:&nbsp; 
+                            <li>State:&nbsp;
 
-                            {userDetails && userDetails.federal_state}
+                              {userDetails && userDetails.federal_state}
 
 
                             </li>
@@ -329,7 +347,7 @@ function getTodayDate() {
                               Country:&nbsp;{" "}
 
 
-                              {userDetails &&  userDetails.country}
+                              {userDetails && userDetails.country}
                             </li>
                           </ul>
                         </div>
@@ -337,12 +355,12 @@ function getTodayDate() {
                     </div>
 
                     {userDetails && userDetails?.otherAddress?.email ? (
-                        <div className="col-md-6">
+                      <div className="col-md-6">
                         <div className="cart_details__box-left">
                           <div className="box-title">
                             <h6>Billing information </h6>
                           </div>
-  
+
                           <div className="box-desc">
                             <ul>
                               <li>
@@ -357,16 +375,16 @@ function getTodayDate() {
                                   ? userDetails?.otherAddress?.company
                                   : userDetails?.company}{" "}
                               </li>
-  
-                             
-  
-  
-                              <li>Email:&nbsp; {userDetails &&  userDetails?.otherAddress?.email?userDetails?.otherAddress?.email:userDetails.email} </li>
+
+
+
+
+                              <li>Email:&nbsp; {userDetails && userDetails?.otherAddress?.email ? userDetails?.otherAddress?.email : userDetails.email} </li>
                               <li>
                                 Gender:&nbsp; {userDetails && userDetails?.gender}
                               </li>
                               <li>
-                                Number:&nbsp; {userDetails &&  userDetails?.otherAddress?.phone?userDetails?.otherAddress?.phone:userDetails.phone}
+                                Number:&nbsp; {userDetails && userDetails?.otherAddress?.phone ? userDetails?.otherAddress?.phone : userDetails.phone}
                               </li>
                               <li>
                                 Address:&nbsp;{" "}
@@ -374,36 +392,36 @@ function getTodayDate() {
                                   ? userDetails?.otherAddress?.address
                                   : userDetails?.address}
                               </li>
-                              <li>City:&nbsp; 
-  
-                              {userDetails &&  userDetails?.otherAddress?.city?userDetails?.otherAddress?.city:userDetails.city}
-  
+                              <li>City:&nbsp;
+
+                                {userDetails && userDetails?.otherAddress?.city ? userDetails?.otherAddress?.city : userDetails.city}
+
                               </li>
                               <li>
                                 Pincode:&nbsp;{" "}
-                    
-                                {userDetails &&  userDetails?.otherAddress?.postal_code?userDetails?.otherAddress?.postal_code:userDetails.postal_code}
-  
+
+                                {userDetails && userDetails?.otherAddress?.postal_code ? userDetails?.otherAddress?.postal_code : userDetails.postal_code}
+
                               </li>
-                              <li>State:&nbsp; 
-  
-                              {userDetails &&  userDetails?.otherAddress?.federal_state?userDetails?.otherAddress?.federal_state:userDetails.federal_state}
-  
-  
+                              <li>State:&nbsp;
+
+                                {userDetails && userDetails?.otherAddress?.federal_state ? userDetails?.otherAddress?.federal_state : userDetails.federal_state}
+
+
                               </li>
-  
+
                               <li>
                                 Country:&nbsp;{" "}
-  
-  
-                                {userDetails &&  userDetails?.otherAddress?.country?userDetails?.otherAddress?.country:userDetails.country}
+
+
+                                {userDetails && userDetails?.otherAddress?.country ? userDetails?.otherAddress?.country : userDetails.country}
                               </li>
                             </ul>
                           </div>
                         </div>
-                      </div> 
-                ):null}
-                 
+                      </div>
+                    ) : null}
+
                   </div>
                 </div>
                 <div className="info">

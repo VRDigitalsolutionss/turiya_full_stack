@@ -207,7 +207,7 @@ const faqItems7 = [
       "Unsere Yoga Ausbildung bietet dir spezielle Kurse, um deine Entwicklung zu unterstützen und die notwendigen Qualitäten eines Yogalehrers zu erlangen. In diesem Zusammenhang Unter diesen Qualitäten lernst du, deinen eigenen Unterricht zu planen, die Techniken richtig zu demonstrieren, sicher zu helfen und sich anzupassen und natürlich deinen eigenen Unterricht abzuhalten. Am wichtigsten ist, dass du eine tiefere Erfahrung mit dir selbst machst, deine Stärken und Schwierigkeiten identifizieren, deine eigene Lehrmethode entsprechend deiner natürlichen Begabungen entwickeln und die Dinge im Auge behalten, an denen du weiterarbeiten kannst.",
       "Die Schüler werden Erfahrung als Hauptlehrer haben, andere unterstützen (Hands-on & Anwendung der Hilfsmittel) und anpassen und natürlich Feedback zu ihrer Reise erhalten, mit klaren Hinweisen, worauf sie sich für die weitere Entwicklung konzentrieren können.",
       "Wir freuen uns, dir mitteilen zu können, dass die Erschaffung eines unterstützenden Umfelds zu unserem Selbstverständnis gehört. Wir glauben, dass nicht nur die herausfordernden Schritte in diesem Kurs für das Wachstum der Teilnehmer verantwortlich sind, sondern auch gute Laune und eine ermutigende Atmosphäre.",
-      
+
     ],
   },
 ];
@@ -221,7 +221,7 @@ const faqItems8 = [
       "• Damit deine zukünftigen Teilnehmer in deinem Unterricht sicher und gesund sind, lernst du, was du über Anatomie und Physiologie wissen musst, und experimentierst während der Yogalehrerausbildung mit verschiedenen Anpassungs- und Unterstützungstechniken.",
       "• Damit deine zukünftigen Teilnehmer dein Potenzial voll ausschöpfen können, erlernst du die Unterrichtsmethodik und lernst, deine eigenen individuellen Qualitäten zu entwickeln. So kannst du dich deutlich ausdrücken, damit deine Teilnehmer dich präzise verstehen, und dadurch kannst du deine unterschiedlichen Lehrmethoden in deinen Klassen unterstützen.",
       "• Damit deine zukünftigen Teilnehmer die Tiefe des Yoga spüren und sich zu einer disziplinierten Praxis inspirieren lassen können, lernst du in unserer Yogalehrer Ausbildung auf sinnvolle Weise die Philosophie und die Geschichte des Yoga. Die heiligen Schriften sind der Treibstoff für unser Üben, und in der Praxis werden die Texte in direkter Erfahrung ausgedrückt: In einem Zyklus nähren sie sich gegenseitig.",
-     "• Für deine zukünftigen Teilnehmer, für dich selbst, für dein zukünftiges Geschäft und für die Welt. Unsere Diskussionen werden häufig Raum geben und das Thema Ethik einbeziehen. Wirkliche Ethik wird in der Gegenwart geboren, indem man eine Zukunft im Auge behält, die das gemeinsame Wohlergehen anstrebt – wobei Moral und Tradition beiseitegelassen werden. Ethik ist eine ständige Praxis der Selbstforschung, aber hauptsächlich des Handelns."
+      "• Für deine zukünftigen Teilnehmer, für dich selbst, für dein zukünftiges Geschäft und für die Welt. Unsere Diskussionen werden häufig Raum geben und das Thema Ethik einbeziehen. Wirkliche Ethik wird in der Gegenwart geboren, indem man eine Zukunft im Auge behält, die das gemeinsame Wohlergehen anstrebt – wobei Moral und Tradition beiseitegelassen werden. Ethik ist eine ständige Praxis der Selbstforschung, aber hauptsächlich des Handelns."
     ],
   },
 ];
@@ -254,7 +254,7 @@ const faqItems9 = [
 const Index = () => {
 
 
-const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+  const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
 
   const fetchNextUpcomingCourse = () => {
     axios
@@ -395,7 +395,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
       setActiveIndex6(activeIndex6 === index ? null : index);
     } else if (section === 7) {
       setActiveIndex7(activeIndex7 === index ? null : index);
-    }else if (section === 8) {
+    } else if (section === 8) {
       setActiveIndex8(activeIndex8 === index ? null : index);
     } else if (section == 9) {
       setActiveIndex9(activeIndex9 === index ? null : index);
@@ -468,6 +468,15 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
 
     // Return the date in the desired format: dd.mm.yyyy
     return `${day}.${month}.${year}`;
+  }
+
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
   }
 
   return (
@@ -577,82 +586,98 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                 </div>
 
                 <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
-                    closestUpcomingCourse[0] ? (
-                      <div>
+                  <div className="about_wrapper__right mb-3">
+                    {
+                      closestUpcomingCourse[0] ? (
+                        <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
+
+                          <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                          <div className="price-tag">
+                            <h6>
                               <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
-                      </div>
-                      <div className="about-date">
-                        <p>
-                            <i className="bx bxs-map" />
-                            {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
-                            }
-                       
-                        </p>
-                        <p>
-                            <i className="bx bxs-calendar" />
-                            
+                              {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                                <>
+                                  {closestUpcomingCourse[0].Offerprice}€
+                                  <sub>
+                                    <del
+                                      style={{
+                                        color: "rgb(255, 87, 34)",
+                                        fontSize: "17px",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {closestUpcomingCourse[0].price}
+                                    </del>
+                                  </sub>
+                                </>
+                              ) : (
+                                <>
+                                  {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                                </>
+                              )}
+                            </h6>
+                          </div>
+                          <div className="about-date">
+                            <p>
+                              <i className="bx bxs-map" />
+                              {
+                                closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
+                              }
+
+                            </p>
+                            <p>
+                              <i className="bx bxs-calendar" />
 
 
-                            {/* {
+
+                              {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
-                            }
-                           <span className="my-2">-</span>  
-                            {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
-                            }
+                              {
+                                formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
+                              }
+                              <span className="my-2">-</span>
+                              {
+                                formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
+                              }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
-                      </div>
-                    ) : (
+                            </p>
+                          </div>
+
+                          <div className="about-contact">
+                            <a href="tel:+4906920134987">
+                              <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                            </a>
+                            <a href="mailto:info@turiyayoga.de">
+                              <i className="bx bxs-envelope" /> info@turiyayoga.de
+                            </a>
+                          </div>
+                        </div>
+                      ) : (
                         <div className="div">
                           <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                            <p>
+                              Reise und Unterkunft sind nicht immer im Schulungspreis
+                              enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                              einfach an. Wir helfen Ihnen gerne weiter.
+                            </p>
+                          </div>
+                          <div className="about-contact">
+                            <a href="tel:+4906920134987">
+                              <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                            </a>
+                            <a href="mailto:info@turiyayoga.de">
+                              <i className="bx bxs-envelope" /> info@turiyayoga.de
+                            </a>
+                          </div>
                         </div>
-                        
-                    )
-                  }
-              </div>
-              </div>
+
+                      )
+                    }
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -689,7 +714,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                         erreichbar.
                       </p>
                       <div className="mehr--btn">
-                        <Link   to='/yogalehrer-ausbildung-in-sampurna-seminarhaus'  >
+                        <Link to='/yogalehrer-ausbildung-in-sampurna-seminarhaus'  >
                           MEHR
                         </Link>
                       </div>
@@ -716,7 +741,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                         erstklassige Verpflegung und Unterkunft.
                       </p>
                       <div className="mehr--btn">
-                        <Link  to='/200h-yogalehrer-ausbildung-mallorca' >
+                        <Link to='/200h-yogalehrer-ausbildung-mallorca' >
                           MEHR
                         </Link>
                       </div>
@@ -744,7 +769,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                         findest du zweifellos einige der schönsten Strände.
                       </p>
                       <div className="mehr--btn">
-                      <Link  to='/yogalehrer-ausbildung-goa-indien' >
+                        <Link to='/yogalehrer-ausbildung-goa-indien' >
                           MEHR
                         </Link>
                       </div>
@@ -772,7 +797,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                         Haupttempels des Dalai Lama zu finden ist...
                       </p>
                       <div className="mehr--btn">
-                      <Link  to='/yogalehrer-ausbildung-himalaya-indien' >
+                        <Link to='/yogalehrer-ausbildung-himalaya-indien' >
                           MEHR
                         </Link>
                       </div>
@@ -833,18 +858,16 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                       {faqItems1.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex1 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex1 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(1, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex1 === index
-                                    ? "bx-minus"
-                                    : "bx-plus"
-                                }`}
+                                className={`bx ${activeIndex1 === index
+                                  ? "bx-minus"
+                                  : "bx-plus"
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -873,18 +896,16 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                       {faqItems2.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex2 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex2 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(2, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex2 === index
-                                    ? "bx-minus"
-                                    : "bx-plus"
-                                }`}
+                                className={`bx ${activeIndex2 === index
+                                  ? "bx-minus"
+                                  : "bx-plus"
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -925,63 +946,59 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                       {faqItems3.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex3 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex3 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(3, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex3 === index
-                                    ? "bx-minus"
-                                    : "bx-plus"
-                                }`}
+                                className={`bx ${activeIndex3 === index
+                                  ? "bx-minus"
+                                  : "bx-plus"
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
                           </div>
                           {activeIndex3 === index && (
                             <div className="answer">
-                              
 
-                          
-                                
-                                
-                                  <p className="mb-3">Die 200H Yogalehrer Ausbildung von Turiya Yoga widmet sich den Stilen des Hatha Yoga (traditionell und modern, mit und ohne Verwendung von Requisiten), Vinyasa und gibt gleichzeitig einen kurzen Einblick in die Tradition des Ashtanga Vinyasa Yoga. Nachdem die Teilnehmer die 200h Yogalehrer Ausbildung erfolgreich abgeschlossen haben, sind sie mehr als bereit, Hatha und Vinyasa zu kombinieren und es geschickt zu unterrichten. Werfen wir einen Blick auf diese Traditionen und was du von ihr erwarten kannst, da die Terminologie heutzutage aufgrund von Informationsmangel und anderen, leider auch Marketingstrategien fließend geworden ist:</p>
-                                  <p className="mb-3"><strong>Hatha Yoga </strong>ist die Mutter aller Yoga-übungen, die den Körper und insbesondere den Atem beeinflussen. Eine typische Praxis von Hatha ist eine langsame Praxis, die traditionelle Körperhaltungen (Asana), Atmungsbewusstsein Pranayama (Beibehaltung der Atemtechniken), Meditation und in einigen übungslinien Mantras kombiniert. In unserer heutigen Gesellschaft konzentrieren sich die Kurse jedoch oft nur auf die Körperhaltung. Der Stil verwendet auch Reinigungstechniken (Kriyas), gelegentlichen Gebrauch von Bandhas (Muskelmanipulationen, die als Energieblockaden angesehen werden) und spezielle Körper- und Atemmanipulationen, sogenannte Mudras.</p>
-                                  <p className="mb-3"><strong>Ashtanga Vinyasa Yoga</strong> und seine Nachkommen Vinyasa sind moderne, rasante übungen, bei denen die Teilnehmer zwischen Körperhaltungen wechseln, während Atem und manchmal auch Drishti (Blick) in festgelegten Abfolgen synchronisiert werden. Der Ashtanga-Stil zählt Pattabhi Jois und sein Guru Krishnamacharya als die Gründer und hat Asana-übungssequenzen festgelegt, während Vinyasa Flow eine westliche Entwicklung ist, die dem Lehrer die Möglichkeit gibt, verschiedene Lehrsequenzen zu erstellen.</p>
-                                  <p className="mb-3">Ein weiterer Schüler von Krishnamacharya und ein weiteres Juwel des modernen Yoga war BKS Iyengar. Iyengar entwickelte einen Hatha Yoga-Stil, der häufig Hilfsmittel verwendet und als Iyengar-Stil bezeichnet wird. Der Stil ist in der therapeutischen Yoga-Nische bekannt und hat weitere westliche Lehrer dazu inspiriert, andere inspirierte Traditionen wie Anusara Yoga zu entwickeln.</p>
-                                  <p className="mb-3">
-                                  Unser Programm deckt jedoch nicht den Iyengar-Stil ab, der sich offen auf die milimetrische Ausrichtung des Praktikers stützt und einen anderen Yogalehrer-Ausbildungsstil verlangt. Unsere Schulung behandelt die Verwendung von Requisiten und deren Verbindung zum Yoga als unterstützende Praxis für Wohlbefinden und Gesundheit. Unsere Yogalehrer Ausbildung zielen unter anderem darauf ab, ein tieferes Erleben der Körperhaltungen zu fördern und die Teilnehmer in unterschiedlichen Ausrichtungen und Perspektiven der Asana-Praxis zu erleuchten.
-                                  </p>
-                                </div>
-                               
-                            
+
+
+
+
+                              <p className="mb-3">Die 200H Yogalehrer Ausbildung von Turiya Yoga widmet sich den Stilen des Hatha Yoga (traditionell und modern, mit und ohne Verwendung von Requisiten), Vinyasa und gibt gleichzeitig einen kurzen Einblick in die Tradition des Ashtanga Vinyasa Yoga. Nachdem die Teilnehmer die 200h Yogalehrer Ausbildung erfolgreich abgeschlossen haben, sind sie mehr als bereit, Hatha und Vinyasa zu kombinieren und es geschickt zu unterrichten. Werfen wir einen Blick auf diese Traditionen und was du von ihr erwarten kannst, da die Terminologie heutzutage aufgrund von Informationsmangel und anderen, leider auch Marketingstrategien fließend geworden ist:</p>
+                              <p className="mb-3"><strong>Hatha Yoga </strong>ist die Mutter aller Yoga-übungen, die den Körper und insbesondere den Atem beeinflussen. Eine typische Praxis von Hatha ist eine langsame Praxis, die traditionelle Körperhaltungen (Asana), Atmungsbewusstsein Pranayama (Beibehaltung der Atemtechniken), Meditation und in einigen übungslinien Mantras kombiniert. In unserer heutigen Gesellschaft konzentrieren sich die Kurse jedoch oft nur auf die Körperhaltung. Der Stil verwendet auch Reinigungstechniken (Kriyas), gelegentlichen Gebrauch von Bandhas (Muskelmanipulationen, die als Energieblockaden angesehen werden) und spezielle Körper- und Atemmanipulationen, sogenannte Mudras.</p>
+                              <p className="mb-3"><strong>Ashtanga Vinyasa Yoga</strong> und seine Nachkommen Vinyasa sind moderne, rasante übungen, bei denen die Teilnehmer zwischen Körperhaltungen wechseln, während Atem und manchmal auch Drishti (Blick) in festgelegten Abfolgen synchronisiert werden. Der Ashtanga-Stil zählt Pattabhi Jois und sein Guru Krishnamacharya als die Gründer und hat Asana-übungssequenzen festgelegt, während Vinyasa Flow eine westliche Entwicklung ist, die dem Lehrer die Möglichkeit gibt, verschiedene Lehrsequenzen zu erstellen.</p>
+                              <p className="mb-3">Ein weiterer Schüler von Krishnamacharya und ein weiteres Juwel des modernen Yoga war BKS Iyengar. Iyengar entwickelte einen Hatha Yoga-Stil, der häufig Hilfsmittel verwendet und als Iyengar-Stil bezeichnet wird. Der Stil ist in der therapeutischen Yoga-Nische bekannt und hat weitere westliche Lehrer dazu inspiriert, andere inspirierte Traditionen wie Anusara Yoga zu entwickeln.</p>
+                              <p className="mb-3">
+                                Unser Programm deckt jedoch nicht den Iyengar-Stil ab, der sich offen auf die milimetrische Ausrichtung des Praktikers stützt und einen anderen Yogalehrer-Ausbildungsstil verlangt. Unsere Schulung behandelt die Verwendung von Requisiten und deren Verbindung zum Yoga als unterstützende Praxis für Wohlbefinden und Gesundheit. Unsere Yogalehrer Ausbildung zielen unter anderem darauf ab, ein tieferes Erleben der Körperhaltungen zu fördern und die Teilnehmer in unterschiedlichen Ausrichtungen und Perspektiven der Asana-Praxis zu erleuchten.
+                              </p>
+                            </div>
+
+
                           )}
                         </div>
 
 
-                        
-                        
+
+
                       ))}
                     </div>
                     <div className="faq_box">
                       {faqItems4.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex4 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex4 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(4, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex4 === index
-                                    ? "bx-minus"
-                                    : "bx-plus"
-                                }`}
+                                className={`bx ${activeIndex4 === index
+                                  ? "bx-minus"
+                                  : "bx-plus"
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -1002,18 +1019,16 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                       {faqItems5.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex5 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex5 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(5, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex5 === index
-                                    ? "bx-minus"
-                                    : "bx-plus"
-                                }`}
+                                className={`bx ${activeIndex5 === index
+                                  ? "bx-minus"
+                                  : "bx-plus"
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -1035,18 +1050,16 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                       {faqItems6.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex6 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex6 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(6, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex6 === index
-                                    ? "bx-minus"
-                                    : "bx-plus"
-                                }`}
+                                className={`bx ${activeIndex6 === index
+                                  ? "bx-minus"
+                                  : "bx-plus"
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -1054,7 +1067,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                           {activeIndex6 === index && (
                             <div className="answer">
                               {faq.answer.map((paragraph, idx) => (
-                                <p key={idx} className="mb-3"         style={{
+                                <p key={idx} className="mb-3" style={{
                                   fontWeight:
                                     idx === 7
                                       ? "bold"
@@ -1070,72 +1083,68 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                     </div>
 
                     <div className="faq_box">
-                    <div className="faq_box">
-                      {faqItems7.map((faq, index) => (
-                        <div
-                          key={index}
-                          className={`faq_box__content ${
-                            activeIndex7 === index ? "active" : ""
-                          }`}
-                          onClick={() => handleToggle(7, index)}>
-                          <div className="question">
-                            <div className="plus">
-                              <i
-                                className={`bx ${
-                                  activeIndex7 === index
+                      <div className="faq_box">
+                        {faqItems7.map((faq, index) => (
+                          <div
+                            key={index}
+                            className={`faq_box__content ${activeIndex7 === index ? "active" : ""
+                              }`}
+                            onClick={() => handleToggle(7, index)}>
+                            <div className="question">
+                              <div className="plus">
+                                <i
+                                  className={`bx ${activeIndex7 === index
                                     ? "bx-minus"
                                     : "bx-plus"
-                                }`}
-                              />
+                                    }`}
+                                />
+                              </div>
+                              <h6>{faq.question}</h6>
                             </div>
-                            <h6>{faq.question}</h6>
+                            {activeIndex7 === index && (
+                              <div className="answer">
+                                {faq.answer.map((paragraph, index) => (
+                                  <p key={index} className="mb-3">
+                                    {paragraph}
+                                  </p>
+                                ))}
+                              </div>
+                            )}
                           </div>
-                          {activeIndex7 === index && (
-                            <div className="answer">
-                              {faq.answer.map((paragraph, index) => (
-                                <p key={index} className="mb-3">
-                                  {paragraph}
-                                </p>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
                     </div>
                     <div className="faq_box">
-                    <div className="faq_box">
-                      {faqItems8.map((faq, index) => (
-                        <div
-                          key={index}
-                          className={`faq_box__content ${
-                            activeIndex8 === index ? "active" : ""
-                          }`}
-                          onClick={() => handleToggle(8, index)}>
-                          <div className="question">
-                            <div className="plus">
-                              <i
-                                className={`bx ${
-                                  activeIndex8 === index
+                      <div className="faq_box">
+                        {faqItems8.map((faq, index) => (
+                          <div
+                            key={index}
+                            className={`faq_box__content ${activeIndex8 === index ? "active" : ""
+                              }`}
+                            onClick={() => handleToggle(8, index)}>
+                            <div className="question">
+                              <div className="plus">
+                                <i
+                                  className={`bx ${activeIndex8 === index
                                     ? "bx-minus"
                                     : "bx-plus"
-                                }`}
-                              />
+                                    }`}
+                                />
+                              </div>
+                              <h6>{faq.question}</h6>
                             </div>
-                            <h6>{faq.question}</h6>
+                            {activeIndex8 === index && (
+                              <div className="answer">
+                                {faq.answer.map((paragraph, index) => (
+                                  <p key={index} className="mb-3">
+                                    {paragraph}
+                                  </p>
+                                ))}
+                              </div>
+                            )}
                           </div>
-                          {activeIndex8 === index && (
-                            <div className="answer">
-                              {faq.answer.map((paragraph, index) => (
-                                <p key={index} className="mb-3">
-                                  {paragraph}
-                                </p>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1152,18 +1161,16 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                       {faqItems9.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex9 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex9 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(9, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex9 === index
-                                    ? "bx-minus"
-                                    : "bx-plus"
-                                }`}
+                                className={`bx ${activeIndex9 === index
+                                  ? "bx-minus"
+                                  : "bx-plus"
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -1173,7 +1180,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                               {faq.answer.map((paragraph, index) => (
                                 <p key={index} className="mb-3" style={{
                                   fontWeight:
-                                  index === 2 || index === 3
+                                    index === 2 || index === 3
                                       ? "bold"
                                       : "normal",
                                 }}>
@@ -1186,7 +1193,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                       ))}
                     </div>
 
-              
+
                     {/* ============================================================= */}
                   </div>
                 </div>
