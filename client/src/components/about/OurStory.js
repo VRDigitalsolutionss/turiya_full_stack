@@ -18,8 +18,6 @@ import axios from "axios";
 import Gallery from "../gallery/Index";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config.js";
 
-
-
 const OurStory = () => {
   const [earlyData, setEarlyData] = useState("");
 
@@ -49,30 +47,26 @@ const OurStory = () => {
     return `${day}.${month}.${year}`;
   }
 
-
-const [upcomingCourse,setUpcomingCourse] = useState("");
+  const [upcomingCourse, setUpcomingCourse] = useState("");
 
   const getUpcomingCourse = () => {
     axios
-    .get(BASE_URL + "/getModuleByLocation/Goa")
-    .then((response) => {
-      console.log("response of Goa courses", response.data);
-      const data = response.data.data;
-      setUpcomingCourse(data)
-    })
-    .catch((error) => {
-      console.error("Error fetching data: ", error);
-    });
-  }
-
-
+      .get(BASE_URL + "/getModuleByLocation/Goa")
+      .then((response) => {
+        console.log("response of Goa courses", response.data);
+        const data = response.data.data;
+        setUpcomingCourse(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  };
 
   useEffect(() => {
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 0);
   }, []);
-
 
   const fetchEarlyBirdData = () => {
     axios
@@ -116,13 +110,13 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
     meta_Title: "",
     status: "",
   });
-  const [videoId, setVideoId] = useState("")
+  const [videoId, setVideoId] = useState("");
 
   useEffect(() => {
-    if(!videoId && ourStory && ourStory.Slider_videolink){
-      setVideoId(ourStory.Slider_videolink)
+    if (!videoId && ourStory && ourStory.Slider_videolink) {
+      setVideoId(ourStory.Slider_videolink);
     }
-  },[videoId])
+  }, [videoId]);
 
   const fetchData = () => {
     axios
@@ -154,8 +148,7 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
             status: data.status,
           });
 
-          setVideoId(data.Slider_videolink)
-
+          setVideoId(data.Slider_videolink);
 
           // var imageUrlcustum2 = data.Slide_Image
           // ? `http://127.0.0.1:7000/uploads/images/our_story/${data.Slide_Image}`
@@ -399,7 +392,6 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
                     />
                   </div>
                   <div className="modal-body">
-
                     {/* ============================================= */}
                     <iframe
                       id="youtube-video"
@@ -442,91 +434,117 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
                   </div>
                 </div>
                 <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
-                    closestUpcomingCourse[0] ? (
+                  <div className="about_wrapper__right mb-3">
+                    {closestUpcomingCourse[0] ? (
                       <div>
-
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                            </h6>
-                           
-                      </div>
-                          <div className="about-date">
-                          <p>
-
-Das Angebot endet am   
-<i className="bx bxs-calendar" />
-{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
-
-
-</p>
-                        <p>
-                            <i className="bx bxs-map" />
-                            {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
-                            }
-                       
-                        </p>
-                        <p>
+                        <h3>
+                          {closestUpcomingCourse[0]
+                            ? closestUpcomingCourse[0].Ausbildung
+                            : null}
+                        </h3>
+                        <div className="price-tag">
+                          <h6>
+                            <i className="bx bxs-purchase-tag" />
+                            {console.log(
+                              "closest upcoming price",
+                              closestUpcomingCourse[0].Offerprice,
+                              closestUpcomingCourse[0].price
+                            )}
+                            {closestUpcomingCourse[0] &&
+                            closestUpcomingCourse[0].Offerprice
+                              ? closestUpcomingCourse[0].Offerprice
+                              : closestUpcomingCourse[0].price}
+                            €
+                            <sub>
+                              <del
+                                style={{
+                                  color: "rgb(255, 87, 34)",
+                                  fontSize: "17px",
+                                  marginLeft: "10px",
+                                }}>
+                                {closestUpcomingCourse[0] &&
+                                closestUpcomingCourse[0].Offerprice
+                                  ? closestUpcomingCourse[0].price
+                                  : null}
+                              </del>
+                            </sub>
+                          </h6>
+                        </div>
+                        <div className="about-date">
+                          {
+                            closestUpcomingCourse[0] &&
+                            closestUpcomingCourse[0].Offerprice?   ( <p>
+                            Das Angebot endet am
                             <i className="bx bxs-calendar" />
-                            
-
+                            {formatDate(
+                              closestUpcomingCourse[0] &&
+                                closestUpcomingCourse[0].Offerprice
+                                ? closestUpcomingCourse[0].OfferEndDate
+                                : null
+                            )}
+                          </p>):null
+                          }
+                      
+                          <p>
+                            <i className="bx bxs-map" />
+                            {closestUpcomingCourse[0]
+                              ? closestUpcomingCourse[0].Location
+                              : null}
+                          </p>
+                          <p>
+                            <i className="bx bxs-calendar" />
 
                             {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
-                            }
-                           <span className="my-2">-</span>  
-                            {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
-                            }
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].StartDate
+                                : null
+                            )}
+                            <span className="my-2">-</span>
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].EndDate
+                                : null
+                            )}
+                          </p>
+                        </div>
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 -
+                            20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im
+                            Schulungspreis enthalten. Wenn Sie weitere Fragen
+                            haben, rufen Sie uns einfach an. Wir helfen Ihnen
+                            gerne weiter.
+                          </p>
                         </div>
-                        
-                    )
-                  }
-              </div>
-              </div>
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 -
+                            20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </section>

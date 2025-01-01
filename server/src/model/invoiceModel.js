@@ -22,6 +22,11 @@ const invoiceschema = new mongoose.Schema({
         required: true, 
         trim: true,
     },
+    due_amount: {
+        type: String,
+        required: true, 
+        trim: true,
+    },
     payment_status: {
         type: String,
         trim: true,

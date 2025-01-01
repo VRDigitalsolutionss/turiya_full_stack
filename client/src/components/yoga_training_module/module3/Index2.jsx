@@ -319,41 +319,47 @@ const Index2 = () => {
                             <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
                         </h6>
                       </div>
-                        <div className="about-date">
-                        <p>
-
-Das Angebot endet am   
-<i className="bx bxs-calendar" />
-{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
-
-
-</p>
-                        <p>
-                            <i className="bx bxs-map" />
-                            {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
-                            }
-                       
-                        </p>
-                        <p>
+                      <div className="about-date">
+                          {
+                            closestUpcomingCourse[0] &&
+                            closestUpcomingCourse[0].Offerprice?   ( <p>
+                            Das Angebot endet am
                             <i className="bx bxs-calendar" />
-                            
-
+                            {formatDate(
+                              closestUpcomingCourse[0] &&
+                                closestUpcomingCourse[0].Offerprice
+                                ? closestUpcomingCourse[0].OfferEndDate
+                                : null
+                            )}
+                          </p>):null
+                          }
+                      
+                          <p>
+                            <i className="bx bxs-map" />
+                            {closestUpcomingCourse[0]
+                              ? closestUpcomingCourse[0].Location
+                              : null}
+                          </p>
+                          <p>
+                            <i className="bx bxs-calendar" />
 
                             {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
-                            }
-                           <span className="my-2">-</span>  
-                            {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
-                            }
-
-                        </p>
-                      </div>
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].StartDate
+                                : null
+                            )}
+                            <span className="my-2">-</span>
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].EndDate
+                                : null
+                            )}
+                          </p>
+                        </div>
                  
                       <div className="about-contact">
                         <a href="tel:+4906920134987">

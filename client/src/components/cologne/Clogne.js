@@ -647,7 +647,7 @@ Das Angebot endet am
                               )}
                             </span>
                             <br />
-                              {item.OfferEndDate ? (
+                              {item.Offerprice ? (
                                 <>
                                                             <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
 {formatDate(item.OfferEndDate?item.OfferEndDate:null)}
