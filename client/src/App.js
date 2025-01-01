@@ -194,7 +194,7 @@ function App() {
             
 
             element={<Block_yogamodule5 />} />
-          <Route path="hybride_yogalehrer_ausbildung" element={<YogaTraningHybrid />} />
+          <Route path="hybride-yogalehrer-ausbildung" element={<YogaTraningHybrid />} />
           <Route path="yoga_retreat" element={<Yoga_retreat />} />
           <Route path="course_booking/:id" element={<BookingDetail />} />
           <Route path="bilingDetails/:id" element={<BilingDetails />} />
@@ -244,11 +244,11 @@ function App() {
           <Route path="500h-yoga-ausbildung-modul-5" element={<Block_yogamodule5 />}/>
             
        
-          <Route path="YOGALEHRERAUSBILDUNG_BERLIN" element={<Berlin />} />
-          <Route path="YOGALEHRERAUSBILDUNG_HAMBURG" element={<Hamburg />} />
-          <Route path="YOGALEHRERAUSBILDUNG_COLOGNE" element={<YOGALEHRERAUSBILDUNGCOLOGNE />} />
+          <Route path="YOGALEHRERAUSBILDUNG-BERLIN" element={<Berlin />} />
+          <Route path="YOGALEHRERAUSBILDUNG-HAMBURG" element={<Hamburg />} />
+          <Route path="YOGALEHRERAUSBILDUNG-COLOGNE" element={<YOGALEHRERAUSBILDUNGCOLOGNE />} />
           <Route path="munchen-yoga-ausbildung" element={<Munchen />} />
-          <Route path="Yogalehrer_Ausbildungen-Stuttgart" element={<Stuttgart />} />
+          <Route path="Yogalehrer-Ausbildungen-Stuttgart" element={<Stuttgart />} />
           <Route path="200-hour-yoga-teacher-training" element={<YogaTeacherTraining200h />} />
           <Route path="yoga-teacher-training-course-india" element={<YogateacherTrainingCourseIndia />} />
        

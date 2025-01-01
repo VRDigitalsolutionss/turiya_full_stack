@@ -5,69 +5,7 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import axios from "axios";
 import { BASE_URL,BASE_URL_IMAGE } from "../../config";
 
-const initialData = [
-  {
-    id: 1,
-    course: "200H Yogalehrer Ausbildung M1 + M2",
-    location: "Mallorca",
-    price: 2699,
-  },
-  {
-    id: 2,
-    course: "200H Yogalehrer Ausbildung M1 + M2",
-    location: "Mallorca",
-    price: 2699,
-  },
-  {
-    id: 3,
-    course: "200H Wochenend Ausbildung",
-    location: "Berlin",
-    price: 2699,
-  },
-  {
-    id: 4,
-    course: "200H Yogalehrer Ausbildung M1 + M2",
-    location: "Goa, Indien",
-    price: 2790,
-  },
-  {
-    id: 5,
-    course: "* All Inklusive 60H Senioren YLA",
-    location: "Goa, Indien",
-    price: 1449,
-  },
-  {
-    id: 6,
-    course: "* All Inklusive 60H Yin Yoga",
-    location: "Goa, Indien",
-    price: 1100,
-  },
-  {
-    id: 7,
-    course: "* All Inklusive Yogalehrer Ausbildung M4",
-    location: "Goa, Indien",
-    price: 1699,
-  },
-  {
-    id: 8,
-    course: "* All Inklusive Yogalehrer Ausbildung M3",
-    location: "Goa, Indien",
-    price: 1699,
-  },
-  {
-    id: 9,
-    course: "200H Yogalehrer Ausbildung M1 + M2",
-    location: "Sampurna Seminarhaus",
-    price: 2799,
-  },
-  {
-    id: 10,
-    course: "200H Yogalehrer Ausbildung M1 + M2",
-    location: "Goa, Indien",
-    price: 2850,
-  },
-  // Add more data as needed
-];
+
 
 const AddModule = () => {
   const navigate = useNavigate();

@@ -1,5 +1,3 @@
-
-
 // import React, { useEffect, useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 // import axios from "axios";
@@ -11,8 +9,6 @@
 // import jsPDF from "jspdf";
 // import "jspdf-autotable";
 // import * as XLSX from "xlsx";
-
-
 
 // const TableComponent = () => {
 //   const navigate = useNavigate();
@@ -27,29 +23,25 @@
 //     }
 //   }, []);
 
-
 //   const fetchData = () => {
 //     axios.get('http://127.0.0.1:7000/api/all_customers').then((response) => {
 //       console.log("custumer response", response.data.data);
-      
+
 //       setData(response.data.data);
 //     }).catch((error) => {
 //       console.error("Error fetching data: ", error);
 //     })
 //   }
 
-
 //   useEffect(() => {
 //     fetchData();
 // },[]);
-
 
 //   const [currentPage, setCurrentPage] = useState(1);
 //   const [searchTerm, setSearchTerm] = useState("");
 //   const rowsPerPage = 5;
 
 //   // Fetch dynamic data (replace with actual API call if needed)
-
 
 //   // Filter data based on search term
 //   const filteredData = data.length > 0 && data.filter(
@@ -115,9 +107,7 @@
 //       console.log("id not found")
 // }
 
-
 //   };
-
 
 //   const handleDelete = (id) => {
 //     setShowDeleteModal(true);
@@ -126,7 +116,6 @@
 
 //   // Delete category
 //   const handleDeleteConfirm = () => {
-
 
 //     // setGalleries(galleries.filter((item) => item.id !== deleteItemId));
 //     // setBlogs((prevUsers) => prevUsers.filter((user) => user.id !== deleteItemId)); // Filter out the user with matching id
@@ -137,9 +126,8 @@
 //     )
 //     .then((response) => {
 //       console.log("delete response", response);
-  
-//       fetchData();
 
+//       fetchData();
 
 //       setShowDeleteModal(false); // Close the modal
 //       setDeleteItemId("");
@@ -153,19 +141,18 @@
 //     }
 //   };
 
-
 //   const [viewCustumer, setViewCustumer] = useState('');
 
 //   const handleViewCustumer = (id) => {
 //     setshowCustumerProfleModal(true);
 //       axios.get(`http://127.0.0.1:7000/api/customer_getbyid/${id}`).then((response) => {
 //         console.log("custumer profile response", response.data.data);
-        
+
 //         setViewCustumer(response.data.data);
 //       }).catch((error) => {
 //         console.error("Error fetching data: ", error);
 //       })
-   
+
 // }
 
 // function formatRegistrationDate(inputDate) {
@@ -281,10 +268,6 @@
 //                   <td>{item.email}</td>
 //                   <td>{item.number}</td>
 //                   <td>{item.address}</td>
-       
-                  
-                 
-
 
 //                   <td>
 //                   {/* <button
@@ -390,12 +373,11 @@
 
 //               <div className="text-start pt-3">
 //                   <ul className="modal_contact_details">
-                    
 
 //                     {/* ========================================================= */}
 
 //                     {/* ============================================================ */}
-                  
+
 //                     <li><IoMdMail className="me-3"/>{viewCustumer.email}</li>
 //                     <li><FaPhoneAlt className="me-3"/>{viewCustumer.number}</li>
 //                     <li><IoLocationSharp className="me-3"/>{viewCustumer.address}</li>
@@ -404,7 +386,7 @@
 //                 <hr />
 //               </div>
 //               <div className="d-flex justify-content-end">
-              
+
 //                 <button
 //                   className="btn btn-secondary"
 //                   onClick={() => setshowCustumerProfleModal(false)}>
@@ -440,10 +422,7 @@
 
 // export default TableComponent;
 
-
-
 // =================================================================================
-
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -456,7 +435,7 @@ import { MdOutlineDateRange } from "react-icons/md";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
 const TableComponent = () => {
   const [showModal, setShowModal] = useState("");
@@ -464,12 +443,11 @@ const TableComponent = () => {
   const [users, setUsers] = useState(data);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [showCustumerProfleModal,setshowCustumerProfleModal] = useState(false);
-  
+  const [showCustumerProfleModal, setshowCustumerProfleModal] = useState(false);
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
-
 
   useEffect(() => {
     if (!token) {
@@ -478,11 +456,15 @@ const TableComponent = () => {
   }, []);
 
   const fetchData = () => {
-    axios.get(BASE_URL + '/all_customers').then((response) => {
-      setData(response.data.data);
-    }).catch((error) => {
-      console.error("Error fetching data: ", error);
-    });
+    axios
+      .get(BASE_URL + "/getallRegisteredUser")
+      .then((response) => {
+        console.log("all custummer", response.data.data);
+        setData(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
   };
 
   useEffect(() => {
@@ -493,11 +475,13 @@ const TableComponent = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const rowsPerPage = 5;
 
+
+  console.log("")
   const filteredData = data.filter(
     (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.First_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.number.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.phone.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.address.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -532,17 +516,17 @@ const TableComponent = () => {
   const exportPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
-      head: [['Sr.No', 'Name', 'Date', 'Email', 'Number', 'Address']],
+      head: [["Sr.No", "Name", "Date", "Email", "Number", "Address"]],
       body: currentUsers.map((item, index) => [
         indexOfFirstUser + index + 1,
         item.name,
         formatRegistrationDate(item.createdAt),
         item.email,
         item.number,
-        item.address
+        item.address,
       ]),
     });
-    doc.save('customers.pdf');
+    doc.save("customers.pdf");
   };
 
   // Export to Excel
@@ -554,7 +538,7 @@ const TableComponent = () => {
         Date: formatRegistrationDate(item.createdAt),
         Email: item.email,
         Number: item.number,
-        Address: item.address
+        Address: item.address,
       }))
     );
     const wb = XLSX.utils.book_new();
@@ -571,7 +555,7 @@ const TableComponent = () => {
         Date: formatRegistrationDate(item.createdAt),
         Email: item.email,
         Number: item.number,
-        Address: item.address
+        Address: item.address,
       }))
     );
     const csv = XLSX.utils.sheet_to_csv(ws);
@@ -590,7 +574,7 @@ const TableComponent = () => {
     window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
     try {
-      document.execCommand('copy');
+      document.execCommand("copy");
       alert("Table data copied to clipboard");
     } catch (err) {
       alert("Unable to copy");
@@ -599,45 +583,46 @@ const TableComponent = () => {
 
   function formatRegistrationDate(inputDate) {
     const date = new Date(inputDate);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = String(date.getFullYear()).slice(-2);
     return `${day}-${month}-${year}`;
   }
 
-
-  const [viewCustumer, setViewCustumer] = useState('');
+  const [viewCustumer, setViewCustumer] = useState("");
 
   const handleViewCustumer = (id) => {
     setshowCustumerProfleModal(true);
-      axios.get(BASE_URL + `/customer_getbyid/${id}`).then((response) => {
-        console.log("custumer profile response", response.data.data);
-        
-        setViewCustumer(response.data.data);
-      }).catch((error) => {
-        console.error("Error fetching data: ", error);
+    axios
+      .get(BASE_URL + `/getUserDetailById/${id}`)
+      .then((response) => {
+        console.log("custumer profile response", response.data);
+
+        setViewCustumer(response.data);
       })
-   
-}
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  };
 
-function formatRegistrationDate(inputDate) {
-  // Create a new Date object from the input string
-  const date = new Date(inputDate);
+  function formatRegistrationDate(inputDate) {
+    // Create a new Date object from the input string
+    const date = new Date(inputDate);
 
-  // Extract the day, month, and year
-  const day = String(date.getDate()).padStart(2, '0');  // Ensure 2 digits
-  const month = String(date.getMonth() + 1).padStart(2, '0');  // Get month, add 1 (0-indexed)
-  const year = String(date.getFullYear()).slice(-2);  // Get last 2 digits of the year
+    // Extract the day, month, and year
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure 2 digits
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month, add 1 (0-indexed)
+    const year = String(date.getFullYear()).slice(-2); // Get last 2 digits of the year
 
-  // Return the formatted date
-  return `${day}-${month}-${year}`;
-}
+    // Return the formatted date
+    return `${day}-${month}-${year}`;
+  }
 
-// Example usage:
-const formattedDate = formatRegistrationDate("2024-11-28T06:15:50.642Z");
+  // Example usage:
+  const formattedDate = formatRegistrationDate("2024-11-28T06:15:50.642Z");
 
-const [showUserProfile,setShowUserProfile] = useState(false)
-  const [deleteId, setDeleteId] = useState('');
+  const [showUserProfile, setShowUserProfile] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
 
   const handleDelete = (id) => {
     setDeleteId(id);
@@ -645,19 +630,20 @@ const [showUserProfile,setShowUserProfile] = useState(false)
   };
 
 
+
+
   const handleDeleteConfirm = () => {
-
-    axios.delete(BASE_URL + `/delete_customer/${deleteId}`).then((response) => {
-      
-      console.log(response)
-      fetchData();
-      setShowDeleteModal(false);
-
-    }).catch((error) => {
-     console.log(error)
-   })
-
-  }
+    axios
+      .delete(BASE_URL + `/delete_customer/${deleteId}`)
+      .then((response) => {
+        console.log(response);
+        fetchData();
+        setShowDeleteModal(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
       <div className="container-fluid mt-3">
@@ -675,24 +661,41 @@ const [showUserProfile,setShowUserProfile] = useState(false)
 
           <div className="row">
             <div className="col-sm-12">
-              <div className="btn-group" role="group" aria-label="Basic example">
-                <button type="button" className="btn btn-secondary" onClick={copyTableData}>
+              <div
+                className="btn-group"
+                role="group"
+                aria-label="Basic example">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={copyTableData}>
                   Copy
                 </button>
-                <button type="button" className="btn btn-secondary" onClick={exportExcel}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={exportExcel}>
                   Excel
                 </button>
-                <button type="button" className="btn btn-secondary" onClick={exportCSV}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={exportCSV}>
                   CSV
                 </button>
-                <button type="button" className="btn btn-secondary" onClick={exportPDF}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={exportPDF}>
                   PDF
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="input-group mb-3 mt-3" style={{ width: "300px", position: "relative" }}>
+          <div
+            className="input-group mb-3 mt-3"
+            style={{ width: "300px", position: "relative" }}>
             <input
               type="text"
               className="form-control"
@@ -715,8 +718,7 @@ const [showUserProfile,setShowUserProfile] = useState(false)
                   border: "none",
                   cursor: "pointer",
                   fontSize: "16px",
-                }}
-              >
+                }}>
                 ✖
               </button>
             )}
@@ -735,158 +737,171 @@ const [showUserProfile,setShowUserProfile] = useState(false)
               </tr>
             </thead>
             <tbody>
-              {currentUsers && currentUsers.map((item, index) => (
-                <tr key={item.id}>
-                  <td>{indexOfFirstUser + index + 1}.</td>
-                  <td>{item.name}</td>
-                  <td>{formatRegistrationDate(item.createdAt)}</td>
-                  <td>{item.email}</td>
-                  <td>{item.number}</td>
-                  <td>{item.address}</td>
-                  <td>
-                  <button
-                    className="btn btn-info btn-sm me-3"
-                    data-bs-toggle="modal"
-                    data-bs-target="#profileModal"
-                    onClick={() => handleViewCustumer(item._id)}>
-                    View Profile
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(item._id)}>
-                    Delete
-                  </button>
-                  </td>
-                </tr>
-              ))}
+              {currentUsers &&
+                currentUsers.map((item, index) => (
+                  <tr key={item.id}>
+                    <td>{indexOfFirstUser + index + 1}.</td>
+                    <td>{item.First_name}</td>
+                    <td>{formatRegistrationDate(item.createdAt)}</td>
+                    <td>{item.email}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.address}</td>
+                    <td>
+                      <button
+                        className="btn btn-info btn-sm me-3"
+                        data-bs-toggle="modal"
+                        data-bs-target="#profileModal"
+                        onClick={() => handleViewCustumer(item._id)}>
+                        View Profile
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(item._id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           {showDeleteModal && (
-          <div
-            id="modalOverlay"
-            className="hiddenOverlayContainer"
-            style={{ display: "block" }}>
-            <div className="customDialogBox">
-              <div
-                className="row "
-                style={{
-                  backgroundColor: "light",
-                  padding: "15px",
-                  borderBottom: "1px solid #7f7f7f",
-                  paddingBottom: "6px",
-                }}>
-                <div className="col-sm-6 d-flex justify-content-start">
-                  <h4 className="modal_header">
-                    <RiDeleteBin6Fill className="me-3" />
-                    Confirmation
-                  </h4>
-                </div>
-                <div className="col-sm-6 d-flex justify-content-end">
-                  {/* <span className="exitButtonTrigger" onClick={closeDialogBox}>
+            <div
+              id="modalOverlay"
+              className="hiddenOverlayContainer"
+              style={{ display: "block" }}>
+              <div className="customDialogBox">
+                <div
+                  className="row "
+                  style={{
+                    backgroundColor: "light",
+                    padding: "15px",
+                    borderBottom: "1px solid #7f7f7f",
+                    paddingBottom: "6px",
+                  }}>
+                  <div className="col-sm-6 d-flex justify-content-start">
+                    <h4 className="modal_header">
+                      <RiDeleteBin6Fill className="me-3" />
+                      Confirmation
+                    </h4>
+                  </div>
+                  <div className="col-sm-6 d-flex justify-content-end">
+                    {/* <span className="exitButtonTrigger" onClick={closeDialogBox}>
           ×
         </span> */}
-                  <span
-                    className="exitButtonTrigger"
-                    onClick={() => setShowDeleteModal(false)}>
-                    ×
-                  </span>
+                    <span
+                      className="exitButtonTrigger"
+                      onClick={() => setShowDeleteModal(false)}>
+                      ×
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="text-start pt-3">
-                <ul className="modal_contact_details">
-                  <li>Are you sure you want to delete this item ?</li>
-                </ul>
-                <hr />
-              </div>
-              <div className="d-flex justify-content-end">
-                <button
-                  className="btn btn-danger me-3"
-                  onClick={handleDeleteConfirm}>
-                  Delete
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setShowDeleteModal(false)}>
-                  Cancel
-                </button>
+                <div className="text-start pt-3">
+                  <ul className="modal_contact_details">
+                    <li>Are you sure you want to delete this item ?</li>
+                  </ul>
+                  <hr />
+                </div>
+                <div className="d-flex justify-content-end">
+                  <button
+                    className="btn btn-danger me-3"
+                    onClick={handleDeleteConfirm}>
+                    Delete
+                  </button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => setShowDeleteModal(false)}>
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-          
+          )}
+
           {showCustumerProfleModal && (
-          <div
-            id="modalOverlay"
-            className="hiddenOverlayContainer"
-            style={{ display: "block" }}>
-            <div className="customDialogBox">
-              <div
-                className="row "
-                style={{
-                  backgroundColor: "light",
-                  padding: "15px",
-                  borderBottom: "1px solid #7f7f7f",
-                  paddingBottom: "6px",
-                }}>
-                <div className="col-sm-6 d-flex justify-content-start">
-                  <h4 className="modal_header">
-                    {/* <RiDeleteBin6Fill className="me-3" /> */}
-                   Custumer Detail
-                  </h4>
-                </div>
-                <div className="col-sm-6 d-flex justify-content-end">
-                  {/* <span className="exitButtonTrigger" onClick={closeDialogBox}>
+            <div
+              id="modalOverlay"
+              className="hiddenOverlayContainer"
+              style={{ display: "block" }}>
+              <div className="customDialogBox">
+                <div
+                  className="row "
+                  style={{
+                    backgroundColor: "light",
+                    padding: "15px",
+                    borderBottom: "1px solid #7f7f7f",
+                    paddingBottom: "6px",
+                  }}>
+                  <div className="col-sm-6 d-flex justify-content-start">
+                    <h4 className="modal_header">
+                      {/* <RiDeleteBin6Fill className="me-3" /> */}
+                      Custumer Detail
+                    </h4>
+                  </div>
+                  <div className="col-sm-6 d-flex justify-content-end">
+                    {/* <span className="exitButtonTrigger" onClick={closeDialogBox}>
           ×
         </span> */}
-                  <span
-                    className="exitButtonTrigger"
-                    onClick={() => setshowCustumerProfleModal(false)}>
-                    ×
-                  </span>
+                    <span
+                      className="exitButtonTrigger"
+                      onClick={() => setshowCustumerProfleModal(false)}>
+                      ×
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="text-start pt-3">
+                <div className="text-start pt-3">
                   <ul className="modal_contact_details">
-                    
-
                     {/* ========================================================= */}
 
                     {/* ============================================================ */}
-                  
-                    <li><IoMdMail className="me-3"/>{viewCustumer.email}</li>
-                    <li><FaPhoneAlt className="me-3"/>{viewCustumer.number}</li>
-                    <li><IoLocationSharp className="me-3"/>{viewCustumer.address}</li>
-                    <li><MdOutlineDateRange className="me-3"/>Registration Date :  { formatRegistrationDate(viewCustumer.createdAt)}</li>
-                </ul>
-                <hr />
-              </div>
-              <div className="d-flex justify-content-end">
-              
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setshowCustumerProfleModal(false)}>
-                  Cancel
-                </button>
+
+                    <li>
+                      <IoMdMail className="me-3" />
+                      {viewCustumer && viewCustumer.email}
+                    </li>
+                    <li>
+                      <FaPhoneAlt className="me-3" />
+                      {viewCustumer && viewCustumer.
+phone
+}
+                    </li>
+                    <li>
+                      <IoLocationSharp className="me-3" />
+                      {viewCustumer && viewCustumer.address}
+                    </li>
+                    <li>
+                      <MdOutlineDateRange className="me-3" />
+                      Registration Date :{" "}
+                      {formatRegistrationDate(viewCustumer && viewCustumer.createdAt)}
+                    </li>
+                  </ul>
+                  <hr />
+                </div>
+                <div className="d-flex justify-content-end">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => setshowCustumerProfleModal(false)}>
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
           <div className="pagination d-flex justify-content-end">
             <button
               onClick={handlePrevPage}
               className="btn btn-secondary page-item me-2"
-              disabled={currentPage === 1}
-            >
+              disabled={currentPage === 1}>
               Prev
             </button>
-            <span className="btn btn-success current-page">Page {currentPage}</span>
+            <span className="btn btn-success current-page">
+              Page {currentPage}
+            </span>
             <button
               onClick={handleNextPage}
               className="btn btn-primary page-item ms-2"
-              disabled={currentPage === totalPages}
-            >
+              disabled={currentPage === totalPages}>
               Next
             </button>
           </div>

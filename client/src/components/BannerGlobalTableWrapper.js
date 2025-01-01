@@ -258,7 +258,7 @@ const BannerGlobalTableWrapper = () => {
     } else if (location == 'Himalaya Indien') {
       navigate('/yogalehrer-ausbildung-himalaya-indien')
     } else if (location == 'Berlin') {
-      navigate('/YOGALEHRERAUSBILDUNG_BERLIN')
+      navigate('/YOGALEHRERAUSBILDUNG-BERLIN')
     } else{
       alert("Page is under development. Sorry for the inconvenience.")
     }
@@ -378,7 +378,20 @@ const BannerGlobalTableWrapper = () => {
                                   <span>€{item.price}</span>
                                 )}
                               </span>
-
+                      
+                              <br />
+                              {item.OfferEndDate ? (
+                                <>
+                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
+{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
+</small>
+                                
+                                </>
+                            ):null}
+ 
+                           
+                              
+                          
                             </td>
 
                             <td
@@ -472,7 +485,16 @@ const BannerGlobalTableWrapper = () => {
                                   <span>€{item.price}</span>
                                 )}
                               </span>
-
+                              <br />
+                              {item.OfferEndDate ? (
+                                <>
+                                                            <small>Das Angebot endet am </small><small><br/><i class="bx bxs-calendar"></i>
+{formatDate(item.OfferEndDate?item.OfferEndDate:null)}
+</small>
+                                
+                                </>
+                            ):null}
+ 
                             </td>
 
                             <td

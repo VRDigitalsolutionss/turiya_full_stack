@@ -37,7 +37,7 @@ const Contact = () => {
       newErrors.email = "Email is invalid";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
     if (!formData.message.trim()) newErrors.message = "Message is required";
-    if (formData.captcha_input !== captchaCode)
+    if (formData.captcha_input && formData.captcha_input !== captchaCode)
       newErrors.captcha_input = "Incorrect verification code";
 
     setErrors(newErrors);
@@ -47,6 +47,7 @@ const Contact = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+ 
   };
 
   const handleSubmit = (e) => {
@@ -76,6 +77,8 @@ const Contact = () => {
           });
           if (response.status === 201) {
             // Reset the form fields
+
+
             setFormData({
               first_name: "",
               last_name: "",
@@ -84,6 +87,10 @@ const Contact = () => {
               message: "",
               captcha_input: "",
             });
+
+            const randomNumber = generateRandom5DigitNumber();
+   
+            setCaptchaCode(randomNumber);
           }
         })
         .catch((error) => {
@@ -222,10 +229,10 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                       />
-                      
-                      {errors.captcha_input && (
+                   {   console.log(" errors.captcha_input", errors.captcha_input)}
+                      {formData.captcha_input && errors.captcha_input? (
                         <p className="error">{errors.captcha_input}</p>
-                      )}
+                      ):null}
                       <button type="submit">Send</button>
                     </div>
                   </form>
