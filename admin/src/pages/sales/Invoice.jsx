@@ -17,9 +17,6 @@ function Invoice() {
     }
   }, []);
 
-  const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Number of items to display per page
 
   const [data, setData] = useState([]);
 
@@ -37,6 +34,13 @@ function Invoice() {
     fetchData();
   }, []);
 
+
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Number of items to display per page
+
+
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -50,16 +54,16 @@ function Invoice() {
     const formattedTime = `${hours12}:${minutes}:${seconds} ${period}`;
     return `${year}-${month}-${day} ${formattedTime}`;
   };
-
+  console.log("data: " + data);
   const filteredData = search.trim()
-    ? data.filter(
+    ? data && data.filter(
         (item) =>
           item._id.toLowerCase() === search.trim().toLowerCase() ||
-          item.amount_due.toLowerCase() === search.trim().toLowerCase()
+          item.amount_due.toLowerCase() === search.trim().toLowerCase() 
       )
     : data;
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredData && filteredData.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -139,7 +143,7 @@ function Invoice() {
 
   // 4. Copy Table Data to Clipboard
   const copyTableData = () => {
-    const csvContent = currentItems.map((item) => [
+    const csvContent = currentItems && currentItems.map((item) => [
       item._id,
       item.product_details,
       item.customer_details,
