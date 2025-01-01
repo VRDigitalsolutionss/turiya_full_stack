@@ -336,7 +336,7 @@ function getTodayDate() {
                       </div>
                     </div>
 
-                    {userDetails && userDetails.otherAddress.email ? (
+                    {userDetails && userDetails?.otherAddress?.email ? (
                         <div className="col-md-6">
                         <div className="cart_details__box-left">
                           <div className="box-title">
@@ -361,12 +361,12 @@ function getTodayDate() {
                              
   
   
-                              <li>Email:&nbsp; {userDetails &&  userDetails.otherAddress.email?userDetails.otherAddress.email:userDetails.email} </li>
+                              <li>Email:&nbsp; {userDetails &&  userDetails?.otherAddress?.email?userDetails?.otherAddress?.email:userDetails.email} </li>
                               <li>
                                 Gender:&nbsp; {userDetails && userDetails?.gender}
                               </li>
                               <li>
-                                Number:&nbsp; {userDetails &&  userDetails.otherAddress.phone?userDetails.otherAddress.phone:userDetails.phone}
+                                Number:&nbsp; {userDetails &&  userDetails?.otherAddress?.phone?userDetails?.otherAddress?.phone:userDetails.phone}
                               </li>
                               <li>
                                 Address:&nbsp;{" "}
@@ -376,18 +376,18 @@ function getTodayDate() {
                               </li>
                               <li>City:&nbsp; 
   
-                              {userDetails &&  userDetails.otherAddress.city?userDetails.otherAddress.city:userDetails.city}
+                              {userDetails &&  userDetails?.otherAddress?.city?userDetails?.otherAddress?.city:userDetails.city}
   
                               </li>
                               <li>
                                 Pincode:&nbsp;{" "}
                     
-                                {userDetails &&  userDetails.otherAddress.postal_code?userDetails.otherAddress.postal_code:userDetails.postal_code}
+                                {userDetails &&  userDetails?.otherAddress?.postal_code?userDetails?.otherAddress?.postal_code:userDetails.postal_code}
   
                               </li>
                               <li>State:&nbsp; 
   
-                              {userDetails &&  userDetails.otherAddress.federal_state?userDetails.otherAddress.federal_state:userDetails.federal_state}
+                              {userDetails &&  userDetails?.otherAddress?.federal_state?userDetails?.otherAddress?.federal_state:userDetails.federal_state}
   
   
                               </li>
@@ -396,7 +396,7 @@ function getTodayDate() {
                                 Country:&nbsp;{" "}
   
   
-                                {userDetails &&  userDetails.otherAddress.country?userDetails.otherAddress.country:userDetails.country}
+                                {userDetails &&  userDetails?.otherAddress?.country?userDetails?.otherAddress?.country:userDetails.country}
                               </li>
                             </ul>
                           </div>

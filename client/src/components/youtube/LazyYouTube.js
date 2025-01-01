@@ -40,8 +40,6 @@ function LazyYouTube({ videoId, feedbackContent, feedbackType, status }) {
 
   const openModal = () => {
     setVideoModal(true);
-
-    alert("hi");
   };
 
   return (
@@ -82,14 +80,7 @@ function LazyYouTube({ videoId, feedbackContent, feedbackType, status }) {
             ></iframe>
           </>
         ) : (
-          <img
-            src={`https://img.youtube.com/vi/${cleanVideoId}/hqdefault.jpg`}
-            alt="Video thumbnail"
-            width="560"
-            height="315"
-            style={{ cursor: "pointer" }}
-            onClick={() => setIntersecting(true)}
-          />
+          <p>hello</p>
         )}
       </div>
     </>

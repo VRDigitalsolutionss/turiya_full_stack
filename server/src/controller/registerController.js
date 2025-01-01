@@ -34,7 +34,7 @@ const registerController = (req, res) => {
           .catch((error) => {
             console.log(error)
             res.status(400).json({
-              msg: "internal server error",
+              msg: "Internal server error",
               error,
             });
           });
@@ -82,7 +82,7 @@ const sendConfirmationEmail = async (email, firstName, lastName, token) => {
         <body>
           <p>Hallo ,${firstName + lastName}</p>
           <p>vielen Dank für deine Registrierung! Bitte klicke auf den untenstehenden Link, um deine E-Mail-Adresse zu bestätigen.</p>
-          <p><a href="${process.env.CLIENT_URL}/verify-email?token=${token}">E-Mail-Adresse bestätigen</a></p>
+          <p><a href="${process.env.CLIENT_URL}/verify-email/${token}">E-Mail-Adresse bestätigen</a></p>
       
           <p>Falls du dich nicht registriert hast, ignoriere bitte diese E-Mail.</p>
        

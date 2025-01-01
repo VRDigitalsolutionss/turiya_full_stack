@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import LazyYouTube from "../youtube/LazyYouTube";
 import axios from 'axios';
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
 const Index = () => {
-  const [videoId,setvideoId] = useState('')
+  const [videoId, setVideoId] = useState('')
 
   const [data, setData] = useState([]); // Store all video data
   const [visibleVideos, setVisibleVideos] = useState([]); // Control which videos are shown
@@ -54,6 +54,24 @@ const Index = () => {
     setBatchIndex((prevIndex) => prevIndex + 1);
   };
 
+  const extractVideoId = (url) => {
+      // Match the pattern for YouTube embed links
+      const regex = /(?:youtube\.com\/(?:embed|v)\/|youtu\.be\/)([^?&\s]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    };
+  
+    useEffect(() => {
+      const modal = document.getElementById("exampleModalTestimonialsIndian");
+  
+      if (modal) {
+        const handleModalClose = () => setVideoId(null);
+        modal.addEventListener("hidden.bs.modal", handleModalClose);
+  
+        return () => modal.removeEventListener("hidden.bs.modal", handleModalClose);
+      }
+    }, []);
+
   return (
     <>
       <section className="global_wrapper turiya_video2">
@@ -75,74 +93,72 @@ const Index = () => {
         <div className="global_content">
           <div className="container">
             <div className="turiya_video__grid">
-              {visibleVideos.map((response, index) => (
-                <div className="turiya_video__box" key={index}>
-                  <div className="turiya_img__box youtube_feedback">
-                    <i className="bx bx-play" data-bs-toggle="modal"
-                      data-bs-target="#play_video_Modal1"
-                      onClick={() => setvideoId(response.youtubeLink)}           style={{cursor: "pointer"}} />
-                    <LazyYouTube
-                      videoId={response.youtubeLink}
-                      feedbackContent={response.feedbackContent}
-                      feedbackType={response.feedbackType}
-                      status={response.status}
-                    />
-                  </div>
-                  <h6>{response.feedbackType}</h6>
-                  <div className="turiya_video__box-yt">
-                    <div className="turiya--yt">
-                      <div className="turiya--yt-cancel">
-                        <i className="bx bx-x" />
-                      </div>
-                      <LazyYouTube
-                        videoId={response.youtubeLink}
-                        feedbackContent={response.feedbackContent}
-                        feedbackType={response.feedbackType}
-                        status={response.status}
+              {visibleVideos.map((response, index) => {
+                const videoIde = extractVideoId(response.youtubeLink);
+                console.log("response", response)
+                return (
+                  <div
+                    className="turiya_video__box"
+                    key={index}
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalTestimonialsIndian"
+                    onClick={() => {
+                      setVideoId(response.youtubeLink);
+                    }}>
+                    <div className="turiya_img__box youtube_feedback">
+                      <img
+                        src={`https://img.youtube.com/vi/${videoIde}/hqdefault.jpg`}
+                        alt="Video thumbnail"
+                        width="560"
+                        height="315"
+                      // style={{ position: "absolute", top: 0, left: 0, cursor: "pointer" }}
+                      />
+                      <i
+                        className="bx bx-play"
+                        style={{ cursor: "pointer" }}
                       />
                     </div>
-                  </div>
-                </div>
-              ))}
+                    <h6>{response.feedbackContent}</h6>
+                  </div>)
+              })}
             </div>
           </div>
         </div>
 
 
         <div className="youtube_video">
-        <div
-          className="modal fade"
-          id="play_video_Modal1"
-          tabIndex={-1}
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> You Can Play and Pause Video</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                />
-              </div>
-              <div className="modal-body">
-                <iframe
-                  width={560}
-                  height={315}
-                  src={videoId && videoId}
-                  // src="https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"
-                  title="YouTube video player"
-                  frameBorder={0}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen></iframe>
+          <div
+            className="modal fade"
+            id="exampleModalTestimonialsIndian"
+            tabIndex={-1}
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                </div>
+                <div className="modal-body">
+                  <iframe
+                    id="youtube-video"
+                    width={560}
+                    height={315}
+                    src={videoId}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </section>
     </>
   );
