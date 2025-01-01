@@ -1,6 +1,7 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const RegisteredUser = require("../model/Register");
+const jwt = require('jsonwebtoken')
 
 
 const forgotPasswordController = async (req, res) => {
@@ -13,7 +14,7 @@ const forgotPasswordController = async (req, res) => {
     if (!user) return res.status(404).send("User not found");
 
     // Generate reset token
-    const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ email }, process.env.secretKey, { expiresIn: "1h" });
 
     // Send email
     const transporter = nodemailer.createTransport({
@@ -40,10 +41,10 @@ const forgotPasswordController = async (req, res) => {
 
     // Send email
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Reset password link sent successfully" });
+    res.status(200).send("Reset password link sent successfully");
   } catch (error) {
     console.error("Error sending email:", error);
-    res.status(500).json({ message: "Failed to send email", error: error.message });
+    res.status(500).send(error.message);
   }
 }
 

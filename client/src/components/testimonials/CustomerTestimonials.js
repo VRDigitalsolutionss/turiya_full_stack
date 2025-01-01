@@ -26,32 +26,32 @@ const CustomerTestimonialsp = () => {
     }, 0);
   }, []);
 
-   const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
-  
-    const fetchNextUpcomingCourse = () => {
-      axios
-        .get(BASE_URL + "/getClosestUpcomingCourseswithNull")
-        .then((response) => {
-          console.log("response of fetchNextUpcomingCourse", response.data.data);
-          setClosestUpcomingCourse(response.data.data);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    };
-  
-    function formatDate(dateString) {
-      // Split the input date into an array [year, month, day]
-      const [year, month, day] = dateString.split("-");
-  
-      // Return the date in the desired format: dd.mm.yyyy
-      return `${day}.${month}.${year}`;
+  const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+
+  const fetchNextUpcomingCourse = () => {
+    axios
+      .get(BASE_URL + "/getClosestUpcomingCourseswithNull")
+      .then((response) => {
+        console.log("response of fetchNextUpcomingCourse", response.data.data);
+        setClosestUpcomingCourse(response.data.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  function formatDate(dateString) {
+    // Split the input date into an array [year, month, day]
+    const [year, month, day] = dateString.split("-");
+
+    // Return the date in the desired format: dd.mm.yyyy
+    return `${day}.${month}.${year}`;
   }
-  
-  
-    useEffect(() => {
-      fetchNextUpcomingCourse();
-    }, []);
+
+
+  useEffect(() => {
+    fetchNextUpcomingCourse();
+  }, []);
 
   const [earlyData, setEarlyData] = useState("");
 
@@ -144,22 +144,15 @@ const CustomerTestimonialsp = () => {
 <p>Weiter unten findest du Videos unserer englischen Yogalehrer Ausbildungen. Diese wurden während unserer internationalen Programme 2014 - 2017 Aufgenommen und zeigen unsere Arbeit mit einer globalen Yogagemeinschaft. Wir haben unsere Ausbildungen sowohl auf Deutsch als auch auf Englisch angeboten, um eine briete Gemeinschaft anzusprechen und unsere Erfahrungen zu teilen.</p>
 `;
 
-  
-  
 
 
-  
-  
+
+
+
+
   return (
     <>
       <section>
-        {/* Modal */}
-
-        {/*cart-overlay */}
-
-        {/* cart-overlay */}
-
-        {/* banner section */}
         <SimpleBanner
           videoLink={
             customerTestimonials && customerTestimonials.Slider_videolink
@@ -206,31 +199,31 @@ const CustomerTestimonialsp = () => {
                 </div>
               </div>
               <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
+                <div className="about_wrapper__right mb-3">
+                  {
                     closestUpcomingCourse[0] ? (
                       <div>
 
-                  
-                        <h3>* {closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                          <i className="bx bxs-purchase-tag" />
+
+                        <h3>* {closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                        <div className="price-tag">
+                          <h6>
+                            <i className="bx bxs-purchase-tag" />
                             {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].price}</del></sub>
-                        </h6>
-                      </div>
-                      <div className="about-date">
-                        <p>
+                            <sub><del style={{ color: "rgb(255, 87, 34)", fontSize: "17px", marginLeft: '10px' }}>{closestUpcomingCourse[0] && closestUpcomingCourse[0].price}</del></sub>
+                          </h6>
+                        </div>
+                        <div className="about-date">
+                          <p>
                             <i className="bx bxs-map" />
                             {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
+                              closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
                             }
-                       
-                        </p>
-                        <p>
+
+                          </p>
+                          <p>
                             <i className="bx bxs-calendar" />
-                            
+
 
 
                             {/* {
@@ -238,47 +231,47 @@ const CustomerTestimonialsp = () => {
                              :null
                             } */}
                             {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
                             }
-                           <span className="my-2">-</span>  
+                            <span className="my-2">-</span>
                             {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
                             }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                          </p>
+                        </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im Schulungspreis
+                            enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                            einfach an. Wir helfen Ihnen gerne weiter.
+                          </p>
                         </div>
-                        
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+
                     )
                   }
-              </div>
+                </div>
               </div>
             </div>
           </div>

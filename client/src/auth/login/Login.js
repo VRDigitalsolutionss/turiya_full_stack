@@ -58,9 +58,10 @@ const Login = () => {
         .then((response) => {
           console.log("response of login", response.data);
 
-          // if(response?.data?.user?.isVerified ===false){
-
-          // }
+          if(response?.data.isVerified===false){
+            alert(response.data.msg)
+            return;
+          }
 
           localStorage.setItem("turiya_auth_token", response.data.token);
           localStorage.setItem("turiya_auth_id", response.data.user._id);

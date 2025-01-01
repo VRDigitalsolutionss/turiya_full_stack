@@ -20,6 +20,7 @@ import ThankYouPage from "./components/ThankYouPage";
 import YogaTeacherTrainingBali from "./components/bali/YogaTeacherTrainingBali";
 import YogaTeacherTraining200HNew from './components/yoga_teacher_training/Index'
 import VerifyEmail from "./auth/VerifyEmail";
+import ResetPassword from "./auth/ResetPassword";
 
 
 // Lazy load other components
@@ -259,6 +260,7 @@ function App() {
           <Route path="forgot_password" element={<ForgotPass />} />
           <Route path="contact" element={<Contact />} />
           <Route path="verify-email/:token" element={<VerifyEmail />} />
+          <Route path="reset-password/:token" element={<ResetPassword />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

@@ -7,15 +7,14 @@ const verifyEmailController = async (req, res) => {
     const { token } = req.body;
 
     if (!token) {
-        return res.status(400).json({ msg: "Token is required for verification" });
+        return res.status(400).send("Token is required for verification" );
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.secretKey);
         if(!decoded){
-            return res.status(400).json({ msg: "Invalid or expired token" });
+            return res.status(400).send("Invalid or expired token");
         }
-
         const user = await RegisteredUser.findOne({ email: decoded.email });
 
         if (!user) return res.status(404).send("User not found");
@@ -26,6 +25,7 @@ const verifyEmailController = async (req, res) => {
 
         res.status(200).send("Email verified successfully!");
     } catch (err) {
+        console.log(err)
         res.status(400).send("Invalid or expired token");
     }
 }

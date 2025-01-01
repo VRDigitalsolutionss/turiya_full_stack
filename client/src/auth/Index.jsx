@@ -3,7 +3,6 @@ import "./forgotpass.scss";
 import { BASE_URL } from "../../config";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +10,6 @@ const Index = () => {
   });
   const [errors, setErrors] = useState({});
 
-  const navigate = useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -52,7 +50,6 @@ const Index = () => {
             popup: 'custom-swal'
           }
         });
-        navigate('/')
 
       } catch (err) {
         alert(err.response?.data)
