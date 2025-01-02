@@ -63,7 +63,7 @@ const Yin_Yoga = () => {
         console.log("respnse of fetchEarlyBirdData", response.data.data[0]);
         const data = response.data.data[0];
         const startDate = data && data.StartDate;
-        console.log("start date",data)
+        console.log("start date", data)
         setEarlyData(response.data.data[0]);
       })
       .catch((error) => {
@@ -87,30 +87,29 @@ const Yin_Yoga = () => {
 
   // 60H Yin Yoga
   const getUpcomingCourse = () => {
-      axios
-        .get(BASE_URL +   "/course_web_page_by_course_category/60H Yin Yoga")
+    axios
+      .get(BASE_URL + "/course_web_page_by_course_category/60H Yin Yoga")
       .then((response) => {
         console.log("response of 60H Yin Yoga", response.data);
         const data = response.data;
         setYin_Yoga(data);
 
         var imageUrlcustum =
-        data && data.yogaTeamSlideImage
-          ? BASE_URL_IMAGE + `/images/coursewebpage/${
-              data && data.yogaTeamSlideImage
+          data && data.yogaTeamSlideImage
+            ? BASE_URL_IMAGE + `/images/coursewebpage/${data && data.yogaTeamSlideImage
             }`
-          : ""; // Fallback image or empty string
+            : ""; // Fallback image or empty string
 
-      console.log("imageUrlcustum", imageUrlcustum);
+        console.log("imageUrlcustum", imageUrlcustum);
         setNewBannerImg(imageUrlcustum);
-        
+
 
 
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-    }
+  }
 
   const fetchData2 = () => {
     axios
@@ -126,9 +125,8 @@ const Yin_Yoga = () => {
 
           var imageUrlcustum =
             data && data.yogaTeamSlideImage
-              ? `${BASE_URL_IMAGE}/images/coursewebpage/${
-                  data && data.yogaTeamSlideImage
-                }`
+              ? `${BASE_URL_IMAGE}/images/coursewebpage/${data && data.yogaTeamSlideImage
+              }`
               : ""; // Fallback image or empty string
 
           console.log("imageUrlcustum", imageUrlcustum);
@@ -141,7 +139,7 @@ const Yin_Yoga = () => {
   };
 
   useEffect(() => {
-   
+
     getUpcomingCourse();
   }, []);
 
@@ -385,6 +383,16 @@ const Yin_Yoga = () => {
 
   console.log("banner img: from yin", newBannerImg);
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
+
   return (
     <>
       <div ref={bannerRef}>
@@ -414,10 +422,10 @@ const Yin_Yoga = () => {
                 {" "}
                 <div className="kurse_link">
                   {/* Attach event handlers to trigger scroll */}
-                  <a onClick={() => scrollToSection(bannerRef)} style={{color:'#9bbb59'}}>
+                  <a onClick={() => scrollToSection(bannerRef)} style={{ color: '#9bbb59' }}>
                     wichtige info
                   </a>
-                  <a onClick={() => scrollToSection(faqRef)} style={{color:'#9bbb59'}}>termine</a>
+                  <a onClick={() => scrollToSection(faqRef)} style={{ color: '#9bbb59' }}>termine</a>
                 </div>
               </p>
 
@@ -434,55 +442,76 @@ const Yin_Yoga = () => {
                     Yin_Yoga && Yin_Yoga.about_first_section_Paragraph_Content,
                 }}></p>
 
-              
+
             </div>
             {/* .postcontent end */}
             {/* Sidebar ============================================= */}
             <div className="col-lg-3">
               <div className="about_wrapper__right mb-3">
-              {
-                    closestUpcomingCourse[0] ? (
-                      <div>
+                {
+                  closestUpcomingCourse[0] ? (
+                    <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
+
+                      <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
                       <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
+                        <h6>
+                          <i className="bx bxs-purchase-tag" />
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                            <>
+                              {closestUpcomingCourse[0].Offerprice}€
+                              <sub>
+                                <del
+                                  style={{
+                                    color: "rgb(255, 87, 34)",
+                                    fontSize: "17px",
+                                    marginLeft: "10px",
+                                  }}
+                                >
+                                  {closestUpcomingCourse[0].price}
+                                </del>
+                              </sub>
+                            </>
+                          ) : (
+                            <>
+                              {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                            </>
+                          )}
                         </h6>
                       </div>
                       <div className="about-date">
+                        {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                          Das Angebot endet am
+                          <i className="bx bxs-calendar" />
+                          {closestUpcomingCourse[0].OfferEndDate}
+                        </p>}
                         <p>
-                            <i className="bx bxs-map" />
-                            {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
-                            }
-                       
+                          <i className="bx bxs-map" />
+                          {
+                            closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
+                          }
+
                         </p>
                         <p>
-                            <i className="bx bxs-calendar" />
-                            
+                          <i className="bx bxs-calendar" />
 
 
-                            {/* {
+
+                          {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
-                            }
-                           <span className="my-2">-</span>  
-                            {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
-                            }
+                          {
+                            formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
+                          }
+                          <span className="my-2">-</span>
+                          {
+                            formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
+                          }
 
                         </p>
                       </div>
-                 
+
                       <div className="about-contact">
                         <a href="tel:+4906920134987">
                           <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
@@ -491,10 +520,10 @@ const Yin_Yoga = () => {
                           <i className="bx bxs-envelope" /> info@turiyayoga.de
                         </a>
                       </div>
-                      </div>
-                    ) : (
-                        <div className="div">
-                          <div className="about-text">
+                    </div>
+                  ) : (
+                    <div className="div">
+                      <div className="about-text">
                         <p>
                           Reise und Unterkunft sind nicht immer im Schulungspreis
                           enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
@@ -509,12 +538,12 @@ const Yin_Yoga = () => {
                           <i className="bx bxs-envelope" /> info@turiyayoga.de
                         </a>
                       </div>
-                        </div>
-                        
-                    )
-                  }
+                    </div>
+
+                  )
+                }
               </div>
-              </div>
+            </div>
             {/* .sidebar end */}
           </div>
         </div>
@@ -531,16 +560,14 @@ const Yin_Yoga = () => {
               {faqItems1.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex1 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex1 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(1, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex1 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex1 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -563,16 +590,14 @@ const Yin_Yoga = () => {
               {faqItems2.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex2 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex2 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(2, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex2 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex2 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -603,16 +628,14 @@ const Yin_Yoga = () => {
               {faqItems3.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex3 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex3 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(3, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex3 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex3 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -645,16 +668,14 @@ const Yin_Yoga = () => {
               {faqItems4.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex4 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex4 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(4, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex4 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex4 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -675,16 +696,14 @@ const Yin_Yoga = () => {
               {faqItems5.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex5 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex5 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(5, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex5 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex5 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -714,7 +733,7 @@ const Yin_Yoga = () => {
       <CheckWrapper />
       <ParralaxWrapper />
 
- 
+
 
       {isDialogVisible && (
         <div
