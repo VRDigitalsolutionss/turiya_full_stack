@@ -101,16 +101,16 @@ const Ourphilosophy = () => {
     status: "",
   });
   const [videoId, setVideoId] = useState("")
-  
-    useEffect(() => {
-      if(!videoId && Ourphilosophy && Ourphilosophy.Slider_videolink){
-        setVideoId(Ourphilosophy.Slider_videolink)
-      }
-    },[videoId])
+
+  useEffect(() => {
+    if (!videoId && Ourphilosophy && Ourphilosophy.Slider_videolink) {
+      setVideoId(Ourphilosophy.Slider_videolink)
+    }
+  }, [videoId])
 
   const fetchData = () => {
     axios
-    .get(BASE_URL + `/our_philosophy`)
+      .get(BASE_URL + `/our_philosophy`)
       .then((response) => {
         console.log("response of our story", response);
 
@@ -141,9 +141,9 @@ const Ourphilosophy = () => {
           setVideoId(data.Slider_videolink)
 
 
-        
-          
-            var imageUrlcustum = data.Slide_Image
+
+
+          var imageUrlcustum = data.Slide_Image
             ? BASE_URL_IMAGE + `/images/our_philoshpy/${data.Slide_Image}`
             : ""; // Fallback image or empty string
 
@@ -205,46 +205,21 @@ const Ourphilosophy = () => {
   // `<p>Selbstredend konnten wir unsere Philosophie als Yoga-Ausbildungsakademie nicht von unserer Lebensphilosophie trennen. In einer der größen Schriften des Yoga, den Patanjali Yoga Sutras, ist unsere Haltung gegenüber anderen und der Welt um uns herum durch das zu bestärken was man Yamas nennt</p><p>Gewaltlosigkeit und Wahrhaftigkeit.Für uns als Team geht es darum, ehrlich und sicher darin zu sein, was wir euch mitteilen und anbieten, sowie, was wir wissen und lehren. Wir bieten auch Transparenz darüber, wo sonst (oder mit wem sonst) ihr nach dem Kurs selbstständig lernen und wachsen könnt. Wir ermutigen euch darin, eure eigenen Flügel auszubreiten und die Reise fortzusetzen.</p><p>Nicht stehlen. Wir schätzen deine Zeit sehr und versprechen, sie niemals als selbstverständlich zu betrachten. In unseren Yogalehrerausbildungen, Kursen und in der Gemeinschaft bemühen wir uns, eure Erfahrungen zu optimieren. Eure Investition in persönliches Wachstum ist uns wichtig, deshalb planen wir jede Session sorgfältig, um das Beste daraus zu machen.</p><p>Brahmacharya wird oft nur mit Zölibat in Verbindung gebracht. Doch ein weiser Lehrer hat uns einmal gelehrt, dass es eigentlich bedeutet, alles mit vollem Herzen zu tun. Auf diese Weise wird jede Handlung zu einer Hingabe an das wahre Selbst oder wie auch immer du es nennen magst. Das bildet den Kern unserer Arbeit und ist stets unser Ziel.</p><p>Unsere Handlungen werden nicht von Gier geleitet. Obwohl wir Geld, Wohlstand und Komfort begrüßen, sind sie nicht der Hauptantrieb unserer Akademie. Wir streben jedoch nach herausragenden Standards, und Qualität erfordert natürlich auch Investitionen.</p>`
   //   };
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
   return (
     <>
       <section id="our-philosophy">
         {/* cart-overlay */}
         <div className="cart-overlay">
-          <div className="cart-overlay-content">
-            <div className="cart-overlay-heading">
-              <div className="cart_wrapper__left-box">
-                <div className="cart_left__heading">
-                  <h6>200H Yogalehrer Ausbildung M1 + M2</h6>
-                  <div className="del">
-                    <button>
-                      <i className="bx bx-trash" />
-                    </button>
-                  </div>
-                </div>
-                <div className="cart-price">
-                  <p>€2799</p>
-                </div>
-                <div className="cart-list">
-                  <ul>
-                    <li>
-                      <i className="bx bxs-calendar" /> 30.09.2024 - 15.10.2024
-                    </li>
-                    <li>Sampurna Seminarhaus</li>
-                    <li>Noch 5 Platz frei</li>
-                  </ul>
-                </div>
-                <div className="cart-total">
-                  <h6>TOTAL</h6>
-                  <p>€2799</p>
-                </div>
-              </div>
-              <div className="anmeldung">
-                <a href="registration.php" className="global_btn">
-                  ANMELDUNG
-                </a>
-              </div>
-            </div>
-          </div>
+
         </div>
         {/* banner section unsere-Philosophie */}
         <section className="banner_wrapper">
@@ -509,42 +484,53 @@ const Ourphilosophy = () => {
                 </div>
               </div>
               <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
+                <div className="about_wrapper__right mb-3">
+                  {
                     closestUpcomingCourse[0] ? (
                       <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
-                      </div>
+
+                        <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                        <div className="price-tag">
+                          <h6>
+                            <i className="bx bxs-purchase-tag" />
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                              <>
+                                {closestUpcomingCourse[0].Offerprice}€
+                                <sub>
+                                  <del
+                                    style={{
+                                      color: "rgb(255, 87, 34)",
+                                      fontSize: "17px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {closestUpcomingCourse[0].price}
+                                  </del>
+                                </sub>
+                              </>
+                            ) : (
+                              <>
+                                {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                              </>
+                            )}
+                          </h6>
+                        </div>
                         <div className="about-date">
-                          
-                        <p>
-
-Das Angebot endet am   
-<i className="bx bxs-calendar" />
-{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
-
-
-</p>
-                        <p>
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                            Das Angebot endet am
+                            <i className="bx bxs-calendar" />
+                            {closestUpcomingCourse[0].OfferEndDate}
+                          </p>}
+                          <p>
                             <i className="bx bxs-map" />
                             {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
+                              closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
                             }
-                       
-                        </p>
-                        <p>
+                          </p>
+                          <p>
                             <i className="bx bxs-calendar" />
-                            
+
 
 
                             {/* {
@@ -552,47 +538,47 @@ Das Angebot endet am
                              :null
                             } */}
                             {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
                             }
-                           <span className="my-2">-</span>  
+                            <span className="my-2">-</span>
                             {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
                             }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                          </p>
+                        </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im Schulungspreis
+                            enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                            einfach an. Wir helfen Ihnen gerne weiter.
+                          </p>
                         </div>
-                        
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+
                     )
                   }
-              </div>
+                </div>
               </div>
             </div>
           </div>

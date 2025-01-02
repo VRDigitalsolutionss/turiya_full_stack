@@ -50,19 +50,19 @@ const OurStory = () => {
   }
 
 
-const [upcomingCourse,setUpcomingCourse] = useState("");
+  const [upcomingCourse, setUpcomingCourse] = useState("");
 
   const getUpcomingCourse = () => {
     axios
-    .get(BASE_URL + "/getModuleByLocation/Goa")
-    .then((response) => {
-      console.log("response of Goa courses", response.data);
-      const data = response.data.data;
-      setUpcomingCourse(data)
-    })
-    .catch((error) => {
-      console.error("Error fetching data: ", error);
-    });
+      .get(BASE_URL + "/getModuleByLocation/Goa")
+      .then((response) => {
+        console.log("response of Goa courses", response.data);
+        const data = response.data.data;
+        setUpcomingCourse(data)
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
   }
 
 
@@ -119,10 +119,10 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
   const [videoId, setVideoId] = useState("")
 
   useEffect(() => {
-    if(!videoId && ourStory && ourStory.Slider_videolink){
+    if (!videoId && ourStory && ourStory.Slider_videolink) {
       setVideoId(ourStory.Slider_videolink)
     }
-  },[videoId])
+  }, [videoId])
 
   const fetchData = () => {
     axios
@@ -219,6 +219,15 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
   //   <p>Ausgezeichnete <b>Ausbildungsqualität</b> , hohe <b>Kundenzufriedenheit</b>, solides<b> Wissen</b>, internationale <b>Erfahrung </b>und absolute <b>Begeisterung</b> – Das sind wir!</p>
   // }
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
   return (
     <>
       <section id="OurStory">
@@ -294,42 +303,7 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
           </div>
           {/* cart-overlay */}
           <div className="cart-overlay">
-            <div className="cart-overlay-content">
-              <div className="cart-overlay-heading">
-                <div className="cart_wrapper__left-box">
-                  <div className="cart_left__heading">
-                    <h6>200H Yogalehrer Ausbildung M1 + M2</h6>
-                    <div className="del">
-                      <button>
-                        <i className="bx bx-trash" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="cart-price">
-                    <p>€2799</p>
-                  </div>
-                  <div className="cart-list">
-                    <ul>
-                      <li>
-                        <i className="bx bxs-calendar" /> 11.01.2025 -
-                        31.01.2025
-                      </li>
-                      <li>Sampurna Seminarhaus</li>
-                      <li>Noch 5 Platz frei</li>
-                    </ul>
-                  </div>
-                  <div className="cart-total">
-                    <h6>TOTAL</h6>
-                    <p>€2799</p>
-                  </div>
-                </div>
-                <div className="anmeldung">
-                  <Link to="registration.php" className="global_btn">
-                    ANMELDUNG
-                  </Link>
-                </div>
-              </div>
-            </div>
+
           </div>
           {/* banner section  // unsere_geschite */}
           <section className="banner_wrapper">
@@ -442,91 +416,103 @@ const [upcomingCourse,setUpcomingCourse] = useState("");
                   </div>
                 </div>
                 <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
-                    closestUpcomingCourse[0] ? (
-                      <div>
+                  <div className="about_wrapper__right mb-3">
+                    {
+                      closestUpcomingCourse[0] ? (
+                        <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
+
+                          <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                          <div className="price-tag">
+                            <h6>
                               <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
+                              {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                                <>
+                                  {closestUpcomingCourse[0].Offerprice}€
+                                  <sub>
+                                    <del
+                                      style={{
+                                        color: "rgb(255, 87, 34)",
+                                        fontSize: "17px",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {closestUpcomingCourse[0].price}
+                                    </del>
+                                  </sub>
+                                </>
+                              ) : (
+                                <>
+                                  {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                                </>
+                              )}
                             </h6>
-                           
-                      </div>
+                          </div>
                           <div className="about-date">
-                          <p>
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                              Das Angebot endet am
+                              <i className="bx bxs-calendar" />
+                              {closestUpcomingCourse[0].OfferEndDate}
+                            </p>}
+                            <p>
+                              <i className="bx bxs-map" />
+                              {
+                                closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
+                              }
 
-Das Angebot endet am   
-<i className="bx bxs-calendar" />
-{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
-
-
-</p>
-                        <p>
-                            <i className="bx bxs-map" />
-                            {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
-                            }
-                       
-                        </p>
-                        <p>
-                            <i className="bx bxs-calendar" />
-                            
+                            </p>
+                            <p>
+                              <i className="bx bxs-calendar" />
 
 
-                            {/* {
+
+                              {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
-                            }
-                           <span className="my-2">-</span>  
-                            {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
-                            }
+                              {
+                                formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
+                              }
+                              <span className="my-2">-</span>
+                              {
+                                formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
+                              }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
-                      </div>
-                    ) : (
+                            </p>
+                          </div>
+
+                          <div className="about-contact">
+                            <a href="tel:+4906920134987">
+                              <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                            </a>
+                            <a href="mailto:info@turiyayoga.de">
+                              <i className="bx bxs-envelope" /> info@turiyayoga.de
+                            </a>
+                          </div>
+                        </div>
+                      ) : (
                         <div className="div">
                           <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                            <p>
+                              Reise und Unterkunft sind nicht immer im Schulungspreis
+                              enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                              einfach an. Wir helfen Ihnen gerne weiter.
+                            </p>
+                          </div>
+                          <div className="about-contact">
+                            <a href="tel:+4906920134987">
+                              <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                            </a>
+                            <a href="mailto:info@turiyayoga.de">
+                              <i className="bx bxs-envelope" /> info@turiyayoga.de
+                            </a>
+                          </div>
                         </div>
-                        
-                    )
-                  }
-              </div>
-              </div>
+
+                      )
+                    }
+                  </div>
+                </div>
               </div>
             </div>
           </section>

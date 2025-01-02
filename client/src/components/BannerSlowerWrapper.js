@@ -62,6 +62,15 @@ const BannerSlowerWrapper = () => {
   const formattedDate = convertDateFormat(dateString);
   console.log(formattedDate); // Output: 09.01.2025
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+  
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+  
+    return today <= offerEnd;
+  }
+
   return (
     <>
       <section className="slower_wrapper">
@@ -178,43 +187,53 @@ const BannerSlowerWrapper = () => {
                         <i className="bx bxs-calendar me-1" />
                         {convertDateFormat(
                           closestUpcomingCourse &&
-                            closestUpcomingCourse[0].StartDate
+                          closestUpcomingCourse[0].StartDate
                         )}{" "}
                         &nbsp;-&nbsp;
                         {convertDateFormat(
                           closestUpcomingCourse &&
-                            closestUpcomingCourse[0].EndDate
+                          closestUpcomingCourse[0].EndDate
                         )}{" "}
                       </li>
                     </ul>
                   </div>
-            
+
 
 
 
 
                   <div className="price">
+                    {
+                      closestUpcomingCourse &&
+                        closestUpcomingCourse[0] &&
+                        isOfferValid(closestUpcomingCourse[0].OfferEndDate) &&
+                        closestUpcomingCourse[0].Offerprice > 0 ? (
+                        <button
+                          className="table-btn triggerDialogBox me-2"
+                          style={{
+                            border: "0px solid",
+                            color: "white",
+                            backgroundColor: "rgb(255, 87, 34)",
+                          }}
+                          data-id={9}
+                          onClick={handletriggerDialogBox}
+                        >
+                          €{closestUpcomingCourse[0].Offerprice}
+                        </button>
+                      ) : null
+                    }
 
-{
-
-  closestUpcomingCourse && closestUpcomingCourse[0].Offerprice?<button
-  className="table-btn triggerDialogBox me-2"
-  style={{ border: "0px solid",color:'white',backgroundColor:'rgb(255, 87, 34)' }}
-  data-id={9}
-  onClick={handletriggerDialogBox}>
-  €{closestUpcomingCourse && closestUpcomingCourse[0].Offerprice}
-</button>:null
-}
-
-<button
-  className="table-btn triggerDialogBox"
-  style={{ border: "0px solid" }}
-  data-id={9}
-  onClick={handletriggerDialogBox}>
-  €{closestUpcomingCourse && closestUpcomingCourse[0].Offerprice?<del>{closestUpcomingCourse && closestUpcomingCourse[0].price}</del>:closestUpcomingCourse && closestUpcomingCourse[0].price}
-  
-</button>{" "}
-</div>
+                    <button
+                      className="table-btn triggerDialogBox"
+                      style={{ border: "0px solid" }}
+                      data-id={9}
+                      onClick={handletriggerDialogBox}>
+                      €{closestUpcomingCourse &&
+                        closestUpcomingCourse[0] &&
+                        isOfferValid(closestUpcomingCourse[0].OfferEndDate) &&
+                        closestUpcomingCourse[0].Offerprice > 0 ? <del>{closestUpcomingCourse && closestUpcomingCourse[0].price}</del> : closestUpcomingCourse && closestUpcomingCourse[0].price}
+                    </button>{" "}
+                  </div>
 
 
                 </div>
