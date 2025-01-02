@@ -395,7 +395,7 @@ const Navbar = () => {
                         </Link>
                         <i className="bx bx-chevron-right" />
                         <div className="mega_dropdown__list">
-                          <ul>
+                          <ul style={{overflowY: 'scroll', maxHeight: '600px'}}>
                             <li>
                               <Link to="/yogalehrer-ausbildung-200h">
                                 200H AYA Yogalehrer Ausbildung

@@ -15,6 +15,7 @@ const BookingDetail = () => {
   const navigate = useNavigate();
   const [invoiceType, setInvoiceType] = useState("Private_Invoice"); // State for invoice type
   const [addressType, setAddressType] = useState("Other_Address"); // State for address type
+  const [loading, setLoading] = useState(true)
 
   const [formData, setFormData] = useState({
     registeredUserId: userId, // Pre-filled ID
@@ -51,15 +52,18 @@ const BookingDetail = () => {
 
   const fetchCourseById = () => {
     if (id) {
+      setLoading(true);
       axios
         .get(`${BASE_URL}/getModuleById/${id}`)
         .then((resonse) => {
           console.log("response of billing module", resonse.data.data);
           setCourseData(resonse.data.data);
+          setLoading(false)
         })
         .catch((error) => {
           console.log("error", error);
           alert("something went wrong");
+          setLoading(false)
         });
     } else {
       alert("id not found");
@@ -212,7 +216,13 @@ const BookingDetail = () => {
 
   return (
     <>
-      <div className="BookingDetail">
+      {loading ?
+        <div className=" d-flex justify-content-center align-items-centers my-5 gap-5">
+          <div class="spinner-border text-success" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <p className="mb-0">Loading your details..</p>
+        </div> : <div className="BookingDetail">
         <div className="global_content">
           <div className="container">
             <div className="row">
@@ -500,7 +510,7 @@ const BookingDetail = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </>
   );
 };
