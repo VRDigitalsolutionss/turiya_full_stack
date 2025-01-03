@@ -182,7 +182,7 @@ const BilingDetails = () => {
   useEffect(() => {
     fetchData();
     fetchCourseById();
-  }, []);
+  }, [login_id, id]);
 
 
   function isOfferValid(offerEndDate) {
@@ -264,8 +264,6 @@ const BilingDetails = () => {
                     <p>€0.00</p>
                   </div>
                   {
-
-
                     userDetails.invoiceType
                       !== "Private_Invoice" ? <div className="cart_details__heading">
                       <h6>VAT (19%)</h6>
