@@ -12,6 +12,7 @@ function Invoice() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false); // Initially modal is hidden
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -33,39 +34,58 @@ function Invoice() {
     });
   };
 
+  console.log("due amount");
+
   const handleSubmit = () => {
     console.log("Form Data Submitted:", formData);
 
-    axios.post(BASE_URL+ `/add_transactionDetail`,formData).then((response) => {
-      console.log("response:", response);
-      if(response.
-        status == 201
-      ) {
-        fetchTransactionDetail();
+    const paidamount = transaction.due_amount;
+
+    const payload = {
+      purchasedModuleId: purchased_module_id,
+      transactionId: transactionId?transactionId:"000",
+      amount: formData.amount,
+      remark: formData.remark,
+      totalAmount: due_total_price,
+    };
+
+    axios
+      .post(BASE_URL + `/add_transactionDetail`, payload)
+      .then((response) => {
+        console.log("response:", response);
+        if (response.status == 201) {
+          fetchTransactionDetail();
+          setFormData({
+            amount: "",
+            remark: "",
+            totalAmount: "",
+          });
+          fetchTransactionDetail(transactionId);
         }
-    }).catch((error) => {
-      console.log(error);
-    })
- 
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  const [transaction, setTransaction] = useState('');
- const fetchTransactionDetail = () => {
-  axios.get(BASE_URL+ `/get_transactionDetail`).then((response) => {
-    console.log("response:", response.data);
-    setTransaction(response.data)
+  const [transaction, setTransaction] = useState("");
 
-  }).catch((error) => {
-    console.log(error);
-  })
-  }
+  const fetchTransactionDetail = (transaction_id) => {
+    if (transaction_id) {
+      console.log(fetchTransactionDetail);
+      axios
+        .get(BASE_URL + `/get_transactionDetail/${transaction_id}`)
+        .then((response) => {
+          console.log(" transaction detail", response.data);
+          setTransaction(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
-  console.log("transaction",transaction)
-
-
-  useEffect(() => {
-    fetchTransactionDetail();
-  }, []);
+  console.log("transaction", transaction);
 
   const fetchData = () => {
     axios
@@ -105,7 +125,9 @@ function Invoice() {
     ? data &&
       data.filter(
         (item) =>
-          item._id === search.trim() || item.amount_due === search.trim()
+          item._id === search.trim() ||
+          item.name == search.trim() ||
+          item.customerName == search.trim()
       )
     : data;
 
@@ -280,20 +302,50 @@ function Invoice() {
     doc.save(`invoice_detail_${row._id}.pdf`);
   };
 
-  const [due, setDue] = useState('');
+  const [due_total_price, setDue_total_price] = useState("");
+  const [purchased_module_id, setPurchased_module_id] = useState("");
+  const [transactionId, setTransactionId] = useState("");
 
-  const handlePaid = (due_amount) => {
-
-    alert("row",due_amount)
-    setDue(due_amount || 0)
+  const handlePaid = (row) => {
+    console.log("due amount: ", row);
+    setTransactionId(row.transactionDetail._id ? row.transactionDetail._id : "");
     setShowModal(true);
+    setDue_total_price(row.price);
+
+    fetchTransactionDetail(
+      row.transactionDetail._id ? row.transactionDetail._id : "0"
+    );
+    setPurchased_module_id(row._id);
   };
 
   const handleClose = () => {
     setShowModal(false);
   };
 
- 
+  const downloadInvoice = async (invoiceId) => {
+    const invoiceId2 = "6763c0a093898e80869c4552";
+    console.log("invoiceId", invoiceId);
+    try {
+      const response = await axios.get(
+        BASE_URL + `/get_purchasedModule_invoice/${invoiceId}`,
+        {
+          responseType: "blob", // Ensure the response is treated as a file
+        }
+      );
+
+      // Create a Blob URL for the PDF
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `invoice_${invoiceId}.pdf`); // Set the file name
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error downloading the invoice:", error);
+    }
+  };
+
   return (
     <div className="container-fluid mt-3">
       <div className="card p-4 shadow-sm" style={{ border: "none" }}>
@@ -416,10 +468,10 @@ function Invoice() {
                       Overdue By 0 Days
                     </span>
                     <br />
-                    {row.amount_due} €<br />
+                    {row.price} €<br />
                     <button
                       type="button"
-                      onClick={()=>handlePaid(row.amount_due)}
+                      onClick={() => handlePaid(row)}
                       className="btn btn-outline-danger btn-sm mt-2">
                       paid
                     </button>
@@ -428,7 +480,8 @@ function Invoice() {
                   <td>
                     <button
                       className="btn btn-success btn-sm me-3"
-                      onClick={() => handleDownloadDetial(row)}>
+                      // onClick={() => handleDownloadDetial(row)}
+                      onClick={() => downloadInvoice(row._id)}>
                       Download Detail
                     </button>
                     <button
@@ -495,7 +548,7 @@ function Invoice() {
                     onClick={handleClose}
                   />
                 </div>
-                {/* ========================================== */}
+
                 <div>
                   <div className="modal-body pt-4" id="AmountmodalBody">
                     <table className="table table-bordered text-center table-striped">
@@ -506,106 +559,70 @@ function Invoice() {
                           <th>Remark</th>
                           <th>Status</th>
                         </tr>
-                      </thead>{" "}
+                      </thead>
                       <tbody id="table_data">
-                        {
-                          transaction && transaction.map((item, index) => {
-                            return (
-                              <tr key={index}>
-                                <td>{item.createdAt}</td>
-                                <td>{item.amount}</td>
-                                <td>{item.remark}</td>
-                                <td>
-                                  <button
-                                    className={`btn btn-warning btn-sm ${
-                                     !item.status
-                                       ? "disabled"
-                                        : ""
-                                    }`}
-                                  >
-                                    {item.status? "Full Paid" : "Partially Paid"}
-                                  </button>
-                                </td>
-                              </tr>
-                            );
-                          })
-                        }
                         <tr>
-                          <th >2025-01-01 10:14:06</th>
-                          <td className="border">300 €</td>
-                          <td>piad</td>
+                          <td>{transaction.createdAt}</td>
+                          <td>{transaction.totalPaidAmount}</td>
+                          <td>{transaction.remark}</td>
                           <td>
                             <button
-                              
-                            
-                              className="btn btn-warning btn-sm">
-                              Full Paid
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>{" "}
-                      <tbody id="table_data" >
-                        <tr>
-                          <th >2025-01-01 17:09:36</th>
-                          <td className="border">2 €</td>
-                          <td>test</td>
-                          <td>
-                          <button
-                              
-                            
-                              className="btn btn-warning btn-sm">
-                              Full Paid
+                              className={`btn btn-warning btn-sm ${
+                                transaction.remark == "Partially Paid"
+                                  ? "disabled"
+                                  : ""
+                              }`}>
+                              {transaction.remark !== "Partially Paid"
+                                ? "Full Paid"
+                                : "Partially Paid"}
                             </button>
                           </td>
                         </tr>
                       </tbody>
                     </table>
                     <h6 className="mt-3 mb-3">
-                      Total Amount: 2799.00 € &nbsp;&nbsp;|&nbsp; Total Paid
-                      Amount: 302 € &nbsp;&nbsp;|&nbsp; Rest Amount: 2497 €{" "}
+                      Total Amount: { transaction.totalAmount } €
+                      &nbsp;&nbsp;|&nbsp; Total Paid Amount:
+                      { transaction.totalPaidAmount } € &nbsp;&nbsp;|&nbsp; Rest
+                      Amount: { transaction.restAmount }€{" "}
                     </h6>
                   </div>
                   <div className="modal-body">
-              <div className="mb-3">
-                <label htmlFor="amount" className="form-label">
-                  Paid Amount*
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="amount"
-                  name="amount"
-                  placeholder="Enter amount"
-                  value={formData.amount}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="remark" className="form-label">
-                  Remarks? *
-                </label>
-                <textarea
-                  className="form-control"
-                  id="remark"
-                  name="remark"
-                  rows={3}
-                  value={formData.remark}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-      
-           
-        
-          
+                    <div className="mb-3">
+                      <label htmlFor="amount" className="form-label">
+                        Paid Amount*
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="amount"
+                        name="amount"
+                        placeholder="Enter amount"
+                        value={formData.amount}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="remark" className="form-label">
+                        Remarks? *
+                      </label>
+                      <textarea
+                        className="form-control"
+                        id="remark"
+                        name="remark"
+                        rows={3}
+                        value={formData.remark}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+
                   <div className="modal-footer">
                     <button
                       type="button"
                       className="btn btn-secondary me-3"
                       data-bs-dismiss="modal"
-                      
-                      onClick={handleClose}
-                    >
+                      onClick={handleClose}>
                       Close
                     </button>
                     <button
@@ -620,93 +637,86 @@ function Invoice() {
                 </div>
               </div>
             </div>
-            {/* Custom Modal */}
-            {/* {showModal && (
-
-)} */}
-
-            {/* Inline styles for custom modal */}
-            <style jsx>{`
-              .custom-modal-overlay {
-                position: fixed;
-                top: 50px;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(
-                  0,
-                  0,
-                  0,
-                  0.2
-                ); /* Semi-transparent backdrop */
-                display: flex;
-                justify-content: center;
-                align-items: top;
-                z-index: 1000;
-              }
-
-              .custom-modal-content {
-                background-color: white;
-                padding: 44px 74px;
-                padding-top: 20px;
-                border-radius: 8px;
-                width: 100%;
-                max-width: 900px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                position: relative;
-                height: fit-content;
-                top: 30px;
-              }
-
-              .custom-modal-close {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background: none;
-                border: none;
-                font-size: 30px;
-                color: #333;
-                cursor: pointer;
-              }
-
-              .custom-modal-close:hover {
-                color: #e74c3c;
-              }
-
-              .custom-modal-input {
-                margin-bottom: 15px;
-              }
-
-              .custom-modal-input input {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-              }
-
-              .custom-modal-btn {
-                width: 100%;
-                padding: 10px;
-                background-color: #3498db;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-              }
-
-              .custom-modal-btn:hover {
-                background-color: #2980b9;
-              }
-
-              .text-danger {
-                color: red;
-                font-size: 12px;
-              }
-            `}</style>
           </div>
         )}
 
-        {/* ============================================================= */}
+        <style jsx>{`
+          .custom-modal-overlay {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(
+              0,
+              0,
+              0,
+              0.2
+            ); /* Semi-transparent backdrop */
+            display: flex;
+            justify-content: center;
+            align-items: top;
+            z-index: 1000;
+          }
+
+          .custom-modal-content {
+            background-color: white;
+            padding: 44px 74px;
+            padding-top: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            height: fit-content;
+            top: 30px;
+          }
+
+          .custom-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: #333;
+            cursor: pointer;
+          }
+
+          .custom-modal-close:hover {
+            color: #e74c3c;
+          }
+
+          .custom-modal-input {
+            margin-bottom: 15px;
+          }
+
+          .custom-modal-input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+          }
+
+          .custom-modal-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+
+          .custom-modal-btn:hover {
+            background-color: #2980b9;
+          }
+
+          .text-danger {
+            color: red;
+            font-size: 12px;
+          }
+        `}</style>
       </div>
     </div>
   );

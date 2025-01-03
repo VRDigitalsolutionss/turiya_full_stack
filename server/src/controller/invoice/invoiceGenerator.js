@@ -64,6 +64,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       customerNumber,
       orderNumber,
       dueDate,
+      due_amount,
       customerName,
       customerAddress,
       productDescription,

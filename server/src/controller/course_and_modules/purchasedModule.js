@@ -83,7 +83,34 @@ const deleteOldPurchasedModules = async (req, res) => {
     }
 };
 
+const get_purchasedModuleById = async (req, res) => {
+    const { id } = req.params;  // Extract the 'id' from the request parameters
+    try {
+        // Find the module by ID
+        const purchasedCourse = await PurchasedModule.findById(id);
 
+        // Check if the module was found
+        if (!purchasedCourse) {
+            return res.status(404).json({
+                success: false,
+                message: 'Module not found',
+            });
+        }
+
+        // If the module is found, return it in the response
+        res.status(200).json({
+            success: true,
+            data: purchasedCourse,
+        });
+    } catch (error) {
+        console.error('Error fetching module by ID:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch module',
+            error: error.message,
+        });
+    }
+};
 
 const get_totalpurchasedModule2 = async (req, res) => {
     try {
@@ -143,4 +170,4 @@ const get_totalpurchasedModule = async (req, res) => {
 };
 
 
-module.exports={get_purchasedModule,get_totalpurchasedModule,get_purchasedModule2,deleteOldPurchasedModules}
+module.exports={get_purchasedModuleById,get_purchasedModule,get_totalpurchasedModule,get_purchasedModule2,deleteOldPurchasedModules}

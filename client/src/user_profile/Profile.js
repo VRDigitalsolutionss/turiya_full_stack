@@ -224,10 +224,10 @@ const Profile = () => {
                       </div>
                       <div className="profile-row">
                         <p>
-                          <b>Padi Amount : €</b>
+                          <b>Padi Amount : 0 €</b>
                           {/*<span> Überfällig seit 0 Tage </span>*/}
-                          <b>&nbsp;&nbsp;Total Amount : €{item.totalPrice}</b>
-                          <b>&nbsp;&nbsp;Left Amount : -{item.totalPrice}</b>
+                          <b>&nbsp;&nbsp;Total Amount : €{item.price}</b>
+                          <b>&nbsp;&nbsp;Left Amount : €{item.price}</b>
                         </p>
                         <p>
                           <span>Unbezahlt </span>

@@ -7,7 +7,7 @@ const transactionDetailRoute = express.Router();
 
 
 transactionDetailRoute.post('/add_transactionDetail',AddTransactionDetail);
-transactionDetailRoute.get('/get_transactionDetail',getTransactionDetail);
+transactionDetailRoute.get('/get_transactionDetail/:transactionId',getTransactionDetail);
 
 
 

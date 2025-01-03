@@ -141,15 +141,15 @@ const BilingDetails = () => {
 
 
     console.log("total price", payload)
-    // axios
-    //   .post(`${BASE_URL}/generateInvoice`, payload)
-    //   .then((response) => {
-    //     console.log("response of invoice", response.data.data);
-    //     navigate('/thank-you');
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //   });
+    axios
+      .post(`${BASE_URL}/generateInvoice`, payload)
+      .then((response) => {
+        console.log("response of invoice", response.data.data);
+        navigate('/thank-you');
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   const fetchData = () => {
