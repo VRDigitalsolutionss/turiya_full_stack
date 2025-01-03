@@ -12,7 +12,7 @@ import ParralaxWrapper from "../../ParralaxWrapper";
 import dilogImg from "../../../assets/images/high-important.png";
 import axios from "axios";
 import SimpleBanner from "../../banner/SimpleBanner3";
-import { BASE_URL,BASE_URL_IMAGE } from "../../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../../config";
 const Index2 = () => {
 
   const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
@@ -39,7 +39,7 @@ const Index2 = () => {
         console.log("respnse of fetchEarlyBirdData", response.data.data[0]);
         const data = response.data.data[0];
         const startDate = data && data.StartDate;
-        console.log("start date",data)
+        console.log("start date", data)
         setEarlyData(response.data.data[0]);
       })
       .catch((error) => {
@@ -236,6 +236,16 @@ const Index2 = () => {
     return `${day}.${month}.${year}`;
   }
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
+
   return (
     <>
       <div ref={bannerRef}>
@@ -268,10 +278,10 @@ const Index2 = () => {
                   <h1> {mainData && mainData.about_first_section_Heading}</h1>
                   <div className="kurse_link">
                     {/* Attach event handlers to trigger scroll */}
-                    <a onClick={() => scrollToSection( faqRef)} style={{color:"#9bbb59"}}>
+                    <a onClick={() => scrollToSection(faqRef)} style={{ color: "#9bbb59" }}>
                       wichtige info
                     </a>
-                    <a onClick={() => scrollToSection(bannerRef)} style={{color:"#9bbb59"}}>termine</a>
+                    <a onClick={() => scrollToSection(bannerRef)} style={{ color: "#9bbb59" }}>termine</a>
                   </div>
 
                   <p
@@ -303,41 +313,54 @@ const Index2 = () => {
               </div>
 
               <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
+                <div className="about_wrapper__right mb-3">
+                  {
                     closestUpcomingCourse[0] ? (
                       <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
-                      </div>
+
+                        <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                        <div className="price-tag">
+                          <h6>
+                            <i className="bx bxs-purchase-tag" />
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                              <>
+                                {closestUpcomingCourse[0].Offerprice}€
+                                <sub>
+                                  <del
+                                    style={{
+                                      color: "rgb(255, 87, 34)",
+                                      fontSize: "17px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {closestUpcomingCourse[0].price}
+                                  </del>
+                                </sub>
+                              </>
+                            ) : (
+                              <>
+                                {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                              </>
+                            )}
+                          </h6>
+                        </div>
                         <div className="about-date">
-                        <p>
-
-Das Angebot endet am   
-<i className="bx bxs-calendar" />
-{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
-
-
-</p>
-                        <p>
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                            Das Angebot endet am
+                            <i className="bx bxs-calendar" />
+                            {formatDate(closestUpcomingCourse[0].OfferEndDate)}
+                          </p>}
+                          <p>
                             <i className="bx bxs-map" />
                             {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
+                              closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
                             }
-                       
-                        </p>
-                        <p>
+
+                          </p>
+                          <p>
                             <i className="bx bxs-calendar" />
-                            
+
 
 
                             {/* {
@@ -345,50 +368,50 @@ Das Angebot endet am
                              :null
                             } */}
                             {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
                             }
-                           <span className="my-2">-</span>  
+                            <span className="my-2">-</span>
                             {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
                             }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                          </p>
+                        </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im Schulungspreis
+                            enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                            einfach an. Wir helfen Ihnen gerne weiter.
+                          </p>
                         </div>
-                        
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+
                     )
                   }
-              </div>
+                </div>
               </div>
 
-              
+
             </div>
           </div>
         </section>
@@ -406,16 +429,14 @@ Das Angebot endet am
               {faqItems1.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex1 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex1 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(1, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex1 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex1 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -448,16 +469,14 @@ Das Angebot endet am
               {faqItems2.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex2 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex2 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(2, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex2 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex2 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -478,16 +497,14 @@ Das Angebot endet am
               {faqItems3.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex3 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex3 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(3, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex3 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex3 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -508,16 +525,14 @@ Das Angebot endet am
               {faqItems4.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex4 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex4 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(4, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex4 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex4 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -539,16 +554,14 @@ Das Angebot endet am
               {faqItems5.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex5 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex5 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(5, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex5 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex5 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -580,16 +593,14 @@ Das Angebot endet am
               {faqItems6.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex6 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex6 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(6, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex6 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex6 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -611,16 +622,14 @@ Das Angebot endet am
               {faqItems7.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex7 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex7 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(6, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex7 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex7 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>

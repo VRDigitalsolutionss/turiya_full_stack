@@ -500,7 +500,7 @@ const Munchen = () => {
                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
                             Das Angebot endet am
                             <i className="bx bxs-calendar" />
-                            {closestUpcomingCourse[0].OfferEndDate}
+                            {formatDate(closestUpcomingCourse[0].OfferEndDate)}
                           </p>}
 
                           <p>

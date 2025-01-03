@@ -110,14 +110,14 @@ const BookingDetail = () => {
   };
 
 
-  const updateInvoiceType = () => {
+  const updateInvoiceType = async  () => {
 
     const userid = localStorage.getItem("turiya_auth_id");
     const payload = {
       "userId": userid,
       "invoiceType": invoiceType,
     };
-    axios
+    await axios
       .put(`${BASE_URL}/addInvoiceType`, payload)
       .then((response) => {
         console.log("response of update user type", response);
@@ -128,13 +128,10 @@ const BookingDetail = () => {
   }
 
 
-  const generateInvoice = () => {
+  const generateInvoice = async () => {
 
     if (id) {
-
-
-
-      updateInvoiceType();
+      await updateInvoiceType();
       if (addressType == 'Other_Address') {
         addOtherAddress();
       }
