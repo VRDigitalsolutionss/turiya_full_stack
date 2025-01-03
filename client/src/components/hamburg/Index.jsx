@@ -22,11 +22,14 @@ import PriceCard from "../price_card/Index";
 import axios from "axios";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
+import Swal from 'sweetalert2'
+
 
 const Index = () => {
-
-
-
+  
+  
+  
+  const UserId = localStorage.getItem('turiya_auth_id');
   const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
 
   const fetchNextUpcomingCourse = () => {
@@ -343,8 +346,53 @@ const Index = () => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   // Function to toggle the dialog visibility
-  const handletriggerDialogBox = () => {
-    setIsDialogVisible(true); // Show the dialog
+  const handletriggerDialogBox = (courseid) => {
+
+    const auth_token = localStorage.getItem("turiya_auth_token");
+
+    console.log("course id: handletriggerDialogBox" + courseid, auth_token);
+    if (auth_token) {
+      // navigate("/course_booking");
+      // reducePlace(courseid);
+      addToCart(courseid);
+    } else {
+      setIsDialogVisible(true); // Show the dialog
+    }
+
+    // handletriggerDialogBox
+  };
+
+
+  const addToCart = (courseid) => {
+    const payload = {
+      moduleId: courseid,
+      userId: UserId,
+      status: "active",
+    };
+
+    axios
+      .post(BASE_URL + "/add_course_in_cart", payload)
+      .then((response) => {
+        console.log("response of cart", response.data.data);
+        Swal.fire({
+          title: "Danke!",
+          text: "Kurs im Warenkorb hinzugefügt!",
+          icon: "success"
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        Swal.fire({
+          Symbol: 'error',
+          Titel: "Benachrichtigung",
+          Text: "Etwas ist schiefgelaufen!",
+          Fußzeile: '<a href="#">Warum habe ich dieses Problem?</a>'
+        });
+
+      });
   };
 
   // Function to close the dialog
@@ -534,15 +582,15 @@ const Index = () => {
                             )}
                           </p>
                         </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
                       <div className="div">

@@ -395,7 +395,7 @@ const Navbar = () => {
                         </Link>
                         <i className="bx bx-chevron-right" />
                         <div className="mega_dropdown__list">
-                          <ul style={{overflowY: 'scroll', maxHeight: '600px'}}>
+                          <ul style={{ overflowY: 'scroll', maxHeight: '600px' }}>
                             <li>
                               <Link to="/yogalehrer-ausbildung-200h">
                                 200H AYA Yogalehrer Ausbildung
@@ -644,7 +644,7 @@ const Navbar = () => {
                                 {isValidOffer && module.Offerprice > 0 ? (
                                   <>
                                     €{module.Offerprice}{" "}
-                                    <del style={{color: '#c3c3c3'}}>€{module.price}</del>
+                                    <del style={{ color: '#c3c3c3' }}>€{module.price}</del>
                                   </>
                                 ) : (
                                   <>€{module.price}</>
@@ -672,7 +672,27 @@ const Navbar = () => {
                           </div>
                           <div className="row mt-3">
                             <div className="col-sm-10">
-                              Bitte melden Sie sich an, um zur Kasse zu gehen.
+                              {user ? <button
+                                onClick={() => {
+                                  navigate(`/course_booking/${module._id}`)
+                                  closeSideber()
+                                }}
+                                style={{
+                                  backgroundColor:
+                                    item.Place <= 3 ? "#FF5722" : "#9BBB59",
+                                  border: "0px solid",
+                                  position: 'relative',
+                                  width: 'fit-content',
+                                  padding: '5px 10px'
+                                }}
+                                className="triggerDialogBox"
+                                data-id={9}>
+                                ANMELDEN
+                              </button> :
+                                <p>
+                                  Bitte melden Sie sich an, um zur Kasse zu gehen.
+                                </p>
+                              }
                             </div>
 
                             <div className="col-sm-2">
@@ -695,23 +715,23 @@ const Navbar = () => {
                   }) :
 
 
-                <div className="mt-4">
+                  <div className="mt-4">
 
-                  <div class="cart-overlay-heading" id="cart_content">
+                    <div class="cart-overlay-heading" id="cart_content">
 
-                    <div className="row mt-3">
-                      <div className="col-sm-12 d-flex justify-content-center">
+                      <div className="row mt-3">
+                        <div className="col-sm-12 d-flex justify-content-center">
 
-                        <h4 className="empty_text">  Dein Warenkorb ist leer!</h4>
+                          <h4 className="empty_text">  Dein Warenkorb ist leer!</h4>
+
+
+                        </div>
 
 
                       </div>
-
-
                     </div>
-                  </div>
 
-                </div>
+                  </div>
 
                 }
               </div>
