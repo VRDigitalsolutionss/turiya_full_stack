@@ -564,8 +564,6 @@ const Berlin = () => {
                           <p>
                             <i className="bx bxs-calendar" />
 
-
-
                             {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null

@@ -401,23 +401,24 @@ const Index = () => {
                         </p>
                         <p>
                             <i className="bx bxs-calendar" />
-                            
-
 
                             {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
-                            }
-                           <span className="my-2">-</span>  
-                            {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
-                            }
-
-                        </p>
-                      </div>
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].StartDate
+                                : null
+                            )}
+                            <span className="my-2">-</span>
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].EndDate
+                                : null
+                            )}
+                          </p>
+                        </div>
                  
                       <div className="about-contact">
                         <a href="tel:+4906920134987">

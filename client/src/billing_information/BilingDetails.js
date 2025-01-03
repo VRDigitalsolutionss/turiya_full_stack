@@ -139,7 +139,7 @@ const BilingDetails = () => {
       email: userDetails.email,
       user_type: userDetails.userType,
       price: courseData.Offerprice ? courseData.Offerprice : courseData.price,
-
+      due_amount:courseData.Offerprice ? courseData.Offerprice : courseData.price,
       courseData: courseData,
       userDetails: userDetails
     };

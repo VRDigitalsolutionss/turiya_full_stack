@@ -414,7 +414,9 @@ _id
                     }</div>
                     <div>{row.email}</div>
                   </td>
-                  <td className="text-center"><span className="text-danger" style={{fontSize:"12px"}}>Overdue By 0 Days<br/></span>{row.amount_due} €<br/><button type="button" class="btn btn-outline-primary btn-sm">Full paid</button></td>
+                  <td className="text-center"><span className="text-danger" style={{fontSize:"12px"}}>Overdue By 0 Days<br/></span>{row.
+price
+} €<br/><button type="button" class="btn btn-outline-primary btn-sm">Full paid</button></td>
                
                   <td>
                   <button

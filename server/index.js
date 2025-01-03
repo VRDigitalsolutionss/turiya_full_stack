@@ -42,6 +42,8 @@ const addInvoiceTypeRoutes = require("./src/routes/addInvoiceRoute");
 const forgotPasswordRoute = require("./src/routes/forgotpasswordRoute");
 const resetPasswordRoute = require("./src/routes/resetPasswordRoute");
 const verifyEmailRoute = require("./src/routes/VerifyEmailRoute");
+const purchasedModuleRoute = require("./src/routes/purchasedModuleRoute");
+const transactionDetailRoute = require("./src/routes/transactionDetail");
 // const test = require('./uploads')
 app.use(cors());
 app.use(express.json());
@@ -64,7 +66,7 @@ app.use("/api", contactRoute);
 app.use("/api", userQueryRoute);
 
 // ==================================================== new added routes =================================
-
+app.use("/api", purchasedModuleRoute);
 app.use("/api", courseCategoryRoute);
 app.use("/api", moduleCategoryRoute);
 app.use("/api", customerTestimonialRoutes);
@@ -94,7 +96,7 @@ app.use("/api", addInvoiceTypeRoutes);
 app.use("/api", forgotPasswordRoute);
 app.use("/api", resetPasswordRoute);
 app.use("/api", verifyEmailRoute);
-
+app.use("/api",transactionDetailRoute)
 
 const port = process.env.PORT || 5001;
 app.listen(port, () => {

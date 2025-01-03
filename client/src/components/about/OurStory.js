@@ -18,8 +18,6 @@ import axios from "axios";
 import Gallery from "../gallery/Index";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config.js";
 
-
-
 const OurStory = () => {
   const [earlyData, setEarlyData] = useState("");
 
@@ -49,7 +47,6 @@ const OurStory = () => {
     return `${day}.${month}.${year}`;
   }
 
-
   const [upcomingCourse, setUpcomingCourse] = useState("");
 
   const getUpcomingCourse = () => {
@@ -72,7 +69,6 @@ const OurStory = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 0);
   }, []);
-
 
   const fetchEarlyBirdData = () => {
     axios
@@ -116,7 +112,7 @@ const OurStory = () => {
     meta_Title: "",
     status: "",
   });
-  const [videoId, setVideoId] = useState("")
+  const [videoId, setVideoId] = useState("");
 
   useEffect(() => {
     if (!videoId && ourStory && ourStory.Slider_videolink) {
@@ -154,8 +150,7 @@ const OurStory = () => {
             status: data.status,
           });
 
-          setVideoId(data.Slider_videolink)
-
+          setVideoId(data.Slider_videolink);
 
           // var imageUrlcustum2 = data.Slide_Image
           // ? `http://127.0.0.1:7000/uploads/images/our_story/${data.Slide_Image}`
@@ -373,7 +368,6 @@ const OurStory = () => {
                     />
                   </div>
                   <div className="modal-body">
-
                     {/* ============================================= */}
                     <iframe
                       id="youtube-video"

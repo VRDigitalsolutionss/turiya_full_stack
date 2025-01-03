@@ -521,25 +521,28 @@ const Index = () => {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {
-                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
-                            }
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].StartDate
+                                : null
+                            )}
                             <span className="my-2">-</span>
-                            {
-                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
-                            }
-
+                            {formatDate(
+                              closestUpcomingCourse[0]
+                                ? closestUpcomingCourse[0].EndDate
+                                : null
+                            )}
                           </p>
                         </div>
-
-                        <div className="about-contact">
-                          <a href="tel:+4906920134987">
-                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                          </a>
-                          <a href="mailto:info@turiyayoga.de">
-                            <i className="bx bxs-envelope" /> info@turiyayoga.de
-                          </a>
-                        </div>
+                 
+                      <div className="about-contact">
+                        <a href="tel:+4906920134987">
+                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                        </a>
+                        <a href="mailto:info@turiyayoga.de">
+                          <i className="bx bxs-envelope" /> info@turiyayoga.de
+                        </a>
+                      </div>
                       </div>
                     ) : (
                       <div className="div">
