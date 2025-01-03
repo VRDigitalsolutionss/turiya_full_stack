@@ -258,7 +258,7 @@ const YogaTraningMallorca = () => {
     if (!videoId2) setVideoId2(originalVideo2);
   }, [videoId1, videoId2]);
 
-  
+
   function isOfferValid(offerEndDate) {
     if (!offerEndDate) return false;
 
@@ -353,30 +353,21 @@ const YogaTraningMallorca = () => {
                         </h6>
                       </div>
                       <div className="about-date">
-                          {
-                            closestUpcomingCourse[0] &&
-                            closestUpcomingCourse[0].Offerprice?   ( <p>
-                            Das Angebot endet am
-                            <i className="bx bxs-calendar" />
-                            {formatDate(
-                              closestUpcomingCourse[0] &&
-                                closestUpcomingCourse[0].Offerprice
-                                ? closestUpcomingCourse[0].OfferEndDate
-                                : null
-                            )}
-                          </p>):null
-                          }
-                      
-                          <p>
-                            <i className="bx bxs-map" />
-                            {closestUpcomingCourse[0]
-                              ? closestUpcomingCourse[0].Location
-                              : null}
-                          </p>
-                          <p>
-                            <i className="bx bxs-calendar" />
+                        {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                          Das Angebot endet am
+                          <i className="bx bxs-calendar" />
+                          {formatDate(closestUpcomingCourse[0].OfferEndDate)}
+                        </p>}
+                        <p>
+                          <i className="bx bxs-map" />
+                          {closestUpcomingCourse[0]
+                            ? closestUpcomingCourse[0].Location
+                            : null}
+                        </p>
+                        <p>
+                          <i className="bx bxs-calendar" />
 
-                            {/* {
+                          {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
@@ -1082,47 +1073,29 @@ const YogaTraningMallorca = () => {
                           </a>
                         </td>
                         <td style={{ backgroundColor: "#F9F9F9" }}>
-                          {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
-                          {item.Offerprice > 0 ? (
-                            <>
-                              <span
-                                style={{
-                                  color:
-                                    item.Offerprice > 0 ? "red" : "inherit",
-                                }}>
-                                €{" "}
-                                {item.Offerprice > 0
-                                  ? item.Offerprice
-                                  : item.price}
-                              </span>
-                            </>
-                          ) : null}
-
-                          <span
-                            // style={{
-                            //   color: item.Offerprice > 0 ? "red" : "inherit",
-                            // }}
-                            className="ms-2">
-                            {item.Offerprice > 0 ? (
-                              <del>€{item.price} </del>
+                            {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
+                              <>
+                                <span
+                                  style={{
+                                    color: "red",
+                                  }}
+                                >
+                                  € {item.Offerprice}
+                                </span>
+                                <span className="ms-2">
+                                  <del>€{item.price}</del>
+                                </span>
+                                <br />
+                                <small>
+                                  Das Angebot endet am{" "}
+                                  <br/>
+                                  <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
+                                </small>
+                              </>
                             ) : (
                               <span>€{item.price}</span>
                             )}
-                          </span>
-                          <br />
-                          {item.Offerprice ? (
-                            <>
-                              <small>Das Angebot endet am </small>
-                              <small>
-                                <br />
-                                <i class="bx bxs-calendar"></i>
-                                {formatDate(
-                                  item.OfferEndDate ? item.OfferEndDate : null
-                                )}
-                              </small>
-                            </>
-                          ) : null}
-                        </td>
+                          </td>
 
                         <td
                           style={{

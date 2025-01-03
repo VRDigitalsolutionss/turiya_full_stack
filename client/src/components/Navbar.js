@@ -281,6 +281,15 @@ const Navbar = () => {
   );
 
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd; // Offer is valid if the current date is before or equal to the end date
+  }
+
 
   return (
     <>
@@ -386,7 +395,7 @@ const Navbar = () => {
                         </Link>
                         <i className="bx bx-chevron-right" />
                         <div className="mega_dropdown__list">
-                          <ul>
+                          <ul style={{overflowY: 'scroll', maxHeight: '600px'}}>
                             <li>
                               <Link to="/yogalehrer-ausbildung-200h">
                                 200H AYA Yogalehrer Ausbildung
@@ -416,13 +425,13 @@ const Navbar = () => {
                             </li>
 
                             {categoryData &&
-                        categoryData.map((item, index) => {
-                          return (
-                            <li>
-                              <Link to={replaceSpacesWithUnderscores(item.category)}>{item.category}</Link>
-                            </li>
-                          );
-                        })}
+                              categoryData.map((item, index) => {
+                                return (
+                                  <li>
+                                    <Link to={replaceSpacesWithUnderscores(item.category)}>{item.category}</Link>
+                                  </li>
+                                );
+                              })}
                           </ul>
                         </div>
                       </li>
@@ -616,41 +625,49 @@ const Navbar = () => {
 
 
 
-                {cartFetchedData && cartFetchedData.length>0 ?
+                {cartFetchedData && cartFetchedData.length > 0 ?
                   cartFetchedData.map((item, index) => {
+                    console.log("item of cart data", item);
+                    const module = item.moduleId;
+                    const isValidOffer = module && isOfferValid(module.OfferEndDate);
 
-
-                    console.log("item of cart data", item)
                     return (
-                      <div div key={index}>
-
-                        <div class="cart-overlay-heading" id="cart_content">
-                          <div class="cart_wrapper__left-box">
-                            <div class="cart_left__heading">
-                              <h6>
-                                {item.moduleId && item.moduleId.Ausbildung}
-                              </h6>
-                              <div class="del"></div>
+                      <div key={index}>
+                        <div className="cart-overlay-heading" id="cart_content">
+                          <div className="cart_wrapper__left-box">
+                            <div className="cart_left__heading">
+                              <h6>{module && module.Ausbildung}</h6>
+                              <div className="del"></div>
                             </div>
-                            <div class="cart-price">
-                              <p> {item.moduleId && item.moduleId.price}</p>
+                            <div className="cart-price">
+                              <p>
+                                {isValidOffer && module.Offerprice > 0 ? (
+                                  <>
+                                    €{module.Offerprice}{" "}
+                                    <del style={{color: '#c3c3c3'}}>€{module.price}</del>
+                                  </>
+                                ) : (
+                                  <>€{module.price}</>
+                                )}
+                              </p>
                             </div>
-                            <div class="cart-list">
+                            <div className="cart-list">
                               <ul>
                                 <li>
-                                  <i class="bx bxs-calendar"></i>{" "}
-                                  {item.moduleId && item.moduleId.StartDate} -{" "}
-                                  {item.moduleId && item.moduleId.EndDate}
+                                  <i className="bx bxs-calendar"></i>{" "}
+                                  {module && module.StartDate} - {module && module.EndDate}
                                 </li>
-                                <li>
-                                  {item.moduleId && item.moduleId.Location}
-                                </li>
-                                <li>{item.moduleId && item.moduleId.Place}</li>
+                                <li>{module && module.Location}</li>
+                                <li>{module && module.Place}</li>
                               </ul>
                             </div>
-                            <div class="cart-total">
-                              <h6>TOTAL </h6>
-                              <p> {item.moduleId && item.moduleId.price}</p>
+                            <div className="cart-total">
+                              <h6>TOTAL</h6>
+                              <p>
+                                {isValidOffer && module.Offerprice > 0
+                                  ? `€${module.Offerprice}`
+                                  : `€${module.price}`}
+                              </p>
                             </div>
                           </div>
                           <div className="row mt-3">
@@ -678,23 +695,23 @@ const Navbar = () => {
                   }) :
 
 
-                  <div className="mt-4">
+                <div className="mt-4">
 
-                    <div class="cart-overlay-heading" id="cart_content">
+                  <div class="cart-overlay-heading" id="cart_content">
 
-                      <div className="row mt-3">
-                        <div className="col-sm-12 d-flex justify-content-center">
+                    <div className="row mt-3">
+                      <div className="col-sm-12 d-flex justify-content-center">
 
-                          <h4 className="empty_text">  Dein Warenkorb ist leer!</h4>
-
-
-                        </div>
+                        <h4 className="empty_text">  Dein Warenkorb ist leer!</h4>
 
 
                       </div>
-                    </div>
 
+
+                    </div>
                   </div>
+
+                </div>
 
                 }
               </div>
@@ -875,7 +892,7 @@ const Navbar = () => {
                   </li>
                 </ul>
 
-     
+
                 {/* ========================================================================= */}
 
                 <ul
@@ -892,32 +909,32 @@ const Navbar = () => {
                   </p>
 
                   <li className="my-3">
-                    <Link to="/blockausbildung-im-ueberblick"  onClick={handleCancel}>
+                    <Link to="/blockausbildung-im-ueberblick" onClick={handleCancel}>
                       Blockausbildung / Überblick
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-100h"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-100h" onClick={handleCancel}>
                       100h Yoga Ausbildung / Modul 1
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-module-200h"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-module-200h" onClick={handleCancel}>
                       +200h Yoga Ausbildung / Modul 2
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-300h"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-300h" onClick={handleCancel}>
                       +300h Yoga Ausbildung / Modul 3
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-400h"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-400h" onClick={handleCancel}>
                       +400h Yoga Ausbildung / Modul 4
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-500h"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-500h" onClick={handleCancel}>
                       +500h Yoga Ausbildung / Modul 5
                     </Link>
                   </li>
@@ -937,42 +954,42 @@ const Navbar = () => {
                   </p>
 
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-200h"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-200h" onClick={handleCancel}>
                       200H AYA Yogalehrer Ausbildung
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-in-sampurna-seminarhaus"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-in-sampurna-seminarhaus" onClick={handleCancel}>
                       200H AYA Yogalehrer Ausbildung Sampurna Seminarhaus
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-goa-indien"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-goa-indien" onClick={handleCancel}>
                       200H AYA Yogalehrer Ausbildung Goa Indien
                     </Link>
                   </li>
                   <li className="my-3">
-                    <Link to="/200h-yogalehrer-ausbildung-mallorca"  onClick={handleCancel}>
+                    <Link to="/200h-yogalehrer-ausbildung-mallorca" onClick={handleCancel}>
                       200H/AYA Yogalehrer Ausbildung I Mallorca
                     </Link>
                   </li>
 
                   <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-himalaya-indien"  onClick={handleCancel}>
+                    <Link to="/yogalehrer-ausbildung-himalaya-indien" onClick={handleCancel}>
                       Yogalehrerausbildung Himalaya Indien
                     </Link>
                   </li>
 
                   {categoryData &&
-                        categoryData.map((item, index) => {
-                          return (
-                            <li className="my-3">
-                              <Link to={replaceSpacesWithUnderscores(item.category)} onClick={handleCancel}>{item.category}</Link>
-                            </li>
-                          );
-                        })}
+                    categoryData.map((item, index) => {
+                      return (
+                        <li className="my-3">
+                          <Link to={replaceSpacesWithUnderscores(item.category)} onClick={handleCancel}>{item.category}</Link>
+                        </li>
+                      );
+                    })}
 
-             
+
                 </ul>
                 {/* ============================================================================== */}
 

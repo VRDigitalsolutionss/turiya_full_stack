@@ -497,18 +497,15 @@ const Index = () => {
                             )}
                           </h6>
                         </div>
-                          <div className="about-date">
-                            
-                        <p>
+                        <div className="about-date">
 
-Das Angebot endet am   
-<i className="bx bxs-calendar" />
-{closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].OfferEndDate : null}
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                            Das Angebot endet am
+                            <i className="bx bxs-calendar" />
+                            {formatDate(closestUpcomingCourse[0].OfferEndDate)}
+                          </p>}
 
-
-</p>
-
-                        <p>
+                          <p>
                             <i className="bx bxs-map" />
                             {
                               closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
@@ -641,37 +638,28 @@ Das Angebot endet am
                               </a>
                             </td>
                             <td style={{ backgroundColor: "#F9F9F9" }}>
-                              {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
-                              {item.Offerprice > 0 ? (
+                              {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
                                 <>
-
-
                                   <span
                                     style={{
-                                      color:
-                                        item.Offerprice > 0 ? "red" : "inherit",
-                                    }}>
-                                    €{" "}
-                                    {item.Offerprice > 0 ? item.Offerprice : item.price}
+                                      color: "red",
+                                    }}
+                                  >
+                                    € {item.Offerprice}
                                   </span>
-
-
+                                  <span className="ms-2">
+                                    <del>€{item.price}</del>
+                                  </span>
+                                  <br />
+                                  <small>
+                                    Das Angebot endet am{" "}
+                                    <br />
+                                    <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
+                                  </small>
                                 </>
-                              ) : null}
-
-                              <span
-                                // style={{
-                                //   color: item.Offerprice > 0 ? "red" : "inherit",
-                                // }}
-                                className="ms-2"
-                              >
-                                {item.Offerprice > 0 ? (
-                                  <del>€{item.price} </del>
-                                ) : (
-                                  <span>€{item.price}</span>
-                                )}
-                              </span>
-
+                              ) : (
+                                <span>€{item.price}</span>
+                              )}
                             </td>
 
                             <td

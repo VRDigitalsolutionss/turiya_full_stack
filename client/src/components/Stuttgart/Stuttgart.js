@@ -26,7 +26,7 @@ import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 const Munchen = () => {
 
 
-const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+  const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
 
   const fetchNextUpcomingCourse = () => {
     axios
@@ -50,7 +50,7 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
         console.log("respnse of fetchEarlyBirdData", response.data.data[0]);
         const data = response.data.data[0];
         const startDate = data && data.StartDate;
-        console.log("start date",data)
+        console.log("start date", data)
         setEarlyData(response.data.data[0]);
       })
       .catch((error) => {
@@ -59,40 +59,40 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
   };
 
   useEffect(() => {
-      fetchEarlyBirdData();
+    fetchEarlyBirdData();
     getUpcomingCourse();
     fetchNextUpcomingCourse();
   }, []);
 
-    const [upcomingCourse,setUpcomingCourse] = useState("");
-    
-      const getUpcomingCourse = () => {
-        axios
-        .get(BASE_URL + "/getModuleByLocation/Munchen")
-        .then((response) => {
-          console.log("response of Goa courses", response.data);
-          const data = response.data.data;
-          setUpcomingCourse(data)
-        })
-        .catch((error) => {
-          console.error("Error fetching data: ", error);
-        });
-      }
-    
-    
+  const [upcomingCourse, setUpcomingCourse] = useState("");
+
+  const getUpcomingCourse = () => {
+    axios
+      .get(BASE_URL + "/getModuleByLocation/Munchen")
+      .then((response) => {
+        console.log("response of Goa courses", response.data);
+        const data = response.data.data;
+        setUpcomingCourse(data)
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }
+
+
   function formatDate(dateString) {
     // Split the input date into an array [year, month, day]
     const [year, month, day] = dateString.split("-");
 
     // Return the date in the desired format: dd.mm.yyyy
     return `${day}.${month}.${year}`;
-    }
-    
-    
+  }
+
+
   console.log("earlyData from Yin_Yoga", earlyData
   );
 
-console.log("upcomingCourse",upcomingCourse)
+  console.log("upcomingCourse", upcomingCourse)
   const [bannerImg, setBannerImg] = useState("");
   const [newBannerImg, setNewBannerImg] = useState("");
 
@@ -101,31 +101,30 @@ console.log("upcomingCourse",upcomingCourse)
 
   // 60H Yin Yoga
   const getUpcomingCourse2 = () => {
-      axios
-        // .get(BASE_URL +   "/course_web_page_by_course_category/Berlin")
-        .get(BASE_URL +   "/all_course_webpages")
+    axios
+      // .get(BASE_URL +   "/course_web_page_by_course_category/Berlin")
+      .get(BASE_URL + "/all_course_webpages")
       .then((response) => {
         console.log("response of 60H Stuttgart Yoga", response.data.data);
-        const data =  response.data.data[11];
+        const data = response.data.data[11];
         setYin_Yoga(data);
 
         var imageUrlcustum =
-        data && data.yogaTeamSlideImage
-          ? BASE_URL_IMAGE + `/images/coursewebpage/${
-              data && data.yogaTeamSlideImage
+          data && data.yogaTeamSlideImage
+            ? BASE_URL_IMAGE + `/images/coursewebpage/${data && data.yogaTeamSlideImage
             }`
-          : ""; // Fallback image or empty string
+            : ""; // Fallback image or empty string
 
-      console.log("imageUrlcustum", imageUrlcustum);
+        console.log("imageUrlcustum", imageUrlcustum);
         setNewBannerImg(imageUrlcustum);
-        
+
 
 
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-    }
+  }
 
   const fetchData2 = () => {
     axios
@@ -141,9 +140,8 @@ console.log("upcomingCourse",upcomingCourse)
 
           var imageUrlcustum =
             data && data.yogaTeamSlideImage
-              ? `${BASE_URL_IMAGE}/images/coursewebpage/${
-                  data && data.yogaTeamSlideImage
-                }`
+              ? `${BASE_URL_IMAGE}/images/coursewebpage/${data && data.yogaTeamSlideImage
+              }`
               : ""; // Fallback image or empty string
 
           console.log("imageUrlcustum", imageUrlcustum);
@@ -156,7 +154,7 @@ console.log("upcomingCourse",upcomingCourse)
   };
 
   useEffect(() => {
-   
+
     getUpcomingCourse2();
   }, []);
 
@@ -400,7 +398,7 @@ console.log("upcomingCourse",upcomingCourse)
 
   console.log("banner img: from yin", newBannerImg);
 
-  
+
   function formatDate(dateString) {
     // Split the input date into an array [year, month, day]
     const [year, month, day] = dateString.split("-");
@@ -409,7 +407,7 @@ console.log("upcomingCourse",upcomingCourse)
     return `${day}.${month}.${year}`;
   }
 
-    
+
   function isOfferValid(offerEndDate) {
     if (!offerEndDate) return false;
 
@@ -421,97 +419,102 @@ console.log("upcomingCourse",upcomingCourse)
 
 
   return (
-      <>
-          <div className="berlin_wrapper">
-      <div ref={bannerRef}>
-        {/* <SimpleBanner2
+    <>
+      <div className="berlin_wrapper">
+        <div ref={bannerRef}>
+          {/* <SimpleBanner2
         banner={banner}
         heading="60H Yin Yoga Ausbildung"
         para="Unsere Yin-Yogalehrer Ausbildung hilft dir, deine Praxis zu vertiefen und deine Lehrfähigkeiten zu meistern. Dieses besondere Programm verbindet Tradition mit modernen Techniken, damit du ein achtsamer und inspirierender Lehrer wirst. Mach mit und transformiere dein Yoga!"
         buttonTxt=" KUNDENSTIMMEN VIDEO "
         /> */}
-        <SimpleBanner3
-          banner={Yin_Yoga && newBannerImg}
-          heading={Yin_Yoga && Yin_Yoga.yogaTeamSliderHeading}
-          para={Yin_Yoga && Yin_Yoga.yogaTeamSliderParagraph}
-          videoLink={Yin_Yoga && Yin_Yoga.yogaTeamSliderVideoLink}
-          buttonTxt="berlin_read_more"
-        />
-      </div>
-      <div
-        id="content"
-        className="about_wrapper__left section pt-5 pt-md-5 pb-3 my-0">
-        <div className="container">
-          <div className="row" id="description">
-            {/* Post Content ============================================= */}
-            <div className="col-lg-9">
-              {/* <h1>Yogalehrer Ausbildungen in Modulen</h1> */}
-              <p>
-                {" "}
-           
-              </p>
+          <SimpleBanner3
+            banner={Yin_Yoga && newBannerImg}
+            heading={Yin_Yoga && Yin_Yoga.yogaTeamSliderHeading}
+            para={Yin_Yoga && Yin_Yoga.yogaTeamSliderParagraph}
+            videoLink={Yin_Yoga && Yin_Yoga.yogaTeamSliderVideoLink}
+            buttonTxt="berlin_read_more"
+          />
+        </div>
+        <div
+          id="content"
+          className="about_wrapper__left section pt-5 pt-md-5 pb-3 my-0">
+          <div className="container">
+            <div className="row" id="description">
+              {/* Post Content ============================================= */}
+              <div className="col-lg-9">
+                {/* <h1>Yogalehrer Ausbildungen in Modulen</h1> */}
+                <p>
+                  {" "}
 
-              <p
-                className="p-0"
-                //   style={{
-                //       color: "rgb(33, 37, 41)",
-                //       fontFamily: "Roboto, sans-serif",
-                //       fontSize: 16,
-                // }}
+                </p>
 
-                dangerouslySetInnerHTML={{
-                  __html:
-                    Yin_Yoga && Yin_Yoga.about_first_section_Paragraph_Content,
-                }}></p>
+                <p
+                  className="p-0"
+                  //   style={{
+                  //       color: "rgb(33, 37, 41)",
+                  //       fontFamily: "Roboto, sans-serif",
+                  //       fontSize: 16,
+                  // }}
 
-              
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      Yin_Yoga && Yin_Yoga.about_first_section_Paragraph_Content,
+                  }}></p>
+
+
               </div>
-              
+
 
               <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
+                <div className="about_wrapper__right mb-3">
+                  {
                     closestUpcomingCourse[0] ? (
                       <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
-                                <>
-                                  {closestUpcomingCourse[0].Offerprice}€
-                                  <sub>
-                                    <del
-                                      style={{
-                                        color: "rgb(255, 87, 34)",
-                                        fontSize: "17px",
-                                        marginLeft: "10px",
-                                      }}
-                                    >
-                                      {closestUpcomingCourse[0].price}
-                                    </del>
-                                  </sub>
-                                </>
-                              ) : (
-                                <>
-                                  {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
-                                </>
-                              )}
-                            </h6>
-                      </div>
-                      <div className="about-date">
-                        <p>
+
+                        <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                        <div className="price-tag">
+                          <h6>
+                            <i className="bx bxs-purchase-tag" />
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                              <>
+                                {closestUpcomingCourse[0].Offerprice}€
+                                <sub>
+                                  <del
+                                    style={{
+                                      color: "rgb(255, 87, 34)",
+                                      fontSize: "17px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {closestUpcomingCourse[0].price}
+                                  </del>
+                                </sub>
+                              </>
+                            ) : (
+                              <>
+                                {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                              </>
+                            )}
+                          </h6>
+                        </div>
+                        <div className="about-date">
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                            Das Angebot endet am
+                            <i className="bx bxs-calendar" />
+                            {formatDate(closestUpcomingCourse[0].OfferEndDate)}
+                          </p>}
+                          <p>
                             <i className="bx bxs-map" />
                             {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].Location:null  
+                              closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
                             }
-                       
-                        </p>
-                        <p>
+
+                          </p>
+                          <p>
                             <i className="bx bxs-calendar" />
-                            
+
 
 
                             {/* {
@@ -519,58 +522,58 @@ console.log("upcomingCourse",upcomingCourse)
                              :null
                             } */}
                             {
-                            formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
                             }
-                           <span className="my-2">-</span>  
+                            <span className="my-2">-</span>
                             {
-                             formatDate(closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate:null) 
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
                             }
 
-                        </p>
-                      </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                          </p>
+                        </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im Schulungspreis
+                            enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                            einfach an. Wir helfen Ihnen gerne weiter.
+                          </p>
                         </div>
-                        
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+
                     )
                   }
+                </div>
               </div>
-              </div> 
-            {/* .postcontent end */}
-            {/* Sidebar ============================================= */}
-       
-            {/* .sidebar end */}
+              {/* .postcontent end */}
+              {/* Sidebar ============================================= */}
+
+              {/* .sidebar end */}
+            </div>
           </div>
         </div>
-      </div>
-      <div style={{backgroundColor:'#F9F9F9',paddingTop:"30px",paddingBottom:"30px"}}>
+        <div style={{ backgroundColor: '#F9F9F9', paddingTop: "30px", paddingBottom: "30px" }}>
           <div className="container">
-            <div className="table-responsive index-table" style={{backgroundColor:'#F9F9F9'}}>
+            <div className="table-responsive index-table" style={{ backgroundColor: '#F9F9F9' }}>
               <table
                 className="table custom-table aos-init"
                 data-aos="zoom-in-up">
@@ -608,134 +611,125 @@ console.log("upcomingCourse",upcomingCourse)
                     upcomingCourse.map((item, index) => {
                       console.log("row of upcoming courses", item);
 
-                     
+
 
                       return (
-                        item.Place &&  item.Place !== '0' ? (
+                        item.Place && item.Place !== '0' ? (
                           <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
-                          <th style={{ backgroundColor: "#F9F9F9" }}>
-                            {item.Ausbildung}
-                          </th>
-                          <td style={{ backgroundColor: "#F9F9F9" }}>
-                            <i className="bx bxs-calendar me-1" />
-                            {formatDate(item.StartDate)} &nbsp;-&nbsp;
-                            <i className="bx bxs-calendar me-1" />
-                            {formatDate(item.EndDate)}{" "}
-                          </td>
-                          <td style={{ backgroundColor: "#F9F9F9" }}>
-                            <a href="#" className="location">
-                              <i className="bx bxs-map me-1" />
+                            <th style={{ backgroundColor: "#F9F9F9" }}>
+                              {item.Ausbildung}
+                            </th>
+                            <td style={{ backgroundColor: "#F9F9F9" }}>
+                              <i className="bx bxs-calendar me-1" />
+                              {formatDate(item.StartDate)} &nbsp;-&nbsp;
+                              <i className="bx bxs-calendar me-1" />
+                              {formatDate(item.EndDate)}{" "}
+                            </td>
+                            <td style={{ backgroundColor: "#F9F9F9" }}>
+                              <a href="#" className="location">
+                                <i className="bx bxs-map me-1" />
 
-                              {item.Location}
-                              {/* Goa, Indien */}
-                            </a>
-                          </td>
-                          <td style={{ backgroundColor: "#F9F9F9" }}>
-                            {/* {'Frühbucherangebot' + " " + item.Offerprice > 0 ? item.Offerprice : null} */}
-                              {item.Offerprice > 0 ? (
+                                {item.Location}
+                                {/* Goa, Indien */}
+                              </a>
+                            </td>
+                            <td style={{ backgroundColor: "#F9F9F9" }}>
+                              {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
                                 <>
-                                
-                               
-                              <span
-                                style={{
-                                  color:
-                                    item.Offerprice > 0 ? "red" : "inherit",
-                                }}>
-                                 €{" "}
-                                {item.Offerprice > 0 ? item.Offerprice : item.price }
+                                  <span
+                                    style={{
+                                      color: "red",
+                                    }}
+                                  >
+                                    € {item.Offerprice}
                                   </span>
-                                  
-                                
-                                  </>
-                            ) : null}
-                           
-                            <span
-                            // style={{
-                            //   color: item.Offerprice > 0 ? "red" : "inherit",
-                                // }}
-                                className="ms-2"
-                            >
-                              {item.Offerprice > 0 ? (
-                                <del>€{item.price} </del>
+                                  <span className="ms-2">
+                                    <del>€{item.price}</del>
+                                  </span>
+                                  <br />
+                                  <small>
+                                    Das Angebot endet am{" "}
+                                    <br />
+                                    <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
+                                  </small>
+                                </>
                               ) : (
                                 <span>€{item.price}</span>
                               )}
-                            </span>
-                           
-                          </td>
-             
-                          <td
-                            style={{
-                              backgroundColor: "#F9F9F9",
-                              color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
-                            }}>
-                            {item.Place <= 3
-                              ? `only Noch ${item.Place} Plätze frei`
-                              : `Noch ${item.Place} Plätze frei`}
-                          </td>
+                            </td>
 
-                          <td style={{ backgroundColor: "#F9F9F9" }}>
-                            <button
-                              onClick={() => handletriggerDialogBox(item._id)}
+                            <td
                               style={{
-                                // background-color: #FF5722;
+                                backgroundColor: "#F9F9F9",
+                                color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                              }}>
+                              {item.Place <= 3
+                                ? `only Noch ${item.Place} Plätze frei`
+                                : `Noch ${item.Place} Plätze frei`}
+                            </td>
 
-                                backgroundColor:
-                                  item.Place <= 3 ? "#FF5722" : "#9BBB59",
-                                border: "0px solid",
-                              }}
-                              className="table-btn triggerDialogBox"
-                              data-id={9}>
-                              ANMELDEN
-                            </button>{" "}
-                          </td>
-                        </tr>
-                       ):null
-                   
+                            <td style={{ backgroundColor: "#F9F9F9" }}>
+                              <button
+                                onClick={() => handletriggerDialogBox(item._id)}
+                                style={{
+                                  // background-color: #FF5722;
+
+                                  backgroundColor:
+                                    item.Place <= 3 ? "#FF5722" : "#9BBB59",
+                                  border: "0px solid",
+                                }}
+                                className="table-btn triggerDialogBox"
+                                data-id={9}>
+                                ANMELDEN
+                              </button>{" "}
+                            </td>
+                          </tr>
+                        ) : null
+
                       );
                     })}
                 </tbody>
               </table>
 
-      
-             
+
+
             </div>
-        
+
           </div>
         </div>
-    
 
-      <Testimonial />
-      <CheckWrapper />
-      {/* <ParralaxWrapper /> */}
 
-  
+        <Testimonial />
+        <CheckWrapper />
+        {/* <ParralaxWrapper /> */}
 
-      {isDialogVisible && (
-        <div
-          id="modalOverlay"
-          className="hiddenOverlayContainer"
-          style={{ display: "block" }}>
-          <div className="customDialogBox">
-            <span className="exitButtonTrigger" onClick={closeDialogBox}>
-              ×
-            </span>
-            <div className="dialogIcon">
-              <img src={dilogImg} style={{ width: 80 }} alt />
-            </div>
-            <p className="mt-3">
-              Um den Kauf abzuschließen, musst du dich zuerst einloggen!
-            </p>
-            <button className="dialogActionButton" onClick={handleredirect}>
-              Go to Login/Registrierung.
-            </button>
-          </div>
-        </div>
-      )}
-      <Contact />
-              <NewsShelter />
-              
+
+
+        {isDialogVisible && (
+          <div
+            id="modalOverlay"
+            className="hiddenOverlayContainer"
+            style={{ display: "block" }}>
+            <div className="customDialogBox">
+              <span className="exitButtonTrigger" onClick={closeDialogBox}>
+                ×
+              </span>
+              <div className="dialogIcon">
+                <img src={dilogImg} style={{ width: 80 }} alt />
               </div>
+              <p className="mt-3">
+                Um den Kauf abzuschließen, musst du dich zuerst einloggen!
+              </p>
+              <button className="dialogActionButton" onClick={handleredirect}>
+                Go to Login/Registrierung.
+              </button>
+            </div>
+          </div>
+        )}
+        <Contact />
+        <NewsShelter />
+
+      </div>
     </>
   );
 };

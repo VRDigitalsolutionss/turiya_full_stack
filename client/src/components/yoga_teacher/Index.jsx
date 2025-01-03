@@ -619,6 +619,11 @@ const Index = () => {
                             </h6>
                           </div>
                           <div className="about-date">
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
+                              Das Angebot endet am
+                              <i className="bx bxs-calendar" />
+                              {formatDate(closestUpcomingCourse[0].OfferEndDate)}
+                            </p>}
                             <p>
                               <i className="bx bxs-map" />
                               {
@@ -811,41 +816,6 @@ const Index = () => {
           <section className="global_wrapper faq_wrapper" id="see_faq">
             <div className="container">
               <div className="faq_wrapper__content" data-aos="fade-up">
-                {/* <div className="faq_heading">
-                  <h3>Zertifizierung &amp; Teilnahmevoraussetzung</h3>
-                </div> */}
-
-                {/* ======================================================== */}
-                {/* <div className="faq_box">
-                  {faqItems.map((faq, index) => (
-                    <div
-                      key={index}
-                      className={`faq_box__content ${
-                        activeIndex === index ? "active" : ""
-                      }`}
-                      onClick={() => handleToggle(index)}>
-                      <div className="question">
-                        <div className="plus">
-                          <i
-                            className={`bx ${
-                              activeIndex === index ? "bx-minus" : "bx-plus"
-                            }`}
-                          />
-                        </div>
-                        <h6>{faq.question}</h6>
-                      </div>
-                      {activeIndex === index && (
-                        <div className="answer">
-                          {faq.answer.map((paragraph, index) => (
-                            <p key={index} className="mb-3">
-                              {paragraph}
-                            </p>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div> */}
 
                 {/* ============================== latest updated =============================== */}
                 <div className="container">

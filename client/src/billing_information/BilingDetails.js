@@ -21,7 +21,7 @@ const BilingDetails = () => {
         alert("something went wrong");
       });
   };
-
+ 
 
 
 
@@ -32,19 +32,24 @@ const BilingDetails = () => {
   console.log("user detils", userDetails);
   console.log("course data", courseData);
   const [taxAmount, setTaxAmount] = useState("");
+  const [loading, setLoading] = useState(true)
+  const [invoiceLoading, setInvoiceLoading] = useState(false)
 
 
   const fetchCourseById = () => {
     if (id) {
+      setLoading(true);
       axios
         .get(`${BASE_URL}/getModuleById/${id}`)
         .then((resonse) => {
           console.log("response of billing module", resonse.data.data);
           setCourseData(resonse.data.data);
+          setLoading(false)
         })
         .catch((error) => {
           console.log("error", error);
           alert("something went wrong");
+          setLoading(false)
         });
     } else {
       alert("id not found");
@@ -114,7 +119,7 @@ const BilingDetails = () => {
     const custumer_num = generateCustomerNumber();
     const order_num = generateOrderNumber();
     const due_date = getTodayDate();
-    const taxCalculationnewv = calculatePriceWithTax( courseData.price, courseData.OfferEndDate, courseData.Offerprice );
+    const taxCalculationnewv = calculatePriceWithTax(courseData.price, courseData.OfferEndDate, courseData.Offerprice);
     // generateInvoiceNumber();
     // generateCustomerNumber();
     // generateOrderNumber();
@@ -138,9 +143,7 @@ const BilingDetails = () => {
       courseData: courseData,
       userDetails: userDetails
     };
-
-
-    console.log("total price", payload)
+    setInvoiceLoading(true)
     axios
       .post(`${BASE_URL}/generateInvoice`, payload)
       .then((response) => {
@@ -149,6 +152,8 @@ const BilingDetails = () => {
       })
       .catch((error) => {
         console.log("error", error);
+        setInvoiceLoading(false)
+        alert("Some error occurred")
       });
   };
 
@@ -177,7 +182,7 @@ const BilingDetails = () => {
   useEffect(() => {
     fetchData();
     fetchCourseById();
-  }, []);
+  }, [login_id, id]);
 
 
   function isOfferValid(offerEndDate) {
@@ -205,63 +210,69 @@ const BilingDetails = () => {
     }
   }
 
+  console.log("sfsfsfsf", loading)
+
 
   return (
     <>
-      <div className="container mt-3 mb-3">
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="cart_details__box">
-              <h3>Agreement on training as a yoga teacher</h3>
-              <div className="cart_details__box-content">
-                <div className="cart_details__heading">
-                  <h6>{courseData.Ausbildung}</h6>
-                  <button>
-                    <i className="bx bx-trash" />
-                  </button>
-                </div>
-                <div className="cart_details__heading">
-                  <span>
-                    <i className="bx bxs-calendar" /> {courseData.StartDate}
-                  </span>{isOfferValid(courseData.OfferEndDate) && courseData.Offerprice > 0 ? (
-                    <p>
-                      € {courseData.Offerprice}
-                    </p>
-                  ) : (
-                    <p>€{courseData.price}</p>
-                  )}
-                </div>
-                <div className="cart_details__list">
-                  <span> {courseData.Location}</span>
-                  <span>
-                    {courseData.Place}
-                    <strong>places</strong> left
-                  </span>
-                </div>
-                <div className="cart_details__heading">
-                  <h6 />
-                  <p>€0.00</p>
-                </div>
-                {/* <div class="cart_details__heading">
+      {loading ?
+        <div className=" d-flex justify-content-center align-items-centers my-5 gap-5">
+          <div class="spinner-border text-success" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <p className="mb-0">Loading your details..</p>
+        </div> : <div className="container mt-3 mb-3">
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="cart_details__box">
+                <h3>Agreement on training as a yoga teacher</h3>
+                <div className="cart_details__box-content">
+                  <div className="cart_details__heading">
+                    <h6>{courseData.Ausbildung}</h6>
+                    <button>
+                      <i className="bx bx-trash" />
+                    </button>
+                  </div>
+                  <div className="cart_details__heading">
+                    <span>
+                      <i className="bx bxs-calendar" /> {courseData.StartDate}
+                    </span>{isOfferValid(courseData.OfferEndDate) && courseData.Offerprice > 0 ? (
+                      <p>
+                        € {courseData.Offerprice}
+                      </p>
+                    ) : (
+                      <p>€{courseData.price}</p>
+                    )}
+                  </div>
+                  <div className="cart_details__list">
+                    <span> {courseData.Location}</span>
+                    <span>
+                      {courseData.Place}
+                      <strong>places</strong> left
+                    </span>
+                  </div>
+                  <div className="cart_details__heading">
+                    <h6 />
+                    <p>€0.00</p>
+                  </div>
+                  {/* <div class="cart_details__heading">
                   <h6>VAT (0%)</h6>
                   <p>€0</p>
               </div> */}
-                <div className="cart_details__heading">
-                  <h6 />
-                  <p>€0.00</p>
-                </div>
-                {
+                  <div className="cart_details__heading">
+                    <h6 />
+                    <p>€0.00</p>
+                  </div>
+                  {
+                    userDetails.invoiceType
+                      !== "Private_Invoice" ? <div className="cart_details__heading">
+                      <h6>VAT (19%)</h6>
+                      <p> {(Number(courseData.price) * 0.19).toFixed(2)} </p>
+                    </div> : null
+                  }
 
 
-                  userDetails.invoiceType
-                    !== "Private_Invoice" ? <div className="cart_details__heading">
-                    <h6>VAT (19%)</h6>
-                    <p> {(Number(courseData.price) * 0.19).toFixed(2)} </p>
-                  </div> : null
-                }
-
-
-                {/* {courseData &&
+                  {/* {courseData &&
                 courseData.otherAddress.userType !== "Private_Invoice" ? (
                   <div className="cart_details__heading">
                     <h6>VAT (19%)</h6>
@@ -270,7 +281,7 @@ const BilingDetails = () => {
                 ) : null} */}
 
 
-                {/* {courseData &&
+                  {/* {courseData &&
                 courseData.otherAddress.userType !== "Private_Invoice" ? (
                   <div className="cart_details__heading">
                     <h6>VAT (19%)</h6>
@@ -279,82 +290,19 @@ const BilingDetails = () => {
                 ) : null} */}
 
 
-                <div className="cart_details__heading">
-                  <p>TOTAL</p>
-                  <p>
-                    €{" "}
-                    {calculatePriceWithTax(
-                      courseData.price,
-                      courseData.OfferEndDate,
-                      courseData.Offerprice
-                    )}
-                  </p>
-                </div>
-                <div className="box-row">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="cart_details__box-left">
-                        <div className="box-title">
-                          <h6>Billing information </h6>
-                        </div>
-
-                        <div className="box-desc">
-                          <ul>
-                            <li>
-                              Name:
-                              {userDetails?.First_name +
-                                "" +
-                                userDetails?.Last_name}{" "}
-                            </li>
-                            <li>
-                              Company Name:
-                              {userDetails && userDetails.company}{" "}
-                            </li>
-
-
-
-
-                            <li>Email:&nbsp; {userDetails && userDetails.email} </li>
-                            <li>
-                              Gender:&nbsp; {userDetails && userDetails?.gender}
-                            </li>
-                            <li>
-                              Number:&nbsp; {userDetails && userDetails.phone}
-                            </li>
-                            <li>
-                              Address:&nbsp;{" "}
-                              {userDetails && userDetails.address}
-                            </li>
-                            <li>City:&nbsp;
-
-                              {userDetails && userDetails.city}
-
-                            </li>
-                            <li>
-                              Pincode:&nbsp;{" "}
-
-                              {userDetails && userDetails.postal_code}
-
-                            </li>
-                            <li>State:&nbsp;
-
-                              {userDetails && userDetails.federal_state}
-
-
-                            </li>
-
-                            <li>
-                              Country:&nbsp;{" "}
-
-
-                              {userDetails && userDetails.country}
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    {userDetails && userDetails?.otherAddress?.email ? (
+                  <div className="cart_details__heading">
+                    <p>TOTAL</p>
+                    <p>
+                      €{" "}
+                      {calculatePriceWithTax(
+                        courseData.price,
+                        courseData.OfferEndDate,
+                        courseData.Offerprice
+                      )}
+                    </p>
+                  </div>
+                  <div className="box-row">
+                    <div className="row">
                       <div className="col-md-6">
                         <div className="cart_details__box-left">
                           <div className="box-title">
@@ -371,41 +319,37 @@ const BilingDetails = () => {
                               </li>
                               <li>
                                 Company Name:
-                                {userDetails && userDetails?.otherAddress !== null
-                                  ? userDetails?.otherAddress?.company
-                                  : userDetails?.company}{" "}
+                                {userDetails && userDetails.company}{" "}
                               </li>
 
 
 
 
-                              <li>Email:&nbsp; {userDetails && userDetails?.otherAddress?.email ? userDetails?.otherAddress?.email : userDetails.email} </li>
+                              <li>Email:&nbsp; {userDetails && userDetails.email} </li>
                               <li>
                                 Gender:&nbsp; {userDetails && userDetails?.gender}
                               </li>
                               <li>
-                                Number:&nbsp; {userDetails && userDetails?.otherAddress?.phone ? userDetails?.otherAddress?.phone : userDetails.phone}
+                                Number:&nbsp; {userDetails && userDetails.phone}
                               </li>
                               <li>
                                 Address:&nbsp;{" "}
-                                {userDetails && userDetails.otherAddress !== null
-                                  ? userDetails?.otherAddress?.address
-                                  : userDetails?.address}
+                                {userDetails && userDetails.address}
                               </li>
                               <li>City:&nbsp;
 
-                                {userDetails && userDetails?.otherAddress?.city ? userDetails?.otherAddress?.city : userDetails.city}
+                                {userDetails && userDetails.city}
 
                               </li>
                               <li>
                                 Pincode:&nbsp;{" "}
 
-                                {userDetails && userDetails?.otherAddress?.postal_code ? userDetails?.otherAddress?.postal_code : userDetails.postal_code}
+                                {userDetails && userDetails.postal_code}
 
                               </li>
                               <li>State:&nbsp;
 
-                                {userDetails && userDetails?.otherAddress?.federal_state ? userDetails?.otherAddress?.federal_state : userDetails.federal_state}
+                                {userDetails && userDetails.federal_state}
 
 
                               </li>
@@ -414,164 +358,233 @@ const BilingDetails = () => {
                                 Country:&nbsp;{" "}
 
 
-                                {userDetails && userDetails?.otherAddress?.country ? userDetails?.otherAddress?.country : userDetails.country}
+                                {userDetails && userDetails.country}
                               </li>
                             </ul>
                           </div>
                         </div>
                       </div>
-                    ) : null}
 
-                  </div>
-                </div>
-                <div className="info">
-                  <div className="box-title">
-                    <h6>
-                      Info <i className="bx bx-info-circle" />
-                    </h6>
-                    <p>
-                      Im Ausbildungspreis inbegriffen sind Ausbildungsskript,
-                      Workbook, Prüfungsgebühr und Zertifikat.
-                    </p>
-                  </div>
-                  {/* <form> */}
-                  <div className="info_desc">
-                    <p>Mein Ausbildungsstatus:</p>
-                    <div className="info_desc__radio">
-                      <input
-                        name="student_type"
-                        defaultValue="Ich möchte Yogalehrer werden"
-                        type="radio"
-                        defaultChecked
-                      />
-                      <label htmlFor>Ich möchte Yogalehrer werden</label>
-                    </div>
-                    <div className="info_desc__radio">
-                      <input
-                        name="student_type"
-                        type="radio"
-                        defaultValue="Ich bin bereits Yogalehrer"
-                      />
-                      <label htmlFor>Ich bin bereits Yogalehrer</label>
-                    </div>
-                    <p>Ausbildungserwartung:</p>
-                    <div className="info_desc__radio">
-                      <input
-                        name="name1"
-                        type="checkbox"
-                        defaultValue="Ich mache die Ausbildung als reine Freizeitbeschäftigung für mich"
-                      />
-                      <label htmlFor>
-                        Ich mache die Ausbildung als reine Freizeitbeschäftigung
-                        für mich
-                      </label>
-                    </div>
-                    <div className="info_desc__radio">
-                      <input
-                        name="name2"
-                        type="checkbox"
-                        required
-                        defaultValue="Ich bin bereits selbständig und möchte Yoga mit ins Programm nehmen"
-                      />
-                      <label htmlFor>
-                        Ich bin bereits selbständig und möchte Yoga mit ins
-                        Programm nehmen
-                      </label>
-                    </div>
-                    <div className="info_desc__radio">
-                      <input
-                        name="name3"
-                        type="checkbox"
-                        required
-                        defaultValue="Die Widerrufsbelehrung/ AGB habe ich zur Kenntnis genommen. Die Widerruffsmöglichkeit beträgt ab dem Tag der Anmeldung 14 Tage."
-                      />
-                      <label htmlFor>
-                        Die Widerrufsbelehrung/ AGB habe ich zur Kenntnis
-                        genommen. Die Widerruffsmöglichkeit beträgt ab dem Tag
-                        der Anmeldung 14 Tage.{" "}
-                      </label>
-                    </div>
-                    <div
-                      className="info_desc__radio "
-                      style={{ display: "none" }}>
-                      <input
-                        name="name4"
-                        type="checkbox"
-                        defaultValue="Ja, ich möchte den kostenlosen Turiya Yoga Newsletter abonnieren um immer auf dem neusten Stand über Ausbildungen, Angebote und Rabatte zu sein."
-                      />
-                      <label htmlFor>
-                        Ja, ich möchte den kostenlosen Turiya Yoga Newsletter
-                        abonnieren um immer auf dem neusten Stand über
-                        Ausbildungen, Angebote und Rabatte zu sein.
-                      </label>
-                    </div>
-                    <div className="info_desc__radio">
-                      <input
-                        name="name5"
-                        type="checkbox"
-                        required
-                        defaultValue="Ich akzeptiere die allgemeinen Geschäftsbedingungen, die Bestandteil dieses vereinbarung sind."
-                      />
-                      <label htmlFor>
-                        {" "}
-                        Ich{" "}
-                        <span
-                          className="btn p-0"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal">
-                          akzeptiere die allgemeinen Geschäftsbedingungen{" "}
-                        </span>
-                        , die Bestandteil dieses vereinbarung sind.
-                      </label>
-                    </div>
-                    <span>
-                      *Die Ausbildung ist bei Privatpersonen inkl. MwSt. Nach
-                      Erhalt der Anmeldung/ Vereinbarung erhältst du von Turiya
-                      Yoga eine ordnungsgemäße Teilnahmebestätigung/Rechnung,
-                      die alle Zahlungsinformationen nochmals enthält. Für
-                      Firmen ist die MwSt. zusätzlich zu den Ausbildungsgebühren
-                      hinzuzurechnen
-                    </span>
-                    <div className="mt-3">
-                      Nicht enthalten sind z. B. Pflichtbücher, Reisekosten zum
-                      Seminarort. Solche trägt der Teilnehmer zusätzlich.
-                    </div>
-                    <div className="info_desc__radio" required>
-                      <input
-                        name="name6"
-                        type="checkbox"
-                        required
-                        defaultValue="ICH STIMME DEN Turiya Yoga"
-                      />
-                      <label htmlFor>
-                        {" "}
-                        ICH STIMME DEN Turiya Yoga{" "}
-                        <span
-                          className="btn p-0"
-                          data-bs-toggle="modal"
-                          data-bs-target="#second_modal">
-                          AGB ZU *{" "}
-                        </span>
-                        ,{" "}
-                      </label>
+                      {userDetails && userDetails?.otherAddress?.email ? (
+                        <div className="col-md-6">
+                          <div className="cart_details__box-left">
+                            <div className="box-title">
+                              <h6>Billing information </h6>
+                            </div>
+
+                            <div className="box-desc">
+                              <ul>
+                                <li>
+                                  Name:
+                                  {userDetails?.First_name +
+                                    "" +
+                                    userDetails?.Last_name}{" "}
+                                </li>
+                                <li>
+                                  Company Name:
+                                  {userDetails && userDetails?.otherAddress !== null
+                                    ? userDetails?.otherAddress?.company
+                                    : userDetails?.company}{" "}
+                                </li>
+
+
+
+
+                                <li>Email:&nbsp; {userDetails && userDetails?.otherAddress?.email ? userDetails?.otherAddress?.email : userDetails.email} </li>
+                                <li>
+                                  Gender:&nbsp; {userDetails && userDetails?.gender}
+                                </li>
+                                <li>
+                                  Number:&nbsp; {userDetails && userDetails?.otherAddress?.phone ? userDetails?.otherAddress?.phone : userDetails.phone}
+                                </li>
+                                <li>
+                                  Address:&nbsp;{" "}
+                                  {userDetails && userDetails.otherAddress !== null
+                                    ? userDetails?.otherAddress?.address
+                                    : userDetails?.address}
+                                </li>
+                                <li>City:&nbsp;
+
+                                  {userDetails && userDetails?.otherAddress?.city ? userDetails?.otherAddress?.city : userDetails.city}
+
+                                </li>
+                                <li>
+                                  Pincode:&nbsp;{" "}
+
+                                  {userDetails && userDetails?.otherAddress?.postal_code ? userDetails?.otherAddress?.postal_code : userDetails.postal_code}
+
+                                </li>
+                                <li>State:&nbsp;
+
+                                  {userDetails && userDetails?.otherAddress?.federal_state ? userDetails?.otherAddress?.federal_state : userDetails.federal_state}
+
+
+                                </li>
+
+                                <li>
+                                  Country:&nbsp;{" "}
+
+
+                                  {userDetails && userDetails?.otherAddress?.country ? userDetails?.otherAddress?.country : userDetails.country}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+
                     </div>
                   </div>
-                  <div className="order-now">
-                    <button
-                      className="btn-primary"
-                      // name="book_order"
-                      //   type="submit"
-                      onClick={fetchModuleDetails}>
-                      Gebührenpflichtig bestellen
-                    </button>
+                  <div className="info">
+                    <div className="box-title">
+                      <h6>
+                        Info <i className="bx bx-info-circle" />
+                      </h6>
+                      <p>
+                        Im Ausbildungspreis inbegriffen sind Ausbildungsskript,
+                        Workbook, Prüfungsgebühr und Zertifikat.
+                      </p>
+                    </div>
+                    {/* <form> */}
+                    <div className="info_desc">
+                      <p>Mein Ausbildungsstatus:</p>
+                      <div className="info_desc__radio">
+                        <input
+                          name="student_type"
+                          defaultValue="Ich möchte Yogalehrer werden"
+                          type="radio"
+                          defaultChecked
+                        />
+                        <label htmlFor>Ich möchte Yogalehrer werden</label>
+                      </div>
+                      <div className="info_desc__radio">
+                        <input
+                          name="student_type"
+                          type="radio"
+                          defaultValue="Ich bin bereits Yogalehrer"
+                        />
+                        <label htmlFor>Ich bin bereits Yogalehrer</label>
+                      </div>
+                      <p>Ausbildungserwartung:</p>
+                      <div className="info_desc__radio">
+                        <input
+                          name="name1"
+                          type="checkbox"
+                          defaultValue="Ich mache die Ausbildung als reine Freizeitbeschäftigung für mich"
+                        />
+                        <label htmlFor>
+                          Ich mache die Ausbildung als reine Freizeitbeschäftigung
+                          für mich
+                        </label>
+                      </div>
+                      <div className="info_desc__radio">
+                        <input
+                          name="name2"
+                          type="checkbox"
+                          required
+                          defaultValue="Ich bin bereits selbständig und möchte Yoga mit ins Programm nehmen"
+                        />
+                        <label htmlFor>
+                          Ich bin bereits selbständig und möchte Yoga mit ins
+                          Programm nehmen
+                        </label>
+                      </div>
+                      <div className="info_desc__radio">
+                        <input
+                          name="name3"
+                          type="checkbox"
+                          required
+                          defaultValue="Die Widerrufsbelehrung/ AGB habe ich zur Kenntnis genommen. Die Widerruffsmöglichkeit beträgt ab dem Tag der Anmeldung 14 Tage."
+                        />
+                        <label htmlFor>
+                          Die Widerrufsbelehrung/ AGB habe ich zur Kenntnis
+                          genommen. Die Widerruffsmöglichkeit beträgt ab dem Tag
+                          der Anmeldung 14 Tage.{" "}
+                        </label>
+                      </div>
+                      <div
+                        className="info_desc__radio "
+                        style={{ display: "none" }}>
+                        <input
+                          name="name4"
+                          type="checkbox"
+                          defaultValue="Ja, ich möchte den kostenlosen Turiya Yoga Newsletter abonnieren um immer auf dem neusten Stand über Ausbildungen, Angebote und Rabatte zu sein."
+                        />
+                        <label htmlFor>
+                          Ja, ich möchte den kostenlosen Turiya Yoga Newsletter
+                          abonnieren um immer auf dem neusten Stand über
+                          Ausbildungen, Angebote und Rabatte zu sein.
+                        </label>
+                      </div>
+                      <div className="info_desc__radio">
+                        <input
+                          name="name5"
+                          type="checkbox"
+                          required
+                          defaultValue="Ich akzeptiere die allgemeinen Geschäftsbedingungen, die Bestandteil dieses vereinbarung sind."
+                        />
+                        <label htmlFor>
+                          {" "}
+                          Ich{" "}
+                          <span
+                            className="btn p-0"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            akzeptiere die allgemeinen Geschäftsbedingungen{" "}
+                          </span>
+                          , die Bestandteil dieses vereinbarung sind.
+                        </label>
+                      </div>
+                      <span>
+                        *Die Ausbildung ist bei Privatpersonen inkl. MwSt. Nach
+                        Erhalt der Anmeldung/ Vereinbarung erhältst du von Turiya
+                        Yoga eine ordnungsgemäße Teilnahmebestätigung/Rechnung,
+                        die alle Zahlungsinformationen nochmals enthält. Für
+                        Firmen ist die MwSt. zusätzlich zu den Ausbildungsgebühren
+                        hinzuzurechnen
+                      </span>
+                      <div className="mt-3">
+                        Nicht enthalten sind z. B. Pflichtbücher, Reisekosten zum
+                        Seminarort. Solche trägt der Teilnehmer zusätzlich.
+                      </div>
+                      <div className="info_desc__radio" required>
+                        <input
+                          name="name6"
+                          type="checkbox"
+                          required
+                          defaultValue="ICH STIMME DEN Turiya Yoga"
+                        />
+                        <label htmlFor>
+                          {" "}
+                          ICH STIMME DEN Turiya Yoga{" "}
+                          <span
+                            className="btn p-0"
+                            data-bs-toggle="modal"
+                            data-bs-target="#second_modal">
+                            AGB ZU *{" "}
+                          </span>
+                          ,{" "}
+                        </label>
+                      </div>
+                    </div>
+                    <div className="order-now">
+                      <button
+                        className="btn-primary d-flex align-items-center gap-3"
+                        // name="book_order"
+                        //   type="submit"
+                        onClick={fetchModuleDetails}>
+                        Gebührenpflichtig bestellen
+                        {invoiceLoading && <div class="spinner-border text-light" role="status"> 
+                        </div>}
+                      </button>
+                    </div>
+                    {/* </form> */}
                   </div>
-                  {/* </form> */}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div>}
     </>
   );
 };

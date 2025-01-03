@@ -38,7 +38,7 @@
 //   console.log("earlyData", earlyData
 //   );
 
-  
+
 //   // const payload = {
 //   //   `<h5>8 Intensive Tage (100 Std. ) nach 200h AYA zertifiziert!</h5>
 //   //   <p>Dieser Basiskurs startet mit intensivem Lernen, Praktizieren und dem Erleben von Yoga mit Gleichgesinnten über 8 Tage. Es ist wichtig zu betonen, dass dieses Modul für alle körperlichen Konditionsstufen geeignet ist. Unsere 100-Stunden-Yogalehrer-Ausbildung bietet eine einzigartige Gelegenheit, eine solide und fundierte Grundlage für die Yogalehrerausbildung zu schaffen, deine eigene Yogapraxis zu vertiefen und natürlich herauszufinden, ob die Arbeit als Yogalehrer zu dir passt. Es ist eine großartige Möglichkeit, tiefer in den umfassenden und wissenschaftlich fundierten Pfad des Yoga einzutauchen, der Gesundheit und inneres Gleichgewicht miteinander verbindet.</p>
@@ -248,23 +248,23 @@
 //                     <a onClick={() => scrollToSection(bannerRef)} style={{color:"#9bbb59"}}>termine</a>
 //                   </div>
 // <p
-      
+
 //       className="p-0"
 //     //   style={{
 //     //       color: "rgb(33, 37, 41)",
 //     //       fontFamily: "Roboto, sans-serif",
 //     //       fontSize: 16,
 //     // }}
-    
-      
+
+
 //       dangerouslySetInnerHTML={{ __html: mainData.about_first_section_Paragraph_Content }} >
-      
+
 
 
 //         </p>
 //                   {/* ======================================================== */}
 
-                  
+
 
 //                   {/* ============================================================================ */}
 //                   {/* <h6>
@@ -340,7 +340,7 @@
 //                     </a>
 //                   </div>
 //                 </div>
-            
+
 //               </div>
 //             </div>
 //           </div>
@@ -614,7 +614,7 @@
 
 // ============
 
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./module1.scss";
 import banner from "../../../assets/images/module_img/banner.webp";
 import SimpleBanner3 from "../../banner/SimpleBanner3";
@@ -625,7 +625,7 @@ import Testimonial from "../../Testimonial";
 import CheckWrapper from "../../CheckWrapper";
 import ParralaxWrapper from "../../ParralaxWrapper";
 import axios from 'axios'
-import { BASE_URL,BASE_URL_IMAGE } from "../../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../../config";
 
 const Index2 = () => {
 
@@ -639,7 +639,7 @@ const Index2 = () => {
         console.log("respnse of fetchEarlyBirdData", response.data.data[0]);
         const data = response.data.data[0];
         const startDate = data && data.StartDate;
-        console.log("start date",data)
+        console.log("start date", data)
         setEarlyData(response.data.data[0]);
       })
       .catch((error) => {
@@ -671,7 +671,7 @@ const Index2 = () => {
   useEffect(() => {
     fetchNextUpcomingCourse();
   }, []);
-console.log("closestUpcomingCourses", closestUpcomingCourse);
+  console.log("closestUpcomingCourses", closestUpcomingCourse);
 
   // const payload = {
   //   `<h5>8 Intensive Tage (100 Std. ) nach 200h AYA zertifiziert!</h5>
@@ -689,9 +689,9 @@ console.log("closestUpcomingCourses", closestUpcomingCourse);
   const fetchData = () => {
     axios
       .get(
-      // "http://127.0.0.1:7000/api/module_webpages_by_category/200H/AYA Yogalehrer Ausbildung I Mallorca"
-      BASE_URL + 
-`/module_webpages_by_category/Modul 1`
+        // "http://127.0.0.1:7000/api/module_webpages_by_category/200H/AYA Yogalehrer Ausbildung I Mallorca"
+        BASE_URL +
+        `/module_webpages_by_category/Modul 1`
       )
       .then((response) => {
         console.log("Modul 1", response.data.data[0]);
@@ -722,7 +722,7 @@ console.log("closestUpcomingCourses", closestUpcomingCourse);
 
   console.log("all courses data", mainData, bannerImg);
   console.log("banner image", bannerImg);
-console.log("main data", mainData);
+  console.log("main data", mainData);
   const [activeIndex1, setActiveIndex1] = useState(null);
   const [activeIndex2, setActiveIndex2] = useState(null);
   const [activeIndex3, setActiveIndex3] = useState(null);
@@ -853,6 +853,15 @@ console.log("main data", mainData);
     return `${day}.${month}.${year}`;
   }
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
 
   return (
     <>
@@ -864,7 +873,7 @@ auf höchstem Niveau"
           para="Yogalehrer Ausbildung Basiskurs intensiv in 8 Tagen schon ab 1.399 €! 100H - Turiya Yoga-Diplom zertifiziert.    "
           buttonTxt=" KUNDENSTIMMEN VIDEO "
         /> */}
-      <SimpleBanner3
+        <SimpleBanner3
           banner={bannerImg && bannerImg}
           heading={mainData.yogaTeamSliderHeading}
           para={mainData.yogaTeamSliderParagraph}
@@ -885,119 +894,126 @@ auf höchstem Niveau"
                   <h1> {mainData && mainData.about_first_section_Heading}</h1>
                   <div className="kurse_link">
                     {/* Attach event handlers to trigger scroll */}
-                    <a onClick={() => scrollToSection( faqRef)} style={{color:"#9bbb59"}}>
+                    <a onClick={() => scrollToSection(faqRef)} style={{ color: "#9bbb59" }}>
                       wichtige info
                     </a>
-                    <a onClick={() => scrollToSection(bannerRef)} style={{color:"#9bbb59"}}>termine</a>
+                    <a onClick={() => scrollToSection(bannerRef)} style={{ color: "#9bbb59" }}>termine</a>
                   </div>
-<p
-      
-      className="p-0"
-    //   style={{
-    //       color: "rgb(33, 37, 41)",
-    //       fontFamily: "Roboto, sans-serif",
-    //       fontSize: 16,
-    // }}
-    
-      
-      dangerouslySetInnerHTML={{ __html: mainData.about_first_section_Paragraph_Content }} >
-      
+                  <p
+
+                    className="p-0"
+                    //   style={{
+                    //       color: "rgb(33, 37, 41)",
+                    //       fontFamily: "Roboto, sans-serif",
+                    //       fontSize: 16,
+                    // }}
 
 
-        </p>
-                
+                    dangerouslySetInnerHTML={{ __html: mainData.about_first_section_Paragraph_Content }} >
+
+
+
+                  </p>
+
                 </div>
               </div>
               <div className="col-lg-3">
-              <div className="about_wrapper__right mb-3">
-              {
+                <div className="about_wrapper__right mb-3">
+                  {
                     closestUpcomingCourse[0] ? (
                       <div>
 
-                  
-                        <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
-                      <div className="price-tag">
-                      <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
-                      </div>
-                      <div className="about-date">
-                          {
-                            closestUpcomingCourse[0] &&
-                            closestUpcomingCourse[0].Offerprice?   ( <p>
+
+                        <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                        <div className="price-tag">
+                        <h6>
+                            <i className="bx bxs-purchase-tag" />
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                              <>
+                                {closestUpcomingCourse[0].Offerprice}€
+                                <sub>
+                                  <del
+                                    style={{
+                                      color: "rgb(255, 87, 34)",
+                                      fontSize: "17px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {closestUpcomingCourse[0].price}
+                                  </del>
+                                </sub>
+                              </>
+                            ) : (
+                              <>
+                                {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                              </>
+                            )}
+                          </h6>
+                        </div>
+                        <div className="about-date">
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
                             Das Angebot endet am
                             <i className="bx bxs-calendar" />
-                            {formatDate(
-                              closestUpcomingCourse[0] &&
-                                closestUpcomingCourse[0].Offerprice
-                                ? closestUpcomingCourse[0].OfferEndDate
-                                : null
-                            )}
-                          </p>):null
-                          }
-                      
+                            {formatDate(closestUpcomingCourse[0].OfferEndDate)}
+                          </p>}
                           <p>
                             <i className="bx bxs-map" />
-                            {closestUpcomingCourse[0]
-                              ? closestUpcomingCourse[0].Location
-                              : null}
+                            {
+                              closestUpcomingCourse[0] ? closestUpcomingCourse[0].Location : null
+                            }
+
                           </p>
                           <p>
                             <i className="bx bxs-calendar" />
+
+
 
                             {/* {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {formatDate(
-                              closestUpcomingCourse[0]
-                                ? closestUpcomingCourse[0].StartDate
-                                : null
-                            )}
+                            {
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].StartDate : null)
+                            }
                             <span className="my-2">-</span>
-                            {formatDate(
-                              closestUpcomingCourse[0]
-                                ? closestUpcomingCourse[0].EndDate
-                                : null
-                            )}
+                            {
+                              formatDate(closestUpcomingCourse[0] ? closestUpcomingCourse[0].EndDate : null)
+                            }
+
                           </p>
                         </div>
-                 
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
                       </div>
                     ) : (
-                        <div className="div">
-                          <div className="about-text">
-                        <p>
-                          Reise und Unterkunft sind nicht immer im Schulungspreis
-                          enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
-                          einfach an. Wir helfen Ihnen gerne weiter.
-                        </p>
-                      </div>
-                      <div className="about-contact">
-                        <a href="tel:+4906920134987">
-                          <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
-                        </a>
-                        <a href="mailto:info@turiyayoga.de">
-                          <i className="bx bxs-envelope" /> info@turiyayoga.de
-                        </a>
-                      </div>
+                      <div className="div">
+                        <div className="about-text">
+                          <p>
+                            Reise und Unterkunft sind nicht immer im Schulungspreis
+                            enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
+                            einfach an. Wir helfen Ihnen gerne weiter.
+                          </p>
                         </div>
-                        
+                        <div className="about-contact">
+                          <a href="tel:+4906920134987">
+                            <i className="bx bxs-phone-call" /> +49 (0)69 - 20134987
+                          </a>
+                          <a href="mailto:info@turiyayoga.de">
+                            <i className="bx bxs-envelope" /> info@turiyayoga.de
+                          </a>
+                        </div>
+                      </div>
+
                     )
                   }
-              </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1016,16 +1032,14 @@ auf höchstem Niveau"
               {faqItems1.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex1 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex1 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(1, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex1 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex1 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -1056,16 +1070,14 @@ auf höchstem Niveau"
               {faqItems2.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex3 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex3 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(3, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex3 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex3 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -1087,16 +1099,14 @@ auf höchstem Niveau"
               {faqItems3.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex3 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex3 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(3, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex3 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex3 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -1117,16 +1127,14 @@ auf höchstem Niveau"
               {faqItems4.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex4 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex4 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(4, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex4 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex4 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -1147,16 +1155,14 @@ auf höchstem Niveau"
               {faqItems5.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex5 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex5 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(5, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex5 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex5 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -1190,16 +1196,14 @@ auf höchstem Niveau"
               {faqItems6.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex6 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex6 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(6, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex6 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex6 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
@@ -1221,16 +1225,14 @@ auf höchstem Niveau"
               {faqItems7.map((faq, index) => (
                 <div
                   key={index}
-                  className={`faq_box__content ${
-                    activeIndex7 === index ? "active" : ""
-                  }`}
+                  className={`faq_box__content ${activeIndex7 === index ? "active" : ""
+                    }`}
                   onClick={() => handleToggle(7, index)}>
                   <div className="question">
                     <div className="plus">
                       <i
-                        className={`bx ${
-                          activeIndex7 === index ? "bx-minus" : "bx-plus"
-                        }`}
+                        className={`bx ${activeIndex7 === index ? "bx-minus" : "bx-plus"
+                          }`}
                       />
                     </div>
                     <h6>{faq.question}</h6>
