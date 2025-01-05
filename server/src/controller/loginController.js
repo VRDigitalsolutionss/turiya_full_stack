@@ -10,7 +10,7 @@ const loginController = (req, res) => {
     .then((user) => {
       if (user !== null) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          const token = jwt.sign({ user: req.body.email }, "rishuam", {
+          const token = jwt.sign({ user: req.body.email }, process.env.secretKey, {
             expiresIn: "1d",
           });
 
