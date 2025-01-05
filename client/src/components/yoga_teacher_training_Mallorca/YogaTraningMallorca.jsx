@@ -34,8 +34,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
+import Swal from 'sweetalert2'
+
 const YogaTraningMallorca = () => {
   const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+  const UserId = localStorage.getItem('turiya_auth_id');
 
   const fetchNextUpcomingCourse = () => {
     axios
@@ -145,17 +148,52 @@ const YogaTraningMallorca = () => {
 
   // Function to toggle the dialog visibility
   const handletriggerDialogBox = (courseid) => {
+
     const auth_token = localStorage.getItem("turiya_auth_token");
 
+    console.log("course id: handletriggerDialogBox" + courseid, auth_token);
     if (auth_token) {
       // navigate("/course_booking");
-      reducePlace(courseid);
+      // reducePlace(courseid);
       addToCart(courseid);
     } else {
       setIsDialogVisible(true); // Show the dialog
     }
 
     // handletriggerDialogBox
+  };
+
+
+  const addToCart = (courseid) => {
+    const payload = {
+      moduleId: courseid,
+      userId: UserId,
+      status: "active",
+    };
+
+    axios
+      .post(BASE_URL + "/add_course_in_cart", payload)
+      .then((response) => {
+        console.log("response of cart", response.data.data);
+        Swal.fire({
+          title: "Danke!",
+          text: "Kurs im Warenkorb hinzugefügt!",
+          icon: "success"
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        Swal.fire({
+          Symbol: 'error',
+          Titel: "Benachrichtigung",
+          Text: "Etwas ist schiefgelaufen!",
+          Fußzeile: '<a href="#">Warum habe ich dieses Problem?</a>'
+        });
+
+      });
   };
 
   // Function to close the dialog
@@ -167,18 +205,6 @@ const YogaTraningMallorca = () => {
     setisloginOpen(true);
     closeDialogBox(); // Close
     //  onClick="window.location.href='registration.php';"
-  };
-
-  const reducePlace = (id) => {
-    axios
-      .get(BASE_URL + `/reduce-places/${id}`)
-      .then((response) => {
-        console.log("response of reduce-places", response);
-        navigate(`/course_booking/${id}`);
-      })
-      .catch((error) => {
-        console.log("error of reduce-places", error);
-      });
   };
 
   function formatDate(dateString) {
@@ -193,21 +219,6 @@ const YogaTraningMallorca = () => {
   const formattedDate = formatDate("2025-01-09");
   console.log(formattedDate); // Output: 09.01.2025
 
-  const addToCart = (courseid) => {
-    const payload = {
-      moduleId: "67543744c21f7e4272deb098",
-      status: "active",
-    };
-
-    axios
-      .post(BASE_URL + "/add_course_in_cart", payload)
-      .then((response) => {
-        console.log("response of cart", response.data.data);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
   useEffect(() => {
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -371,19 +382,19 @@ const YogaTraningMallorca = () => {
                              closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
                              :null
                             } */}
-                            {formatDate(
-                              closestUpcomingCourse[0]
-                                ? closestUpcomingCourse[0].StartDate
-                                : null
-                            )}
-                            <span className="my-2">-</span>
-                            {formatDate(
-                              closestUpcomingCourse[0]
-                                ? closestUpcomingCourse[0].EndDate
-                                : null
-                            )}
-                          </p>
-                        </div>
+                          {formatDate(
+                            closestUpcomingCourse[0]
+                              ? closestUpcomingCourse[0].StartDate
+                              : null
+                          )}
+                          <span className="my-2">-</span>
+                          {formatDate(
+                            closestUpcomingCourse[0]
+                              ? closestUpcomingCourse[0].EndDate
+                              : null
+                          )}
+                        </p>
+                      </div>
 
                       <div className="about-contact">
                         <a href="tel:+4906920134987">
@@ -1073,29 +1084,29 @@ const YogaTraningMallorca = () => {
                           </a>
                         </td>
                         <td style={{ backgroundColor: "#F9F9F9" }}>
-                            {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
-                              <>
-                                <span
-                                  style={{
-                                    color: "red",
-                                  }}
-                                >
-                                  € {item.Offerprice}
-                                </span>
-                                <span className="ms-2">
-                                  <del>€{item.price}</del>
-                                </span>
+                          {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
+                            <>
+                              <span
+                                style={{
+                                  color: "red",
+                                }}
+                              >
+                                € {item.Offerprice}
+                              </span>
+                              <span className="ms-2">
+                                <del>€{item.price}</del>
+                              </span>
+                              <br />
+                              <small>
+                                Das Angebot endet am{" "}
                                 <br />
-                                <small>
-                                  Das Angebot endet am{" "}
-                                  <br/>
-                                  <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
-                                </small>
-                              </>
-                            ) : (
-                              <span>€{item.price}</span>
-                            )}
-                          </td>
+                                <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
+                              </small>
+                            </>
+                          ) : (
+                            <span>€{item.price}</span>
+                          )}
+                        </td>
 
                         <td
                           style={{

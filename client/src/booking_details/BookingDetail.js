@@ -43,6 +43,12 @@ const BookingDetail = () => {
     setInvoiceType(e.target.value);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
+  }, []);
+
   // Handle changes for address type ${BASE_URL}/getModuleById/67543744c21f7e4272deb098
   const handleAddressTypeChange = (e) => {
     setAddressType(e.target.value);

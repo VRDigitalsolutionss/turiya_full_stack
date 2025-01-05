@@ -23,6 +23,11 @@ const BilingDetails = () => {
   };
  
 
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
+  }, []);
 
 
   const login_id = localStorage.getItem("turiya_auth_id");
@@ -148,12 +153,24 @@ const BilingDetails = () => {
       .post(`${BASE_URL}/generateInvoice`, payload)
       .then((response) => {
         console.log("response of invoice", response.data.data);
+        reducePlace(id)
         navigate('/thank-you');
       })
       .catch((error) => {
         console.log("error", error);
         setInvoiceLoading(false)
         alert("Some error occurred")
+      });
+  };
+
+  const reducePlace = (id) => {
+    axios
+      .get(BASE_URL + `/reduce-places/${id}`)
+      .then((response) => {
+        console.log("response of reduce-places", response);
+      })
+      .catch((error) => {
+        console.log("error of reduce-places", error);
       });
   };
 

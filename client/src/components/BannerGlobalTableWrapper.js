@@ -154,15 +154,10 @@ const BannerGlobalTableWrapper = () => {
 
   // Function to toggle the dialog visibility
   const handletriggerDialogBox = (courseid) => {
-
-
     const auth_token = localStorage.getItem("turiya_auth_token");
-
-
-
     if (auth_token) {
       // navigate("/course_booking");
-      reducePlace(courseid);
+      // reducePlace(courseid);
       addToCart(courseid);
     } else {
       setIsDialogVisible(true); // Show the dialog
@@ -180,18 +175,6 @@ const BannerGlobalTableWrapper = () => {
     setisloginOpen(true);
     closeDialogBox(); // Close
     //  onClick="window.location.href='registration.php';"
-  };
-
-  const reducePlace = (id) => {
-    axios
-      .get(BASE_URL + `/reduce-places/${id}`)
-      .then((response) => {
-        console.log("response of reduce-places", response);
-        navigate(`/course_booking/${id}`);
-      })
-      .catch((error) => {
-        console.log("error of reduce-places", error);
-      });
   };
 
   function formatDate(dateString) {
@@ -233,20 +216,12 @@ const BannerGlobalTableWrapper = () => {
           text: "Kurs im Warenkorb hinzugefügt!",
           icon: "success"
         });
-
-
-
-
-        // window.location.reload();
-
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       })
       .catch((error) => {
         console.log("error", error);
-
-
-
-
-
         Swal.fire({
           Symbol: 'error',
           Titel: "Benachrichtigung",
@@ -488,7 +463,7 @@ const BannerGlobalTableWrapper = () => {
                                 }}
                                 className="table-btn triggerDialogBox"
                                 data-id={9}>
-                                ANMELDEN
+                                CHE
                               </button>{" "}
                             </td>
                           </tr>

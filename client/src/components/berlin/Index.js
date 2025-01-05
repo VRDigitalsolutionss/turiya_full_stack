@@ -23,10 +23,13 @@ import axios from "axios";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 import { useNavigate } from "react-router-dom";
 
+import Swal from 'sweetalert2'
+
 
 const Berlin = () => {
   const navigate = useNavigate();
   const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+  const UserId = localStorage.getItem('turiya_auth_id');
 
   const fetchNextUpcomingCourse = () => {
     axios
@@ -377,7 +380,7 @@ const Berlin = () => {
     console.log("course id: handletriggerDialogBox" + courseid, auth_token);
     if (auth_token) {
       // navigate("/course_booking");
-      reducePlace(courseid);
+      // reducePlace(courseid);
       addToCart(courseid);
     } else {
       setIsDialogVisible(true); // Show the dialog
@@ -388,9 +391,9 @@ const Berlin = () => {
 
 
   const addToCart = (courseid) => {
-    alert("courseid", courseid)
     const payload = {
       moduleId: courseid,
+      userId: UserId,
       status: "active",
     };
 
@@ -398,9 +401,24 @@ const Berlin = () => {
       .post(BASE_URL + "/add_course_in_cart", payload)
       .then((response) => {
         console.log("response of cart", response.data.data);
+        Swal.fire({
+          title: "Danke!",
+          text: "Kurs im Warenkorb hinzugefügt!",
+          icon: "success"
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       })
       .catch((error) => {
         console.log("error", error);
+        Swal.fire({
+          Symbol: 'error',
+          Titel: "Benachrichtigung",
+          Text: "Etwas ist schiefgelaufen!",
+          Fußzeile: '<a href="#">Warum habe ich dieses Problem?</a>'
+        });
+
       });
   };
   // Function to close the dialog
@@ -683,29 +701,29 @@ const Berlin = () => {
                               </a>
                             </td>
                             <td style={{ backgroundColor: "#F9F9F9" }}>
-                            {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
-                              <>
-                                <span
-                                  style={{
-                                    color: "red",
-                                  }}
-                                >
-                                  € {item.Offerprice}
-                                </span>
-                                <span className="ms-2">
-                                  <del>€{item.price}</del>
-                                </span>
-                                <br />
-                                <small>
-                                  Das Angebot endet am{" "}
-                                  <br/>
-                                  <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
-                                </small>
-                              </>
-                            ) : (
-                              <span>€{item.price}</span>
-                            )}
-                          </td>
+                              {isOfferValid(item.OfferEndDate) && item.Offerprice > 0 ? (
+                                <>
+                                  <span
+                                    style={{
+                                      color: "red",
+                                    }}
+                                  >
+                                    € {item.Offerprice}
+                                  </span>
+                                  <span className="ms-2">
+                                    <del>€{item.price}</del>
+                                  </span>
+                                  <br />
+                                  <small>
+                                    Das Angebot endet am{" "}
+                                    <br />
+                                    <i className="bx bxs-calendar"></i> {formatDate(item.OfferEndDate)}
+                                  </small>
+                                </>
+                              ) : (
+                                <span>€{item.price}</span>
+                              )}
+                            </td>
 
                             <td
                               style={{

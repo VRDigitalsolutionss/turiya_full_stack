@@ -21,12 +21,13 @@ import ParralaxWrapper from "../ParralaxWrapper";
 import PriceCard from "../price_card/Index";
 import axios from "axios";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config";
-
+import Swal from 'sweetalert2'
 
 const Munchen = () => {
-
-
+  
+  
   const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+  const UserId = localStorage.getItem('turiya_auth_id');
 
   const fetchNextUpcomingCourse = () => {
     axios
@@ -341,9 +342,54 @@ const Munchen = () => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   // Function to toggle the dialog visibility
-  const handletriggerDialogBox = () => {
-    setIsDialogVisible(true); // Show the dialog
-  };
+  const handletriggerDialogBox = (courseid) => {
+  
+      const auth_token = localStorage.getItem("turiya_auth_token");
+  
+      console.log("course id: handletriggerDialogBox" + courseid, auth_token);
+      if (auth_token) {
+        // navigate("/course_booking");
+        // reducePlace(courseid);
+        addToCart(courseid);
+      } else {
+        setIsDialogVisible(true); // Show the dialog
+      }
+  
+      // handletriggerDialogBox
+    };
+  
+  
+    const addToCart = (courseid) => {
+      const payload = {
+        moduleId: courseid,
+        userId: UserId,
+        status: "active",
+      };
+  
+      axios
+        .post(BASE_URL + "/add_course_in_cart", payload)
+        .then((response) => {
+          console.log("response of cart", response.data.data);
+          Swal.fire({
+            title: "Danke!",
+            text: "Kurs im Warenkorb hinzugefügt!",
+            icon: "success"
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        })
+        .catch((error) => {
+          console.log("error", error);
+          Swal.fire({
+            Symbol: 'error',
+            Titel: "Benachrichtigung",
+            Text: "Etwas ist schiefgelaufen!",
+            Fußzeile: '<a href="#">Warum habe ich dieses Problem?</a>'
+          });
+  
+        });
+    };
 
   // Function to close the dialog
   const closeDialogBox = () => {
