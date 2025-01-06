@@ -228,16 +228,12 @@ const Navbar = () => {
   const FetchedPurchased = () => {
     console.log("Fetched cart id", id)
 
-
-    // console.log("BASE_URL of FetchedPurchased",BASE_URL + `/get_purchasedModule/${id}`)
     if (id) {
       axios
-        // .get("http://127.0.0.1:7000/api/get_purchasedModule")
         .get(BASE_URL + `/get_purchasedModule/${id}`)
         .then((response) => {
           console.log("response of get_purchasedModule", response.data.data);
           setPuchasedCourse(response.data.data);
-          // setcartFetchedData(response.data.data);
         })
         .catch((error) => {
           console.log("error", error);
@@ -321,16 +317,6 @@ const Navbar = () => {
                     [LEER]
                   </p>
                 </Link>
-                {/* <p  data-bs-toggle="modal" data-bs-target="registermodal" className="registerLink" style={{ cursor: "pointer" }}>
-                  <i className="bx bx-user" />
-                  Anmeldung/Registrierung
-                </p> */}
-                {/* <a data-bs-toggle="modal" data-bs-target="#exampleModal-form" className="registerLink" style={{ cursor: "pointer" }}>
-  <i className="bx bx-user" />
-  Anmeldung/Registrierung
-                </a> */}
-                {/* ========================================================= */}
-
                 {user ? (
                   <p
                     onClick={handleRedirect}
@@ -487,22 +473,6 @@ const Navbar = () => {
                           Hybride Wochenend Yogalehrer Ausbildung
                         </Link>
                       </li>
-
-                      {/* ================================== */}
-
-                      {/* {
-                              categoryData && categoryData.map((data, index) => {
-                                return (
-                                  <li key={index}>
-                                    <Link to={`/${replaceSpacesWithUnderscores(data.category)}`}>
-                                      {data.category}
-                                    </Link>
-                                  </li>
-                                )
-                              })
-                              } */}
-
-                      {/* ================================== */}
                     </ul>
                   </li>
                   <li className="dropdown_menu">
@@ -518,21 +488,6 @@ const Navbar = () => {
                       </li>
                     </ul>
                   </li>
-                  {/*
-                  <li className="dropdown_menu">
-                    <Link to="/product">
-                    Product
-                      <i className="bx bx-chevron-down" />
-                    </Link>
-                    <ul className="dropdown_menu__list">
-                      <li>
-                        <Link to="/product">
-                        Yoga Product
-                        </Link>
-                      </li>
-                    </ul>
-                  </li> */}
-
                   <li className="menu-item">
                     <Link to="/contact">
                       <i className="bx bx-envelope" />
@@ -548,64 +503,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          {/* <div className="hide_top_menu">
-            <Link to="tel:+49(0)69-20134987">
-              <i className="bx bxs-mobile" />
-              +49(0)69-20134987
-            </Link>
-            <Link to="mailto:info@turiyayoga.de">
-              <i className="bx bxs-envelope" /> info@turiyayoga.de
-            </Link>
-
-            <p onClick={handleSidBar} className="cart_mobile_view">
-              <i className="bx bx-shopping-bag" />
-              <span className="me-1">
-                {cartFetchedData && cartFetchedData.length > 0
-                  ? cartFetchedData.length
-                  : 0}
-              </span>
-              [LEER]
-            </p>
-
-
-
-
-
-            {user ? (
-              <p
-                onClick={handleRedirect}
-                className="registerLink"
-                style={{
-                  cursor: "pointer",
-                  fontSize: "20px",
-                  textTransform: "capitalize",
-                }}>
-                <i className="bx bx-user" />
-                {user && user}
-              </p>
-            ) : (
-              <p
-                onClick={handleRedirect}
-                className="registerLink"
-                style={{ cursor: "pointer" }}>
-                <i className="bx bx-user" />
-                Anmeldung/Registrierung
-              </p>
-            )}
-          </div> */}
-
-          {/* =============================================================================== */}
-          <div className="form-body">
-            {/* ----------------------------------------------------old code ------------------------------------------- */}
-
-            {/* ----------------------------------------------------------------------- */}
-            {console.log("cartFetchedData", cartFetchedData)}
-
-            {/* -------------------------------------------------------------------------------------- */}
-          </div>
-
-          {/* ============================================================================================= */}
-
+          
           {showSiderBar && (
             <div class="cart-overlay active">
               <div class="cart-overlay-content px-3">
@@ -825,41 +723,6 @@ const Navbar = () => {
                           500H AYA Yogalehrer Blockausbildung | 100h
                           Einzelmodule    <i className="bx bx-chevron-right" />
                         </Link>
-
-                        {/* <div className="mega_dropdown__list">
-                          <ul>
-                            <li>
-                              <Link to="/block_yogaTraning">
-                                Blockausbildung / Überblick
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-100h">
-                                100h Yoga Ausbildung / Modul 1
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule2">
-                                +200h Yoga Ausbildung / Modul 2
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule3">
-                                +300h Yoga Ausbildung / Modul 3
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule4">
-                                +400h Yoga Ausbildung / Modul 4
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule5">
-                                +500h Yoga Ausbildung / Modul 5
-                              </Link>
-                            </li>
-                          </ul>
-                        </div> */}
                       </li>
                       <li className="my-3">
                         <Link to="/yin-yoga " style={{ fontSize: "12px" }}>60H Yin Yoga</Link>
@@ -1003,17 +866,7 @@ const Navbar = () => {
                     })}
 
 
-                </ul>
-                {/* ============================================================================== */}
-
-
-
-              </div>
-
-              {/* =========================================================== */}
-
-
-              {/* ==================================================================== */}
+                </ul></div>
             </div>
           </div>
         </div>

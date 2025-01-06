@@ -173,11 +173,11 @@ const Index = () => {
         buttonTxt="null"
       />
       <div>
-        <section className="global_wrapper about_wrapper" data-aos="fade-up">
+        <section className="global_wrapper about_wrapper">
           <div className="container">
             <div className="row">
               <div className="col-lg-9">
-                <div className="about_wrapper__left" data-aos="fade-up">
+                <div className="about_wrapper__left">
                   <h3>
                     {" "}
                     {mainData && mainData.about_first_section_sub_Paragraph}
@@ -239,7 +239,7 @@ const Index = () => {
                                 <sub>
                                   <del
                                     style={{
-                                      color: "rgb(255, 87, 34)",
+                                      color: "rgb(198, 132, 27)",
                                       fontSize: "17px",
                                       marginLeft: "10px",
                                     }}

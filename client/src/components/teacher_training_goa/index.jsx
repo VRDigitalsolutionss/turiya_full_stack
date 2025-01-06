@@ -254,11 +254,11 @@ const Index = () => {
       />
 
       <div>
-        <section className="global_wrapper about_wrapper" data-aos="fade-up">
+        <section className="global_wrapper about_wrapper">
           <div className="container">
             <div className="row">
-              <div className="col-lg-9">
-                <div className="about_wrapper__left" data-aos="fade-up">
+              {/* <div className="col-lg-9"> */}
+                <div className="about_wrapper__left">
                   {/* <h3>Yogalehrer Ausbildung 200 Stunden - Hatha &amp; Vinyasa - Flow ( Auf Deutsch )</h3> */}
                   <h3>
                     {" "}
@@ -282,9 +282,9 @@ const Index = () => {
 
                   {/* <p>Der Süden von Goa ist bekanntlich der schönste und ruhigste Teil des Staates. Vor der Kulisse von Kokosnussplantagen und grünen Hügeln befinden sich hier zweifellos die schönsten Strände. Turiya Yoga bietet seine 200-Stunden-Yogalehrer-Training an einem Ort in der Nähe eines der friedlichsten und unberührtesten Orte in Süd-Goa an, dem wunderschönen Agonda Beach. Karibik-ähnliche Traumstrände, idyllische Ferienorte, die nichts von ihrer Ursprünglichkeit eingebüßt haben, und bunte Hippie-Märkte lassen eure Yogalehrer-Ausbildung unvergesslich werden.</p> */}
                 </div>
-              </div>
+              {/* </div> */}
 
-              <div className="col-lg-3">
+              {/* <div className="col-lg-3">
                 <div className="about_wrapper__right mb-3">
                   {
                     closestUpcomingCourse[0] ? (
@@ -301,7 +301,7 @@ const Index = () => {
                                 <sub>
                                   <del
                                     style={{
-                                      color: "rgb(255, 87, 34)",
+                                      color: "rgb(198, 132, 27)",
                                       fontSize: "17px",
                                       marginLeft: "10px",
                                     }}
@@ -331,11 +331,6 @@ const Index = () => {
                           </p>
                           <p>
                             <i className="bx bxs-calendar" />
-
-                            {/* {
-                             closestUpcomingCourse[0]? closestUpcomingCourse[0].StartDate:null + "-" +  closestUpcomingCourse[0]? closestUpcomingCourse[0].EndDate
-                             :null
-                            } */}
                             {formatDate(
                               closestUpcomingCourse[0]
                                 ? closestUpcomingCourse[0].StartDate
@@ -381,7 +376,7 @@ const Index = () => {
                     )
                   }
                 </div>
-              </div>
+              </div> */}
 
             </div>
           </div>
@@ -702,7 +697,7 @@ const Index = () => {
                               <>
                                 <span
                                   style={{
-                                    color: "red",
+                                    color: "rgb(198, 132, 27)",
                                   }}
                                 >
                                   € {item.Offerprice}
@@ -725,7 +720,7 @@ const Index = () => {
                           <td
                             style={{
                               backgroundColor: "#F9F9F9",
-                              color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                              color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is rgb(198, 132, 27)
                             }}>
                             {item.Place <= 3
                               ? `only Noch ${item.Place} Plätze frei`
@@ -791,7 +786,7 @@ const Index = () => {
                                 <span
                                   style={{
                                     color:
-                                      item.Offerprice > 0 ? "red" : "inherit",
+                                      item.Offerprice > 0 ? "rgb(198, 132, 27)" : "inherit",
                                   }}>
                                   €{" "}
                                   {item.Offerprice > 0 ? item.Offerprice : item.price}
@@ -803,7 +798,7 @@ const Index = () => {
 
                             <span
                               // style={{
-                              //   color: item.Offerprice > 0 ? "red" : "inherit",
+                              //   color: item.Offerprice > 0 ? "rgb(198, 132, 27)" : "inherit",
                               // }}
                               className="ms-2"
                             >
@@ -828,7 +823,7 @@ const Index = () => {
                           <td
                             style={{
                               backgroundColor: "#F9F9F9",
-                              color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                              color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is rgb(198, 132, 27)
                             }}>
                             {item.Place <= 3
                               ? `only Noch ${item.Place} Plätze frei`

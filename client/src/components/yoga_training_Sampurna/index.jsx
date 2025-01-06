@@ -169,11 +169,11 @@ const Index = () => {
         buttonTxt="VIDEO"
       />
 
-      <section className="global_wrapper about_wrapper" data-aos="fade-up">
+      <section className="global_wrapper about_wrapper">
         <div className="container">
           <div className="row">
             <div className="col-lg-9">
-              <div className="about_wrapper__left" data-aos="fade-up">
+              <div className="about_wrapper__left">
                 {/* <h1>Yogalehrer Ausbildung in Sampurna Seminarhaus</h1> */}
                 <h1> {mainData && mainData.about_first_section_Heading}</h1>
 
@@ -212,7 +212,7 @@ const Index = () => {
                             <sub>
                               <del
                                 style={{
-                                  color: "rgb(255, 87, 34)",
+                                  color: "rgb(198, 132, 27)",
                                   fontSize: "17px",
                                   marginLeft: "10px",
                                 }}>
@@ -305,7 +305,7 @@ const Index = () => {
       </section>
       <section className="sampurna_wrapper">
         <div className="container">
-          <div className="sampurna_wrapper__content" data-aos="fade-up">
+          <div className="sampurna_wrapper__content">
             <h4>Sampurna Seminarhaus</h4>
             <div className="yoga-list-img">
               <img src={img1} className="img-fluid" alt="cclip_image002" />

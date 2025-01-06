@@ -224,7 +224,7 @@ const CustomerTestimonialsp = () => {
                                 <sub>
                                   <del
                                     style={{
-                                      color: "rgb(255, 87, 34)",
+                                      color: "rgb(198, 132, 27)",
                                       fontSize: "17px",
                                       marginLeft: "10px",
                                     }}

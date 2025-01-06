@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import { BASE_URL,BASE_URL_IMAGE } from "../../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../../config";
 
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -31,7 +31,7 @@ const CourseForm = () => {
 
 
         const data = response.data.data;
-        
+
         setFormData({
           courseCategory: data.courseCategory || "",
           pageUrl: data.pageUrl || "",
@@ -45,12 +45,12 @@ const CourseForm = () => {
         });
 
         setAboutFirstSectionHeading(data.about_first_section_Heading || "");
-        setAboutFirstSectionSubParagraph(data.aboutFirstSectionSubParagraph  || "");
+        setAboutFirstSectionSubParagraph(data.aboutFirstSectionSubParagraph || "");
         setBlogContent(data.about_first_section_Paragraph_Content || "");
 
 
 
-     //  response -- about_first_section_Heading
+        //  response -- about_first_section_Heading
         // : 
         // "Heading :"
         // about_first_section_Image
@@ -122,7 +122,7 @@ const CourseForm = () => {
         // _id
         // : 
         // "6746afa967d2767083f6d4e8"
-       
+
       }).catch((error) => {
         console.log("error", error);
       });
@@ -149,8 +149,8 @@ const CourseForm = () => {
         { indent: "-1" }, // Decrease indentation
         { indent: "+1" } // Increase indentation
       ],
-    
-     
+
+
       ["link", "image", "video"], // Insert link, image, and video
       [
         { align: "" }, // Default alignment (left)
@@ -158,7 +158,7 @@ const CourseForm = () => {
         { align: "right" }, // Right alignment
         { align: "justify" }, // Justify alignment
       ],
-      
+
       ["clean"] // Clear formatting button
     ]
   };
@@ -223,10 +223,10 @@ const CourseForm = () => {
   const [moduleCategories, setModuleCategories] = useState('');
 
 
-  
+
   const fetchModuleCategories = () => {
-    axios.get(BASE_URL+'/api').then((response) => {
-      console.log("response of fetchModuleCategories",response);
+    axios.get(BASE_URL + '/api').then((response) => {
+      console.log("response of fetchModuleCategories", response);
     }).catch((error) => {
       console.log("error", error);
     })
@@ -234,23 +234,42 @@ const CourseForm = () => {
 
 
 
-  // ================================================================
-  const courseCategories = [
-    { label: "Select Course Category", value: "Select Course Category" },
-    { label: "Alle Kommenden Kurse", value: "Alle Kommenden Kurse" },
-    { label: "200H AYA Yogalehrer Ausbildung - Intensiv", value: "200H AYA Yogalehrer Ausbildung - Intensiv" },
-    {
-      label: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-      value: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    },
-    { label: "60H Yin Yoga", value: "60H Yin Yoga" },
-    { label: "60H Senioren Yoga", value: "60H Senioren Yoga" },
-    { label: "Hybride Wochenend Yogalehrer Ausbildung", value: "Hybride Wochenend Yogalehrer Ausbildung" },
-  ];
+  // // ================================================================
+  // const courseCategories = [
+  //   { label: "Select Course Category", value: "Select Course Category" },
+  //   { label: "Alle Kommenden Kurse", value: "Alle Kommenden Kurse" },
+  //   { label: "200H AYA Yogalehrer Ausbildung - Intensiv", value: "200H AYA Yogalehrer Ausbildung - Intensiv" },
+  //   {
+  //     label: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
+  //     value: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
+  //   },
+  //   { label: "60H Yin Yoga", value: "60H Yin Yoga" },
+  //   { label: "60H Senioren Yoga", value: "60H Senioren Yoga" },
+  //   { label: "Hybride Wochenend Yogalehrer Ausbildung", value: "Hybride Wochenend Yogalehrer Ausbildung" },
+  // ];
 
-  console.log(courseCategories);
+  // console.log(courseCategories);
 
-  const [courseCategory, setccourseCategory] = useState("");
+  const [courseCategories, setccourseCategories] = useState([]);
+
+  const fetchCategories = () => {
+    axios
+      .get(BASE_URL + "/course_categories_latest")
+      .then((response) => {
+        console.log("response course_categories_latest ", response.data.data);
+
+        const data = response.data.data;
+
+        console.log(data)
+        setccourseCategories(data);
+      })
+      .catch((error) => {
+        console.log("Error fetching categories", error);
+      });
+  };
+  useEffect(() => {
+    fetchCategories()
+  }, [])
   const HandleCourseCategory = (event) => {
     // setFaqs(event.target.value.split(','));
   };
@@ -278,7 +297,7 @@ const CourseForm = () => {
     "* All Inklusive Yogalehrer Ausbildung M3",
   ];
 
-  
+
   const handleFaqChange = (event) => {
     const selectedValues = Array.from(
       event.target.selectedOptions,
@@ -359,7 +378,7 @@ const CourseForm = () => {
 
     // Prepare the payload
     const payload = {
-      courseCategory:formData.courseCategory,
+      courseCategory: formData.courseCategory,
       pageUrl: formData.pageUrl,
       metaTitle: formData.metaTitle,
       metaDescription: formData.metaDescription,
@@ -400,48 +419,48 @@ const CourseForm = () => {
       // Axios POST request
 
 
-      if (id) { 
+      if (id) {
         axios
-        .put(BASE_URL + `/edit_module_webpage/${id}`, form, {
-          headers: {
-            "Content-Type": "multipart/form-data", // Set content type for file uploads
-          },
-        })
-        .then((response) => {
-          console.log("Response of add_course_webpage:", response);
+          .put(BASE_URL + `/edit_module_webpage/${id}`, form, {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set content type for file uploads
+            },
+          })
+          .then((response) => {
+            console.log("Response of add_course_webpage:", response);
 
-          if (response.status == 200) {
-            alert("Course module Webpage updated successfully!");
-          } else {
-            alert("Failed to update module webpage. Please try again.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error while submitting form:", error);
-          alert("An error occurred while submitting the form. Check console.");
-        });
+            if (response.status == 200) {
+              alert("Course module Webpage updated successfully!");
+            } else {
+              alert("Failed to update module webpage. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while submitting form:", error);
+            alert("An error occurred while submitting the form. Check console.");
+          });
       } else {
         axios
-        .post(BASE_URL + "/add_module_webpage", form, {
-          headers: {
-            "Content-Type": "multipart/form-data", // Set content type for file uploads
-          },
-        })
-        .then((response) => {
-          console.log("Response of add_course_webpage:", response);
+          .post(BASE_URL + "/add_module_webpage", form, {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set content type for file uploads
+            },
+          })
+          .then((response) => {
+            console.log("Response of add_course_webpage:", response);
 
-          if (response.status == 201) {
-            alert("Course module Webpage added successfully!");
-          } else {
-            alert("Failed to create course module webpage. Please try again.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error while submitting form:", error);
-          alert("An error occurred while submitting the form. Check console.");
-        });
+            if (response.status == 201) {
+              alert("Course module Webpage added successfully!");
+            } else {
+              alert("Failed to create course module webpage. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while submitting form:", error);
+            alert("An error occurred while submitting the form. Check console.");
+          });
       }
-      
+
     } else {
       alert("All fields are mandatory. Please fill in all required fields.");
     }
@@ -471,13 +490,11 @@ const CourseForm = () => {
                 onChange={handleChange}>
                 <option value="">Select Course Category</option>
 
-                {courseCategories.map((category) => {
-                  return (
-                    <option key={category.value} value={category.value}>
-                      {category.label}
-                    </option>
-                  );
-                })}
+                {courseCategories.map((data) => (
+                  <option key={data._id} value={data.category}>
+                    {data && data.category
+                    }
+                  </option>))}
                 {/* <option value="yoga">Yoga</option>
                 <option value="programming">Programming</option>
                 <option value="design">Design</option> */}
@@ -643,7 +660,7 @@ const CourseForm = () => {
                   onChange={(e) =>
                     setAboutFirstSectionSubParagraph(e.target.value)
                   }
-                  // onChange={handleFileChange}
+                // onChange={handleFileChange}
                 />
               </div>
             </div>

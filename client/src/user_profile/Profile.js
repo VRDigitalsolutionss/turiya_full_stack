@@ -53,10 +53,8 @@ const Profile = () => {
   console.log("fetchedData of profile", cartFetchedData);
 
   const FetchedPurchased = () => {
-// console.log("BASE_URL of FetchedPurchased",BASE_URL + `/get_purchasedModule/${id}`)
     if (id) {
       axios
-      // .get("http://127.0.0.1:7000/api/get_purchasedModule")
       .get(BASE_URL + `/get_purchasedModule/${id}`)
       .then((response) => {
         console.log("response of get_purchasedModule", response.data.data);

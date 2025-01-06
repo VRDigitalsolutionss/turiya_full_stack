@@ -264,11 +264,11 @@ const Index2 = () => {
         />
       </div>
       <div id="content" className="section">
-        <section className="global_wrapper about_wrapper" data-aos="fade-up">
+        <section className="global_wrapper about_wrapper">
           <div className="container">
             <div className="row">
               <div className="col-lg-9">
-                <div className="about_wrapper__left" data-aos="fade-up">
+                <div className="about_wrapper__left">
                   {/* <h3>MODUL 3</h3>
                   <h1>Yogalehrer Ausbildung +300H / AYA 500</h1> */}
 
@@ -329,7 +329,7 @@ const Index2 = () => {
                                 <sub>
                                   <del
                                     style={{
-                                      color: "rgb(255, 87, 34)",
+                                      color: "rgb(198, 132, 27)",
                                       fontSize: "17px",
                                       marginLeft: "10px",
                                     }}
@@ -420,7 +420,7 @@ const Index2 = () => {
 
       <section className="yin_yoga_faq" ref={faqRef}>
         <div className="container">
-          <div className="faq_wrapper__content" data-aos="fade-up">
+          <div className="faq_wrapper__content">
             <div className="faq_heading">
               <h3>Zertifizierung & Teilnahmevoraussetzung</h3>
             </div>
@@ -459,7 +459,7 @@ const Index2 = () => {
         </div>
 
         <div className="container">
-          <div className="faq_wrapper__content" data-aos="fade-up">
+          <div className="faq_wrapper__content">
             <div className="faq_heading">
               <h3>Yogausbildungsinhalte & Wichtige Informationen</h3>
             </div>
@@ -582,7 +582,7 @@ const Index2 = () => {
         </div>
 
         <div className="container">
-          <div className="faq_wrapper__content" data-aos="fade-up">
+          <div className="faq_wrapper__content">
             <div className="faq_heading">
               <h3>Tagesablauf</h3>
             </div>

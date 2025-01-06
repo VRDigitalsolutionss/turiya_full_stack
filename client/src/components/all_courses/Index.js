@@ -225,6 +225,15 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
     }
   },[videoId])
 
+  function isOfferValid(offerEndDate) {
+    if (!offerEndDate) return false;
+
+    const today = new Date();
+    const offerEnd = new Date(offerEndDate);
+
+    return today <= offerEnd;
+  }
+
 
   return (
     <>
@@ -332,11 +341,11 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
           </div>
         </div>
         {/* about turiya */}
-        <section class="global_wrapper about_wrapper" data-aos="fade-up">
+        <section class="global_wrapper about_wrapper">
           <div class="container">
             <div class="row">
               <div class="col-lg-9">
-                <div class="about_wrapper__left" data-aos="fade-up">
+                <div class="about_wrapper__left">
                   <h1> {all_course.about_first_section_Heading}</h1>
                   <div class="kurse_link">
                     <Link to="/yogalehrer-ausbildung-100h">modul 1</Link>
@@ -382,27 +391,36 @@ const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
                         <h3>{closestUpcomingCourse[0]? closestUpcomingCourse[0].Ausbildung:null}</h3>
                       <div className="price-tag">
                       <h6>
-                              <i className="bx bxs-purchase-tag" />
-                              
-{                              console.log("closest upcoming price",closestUpcomingCourse[0].Offerprice, closestUpcomingCourse[0].price)}
-                            {closestUpcomingCourse[0] && closestUpcomingCourse[0].Offerprice ? closestUpcomingCourse[0].Offerprice : closestUpcomingCourse[0].price}€
-                            <sub><del style={{color:"rgb(255, 87, 34)",fontSize:"17px",marginLeft:'10px'}}>{ closestUpcomingCourse[0] &&  closestUpcomingCourse[0].Offerprice?closestUpcomingCourse[0].price:null}</del></sub>
-                        </h6>
-                      </div>
-                      <div className="about-date">
-                          {
-                            closestUpcomingCourse[0] &&
-                            closestUpcomingCourse[0].Offerprice?   ( <p>
+                            <i className="bx bxs-purchase-tag" />
+                            {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 ? (
+                              <>
+                                {closestUpcomingCourse[0].Offerprice}€
+                                <sub>
+                                  <del
+                                    style={{
+                                      color: "rgb(198, 132, 27)",
+                                      fontSize: "17px",
+                                      marginLeft: "10px",
+                                    }}
+                                  >
+                                    {closestUpcomingCourse[0].price}
+                                  </del>
+                                </sub>
+                              </>
+                            ) : (
+                              <>
+                                {closestUpcomingCourse[0] && closestUpcomingCourse[0].price}€
+                              </>
+                            )}
+                          </h6>
+                        </div>
+                        <div className="about-date">
+
+                          {closestUpcomingCourse[0] && isOfferValid(closestUpcomingCourse[0].OfferEndDate) && closestUpcomingCourse[0].Offerprice > 0 && <p>
                             Das Angebot endet am
                             <i className="bx bxs-calendar" />
-                            {formatDate(
-                              closestUpcomingCourse[0] &&
-                                closestUpcomingCourse[0].Offerprice
-                                ? closestUpcomingCourse[0].OfferEndDate
-                                : null
-                            )}
-                          </p>):null
-                          }
+                            {formatDate(closestUpcomingCourse[0].OfferEndDate)}
+                          </p>}
                       
                           <p>
                             <i className="bx bxs-map" />

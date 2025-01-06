@@ -298,11 +298,11 @@ const YogaTraningMallorca = () => {
       />
 
       <div>
-        <section className="global_wrapper about_wrapper" data-aos="fade-up">
+        <section className="global_wrapper about_wrapper">
           <div className="container">
             <div className="row">
               <div className="col-lg-9">
-                <div className="about_wrapper__left" data-aos="fade-up">
+                <div className="about_wrapper__left">
                   {/* <h3>Yogalehrer Ausbildung 200 Std. AYA Hatha-Flow</h3> */}
 
                   <h3>
@@ -347,7 +347,7 @@ const YogaTraningMallorca = () => {
                               <sub>
                                 <del
                                   style={{
-                                    color: "rgb(255, 87, 34)",
+                                    color: "rgb(198, 132, 27)",
                                     fontSize: "17px",
                                     marginLeft: "10px",
                                   }}
@@ -1088,7 +1088,7 @@ const YogaTraningMallorca = () => {
                             <>
                               <span
                                 style={{
-                                  color: "red",
+                                  color: "rgb(198, 132, 27)",
                                 }}
                               >
                                 € {item.Offerprice}
@@ -1111,7 +1111,7 @@ const YogaTraningMallorca = () => {
                         <td
                           style={{
                             backgroundColor: "#F9F9F9",
-                            color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                            color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is rgb(198, 132, 27)
                           }}>
                           {item.Place <= 3
                             ? `only Noch ${item.Place} Plätze frei`
@@ -1171,7 +1171,7 @@ const YogaTraningMallorca = () => {
                               <span
                                 style={{
                                   color:
-                                    item.Offerprice > 0 ? "red" : "inherit",
+                                    item.Offerprice > 0 ? "rgb(198, 132, 27)" : "inherit",
                                 }}>
                                 €{" "}
                                 {item.Offerprice > 0
@@ -1183,7 +1183,7 @@ const YogaTraningMallorca = () => {
 
                           <span
                             // style={{
-                            //   color: item.Offerprice > 0 ? "red" : "inherit",
+                            //   color: item.Offerprice > 0 ? "rgb(198, 132, 27)" : "inherit",
                             // }}
                             className="ms-2">
                             {item.Offerprice > 0 ? (
@@ -1210,7 +1210,7 @@ const YogaTraningMallorca = () => {
                         <td
                           style={{
                             backgroundColor: "#F9F9F9",
-                            color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                            color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is rgb(198, 132, 27)
                           }}>
                           {item.Place <= 3
                             ? `only Noch ${item.Place} Plätze frei`

@@ -100,11 +100,11 @@ const Index = () => {
       />
 
       <div id="content" className="section">
-        <section className="global_wrapper about_wrapper" data-aos="fade-up">
+        <section className="global_wrapper about_wrapper">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
-                <div className="about_wrapper__left" data-aos="fade-up">
+                <div className="about_wrapper__left">
                   <h1> {mainData && mainData.about_first_section_Heading}</h1>
                   {/* <h3>BLOCKAUSBILDUNG</h3> */}
                   {/* <h1>Yogalehrer Ausbildungen in Modulen</h1> */}
