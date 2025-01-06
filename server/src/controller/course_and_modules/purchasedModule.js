@@ -87,7 +87,7 @@ const get_purchasedModuleById = async (req, res) => {
     const { id } = req.params;  // Extract the 'id' from the request parameters
     try {
         // Find the module by ID
-        const purchasedCourse = await PurchasedModule.findById(id);
+        const purchasedCourse = await PurchasedModule.find({ "userDetails._id": id });
 
         // Check if the module was found
         if (!purchasedCourse) {

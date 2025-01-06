@@ -532,7 +532,7 @@ const Clogne = () => {
                                 <sub>
                                   <del
                                     style={{
-                                      color: "rgb(255, 87, 34)",
+                                      color: "rgb(198, 132, 27)",
                                       fontSize: "17px",
                                       marginLeft: "10px",
                                     }}
@@ -689,7 +689,7 @@ const Clogne = () => {
                               <>
                                 <span
                                   style={{
-                                    color: "red",
+                                    color: "rgb(198, 132, 27)",
                                   }}
                                 >
                                   € {item.Offerprice}
@@ -712,7 +712,7 @@ const Clogne = () => {
                             <td
                               style={{
                                 backgroundColor: "#F9F9F9",
-                                color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
+                                color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is rgb(198, 132, 27)
                               }}>
                               {item.Place <= 3
                                 ? `only Noch ${item.Place} Plätze frei`

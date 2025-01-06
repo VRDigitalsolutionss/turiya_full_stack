@@ -494,11 +494,11 @@ const Index = () => {
 
         {/* modal youtube video */}
         <div>
-          <section className="global_wrapper about_wrapper" data-aos="fade-up">
+          <section className="global_wrapper about_wrapper">
             <div className="container">
               <div className="row">
                 <div className="col-lg-9">
-                  <div className="about_wrapper__left" data-aos="fade-up">
+                  <div className="about_wrapper__left">
                     {/* <h3>MODUL 1 + MODUL 2 INTENSIV {maindata.about_first_section_Heading}</h3> */}
                     <h3>
                       {" "}
@@ -602,7 +602,7 @@ const Index = () => {
                                   <sub>
                                     <del
                                       style={{
-                                        color: "rgb(255, 87, 34)",
+                                        color: "rgb(198, 132, 27)",
                                         fontSize: "17px",
                                         marginLeft: "10px",
                                       }}
@@ -703,7 +703,7 @@ const Index = () => {
                 <div className="yogalehrer-grid">
                   <div
                     className="third_section__box"
-                    data-aos="fade-up"
+                   
                     data-aos-delay={100}>
                     <div className="box_img">
                       <img src={thumbImg1} className="img-fluid" alt="yoga" />
@@ -727,7 +727,7 @@ const Index = () => {
                   </div>
                   <div
                     className="third_section__box"
-                    data-aos="fade-up"
+                   
                     data-aos-delay={200}>
                     <div className="box_img">
                       <img
@@ -754,7 +754,7 @@ const Index = () => {
                   </div>
                   <div
                     className="third_section__box"
-                    data-aos="fade-up"
+                   
                     data-aos-delay={300}>
                     <div className="box_img">
                       <img
@@ -782,7 +782,7 @@ const Index = () => {
                   </div>
                   <div
                     className="third_section__box"
-                    data-aos="fade-up"
+                   
                     data-aos-delay={400}>
                     <div className="box_img">
                       <img
@@ -815,11 +815,11 @@ const Index = () => {
           {/* faq */}
           <section className="global_wrapper faq_wrapper" id="see_faq">
             <div className="container">
-              <div className="faq_wrapper__content" data-aos="fade-up">
+              <div className="faq_wrapper__content">
 
                 {/* ============================== latest updated =============================== */}
                 <div className="container">
-                  <div className="faq_wrapper__content" data-aos="fade-up">
+                  <div className="faq_wrapper__content">
                     <div className="faq_heading">
                       <h3>Zertifizierung & Teilnahmevoraussetzung</h3>
                     </div>
@@ -906,7 +906,7 @@ const Index = () => {
                 </div>
 
                 <div className="container">
-                  <div className="faq_wrapper__content" data-aos="fade-up">
+                  <div className="faq_wrapper__content">
                     <div className="faq_heading">
                       <h3> Yogausbildungsinhalte & Wichtige Informationen</h3>
                     </div>
@@ -1120,7 +1120,7 @@ const Index = () => {
                 </div>
 
                 <div className="container">
-                  <div className="faq_wrapper__content" data-aos="fade-up">
+                  <div className="faq_wrapper__content">
                     <div className="faq_heading">
                       <h3>Tagesablauf</h3>
                     </div>
