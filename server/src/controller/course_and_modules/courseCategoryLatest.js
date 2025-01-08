@@ -7,7 +7,7 @@ const CourseCategoriesLatest = require("../../model/CourseCategoriesLatest");
 // Add a course category
 const handleAddCourseCategorylatest = async (req, res) => {
     try {
-        const { category } = req.body;
+        const { category, slug } = req.body;
 
         if (!category) {
             return res.status(400).json({
@@ -15,8 +15,14 @@ const handleAddCourseCategorylatest = async (req, res) => {
                 message: "Category is required",
             });
         }
+        if (!slug) {
+            return res.status(400).json({
+                success: false,
+                message: "Slug is required",
+            });
+        }
 
-        const newCategory = new CourseCategoriesLatest({ category });
+        const newCategory = new CourseCategoriesLatest({ category, slug });
 
         await newCategory.save();
 
@@ -35,10 +41,10 @@ const handleAddCourseCategorylatest = async (req, res) => {
 };
 
 // Edit or update a course category
-const editCourseCategory = async (req, res) => {
+const editCourseCategoryLatest = async (req, res) => {
     try {
         const { id } = req.params;
-        const { category } = req.body;
+        const { category, slug } = req.body;
 
         if (!category) {
             return res.status(400).json({
@@ -46,10 +52,16 @@ const editCourseCategory = async (req, res) => {
                 message: "Category is required for update",
             });
         }
+        if (!slug) {
+            return res.status(400).json({
+                success: false,
+                message: "Slug is required for update",
+            });
+        }
 
         const updatedCategory = await CourseCategoriesLatest.findByIdAndUpdate(
             id,
-            { category },
+            { category, slug },
             { new: true }
         );
 
@@ -65,6 +77,7 @@ const editCourseCategory = async (req, res) => {
             message: "Course category updated successfully",
             data: updatedCategory,
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -137,7 +150,10 @@ const deleteCourseCategory = async (req, res) => {
 // Get all course categories
 const getAllCourseCategoriesLatest = async (req, res) => {
     try {
-        const categories = await CourseCategoriesLatest.find().populate("courseSubCategory");
+        const categories = await CourseCategoriesLatest.find().populate({
+            path: "courseSubCategories",
+            select: "modulecategory slug status",
+          });
         res.status(200).json({
             success: true,
             data: categories,
@@ -156,7 +172,10 @@ const getCourseCategoryById = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // console.log("bgiubouinoi")
+
         const category = await CourseCategoriesLatest.findById(id).populate("moduleCategories");
+
         if (!category) {
             return res.status(404).json({
                 success: false,
@@ -181,7 +200,7 @@ const getCourseCategoryById = async (req, res) => {
 
 module.exports = {
     handleAddCourseCategorylatest,
-    editCourseCategory,
+    editCourseCategoryLatest,
     toggleCourseCategoryStatus,
     deleteCourseCategory,
     getAllCourseCategoriesLatest,

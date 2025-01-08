@@ -9,51 +9,7 @@ import { BASE_URL,BASE_URL_IMAGE } from "../../../config";
 const CourseTable = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [courses, setCourses] = useState([
-    {
-      id: 1,
-      category: "Hybride Wochenend Yogalehrer Ausbildung",
-      title: "Hybride Wochenend Yogalehrer Ausbildung...",
-      name: "Hybride Wochenend Yogalehrer Ausbildung...",
-      isActive: true,
-    },
-    {
-      id: 2,
-      category: "60H Senioren Yoga",
-      title: "60H Senioren Yoga...",
-      name: "60H Senioren Yoga...",
-      isActive: true,
-    },
-    {
-      id: 3,
-      category: "60H Yin Yoga",
-      title: "60H Yin Yoga senior...",
-      name: "60H Yin Yoga senior...",
-      isActive: true,
-    },
-    {
-      id: 4,
-      category: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-      title: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule...",
-      name: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule...",
-      isActive: true,
-    },
-    {
-      id: 5,
-      category: "200H AYA Yogalehrer Ausbildung - Intensiv",
-      title: "200H AYA Yogalehrer Ausbildung - Intensiv...",
-      name: "200H AYA Yogalehrer Ausbildung - Intensiv...",
-      isActive: true,
-    },
-    {
-      id: 6,
-      category: "Alle Kommenden Kurse",
-      title: "Alle kommenden Yogalehrer Ausbildungen...",
-      name: "Alle kommenden Yogalehrer Ausbildungen...",
-      isActive: true,
-    },
-    // Add more course data if needed for testing pagination
-  ]);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     if (!token) {
@@ -80,7 +36,7 @@ const CourseTable = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 3; // Number of courses per page
+  const coursesPerPage = 10; // Number of courses per page
 
   const truncateText = (text, length) => {
     if (!text || typeof text !== "string") {
@@ -291,8 +247,8 @@ const CourseTable = () => {
           <thead className="thead-dark">
             <tr>
               <th>#</th>
-              <th>Course Categories</th>
-              <th>Title</th>
+              <th>Module Categoy</th>
+              <th>Meta Title</th>
               <th>Name</th>
               <th>Action</th>
             </tr>
@@ -302,9 +258,9 @@ const CourseTable = () => {
               currentCourses.map((course, index) => (
                 <tr key={course.id}>
                   <td>{indexOfFirstCourse + index + 1}</td>
-                  <td>{course.courseCategory}</td>
+                  <td>{course.courseModuleCategory}</td>
                   <td>{course.metaTitle}</td>
-                  <td>{truncateText(course.courseCategory, 15)}</td>
+                  <td>{truncateText(course.courseModuleCategory, 15)}</td>
                   <td>
                     <button
                       onClick={() => toggleActive(course._id)}

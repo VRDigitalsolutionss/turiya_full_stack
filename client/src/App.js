@@ -21,6 +21,8 @@ import YogaTeacherTrainingBali from "./components/bali/YogaTeacherTrainingBali";
 import YogaTeacherTraining200HNew from './components/yoga_teacher_training/Index'
 import VerifyEmail from "./auth/VerifyEmail";
 import ResetPassword from "./auth/ResetPassword";
+import SubCategory from "./components/SubCategoryPage";
+import Category from "./components/CategoryPage";
 
 
 // Lazy load other components
@@ -262,6 +264,12 @@ function App() {
           <Route path="verify-email/:token" element={<VerifyEmail />} />
           <Route path="reset-password/:token" element={<ResetPassword />} />
           <Route path="*" element={<NoPage />} />
+
+
+          <Route path="module/:slug" element={<SubCategory />} />
+          <Route path="category/:slug" element={<Category />} />
+
+
         </Route>
       </Routes>
     </Suspense>

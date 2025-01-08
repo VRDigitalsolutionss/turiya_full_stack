@@ -4,60 +4,28 @@ const FAQCategory = require("../../model/FAQCategory");
 
 
 
-const handleAddFAQ = async (req,res) => {
-    // try {
-    //     // Extract data from the request body
-    //     const { category, question, answer } = req.body;
-
-    //     // Validate required fields
-    //     if (!category || !question || !answer) {
-    //         return res.status(400).json({
-    //             success: false,
-    //             message: "category, question, and answer are required",
-    //         });
-    //     }
-
-    //     // Create a new testimonial document
-    //     const newFAQ= new FAQ({
-    //         category,
-    //         question,
-    //         answer,
-       
-    //     });
-
-    //     // Save to the database
-    //     await newFAQ.save();
-
-    //     // Send success response
-    //     res.status(201).json({
-    //         success: true,
-    //         message: "FAQ added successfully",
-    //         data: newFAQ,
-    //     });
-    // } catch (error) {
-    //     // Handle any errors
-    //     res.status(500).json({
-    //         success: false,
-    //         message: "Failed to add FAQ",
-    //         error: error.message,
-    //     });
-    // }
-
+const handleAddFAQ = async (req, res) => {
 
     try {
-        const { categoryId, question, answer } = req.body; // Get data from the request body
-  
-        // Check if the category exists
-        const category = await FAQCategory.findById(categoryId);
+        const { question, answer } = req.body;
+
+        // // Check if the category exists
+        // const category = await FAQCategory.findById(categoryId);
 
 
-        if (!category) {
-            return res.status(400).json({ success: false, message: "Category not found" });
+        // if (!category) {
+        //     return res.status(400).json({ success: false, message: "Category not found" });
+        // }
+
+        if (!question || !answer) {
+            return res.status(400).json({
+                success: false,
+                message: "question and answer are required",
+            });
         }
 
         // Create a new FAQ document
         const newFAQ = new FAQ({
-            category: categoryId,
             question,
             answer,
         });
@@ -70,61 +38,43 @@ const handleAddFAQ = async (req,res) => {
     }
 };
 
-const editFAQ = async  (req, res) => {
+const editFAQ = async (req, res) => {
 
-const id  = req.params.id;
+    const id = req.params.id;
 
     try {
         // Extract data from the request body
-        const { category, question,answer } = req.body;
+        const { question, answer } = req.body;
+
+        if(!id){
+            return res.status(400).json({ success: false, message: "FAQ id is required"})
+        }
 
         // Validate required fields
-        if (!category || !question || !answer) {
+        if (!question || !answer) {
             return res.status(400).json({
                 success: false,
-                message: "category, question, and answer are required",
+                message: "question and answer are required",
+            });
+        }
+        const updatedcategory = await FAQ.findByIdAndUpdate(
+            id,
+            { question, answer },
+        );
+
+        if (!updatedcategory) {
+            return res.status(404).json({
+                success: false,
+                message: "FAQ not found for update",
             });
         }
 
-        if (id) {
-            // If ID is provided, update the testimonial
-            const updatedcategory = await FAQ.findByIdAndUpdate(
-                id,
-                { category, question, answer },
-            );
-
-            if (!updatedcategory) {
-                return res.status(404).json({
-                    success: false,
-                    message: "FAQ not found for update",
-                });
-            }
-
-            // Send success response for update
-            return res.status(200).json({
-                success: true,
-                message: "FAQ updated successfully",
-                data: updatedcategory,
-            });
-        } else {
-            // If no ID is provided, create a new testimonial
-            const newFAQ = new FAQ({
-                category,
-                question,
-                answer,
-              
-            });
-
-            // Save to the database
-            await newFAQ.save();
-
-            // Send success response for creation
-            return res.status(201).json({
-                success: true,
-                message: "FAQ added successfully",
-                data: newFAQ,
-            });
-        }
+        // Send success response for update
+        return res.status(200).json({
+            success: true,
+            message: "FAQ updated successfully",
+            data: updatedcategory,
+        });
     } catch (error) {
         // Handle any errors
         res.status(500).json({
@@ -200,7 +150,7 @@ const deleteFAQ = async (req, res) => {
 };
 
 
-const FAQs = async (req,res) => {
+const FAQs = async (req, res) => {
     FAQ.find().then((data) => {
         res.status(200).json({ success: true, data })
     }).catch((error) => {
@@ -208,18 +158,18 @@ const FAQs = async (req,res) => {
     })
 }
 
-const getFaq = (req,res) => {
+const getFaq = (req, res) => {
 
     const { id } = req.params;
     if (id) {
-        FAQ.findOne({_id:id}).then((data) => {
+        FAQ.findOne({ _id: id }).then((data) => {
             res.status(200).json({ success: true, data })
         }).catch((error) => {
             res.status(500).json({ success: false, error: error.message })
         })
     } else {
         res.status(400).json({
-            msg:"id not found"
+            msg: "id not found"
         })
     }
 
@@ -227,4 +177,4 @@ const getFaq = (req,res) => {
 
 
 
-module.exports= {handleAddFAQ,editFAQ,toggleFAQStatus,deleteFAQ,FAQs,getFaq}
+module.exports = { handleAddFAQ, editFAQ, toggleFAQStatus, deleteFAQ, FAQs, getFaq }

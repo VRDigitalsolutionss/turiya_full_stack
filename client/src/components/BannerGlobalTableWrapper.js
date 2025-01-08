@@ -321,16 +321,11 @@ const BannerGlobalTableWrapper = () => {
                               {formatDate(item.EndDate)}{" "}
                             </td>
                             <td style={{ backgroundColor: "#EDEDED" }}>
-                              <button type="button" className="location border-none" style={{ border: 'none' }}
-
-                                onClick={() => ManagePageRedirect(item.Location)}
-
-
-                              >
+                              <button type="button" className="location border-none" style={{ border: 'none' }}>
+                                <Link to={`/module/${item.redirectUrl}`} className="text-black">
                                 <i className="bx bxs-map me-1" />
-
-                                {item.Location}
-                                {/* Goa, Indien */}
+                                  {item.Location}
+                                </Link>
                               </button>
                             </td>
                              <td style={{ backgroundColor: "#EDEDED" }}>

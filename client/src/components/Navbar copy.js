@@ -74,21 +74,6 @@ const Navbar = () => {
 
   const [cartFetchedData, setcartFetchedData] = useState([]);
 
-  // http://127.0.0.1:7000/api/getAllModuleWithId/676837e79d79a88378c817e9
-  const fetchCartData2 = () => {
-    console.log("id of user", `http://127.0.0.1:5001` + `/api/get_all_cart_with_id/${id}`);
-    axios
-      .get(BASE_URL + `/get_all_cart_with_id/${id}`)
-      // .get(`http://127.0.0.1:5001` + `/api/get_all_cart_with_id/${id}`)
-      .then((response) => {
-        console.log("response of cart fetched", response.data.cartItems
-        );
-        setcartFetchedData(response.data.cartItems);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
 
   const fetchCartData = () => {
     console.log("id of user", id);
@@ -105,7 +90,6 @@ const Navbar = () => {
 
   useEffect(() => {
     fetchCartData();
-    fetchCartData2();
   }, []);
 
   const handleRedirect = () => {

@@ -1,9 +1,9 @@
 import React from "react";
 import { BASE_URL_IMAGE } from "../../config";
 import { Link } from "react-router-dom";
-const SimpleBanner = ({ banner, heading, para, buttonTxt, videoLink }) => {
+const SimpleBanner = ({ banner, heading, para, videoLink }) => {
 
-console.log("video link of all courses",videoLink)
+  console.log("video link of all courses", videoLink)
 
 
   return (
@@ -34,51 +34,36 @@ console.log("video link of all courses",videoLink)
 
 
                         <p
-                        
-                        className="p-0 m-0"
-                      //   style={{
-                      //       color: "rgb(33, 37, 41)",
-                      //       fontFamily: "Roboto, sans-serif",
-                      //       fontSize: 16,
-                      // }}
-                        
-                        
-                        
-                        dangerouslySetInnerHTML={{ __html: para }} >
-                        
+
+                          className="p-0 m-0"
+                          //   style={{
+                          //       color: "rgb(33, 37, 41)",
+                          //       fontFamily: "Roboto, sans-serif",
+                          //       fontSize: 16,
+                          // }}
 
 
-                          </p>
+
+                          dangerouslySetInnerHTML={{ __html: para }} >
+
+
+
+                        </p>
                       </span>
                       {/* <br /> */}
                     </p>
-                  )}{" "}
-                  {/*<p>*/}
-                  {/*    Hoher Standard, weil wir deine Zeit respektieren. Leidenschaft, weil wir uns nicht von*/}
-                  {/*    Gier leiten lassen. Authentisch, weil wir eigenartig moderne und traditionelle*/}
-                  {/*    Perspektiven kombinieren.*/}
-                  {/*</p>*/}
-                  
-                  {buttonTxt == 'read_more'  ? (
+                  )}
+                  <div
+                    className="banner_bg__content-btn animate__animated"
+                    data-animation-in="animate__fadeInUp"
+                    data-duration-in={3}>
                     <div
-                      className="banner_bg__content-btn animate__animated"
-                      data-animation-in="animate__fadeInUp"
-                      data-duration-in={3}>
-                      <div
-                        className="video-btn mehr-btn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        <Link to="/">
-                      
-                     MEHR
-                        </Link>
-                      </div>
+                      className="video-btn mehr-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal">
+                      MEHR
                     </div>
-                  ) :
-                   null
-                  
-                  
-                  }
+                  </div>
                 </div>
               </div>
             </div>

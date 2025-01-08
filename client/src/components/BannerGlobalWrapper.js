@@ -48,7 +48,7 @@ const BannerGlobalWrapper = () => {
                     Upanishaden tief inspirieren.
                   </p>
                   <div className="mehr--btn">
-                    <Link to="/yogalehrer-ausbildung-100h "
+                    <Link to="/module/100h-yoga-ausbildung-modul-1"
                       
 
 
@@ -77,7 +77,7 @@ const BannerGlobalWrapper = () => {
                     Perspektive im Tantra Yoga.
                   </p>
                   <div className="mehr--btn">
-                    <Link to="/yogalehrer-ausbildung-200h">MEHR</Link>
+                    <Link to="/module/200h-yoga-ausbildung-modul-2">MEHR</Link>
                   </div>
                 </div>
               </div>
@@ -102,7 +102,7 @@ const BannerGlobalWrapper = () => {
                     begeistern.
                   </p>
                   <div className="mehr--btn">
-                    <Link to="/yogalehrer-ausbildung-300h">MEHR</Link>
+                    <Link to="/module/300h-yoga-ausbildung-modul-3">MEHR</Link>
                   </div>
                 </div>
               </div>
@@ -127,7 +127,7 @@ const BannerGlobalWrapper = () => {
                     deine Fähigkeiten auf das nächste Level.
                   </p>
                   <div className="mehr--btn">
-                    <Link to="/yogalehrer-ausbildung-400h">MEHR</Link>
+                    <Link to="/module/400h-yoga-ausbildung-modul-4">MEHR</Link>
                   </div>
                 </div>
               </div>
@@ -152,7 +152,7 @@ const BannerGlobalWrapper = () => {
                     liegen.
                   </p>
                   <div className="mehr--btn">
-                    <Link  to="/yogalehrer-ausbildung-500h">MEHR</Link>
+                    <Link  to="/module/500h-yoga-ausbildung-modul-5">MEHR</Link>
                   </div>
                 </div>
               </div>

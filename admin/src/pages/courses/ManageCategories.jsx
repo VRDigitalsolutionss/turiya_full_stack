@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
 
 
@@ -14,11 +14,10 @@ const ManageModuleCategories = () => {
   useEffect(() => {
     if (id) {
       axios.get(BASE_URL + `/get_course_category/${id}`).then((response) => {
-        console.log("category", response.data.data)
-        
+        // setCategory()
         setCategory(response.data.data.category)
-
-        }).catch((error) => {
+        setSlug(response.data.data.slug || "")
+      }).catch((error) => {
         console.log(error)
       })
     }
@@ -35,66 +34,56 @@ const ManageModuleCategories = () => {
   }, []);
 
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([]);
-
-  // Handle input change
-  const handleInputChange = (event) => {
-    setCategory(event.target.value);
-  };
+  const [slug, setSlug] = useState("");
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if category input is not empty
-
-    const payload = {
-      "category": category
-    };
-
     if (!id) {
       if (category.trim() !== "") {
         try {
           // Send the category to the API
-          const response = await axios.post(BASE_URL + "/add_course_category_latest", payload);
-    alert("course category added successfully")
-          // Add the new category to the categories list (local state)
-          // setCategories([...categories, response.data.category]);
-    
-          // Clear the input field after successful submission
-          setCategory("");
-    
-          console.log("Category added successfully:", response.data);
+          const response = await axios.post(BASE_URL + "/add_course_category_latest", {
+            category: category,
+            slug: slug
+          });
+          alert("course category added successfully")
+          navigate('/courses/course_Categories')
         } catch (error) {
           console.error("Error adding category:", error.response?.data || error.message);
         }
-    
+
       }
     } else {
       if (category.trim() !== "") {
         try {
           // Send the category to the API
-          const response = await axios.put(BASE_URL + `/edit_course_category/${id}`, payload);
-    alert("course category updated successfully")
-          // Add the new category to the categories list (local state)
-          // setCategories([...categories, response.data.category]);
-    
-          // Clear the input field after successful submission
-          setCategory("");
-    
-          console.log("Category added successfully:", response.data);
+          const response = await axios.put(BASE_URL + `/edit_course_category/${id}`, {
+            category: category,
+            slug: slug
+          });
+          alert("course category updated successfully")
+          navigate('/courses/course_Categories')
+
         } catch (error) {
           console.error("Error adding category:", error.response?.data || error.message);
         }
-    
+
       }
-}
-
-
-
-    
+    }
   };
-  console.log(categories);
+
+  
+  const generateSlug = (name) => {
+    return name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  };
+
+
   return (
     <div className="container-fluid mt-3">
       <div className="card p-4 shadow-sm" style={{ border: "none" }}>
@@ -109,8 +98,21 @@ const ManageModuleCategories = () => {
               type="text"
               className="form-control"
               value={category}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setSlug(generateSlug(e.target.value))
+              }}
               placeholder="Enter a category name"
+            />
+          </div>
+          <div className="form-group my-3">
+            <label>Enter slug:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              placeholder="Enter slug for the category"
             />
           </div>
           <button type="submit" className="btn btn-primary">

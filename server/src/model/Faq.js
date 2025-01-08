@@ -1,35 +1,33 @@
 
 
 
-const mongoose = require("../config/db"); 
+const mongoose = require("../config/db");
 
 
 const faqSchema = new mongoose.Schema({
 
-    category: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'FAQCategory', // Reference to the FAQCategory model
-        required: true, 
-    },
+    // category: {
+    //     type: mongoose.Schema.Types.ObjectId, 
+    //     ref: 'FAQCategory', // Reference to the FAQCategory model
+    //     required: true, 
+    // },
     question: {
         type: String,
-        required: true, 
+        required: true,
         trim: true,
     },
     answer: {
         type: String,
-        required: true, 
+        required: true,
         trim: true,
     },
     status: {
         type: String,
-        trim: true, 
+        trim: true,
         default: 'active',
-    
-}
-   
+    }
 }, {
-    timestamps: true, 
+    timestamps: true,
 });
 
 

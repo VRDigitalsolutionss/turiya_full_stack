@@ -7,7 +7,7 @@ const {
     toggleModuleStatus,
     getModuleById
 } = require('../controller/course_and_modules/addModuleController');
-const { getfilteredModule, final_add_module,getUpcoming_course, getComingSoonCourses, getNextComingCoursenew, getClosestStartDateCourse, getClosestUpcomingCourses, getClosestUpcomingCourseswithhrs, getClosestUpcomingCourseswithNull, getModuleByLocation, updateModule } = require('../controller/course_and_modules/addModuleControllerLatest');
+const { getfilteredModule, final_add_module,getUpcoming_course, getComingSoonCourses, getNextComingCoursenew, getClosestStartDateCourse, getClosestUpcomingCourses, getClosestUpcomingCourseswithhrs, getClosestUpcomingCourseswithNull, getModuleByLocation, updateModule, getModuleBySlug } = require('../controller/course_and_modules/addModuleControllerLatest');
 
 // ===================================== latest change  =================================
 
@@ -39,6 +39,7 @@ moduleRoute.get('/getModuleById/:id', getModuleById);
 moduleRoute.get('/getupcoming_course', getUpcoming_course);
 
 moduleRoute.get('/getModuleByLocation/:location',getModuleByLocation)
+moduleRoute.get('/getModuleBySlug/:slug',getModuleBySlug)
 moduleRoute.get('/getComingSoonCourses', getComingSoonCourses);
   
   moduleRoute.get('/getClosestStartDateCourse', getClosestStartDateCourse);

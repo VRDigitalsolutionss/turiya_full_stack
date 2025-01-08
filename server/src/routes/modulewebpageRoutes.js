@@ -39,7 +39,7 @@ moduleWebPageRoutes.delete("/delete_module_webpage/:id", deleteCourseModuleWebpa
 moduleWebPageRoutes.get("/all_module_webpages", getAllModuleModuleWebpages);
 
 moduleWebPageRoutes.get("/module_webpages_byId/:id", getCourseModuleWebpageById);
-moduleWebPageRoutes.get("/module_webpages_by_category/:courseCategory", findModuleWebpagesByCategory);
+moduleWebPageRoutes.get("/module_webpages_by_category/:slug", findModuleWebpagesByCategory);
 // Toggle Module Webpage Status
 moduleWebPageRoutes.put("/toggle_module_webpage_status/:id", toggleModuleWebpagestatus3);
 

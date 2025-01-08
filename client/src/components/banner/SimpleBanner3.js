@@ -32,34 +32,13 @@ const SimpleBanner = ({ banner, heading, para, buttonTxt, videoLink }) => {
                           fontFamily: "Roboto, sans-serif",
                           fontSize: 16,
                         }}>
-                        {/* {para} */}
-
-
                         <p
-
                           className="p-0 m-0"
-                          //   style={{
-                          //       color: "rgb(33, 37, 41)",
-                          //       fontFamily: "Roboto, sans-serif",
-                          //       fontSize: 16,
-                          // }}
-
-
-
                           dangerouslySetInnerHTML={{ __html: para }} >
-
-
-
                         </p>
                       </span>
-                      {/* <br /> */}
                     </p>
-                  )}{" "}
-                  {/*<p>*/}
-                  {/*    Hoher Standard, weil wir deine Zeit respektieren. Leidenschaft, weil wir uns nicht von*/}
-                  {/*    Gier leiten lassen. Authentisch, weil wir eigenartig moderne und traditionelle*/}
-                  {/*    Perspektiven kombinieren.*/}
-                  {/*</p>*/}
+                  )}
                   {buttonTxt && (
                     <div
                       className="banner_bg__content-btn animate__animated"
@@ -92,7 +71,6 @@ const SimpleBanner = ({ banner, heading, para, buttonTxt, videoLink }) => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                {/* <h5 className="modal-title" id="exampleModalLabel">Modal title</h5> */}
                 <button
                   type="button"
                   className="btn-close"
@@ -102,21 +80,11 @@ const SimpleBanner = ({ banner, heading, para, buttonTxt, videoLink }) => {
                 />
               </div>
               <div className="modal-body">
-                {/*<iframe id="youtube-video" width="560" height="315"*/}
-                {/*    src="https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"*/}
-                {/*    title="YouTube video player" frameBorder="0"*/}
-                {/*    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"*/}
-                {/*    referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>*/}
-                {/*</iframe>*/}
                 <iframe
                   id="youtube-video"
                   width={560}
                   height={315}
                   src={videoId}
-                  // https://www.youtube.com/watch?v=z6z4-bnDhws
-                  // src="https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"
-                  // src="https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a"
-                  // src="https://www.youtube.com/embed/z6z4-bnDhws?si=z6z4-bnDhws"
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerPolicy="strict-origin-when-cross-origin"

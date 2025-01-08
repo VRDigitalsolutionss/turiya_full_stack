@@ -52,7 +52,6 @@ const CourseTable = () => {
       name: "Alle kommenden Yogalehrer Ausbildungen...",
       isActive: true,
     },
-    // Add more course data if needed for testing pagination
   ]);
 
   useEffect(() => {
@@ -80,7 +79,7 @@ const CourseTable = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 3; // Number of courses per page
+  const coursesPerPage = 10; // Number of courses per page
 
   const truncateText = (text, length) => {
     if (!text || typeof text !== "string") {

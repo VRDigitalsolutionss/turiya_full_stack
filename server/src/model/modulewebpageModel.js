@@ -1,11 +1,17 @@
 const mongoose = require("../config/db");
 
 const modulewebpageschema = new mongoose.Schema(
-   {
-        courseCategory: {
+    {
+        courseModuleCategory: {
             type: String,
             required: true,
             trim: true,
+        },
+        slug: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true,
         },
         pageUrl: {
             type: String,
@@ -61,10 +67,13 @@ const modulewebpageschema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-        },faqs: {
-            type: Array,
-            required: true,
         },
+        faqs: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "FAQ",
+            },
+        ],
         modules: {
             type: Array,
             required: true,
@@ -83,7 +92,7 @@ const modulewebpageschema = new mongoose.Schema(
             default: "active",
         },
     },
-   
+
     {
         timestamps: true,
     }

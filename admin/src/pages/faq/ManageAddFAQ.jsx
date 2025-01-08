@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
 const ManageAddFAQ = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetchFaqCategory();
+    // fetchFaqCategory();
     if (!token) {
       navigate("/login");
     }
@@ -23,13 +23,13 @@ const ManageAddFAQ = () => {
     // Fetch the FAQ category based on the provided ID
     // Example API call
     axios
-     .get(BASE_URL + `/faq_category`)
-     .then((response) => {
+      .get(BASE_URL + `/faq_category`)
+      .then((response) => {
         console.log("response of faq category", response.data.data);
-       // Set the category field
-       setOptions(response.data.data)
+        // Set the category field
+        setOptions(response.data.data)
       })
-     .catch((err) => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -39,14 +39,14 @@ const ManageAddFAQ = () => {
       axios
         .get(BASE_URL + `/get_faq/${id}`)
         .then((response) => {
-          console.log("response params id",response.data.data)
+          console.log("response params id", response.data.data)
           // Set the name field
           const data = response.data.data;
 
           setCategory(data.category)
           setQuestion(data.question)
           setAnswer(data.answer)
- 
+
 
           // answer
           // : 
@@ -107,7 +107,6 @@ const ManageAddFAQ = () => {
 
     // =============================================================================================
     const payload = {
-      category: category,
       question: question,
       answer: answer,
       status: "active",
@@ -115,16 +114,13 @@ const ManageAddFAQ = () => {
 
     if (id) {
       axios
-        .put(BASE_URL +  `/edit_faq/${id}`, payload)
+        .put(BASE_URL + `/edit_faq/${id}`, payload)
         .then((response) => {
           console.log(response);
 
           if (response.status == 200) {
             alert("success");
-
-            setCategory("");
-            setQuestion("");
-            setAnswer("");
+            navigate('/faq')
           } else {
             alert("faild");
           }
@@ -134,16 +130,13 @@ const ManageAddFAQ = () => {
         });
     } else {
       axios
-        .post(BASE_URL +  "/add_faq", payload)
+        .post(BASE_URL + "/add_faq", payload)
         .then((response) => {
           console.log(response);
 
           if (response.status == 201) {
             alert("Success");
-
-            setCategory("");
-            setQuestion("");
-            setAnswer("");
+            navigate('/faq')
           }
         })
         .catch((err) => {
@@ -167,8 +160,7 @@ const ManageAddFAQ = () => {
           <h4 className="py-1">Manage FAQ</h4>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            {/* Category selection using radio buttons */}
+          {/* <div className="mb-4">
             <div className="form-check mb-3">
               <input
                 className="form-check-input"
@@ -203,10 +195,10 @@ const ManageAddFAQ = () => {
               />
               <label className="form-check-label">Daily routine</label>
             </div>
-          </div>
+          </div> */}
 
           {/* Category selection using a dropdown */}
-          <div className="my-3">
+          {/* <div className="my-3">
             <label htmlFor="dynamicSelect" className="form-label">
               Select an Option
             </label>
@@ -224,28 +216,30 @@ const ManageAddFAQ = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* Question input */}
           <div className="mb-3">
             <label className="form-label">Enter question: </label>
-            <ReactQuill
+            <textarea
               value={question}
-              onChange={handleQuestionChange}
+              onChange={(e) => setQuestion(e.target.value)}
               placeholder="Enter Question Here ..."
-              style={{ height: "200px", marginBottom: "50px" }}
-            />
+              style={{ height: "200px", marginBottom: "50px", width: "100%", resize: "vertical" }}
+              className="form-control"
+            ></textarea>
           </div>
 
           {/* Answer input */}
           <div className="mb-3">
             <label className="form-label">Enter answer: </label>
-            <ReactQuill
+            <textarea
               value={answer}
-              onChange={handleAnswerChange}
-              placeholder="Enter answer Here ..."
-              style={{ height: "200px", marginBottom: "50px" }}
-            />
+              onChange={(e) => setAnswer(e.target.value)} // Replace handleAnswerChange with setAnswer
+              placeholder="Enter Answer Here ..."
+              style={{ height: "200px", marginBottom: "50px", width: "100%", resize: "vertical" }}
+              className="form-control"
+            ></textarea>
           </div>
 
           <button type="submit" className="btn btn-primary mt-3">

@@ -15,7 +15,7 @@ const courseWebPageRoutes = express.Router();
 
 // Add Course Webpage
 
-courseWebPageRoutes.get('/course_web_page_by_course_category/:courseCategory',getCourseWebpageByCategory)
+courseWebPageRoutes.get('/course_web_page_by_course_category/:slug',getCourseWebpageByCategory)
 courseWebPageRoutes.post("/add_course_webpage", addCourseWebpage);
 
 // Edit Course Webpage

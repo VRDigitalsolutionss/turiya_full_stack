@@ -51,6 +51,7 @@ const addCourseWebpage = async (req, res) => {
         try {
             const {
                 courseCategory,
+                slug,
                 pageUrl,
                 metaTitle,
                 metaDescription,
@@ -72,6 +73,7 @@ const addCourseWebpage = async (req, res) => {
             const yogaTeamSlideImage = req.file ? req.file.filename : null;
             if (
                 !courseCategory ||
+                !slug ||
                 !pageUrl ||
                 !metaTitle ||
                 !metaDescription ||
@@ -96,6 +98,7 @@ const addCourseWebpage = async (req, res) => {
 
             const newCourseWebpage = new CourseWebpages({
                 courseCategory,
+                slug,
                 pageUrl,
                 metaTitle,
                 metaDescription,
@@ -303,24 +306,33 @@ const getCourseWebpageById = async (req, res) => {
     }
 };
 
-const getCourseWebpageByCategory = (req, res) => {
-    const { courseCategory } = req.params;
-
-    // Find course webpage by course category
-    CourseWebpages.findOne({ courseCategory: courseCategory })
-        .then((data) => {
-            if (!data) {
-                return res.status(404).json({ message: 'Course webpage not found for the given category' });
-            }
-            // Return the found data
-            res.status(200).json(data);
-        })
-        .catch((error) => {
-            // Handle any errors
-            console.error(error);
-            res.status(500).json({ message: 'Server error, please try again later.' });
+const getCourseWebpageByCategory = async (req, res) => {
+    const { slug } = req.params;
+    
+    try {
+        const response = await CourseWebpages.find({slug: slug});
+        // console.log(response)
+        if (response && response.length > 0) {
+            console.log(response)
+            res.status(200).json({
+                success: true,
+                data: response
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "No module webpages found for the given course category."
+            });
+        }
+    } catch (error) {
+        console.error("Error fetching Module Webpages by Category:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch Module Webpages by Category",
+            error: error.message,
         });
-};
+    }
+}
 
 
 module.exports = {
@@ -331,4 +343,4 @@ module.exports = {
     toggleCourseWebpageStatus,
     getCourseWebpageById,
     getCourseWebpageByCategory
-};
+}

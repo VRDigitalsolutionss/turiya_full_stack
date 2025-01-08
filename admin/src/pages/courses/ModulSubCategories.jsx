@@ -5,51 +5,6 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import axios from "axios";
 import { BASE_URL,BASE_URL_IMAGE } from "../../config";
 
-
-const initialData = [
-  {
-    id: 1,
-    category: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    moduleName: "+500h Yoga Ausbildung / Modul 5",
-  },
-  {
-    id: 2,
-    category: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    moduleName: "+400h Yoga Ausbildung / Modul 4",
-  },
-  {
-    id: 3,
-    category: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    moduleName: "+300h Yoga Ausbildung / Modul 3",
-  },
-  {
-    id: 4,
-    category: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    moduleName: "+200h Yoga Ausbildung / Modul 2",
-  },
-  {
-    id: 5,
-    category: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    moduleName: "100h Yoga Ausbildung / Modul 1",
-  },
-  {
-    id: 6,
-    category: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    moduleName: "Blockausbildung / Überblick",
-  },
-  {
-    id: 7,
-    category: "200H AYA Yogalehrer Ausbildung - Intensiv",
-    moduleName: "Yogalehrerausbildung Himalaya Indien",
-  },
-  {
-    id: 8,
-    category: "200H AYA Yogalehrer Ausbildung - Intensiv",
-    moduleName: "200H/AYA Yogalehrer Ausbildung I Mallorca",
-  },
-  // Add more as needed
-];
-
 const ManageModuleSubcategories = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -106,7 +61,7 @@ const ManageModuleSubcategories = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 5;
+  const rowsPerPage = 10;
 
   // Calculate pagination
   const indexOfLastItem = currentPage * rowsPerPage;
@@ -173,8 +128,8 @@ const ManageModuleSubcategories = () => {
           <thead>
             <tr>
               <th>Sr.No.</th>
-              {/* <th>Course Categories</th> */}
               <th>Module Name</th>
+              <th>Course Categories</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -183,8 +138,8 @@ const ManageModuleSubcategories = () => {
               currentRows.map((item, index) => (
                 <tr key={item.id}>
                   <td>{indexOfFirstItem + index + 1}</td>
-                  {/* <td>{item.courseSubCategory}</td> */}
                   <td>{item.modulecategory}</td>
+                  <td>{item?.category?.category}</td>
                   <td>
                     <button
                       className="btn btn-danger"

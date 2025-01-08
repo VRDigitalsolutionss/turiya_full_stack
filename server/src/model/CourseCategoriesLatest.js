@@ -7,17 +7,23 @@ const coursecategoriesschema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
     status: {
       type: String,
       trim: true,
       default: "active",
     },
-    courseSubCategory: {
-      // Add this field to store the reference to Coursecategories
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ModulecategoriesLatest", // The model name for Coursecategories
-      required:false
-    },
+    courseSubCategories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ModulecategoriesLatest",
+      },
+    ],
   },
   {
       timestamps: true,

@@ -239,6 +239,38 @@ const getModuleByLocation = async (req, res) => {
   }
 }
 
+const getModuleBySlug = async (req, res) => {
+  try {
+    // Extract the location parameter from the request
+    const { slug } = req.params;
+
+    if (!slug) {
+      return res.status(400).json({ message: 'Slug parameter is required.' });
+    }
+
+    // Find data in MongoDB based on the location
+    const modules = await Module.find({redirectUrl: slug});
+
+    if (modules.length === 0) {
+      return res.status(404).json({ message: 'No modules found for the specified location.' });
+    }
+
+    // Send the retrieved data as a response
+    res.status(200).json({
+      success: true,
+      data: modules
+    });
+
+  } catch (error) {
+    console.error('Error fetching modules by location:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error. Could not fetch modules.',
+      error: error.message
+    });
+  }
+}
+
 
 
 // Get all Modules
@@ -991,5 +1023,6 @@ module.exports = {
   getClosestUpcomingCourses,
   getClosestUpcomingCourseswithhrs,
   getClosestUpcomingCourseswithNull,
-  getModuleByLocation
+  getModuleByLocation,
+  getModuleBySlug
 };

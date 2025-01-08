@@ -12,9 +12,20 @@ const modulecategoriesschema = new mongoose.Schema(
       trim: true,
       default: "active",
     },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CourseCategoriesLatest",
+      required: false
+    },
+    slug: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 
