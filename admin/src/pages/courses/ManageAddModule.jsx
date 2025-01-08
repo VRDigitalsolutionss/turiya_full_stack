@@ -39,7 +39,7 @@ const ManageAddModule = () => {
     offerEndDate: "",
     place: "",
     aboutCourse: "",
-    homePageContent: "", // HTML content for rich text editor
+    homePageContent: "",
     image: null,
     redirectUrl:"",
   });
@@ -186,25 +186,6 @@ const ManageAddModule = () => {
 
           if (response.status == 200) {
             alert("success");
-
-            setFormData({
-              moduleCategory: "",
-              moduleCategory2: "",
-              coursesHeading: "",
-              coursesSubHeading: "",
-              ausbildung: "",
-              startDate: "",
-              endDate: "",
-              location: "",
-              price: "",
-              offerPrice: "",
-              offerEndDate: "",
-              place: "",
-              aboutCourse: "",
-              homePageContent: "",
-              image: null,
-              redirectUrl:""
-            });
           } else {
             alert("faild");
           }
@@ -212,33 +193,15 @@ const ManageAddModule = () => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
+      } else {
       axios
-        .post(BASE_URL + "/add_module", payload)
+      .post(BASE_URL + "/add_module", payload)
         .then((response) => {
           console.log("response of add module", response);
 
           if (response.status == 201) {
             alert("Success");
-
-            setFormData({
-              moduleCategory: "",
-              moduleCategory2: "",
-              coursesHeading: "",
-              coursesSubHeading: "",
-              ausbildung: "",
-              startDate: "",
-              endDate: "",
-              location: "",
-              price: "",
-              offerPrice: "",
-              offerEndDate: "",
-              place: "",
-              aboutCourse: "",
-              homePageContent: "",
-              image: null,
-              redirectUrl:""
-            });
+            navigate('/courses/addModule')
           }
         })
         .catch((err) => {
@@ -474,16 +437,6 @@ const ManageAddModule = () => {
 
             <div className="mb-3">
               <label>Redirect  page</label>
-              {/* <input
-                type="text"
-                name="redirectUrl"
-                onChange={handleChange}
-                className="form-control"
-              /> */}
-
-
-              {/* ========================================= */}
-
               <select
                   name="redirectUrl"
                   value={formData.redirectUrl}
@@ -495,13 +448,11 @@ const ManageAddModule = () => {
                   </option>
                   {module_categories_option &&
                     module_categories_option.map((data) => (
-                      <option key={data._id} value={data.modulecategory}>
-                        {data.modulecategory}
+                      <option key={data._id} value={data.slug}>
+                        {data.slug}
                       </option>
                     ))}
               </select>
-              
-              {/* ======================================================= */}
             </div>
 
             <button type="submit" className="btn btn-success">

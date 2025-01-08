@@ -65,3 +65,13 @@ code {
     padding: 10px 20px !important;
   }
 }
+
+.yoga-list-img {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+}

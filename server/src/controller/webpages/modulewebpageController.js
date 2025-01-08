@@ -4,6 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const ModuleWebpages = require("../../model/modulewebpageModel");
+const FAQ = require("../../model/Faq");
 
 
 // Configure Multer for image uploads modulewebpage
@@ -37,8 +38,8 @@ const upload = multer({
 const addCourseModuleWebpage = async (req, res) => {
 
 
-   
-   
+
+
     upload(req, res, async (err) => {
         if (err) {
             console.error("Multer Error:", err);
@@ -48,10 +49,11 @@ const addCourseModuleWebpage = async (req, res) => {
                 error: err.message,
             });
         }
-      
+
         try {
             const {
-                courseCategory,
+                courseModuleCategory,
+                slug,
                 pageUrl,
                 metaTitle,
                 metaDescription,
@@ -67,12 +69,13 @@ const addCourseModuleWebpage = async (req, res) => {
                 selectedButton,
                 selectedSections,
             } = req.body;
-         
+
             const files = req.files;
             const yogaTeamSlideImage = files.yogaTeamSlideImage ? files.yogaTeamSlideImage[0].filename : null;
-          
+
             if (
-                !courseCategory ||
+                !courseModuleCategory ||
+                !slug ||
                 !pageUrl ||
                 !metaTitle ||
                 !metaDescription ||
@@ -96,7 +99,7 @@ const addCourseModuleWebpage = async (req, res) => {
             }
             // console.log("testing................................")
             const newCourseWebpage = new ModuleWebpages({
-                courseCategory,
+                courseModuleCategory,
                 pageUrl,
                 metaTitle,
                 metaDescription,
@@ -146,7 +149,13 @@ const editCourseModuleWebpage = async (req, res) => {
 
         try {
             const { id } = req.params;
-            const updateFields = { ...req.body };
+            
+            const selectedSections = JSON.parse(req.body.selectedSections);
+            const selectedFAQs = JSON.parse(req.body.faqs);
+            const updateFields = { ...req.body, selectedSections, faqs: selectedFAQs };
+
+            console.log(updateFields)
+
 
             const courseWebpage = await ModuleWebpages.findById(id);
             if (!courseWebpage) {
@@ -190,8 +199,7 @@ const deleteCourseModuleWebpage = async (req, res) => {
     try {
         const { id } = req.params;
 
-
-        console.log("module id ",id)
+        console.log("module id ", id)
         const courseWebpage = await ModuleWebpages.findById(id);
         if (!courseWebpage) {
             return res.status(404).json({
@@ -231,7 +239,7 @@ const deleteCourseModuleWebpage = async (req, res) => {
 // **Get All Course Webpages**
 const getAllModuleModuleWebpages = async (req, res) => {
     try {
-        const getModuleWebpages = await ModuleWebpages.find();
+        const getModuleWebpages = await ModuleWebpages.find().populate("faqs");
         res.status(200).json({
             success: true,
             data: getModuleWebpages,
@@ -288,7 +296,7 @@ const getCourseModuleWebpageById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const courseWebpage = await ModuleWebpages.findById(id);
+        const courseWebpage = await ModuleWebpages.findById(id).populate("faqs");
         if (!courseWebpage) {
             return res.status(404).json({
                 success: false,
@@ -311,10 +319,12 @@ const getCourseModuleWebpageById = async (req, res) => {
 };
 
 
-const findModuleWebpagesByCategory = (req, res) => {
-    const { courseCategory } = req.params;
+const findModuleWebpagesByCategory = async (req, res) => {
+    const { slug } = req.params;
     
-    ModuleWebpages.find({ courseCategory: courseCategory }).then((response) => {
+    try {
+        const response = await ModuleWebpages.find({ slug: slug }).populate("faqs");
+
         if (response && response.length > 0) {
             res.status(200).json({
                 success: true,
@@ -326,13 +336,14 @@ const findModuleWebpagesByCategory = (req, res) => {
                 message: "No module webpages found for the given course category."
             });
         }
-    }).catch((error) => {
-        console.error("Error fetching module webpages:", error);
+    } catch (error) {
+        console.error("Error fetching Module Webpages by Category:", error);
         res.status(500).json({
             success: false,
-            message: "Server error occurred while fetching module webpages."
+            message: "Failed to fetch Module Webpages by Category",
+            error: error.message,
         });
-    });
+    }
 }
 
 

@@ -1,4 +1,5 @@
 
+const { default: mongoose } = require('mongoose');
 const Module = require('../../model/addmodule');
 const Cart = require('../../model/Cart');
 
@@ -50,40 +51,15 @@ const getAllModules = async (req, res) => {
       res.status(500).json({ error: "Failed to retrieve modules." });
     }
 };
-  
-
-const getAllCartModuleIds = async (req, res) => {
-  try {
-    const { userId } = req.params;
-
-    // Validate userId
-    if (!userId) {
-      return res.status(400).json({ error: 'User ID is required.' });
-    }
-
-    // Find all cart items for the specified user
-    const allModules = await Cart.find({ userId: userId }).populate('moduleId');;
-
-// console.log('allModules', allModules)
-
-
-    // Check if cart items exist
-    if (!allModules.length) {
-      return res.status(404).json({ message: 'No cart items found for this user.' });
-    }
-
-    // Respond with the retrieved cart items
-    return res.status(200).json({ cartItems: allModules });
-  } catch (error) {
-    console.error('Error retrieving cart data:', error);
-    return res.status(500).json({ error: 'An error occurred while retrieving cart data.' });
-  }
-};
 
 
 const getAllModuleWithId = async (req, res) => {
   try {
     const { userId } = req.params; // Extract userId from request parameters
+
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid or missing userId' });
+    }
 
     // Query to find Cart entries where userId matches the given parameter
     const references = await Cart.find({ userId }).populate("moduleId"); // Populate module data
@@ -141,4 +117,4 @@ const deleteCart = async (req, res) => {
 
 
 
-  module.exports={getAllCartModuleIds,storeModuleId,getAllModules,deleteCart,getAllModuleWithId,}
+  module.exports={storeModuleId,getAllModules,deleteCart,getAllModuleWithId,}

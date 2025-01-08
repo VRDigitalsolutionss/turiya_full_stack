@@ -37,7 +37,7 @@ const handleAddCourseCategory = async (req, res) => {
 const editCourseCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const { category } = req.body;
+        const { category, slug } = req.body;
 
         if (!category) {
             return res.status(400).json({
@@ -46,9 +46,16 @@ const editCourseCategory = async (req, res) => {
             });
         }
 
+        if (!slug) {
+            return res.status(400).json({
+                success: false,
+                message: "Slug is required for update",
+            });
+        }
+
         const updatedCategory = await CourseCategoriesLatest.findByIdAndUpdate(
             id,
-            { category }
+            { category, slug }
         );
 
         if (!updatedCategory) {

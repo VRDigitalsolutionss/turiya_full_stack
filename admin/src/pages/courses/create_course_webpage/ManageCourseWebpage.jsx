@@ -19,7 +19,7 @@ const CourseForm = () => {
   }, []);
 
 
-  const [categories, setcategories] = useState('');
+  const [categories, setcategories] = useState([]);
 
 
 
@@ -53,6 +53,7 @@ console.log("course_categories", categories)
         
         setFormData({
           courseCategory: data.courseCategory || "",
+          slug: data.slug || "",
           pageUrl: data.pageUrl || "",
           metaTitle: data.metaTitle || "",
           metaDescription: data.metaDescription || "",
@@ -142,6 +143,7 @@ console.log("course_categories", categories)
 
   const [formData, setFormData] = useState({
     courseCategory: "",
+    slug: "",
     pageUrl: "",
     metaTitle: "",
     metaDescription: "",
@@ -168,27 +170,6 @@ console.log("course_categories", categories)
       ...formData,
       [name]: files[0],
     });
-  };
-
-  // ================================================================
-  const courseCategories = [
-    { label: "Select Course Category", value: "Select Course Category" },
-    { label: "Alle Kommenden Kurse", value: "Alle Kommenden Kurse" },
-    { label: "200H AYA Yogalehrer Ausbildung - Intensiv", value: "200H AYA Yogalehrer Ausbildung - Intensiv" },
-    {
-      label: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-      value: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    },
-    { label: "60H Yin Yoga", value: "60H Yin Yoga" },
-    { label: "60H Senioren Yoga", value: "60H Senioren Yoga" },
-    { label: "Hybride Wochenend Yogalehrer Ausbildung", value: "Hybride Wochenend Yogalehrer Ausbildung" },
-  ];
-
-  console.log(courseCategories);
-
-  const [courseCategory, setccourseCategory] = useState("");
-  const HandleCourseCategory = (event) => {
-    // setFaqs(event.target.value.split(','));
   };
 
   const [selectedButton, setSelectedButton] = useState("");
@@ -296,6 +277,7 @@ console.log("course_categories", categories)
     // Prepare the payload
     const payload = {
       courseCategory:formData.courseCategory,
+      slug: formData.slug,
       pageUrl: formData.pageUrl,
       metaTitle: formData.metaTitle,
       metaDescription: formData.metaDescription,
@@ -368,6 +350,7 @@ console.log("course_categories", categories)
 
           if (response.status == 201) {
             alert("Course webpage created successfully!");
+            navigate('/create_course_webpage')
           } else {
             alert("Failed to create course webpage. Please try again.");
           }
@@ -395,7 +378,7 @@ console.log("course_categories", categories)
                 Select Course In Which You Want to Create Webpage new
               </h4>
             </div>
-            <div className="col-md-12 col-12">
+            <div className="col-md-6 col-12">
               <label htmlFor="courseCategory" className="form-label">
                 Select Course Category
               </label>
@@ -414,9 +397,27 @@ console.log("course_categories", categories)
                     </option>
                   );
                 })}
-                {/* <option value="yoga">Yoga</option>
-                <option value="programming">Programming</option>
-                <option value="design">Design</option> */}
+              </select>
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="courseCategory" className="form-label">
+                Select Slug Name
+              </label>
+              <select
+                id="slug"
+                name="slug"
+                className="form-select"
+                value={formData.slug}
+                onChange={handleChange}>
+                <option value="">Select Slug</option>
+
+                {categories && categories.map((category) => {
+                  return (
+                    <option key={category.value} value={category.slug}>
+                      {category.slug}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>

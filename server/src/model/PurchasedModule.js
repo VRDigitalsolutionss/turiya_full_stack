@@ -8,7 +8,7 @@ const PurchasedModuleschema = new mongoose.Schema(
     customerNumber: { type: String, required: false },
     orderNumber: { type: String, required: false },
     dueDate: { type: Date, required: false },
-    due_amount:{ type: String, required: false},
+    due_amount:{ type: Number, required: false},
     customerName: { type: String, required: false },
     customerAddress: { type: String, required: false },
     productDescription: { type: String, required: false },
@@ -22,6 +22,14 @@ const PurchasedModuleschema = new mongoose.Schema(
     invoice: { type: Buffer ,required: false}, // Store PDF as a binary buffer
     agreement: { type: Buffer, required: false }, // Store PDF as a binary buffer
     transactionDetail:{ type: mongoose.Schema.Types.Mixed, required: false },
+    paid_amount: { type: Number, required: true},
+    invoiceType: {type: String, required: true},
+    transactionHistory: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TransactionDetail",
+      },
+    ],
   },
   {
     timestamps: true,

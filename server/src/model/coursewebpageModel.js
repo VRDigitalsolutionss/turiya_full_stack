@@ -7,6 +7,12 @@ const courseWebpageSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        slug: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true,
+        },
         pageUrl: {
             type: String,
             required: true,
@@ -61,21 +67,21 @@ const courseWebpageSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-        },faqs: {
+        }, faqs: {
             type: Array,
             required: false,
         },
         modules: {
             type: Array,
-          
+
         },
         selectedButton: {
             type: Array,
-      
+
         },
         selectedSections: {
             type: Array,
-            
+
         },
         status: {
             type: String,

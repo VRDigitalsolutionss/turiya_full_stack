@@ -1,4 +1,5 @@
 const PurchasedModule = require("../../model/PurchasedModule");
+const TransactionDetail = require("../../model/TransactionDetail");
 
 
 const get_purchasedModule2 = async (req, res) => {
@@ -29,28 +30,30 @@ const get_purchasedModule2 = async (req, res) => {
 };
 
 const get_purchasedModule = async (req, res) => {
-        try {
-    
-            const Purchased_course = await PurchasedModule.find();
-            if (!Purchased_course) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Module not found',
-                });
-            }
-    
-            res.status(200).json({
-                success: true,
-                data: Purchased_course,
-            });
-        } catch (error) {
-            console.error('Error fetching module by ID:', error);
-            res.status(500).json({
+    try {
+
+        const Purchased_course = await PurchasedModule.find().populate({
+            path: "transactionHistory",
+        });
+        if (!Purchased_course) {
+            return res.status(404).json({
                 success: false,
-                message: 'Failed to fetch module',
-                error: error.message,
+                message: 'Module not found',
             });
         }
+
+        res.status(200).json({
+            success: true,
+            data: Purchased_course,
+        });
+    } catch (error) {
+        console.error('Error fetching module by ID:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch module',
+            error: error.message,
+        });
+    }
 
 };
 
@@ -116,7 +119,7 @@ const get_totalpurchasedModule2 = async (req, res) => {
     try {
 
         const Purchased_course = await PurchasedModule.find();
-        
+
         // Check if any modules are found
         if (!Purchased_course || Purchased_course.length === 0) {
             return res.status(404).json({
@@ -170,4 +173,4 @@ const get_totalpurchasedModule = async (req, res) => {
 };
 
 
-module.exports={get_purchasedModuleById,get_purchasedModule,get_totalpurchasedModule,get_purchasedModule2,deleteOldPurchasedModules}
+module.exports = { get_purchasedModuleById, get_purchasedModule, get_totalpurchasedModule, get_purchasedModule2, deleteOldPurchasedModules }

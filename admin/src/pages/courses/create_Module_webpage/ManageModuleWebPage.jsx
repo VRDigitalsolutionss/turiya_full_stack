@@ -1,6 +1,6 @@
 // ========================================================
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -8,6 +8,8 @@ import { BASE_URL, BASE_URL_IMAGE } from "../../../config";
 
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+import JoditEditor from 'jodit-react';
 
 const CourseForm = () => {
   const navigate = useNavigate();
@@ -33,7 +35,8 @@ const CourseForm = () => {
         const data = response.data.data;
 
         setFormData({
-          courseCategory: data.courseCategory || "",
+          courseModuleCategory: data.courseModuleCategory || "",
+          slug: data.slug || "",
           pageUrl: data.pageUrl || "",
           metaTitle: data.metaTitle || "",
           metaDescription: data.metaDescription || "",
@@ -47,82 +50,8 @@ const CourseForm = () => {
         setAboutFirstSectionHeading(data.about_first_section_Heading || "");
         setAboutFirstSectionSubParagraph(data.aboutFirstSectionSubParagraph || "");
         setBlogContent(data.about_first_section_Paragraph_Content || "");
-
-
-
-        //  response -- about_first_section_Heading
-        // : 
-        // "Heading :"
-        // about_first_section_Image
-        // : 
-        // "1732685737969-img2.webp"
-        // about_first_section_Paragraph
-        // : 
-        // "\"Our yoga courses are designed for all levels, from beginners to experts.\""
-        // about_first_section_Paragraph_Content
-        // : 
-        // "<p>Paragraph Content :</p>"
-        // about_first_section_VideoLink
-        // : 
-        // "\"https://www.youtube.com/watch?v=abcdef12345\""
-        // about_first_section_sub_Paragraph
-        // : 
-        // "Sub Paragraph :"
-        // courseCategory
-        // : 
-        // "200H AYA Yogalehrer Ausbildung - Intensiv"
-        // createdAt
-        // : 
-        // "2024-11-27T05:35:38.021Z"
-        // faqs
-        // : 
-        // ['["Was wird in der 200H Yogalehrer Ausbildung prakt…iken und Training in der Yoga-Praxis behandelt?"]']
-        // metaDescription
-        // : 
-        // "meta description"
-        // metaKeywords
-        // : 
-        // "Meta Keywords"
-        // metaTitle
-        // : 
-        // "Meta Title"
-        // modules
-        // : 
-        // ['["200H Yogalehrer Ausbildung M1 + M2"]']
-        // pageUrl
-        // : 
-        // "Page URL"
-        // selectedButton
-        // : 
-        // ['["moduleSame","video"]']
-        // selectedSections
-        // : 
-        // ['["turiya-advantages","contact-us-section","video-testimonials"]']
-        // status
-        // : 
-        // "\"active\""
-        // updatedAt
-        // : 
-        // "2024-11-29T05:03:07.770Z"
-        // yogaTeamSlideImage
-        // : 
-        // "1732856587746-11yogaimg.jpeg"
-        // yogaTeamSliderHeading
-        // : 
-        // "Slider Heading"
-        // yogaTeamSliderParagraph
-        // : 
-        // "slider paragraph"
-        // yogaTeamSliderVideoLink
-        // : 
-        // "Slider Video Link"
-        // __v
-        // : 
-        // 0
-        // _id
-        // : 
-        // "6746afa967d2767083f6d4e8"
-
+        setSelectedSections(data.selectedSections)
+        setSelectedFAQs(data.faqs)
       }).catch((error) => {
         console.log("error", error);
       });
@@ -191,7 +120,8 @@ const CourseForm = () => {
     useState(blogContent);
 
   const [formData, setFormData] = useState({
-    courseCategory: "",
+    courseModuleCategory: "",
+    slug: "",
     pageUrl: "",
     metaTitle: "",
     metaDescription: "",
@@ -232,36 +162,35 @@ const CourseForm = () => {
     })
   }
 
+  const [courseModuleCategories, setCourseModuleCategories] = useState([]);
+  const [FAQData, setFAQData] = useState([]);
 
+  const fetchFAQData = () => {
+    axios.get(BASE_URL + '/faq').then((response) => {
 
-  // // ================================================================
-  // const courseCategories = [
-  //   { label: "Select Course Category", value: "Select Course Category" },
-  //   { label: "Alle Kommenden Kurse", value: "Alle Kommenden Kurse" },
-  //   { label: "200H AYA Yogalehrer Ausbildung - Intensiv", value: "200H AYA Yogalehrer Ausbildung - Intensiv" },
-  //   {
-  //     label: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-  //     value: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-  //   },
-  //   { label: "60H Yin Yoga", value: "60H Yin Yoga" },
-  //   { label: "60H Senioren Yoga", value: "60H Senioren Yoga" },
-  //   { label: "Hybride Wochenend Yogalehrer Ausbildung", value: "Hybride Wochenend Yogalehrer Ausbildung" },
-  // ];
+      console.log(" faq response", response);
+      if (response.status === 200) {
+        setFAQData(response.data.data)
+      } else {
+        alert("something went wrong")
+      }
 
-  // console.log(courseCategories);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
 
-  const [courseCategories, setccourseCategories] = useState([]);
 
   const fetchCategories = () => {
     axios
-      .get(BASE_URL + "/course_categories_latest")
+      .get(BASE_URL + "/module_categories_latest")
       .then((response) => {
         console.log("response course_categories_latest ", response.data.data);
 
         const data = response.data.data;
 
         console.log(data)
-        setccourseCategories(data);
+        setCourseModuleCategories(data);
       })
       .catch((error) => {
         console.log("Error fetching categories", error);
@@ -269,6 +198,7 @@ const CourseForm = () => {
   };
   useEffect(() => {
     fetchCategories()
+    fetchFAQData()
   }, [])
   const HandleCourseCategory = (event) => {
     // setFaqs(event.target.value.split(','));
@@ -276,10 +206,9 @@ const CourseForm = () => {
 
   const [selectedButton, setSelectedButton] = useState("");
   const [selectedSections, setSelectedSections] = useState([]);
-  const [faqs, setFaqs] = useState([]);
   const [modulesOption, setModulesOption] = useState([]);
 
-  const [selectedFaqs, setSelectedFaqs] = useState([]);
+  const [selectedFAQs, setSelectedFAQs] = useState([]);
 
   // Example FAQ options
   const faqOptions = [
@@ -298,14 +227,6 @@ const CourseForm = () => {
   ];
 
 
-  const handleFaqChange = (event) => {
-    const selectedValues = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedFaqs(selectedValues);
-  };
-
   const buttons = [
     { label: "Module button (Redirect same page)", value: "moduleSame" },
     { label: "Video Button", value: "video" },
@@ -317,19 +238,11 @@ const CourseForm = () => {
   ];
 
   const sections = [
-    { label: "Banner Section", value: "banner-section" },
-    { label: "Turiya Advantages", value: "turiya-advantages" },
-    {
-      label: "Turiya Training Place Section",
-      value: "turiya-training-place-section",
-    },
     { label: "Module Section", value: "module-section" },
     { label: "FAQ Section", value: "faq-section" },
     { label: "Contact Us section", value: "contact-us-section" },
-    { label: "Offer Card", value: "offer-card" },
-    { label: "Info Card", value: "info-card" },
+    // { label: "Offer Card", value: "offer-card" },
     { label: "Text Testimonials", value: "text-testimonials" },
-    { label: "Video Testimonials", value: "video-testimonials" },
     { label: "Gallery", value: "gallery" },
     { label: "Newsletter", value: "newsletter" },
   ];
@@ -352,13 +265,13 @@ const CourseForm = () => {
     );
   };
 
-  const handleFaqsChange = (event) => {
-    setFaqs(event.target.value.split(","));
-  };
+  // const handleFaqsChange = (event) => {
+  //   setFaqs(event.target.value.split(","));
+  // };
 
-  const handleModulesChange = (event) => {
-    setModulesOption(event.target.value.split(","));
-  };
+  // const handleModulesChange = (event) => {
+  //   setModulesOption(event.target.value.split(","));
+  // };
 
   // ===============================================================================
   // Handle form submission
@@ -370,7 +283,7 @@ const CourseForm = () => {
       ...formData,
       selectedButton,
       selectedSections,
-      faqs,
+      selectedFAQs,
       modulesOption,
     };
 
@@ -378,7 +291,8 @@ const CourseForm = () => {
 
     // Prepare the payload
     const payload = {
-      courseCategory: formData.courseCategory,
+      courseModuleCategory: formData.courseModuleCategory,
+      slug: formData.slug,
       pageUrl: formData.pageUrl,
       metaTitle: formData.metaTitle,
       metaDescription: formData.metaDescription,
@@ -389,10 +303,10 @@ const CourseForm = () => {
       about_first_section_Heading: aboutFirstSectionHeading,
       about_first_section_sub_Paragraph: aboutFirstSectionSubParagraph,
       about_first_section_Paragraph_Content: blogContent,
-      faqs: JSON.stringify(faqs), // Convert to JSON string
+      faqs: JSON.stringify(selectedFAQs.map((faq) => faq._id)), // Convert to JSON string
       modules: JSON.stringify(modulesOption), // Convert to JSON string
       selectedButton: JSON.stringify(selectedButton), // Convert to JSON string
-      selectedSections: JSON.stringify(selectedSections), // Convert to JSON string
+      selectedSections: JSON.stringify(selectedSections)
     };
 
     const form = new FormData();
@@ -451,6 +365,7 @@ const CourseForm = () => {
 
             if (response.status == 201) {
               alert("Course module Webpage added successfully!");
+              navigate('/create_module_webpage')
             } else {
               alert("Failed to create course module webpage. Please try again.");
             }
@@ -466,6 +381,33 @@ const CourseForm = () => {
     }
   };
 
+  const editor = useRef(null);
+
+  const config = {
+    readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+    placeholder: 'Start typings...'
+  }
+
+  const handleFaqsChange = (event) => {
+    const selectedId = event.target.value;
+
+    // Find the selected FAQ by its ID
+    const selectedFAQ = FAQData.find((faq) => faq._id === selectedId);
+
+    // Check if it's already in the selected list
+    if (
+      selectedFAQ &&
+      !selectedFAQs.some((faq) => faq._id === selectedFAQ._id)
+    ) {
+      setSelectedFAQs([...selectedFAQs, selectedFAQ]);
+    }
+  };
+
+  // Handle removing a selected FAQ
+  const removeFAQ = (id) => {
+    setSelectedFAQs(selectedFAQs.filter((faq) => faq._id !== id));
+  };
+
   return (
     <div className="container-fluid">
       <div className="card shadow-sm p-3" style={{ border: "none" }}>
@@ -475,29 +417,47 @@ const CourseForm = () => {
               className="px-3 py-2 mb-3 rounded mb-3"
               style={{ backgroundColor: "#9EC54E", borderRadius: "12x" }}>
               <h4 className="text-white">
-                Select Course In Which You Want to Create Webpage new
+                Select Module In Which You Want to Create Webpage new
               </h4>
             </div>
-            <div className="col-md-12 col-12">
-              <label htmlFor="courseCategory" className="form-label">
-                Select Course Category
+            <div className="col-md-6 col-12">
+              <label htmlFor="courseModuleCategory" className="form-label">
+                Select Module Category
               </label>
               <select
-                id="courseCategory"
-                name="courseCategory"
+                id="courseModuleCategory"
+                name="courseModuleCategory"
                 className="form-select"
-                value={formData.courseCategory}
+                value={formData.courseModuleCategory}
                 onChange={handleChange}>
-                <option value="">Select Course Category</option>
+                <option value="">Select Module Category</option>
 
-                {courseCategories.map((data) => (
-                  <option key={data._id} value={data.category}>
-                    {data && data.category
+                {courseModuleCategories.map((data) => (
+                  <option key={data._id} value={data.modulecategory}>
+                    {data && data.modulecategory
                     }
                   </option>))}
-                {/* <option value="yoga">Yoga</option>
-                <option value="programming">Programming</option>
-                <option value="design">Design</option> */}
+              </select>
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="courseCategory" className="form-label">
+                Select Slug Name
+              </label>
+              <select
+                id="slug"
+                name="slug"
+                className="form-select"
+                value={formData.slug}
+                onChange={handleChange}>
+                <option value="">Select Slug</option>
+
+                {courseModuleCategories && courseModuleCategories.map((category) => {
+                  return (
+                    <option key={category.value} value={category.slug}>
+                      {category.slug}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
@@ -667,12 +627,20 @@ const CourseForm = () => {
 
             <div className="mb-3">
               <label className="form-label">Paragraph Content :</label>
-              <ReactQuill
+              {/* <ReactQuill
                 value={blogContent}
                 onChange={setBlogContent}
                 placeholder="Write your blog content here..."
                 style={{ height: "300px", marginBottom: "50px" }}
                 modules={modules}
+                formats={['div', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'link', 'image', 'video']}
+              /> */}
+              <JoditEditor
+                ref={editor}
+                value={blogContent}
+                config={config}
+                tabIndex={1} // tabIndex of textarea
+                onChange={newContent => setBlogContent(newContent)}
               />
             </div>
             <div className="row">
@@ -743,7 +711,7 @@ const CourseForm = () => {
               <div className="container">
                 {/* <h3 className=" mb-3">Select which section you want to show on Webpage:</h3> */}
 
-                <h4>Select button which you want to show on website:</h4>
+                {/* <h4>Select button which you want to show on website:</h4>
                 <div className="row mb-4">
                   {buttons.map((button) => (
                     <div key={button.value} className="col-md-3 col-6 mb-2">
@@ -762,7 +730,7 @@ const CourseForm = () => {
                       </div>
                     </div>
                   ))}
-                </div>
+                </div> */}
 
                 <h4>Select sections which you want to show on website:</h4>
                 <div className="row mb-4">
@@ -790,35 +758,43 @@ const CourseForm = () => {
                 <div className="row mb-4">
                   <div className="col-md-6 mb-3">
                     <label className="form-label">FAQ's:</label>
-
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
-                      onChange={handleFaqsChange}>
-                      <option selected>You can Select multiple Option</option>
-                      {faqOptions.map((faq) => (
-                        <option key={faq} value={faq}>
-                          {faq}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className="form-label">Modules:</label>
-
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      onChange={handleModulesChange}>
-                      <option selected>You can Select multiple Option</option>
-                      {module_option.map((faq) => (
-                        <option key={faq} value={faq}>
-                          {faq}
+                      onChange={handleFaqsChange}
+                    >
+                      <option value="" selected disabled>
+                        You can select multiple options
+                      </option>
+                      {FAQData.map((faq) => (
+                        <option key={faq._id} value={faq._id}>
+                          {faq.question}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
+                <div className="selected-faqs">
+        <h5>Selected FAQs:</h5>
+        {selectedFAQs.length > 0 ? (
+          <ul>
+            {selectedFAQs.map((faq) => (
+              <li key={faq._id} className="mb-2">
+                <strong>{faq.question}</strong>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-danger ms-2"
+                  onClick={() => removeFAQ(faq._id)}
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No FAQs selected.</p>
+        )}
+      </div>
 
                 {/* <button className="btn btn-primary" onClick={handleSubmit}>Submit</button> */}
               </div>

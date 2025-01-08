@@ -74,29 +74,13 @@ const Navbar = () => {
 
   const [cartFetchedData, setcartFetchedData] = useState([]);
 
-  // http://127.0.0.1:7000/api/getAllModuleWithId/676837e79d79a88378c817e9
-  const fetchCartData2 = () => {
-    console.log("id of user", `http://127.0.0.1:5001` + `/api/get_all_cart_with_id/${id}`);
-    axios
-      .get(BASE_URL + `/get_all_cart_with_id/${id}`)
-      // .get(`http://127.0.0.1:5001` + `/api/get_all_cart_with_id/${id}`)
-      .then((response) => {
-        console.log("response of cart fetched", response.data.cartItems
-        );
-        setcartFetchedData(response.data.cartItems);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-
   const fetchCartData = () => {
     console.log("id of user", id);
     axios
       .get(BASE_URL + `/getAllModuleWithId/${id}`)
       .then((response) => {
         console.log("response of cart fetched", response.data.data);
-        // setcartFetchedData(response.data.data);
+        setcartFetchedData(response.data.data);
       })
       .catch((error) => {
         console.log("error", error);
@@ -105,7 +89,6 @@ const Navbar = () => {
 
   useEffect(() => {
     fetchCartData();
-    fetchCartData2();
   }, []);
 
   const handleRedirect = () => {
@@ -153,16 +136,14 @@ const Navbar = () => {
     return category.replace(/\s+/g, "-");
   };
 
-  const [categoryData, setcategoryData] = useState("");
+  const [categoryData, setcategoryData] = useState([]);
   const [courseSubCategoryData, setCourseSubCategoryData] = useState("");
   const fetchCourseCategory = () => {
     axios
       .get(BASE_URL + "/course_categories_latest")
       .then((response) => {
         console.log("response of course_categories_latest", response.data.data);
-        // Filter the data to only include items with index greater than 4
-        const filteredData = response.data.data.filter((_, index) => index > 4);
-        setcategoryData(filteredData); // Store the filtered data
+        setcategoryData(response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching course category", error);
@@ -386,123 +367,26 @@ const Navbar = () => {
                       <i className="bx bx-chevron-down" />
                     </Link>
                     <ul className="dropdown_menu__list">
-                      <li>
-                        <Link to="/kommende-kurse">Alle Kommenden Kurse</Link>
-                      </li>
-                      <li className="mega_dropdown">
-                        <Link to="/yogalehrer-ausbildung-200h">
-                          200H AYA Yogalehrer Ausbildung - Intensiv
-                        </Link>
-                        <i className="bx bx-chevron-right" />
-                        <div className="mega_dropdown__list">
-                          <ul style={{ overflowY: 'scroll', maxHeight: '400px' }}>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-200h">
-                                200H AYA Yogalehrer Ausbildung
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-in-sampurna-seminarhaus">
-                                200H AYA Yogalehrer Ausbildung Sampurna
-                                Seminarhaus
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-goa-indien">
-                                200H AYA Yogalehrer Ausbildung Goa Indien
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/200h-yogalehrer-ausbildung-mallorca">
-                                200H/AYA Yogalehrer Ausbildung I Mallorca
-                              </Link>
-                            </li>
+                      {categoryData.map((item) => (
+                        <li className="mega_dropdown">
+                          <Link to={`/category/${item.slug}`}>
+                            {item.category}
+                          </Link>
+                          {item.courseSubCategories.length > 0 && <i className="bx bx-chevron-right" />}
+                          {item.courseSubCategories.length > 0 && <div className="mega_dropdown__list">
+                            <ul style={{ overflowY: 'scroll', maxHeight: '400px' }}>
+                              {item.courseSubCategories.map((subitem) => (
 
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-himalaya-indien">
-                                Yogalehrerausbildung Himalaya Indien
-                              </Link>
-                            </li>
-
-                            {categoryData &&
-                              categoryData.map((item, index) => {
-                                return (
-                                  <li>
-                                    <Link to={replaceSpacesWithUnderscores(item.category)}>{item.category}</Link>
-                                  </li>
-                                );
-                              })}
-                          </ul>
-                        </div>
-                      </li>
-                      <li className="mega_dropdown">
-                        <Link to="/blockausbildung-im-ueberblick">
-                          500H AYA Yogalehrer Blockausbildung | 100h
-                          Einzelmodule
-                        </Link>
-                        <i className="bx bx-chevron-right" />
-                        <div className="mega_dropdown__list">
-                          <ul>
-                            <li>
-                              <Link to="/blockausbildung-im-ueberblick">
-                                Blockausbildung / Überblick
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-100h">
-                                100h Yoga Ausbildung / Modul 1
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-module-200h">
-                                +200h Yoga Ausbildung / Modul 2
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-300h">
-                                +300h Yoga Ausbildung / Modul 3
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-400h">
-                                +400h Yoga Ausbildung / Modul 4
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-500h">
-                                +500h Yoga Ausbildung / Modul 5
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li>
-                        <Link to="/yin-yoga">60H Yin Yoga</Link>
-                      </li>
-                      <li>
-                        <Link to="/senioren-yoga">60H Senioren Yoga</Link>
-                      </li>
-                      <li>
-                        <Link to="/hybride-yogalehrer-ausbildung">
-                          Hybride Wochenend Yogalehrer Ausbildung
-                        </Link>
-                      </li>
-
-                      {/* ================================== */}
-
-                      {/* {
-                              categoryData && categoryData.map((data, index) => {
-                                return (
-                                  <li key={index}>
-                                    <Link to={`/${replaceSpacesWithUnderscores(data.category)}`}>
-                                      {data.category}
-                                    </Link>
-                                  </li>
-                                )
-                              })
-                              } */}
-
-                      {/* ================================== */}
+                                <li>
+                                  <Link to={`/module/${subitem.slug}`}>
+                                    {subitem.modulecategory}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>}
+                        </li>
+                      ))}
                     </ul>
                   </li>
                   <li className="dropdown_menu">
@@ -518,21 +402,6 @@ const Navbar = () => {
                       </li>
                     </ul>
                   </li>
-                  {/*
-                  <li className="dropdown_menu">
-                    <Link to="/product">
-                    Product
-                      <i className="bx bx-chevron-down" />
-                    </Link>
-                    <ul className="dropdown_menu__list">
-                      <li>
-                        <Link to="/product">
-                        Yoga Product
-                        </Link>
-                      </li>
-                    </ul>
-                  </li> */}
-
                   <li className="menu-item">
                     <Link to="/contact">
                       <i className="bx bx-envelope" />
@@ -548,51 +417,6 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          {/* <div className="hide_top_menu">
-            <Link to="tel:+49(0)69-20134987">
-              <i className="bx bxs-mobile" />
-              +49(0)69-20134987
-            </Link>
-            <Link to="mailto:info@turiyayoga.de">
-              <i className="bx bxs-envelope" /> info@turiyayoga.de
-            </Link>
-
-            <p onClick={handleSidBar} className="cart_mobile_view">
-              <i className="bx bx-shopping-bag" />
-              <span className="me-1">
-                {cartFetchedData && cartFetchedData.length > 0
-                  ? cartFetchedData.length
-                  : 0}
-              </span>
-              [LEER]
-            </p>
-
-
-
-
-
-            {user ? (
-              <p
-                onClick={handleRedirect}
-                className="registerLink"
-                style={{
-                  cursor: "pointer",
-                  fontSize: "20px",
-                  textTransform: "capitalize",
-                }}>
-                <i className="bx bx-user" />
-                {user && user}
-              </p>
-            ) : (
-              <p
-                onClick={handleRedirect}
-                className="registerLink"
-                style={{ cursor: "pointer" }}>
-                <i className="bx bx-user" />
-                Anmeldung/Registrierung
-              </p>
-            )}
-          </div> */}
 
           {/* =============================================================================== */}
           <div className="form-body">
@@ -784,24 +608,18 @@ const Navbar = () => {
 
                   <li className="drop-menu" style={{ display: "inline" }}>
                     <Link
-
-
                       to="/"
                       className={`active-menu ${activeLink === "yogaTraining" ? "active" : ""
                         }`}
-
-
                       onClick={() => handleLinkClick("yogaTraining")}>
                       Yogalehrer Ausbildungen{" "}
                       <i className="bx bx-chevron-right" style={{ display: "inline" }}></i>
                     </Link>
                     <div
-                      className={`drop-menu-list ${activeLink === "yogaTraining" ? "show" : ""
-                        }`}>
+                      className={`drop-menu-list ${activeLink === "yogaTraining" ? "show" : ""}`}>
                       <Link to="/kommende-kurse" style={{ fontSize: "12px", marginBottom: '12px', marginTop: "12px" }} onClick={() => setIsActive(false)}>
                         Alle Kommenden Kurse
                       </Link>
-                      {/* Additional nested links */}
                       <li className="mega_dropdown my-3" style={{ display: 'inline' }}>
                         <Link
                           style={{ fontSize: "12px" }}
@@ -809,12 +627,9 @@ const Navbar = () => {
                             handle_Yogalehrer_Ausbildung(
                               "200H AYA Yogalehrer Ausbildung - Intensiv"
                             )}
-
                         >
                           200H AYA Yogalehrer Ausbildung - Intensiv <i className="bx bx-chevron-right" />
                         </Link>
-
-
                       </li>
                       <li className="mega_dropdown my-3">
                         <Link style={{ fontSize: "12px" }} onClick={() =>
@@ -825,41 +640,6 @@ const Navbar = () => {
                           500H AYA Yogalehrer Blockausbildung | 100h
                           Einzelmodule    <i className="bx bx-chevron-right" />
                         </Link>
-
-                        {/* <div className="mega_dropdown__list">
-                          <ul>
-                            <li>
-                              <Link to="/block_yogaTraning">
-                                Blockausbildung / Überblick
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogalehrer-ausbildung-100h">
-                                100h Yoga Ausbildung / Modul 1
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule2">
-                                +200h Yoga Ausbildung / Modul 2
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule3">
-                                +300h Yoga Ausbildung / Modul 3
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule4">
-                                +400h Yoga Ausbildung / Modul 4
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/yogamodule5">
-                                +500h Yoga Ausbildung / Modul 5
-                              </Link>
-                            </li>
-                          </ul>
-                        </div> */}
                       </li>
                       <li className="my-3">
                         <Link to="/yin-yoga " style={{ fontSize: "12px" }}>60H Yin Yoga</Link>
@@ -917,7 +697,6 @@ const Navbar = () => {
                     onClick={() =>
                       handleCancelMegaMenu("handleEinzelmoduleClick")
                     }>
-                    {" "}
                     <IoMdArrowBack /> Go back
                   </p>
 
@@ -953,57 +732,37 @@ const Navbar = () => {
                   </li>
                 </ul>
                 {/* ============================================================================= */}
-                <ul
-                  id="yogalehrer_Ausbildung"
-                  ref={yogalehrer_Ausbildung}
-                  style={{ display: "none" }}>
-                  <p
-                    className="cancel-mega-menu"
-                    onClick={() =>
-                      handleCancelyogalehrer_Ausbildung("yogalehrer_Ausbildung")
-                    }>
-                    {" "}
-                    <IoMdArrowBack /> Go back
-                  </p>
+                {categoryData &&
+                  categoryData.map((item, index) => {
 
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-200h" onClick={handleCancel}>
-                      200H AYA Yogalehrer Ausbildung
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-in-sampurna-seminarhaus" onClick={handleCancel}>
-                      200H AYA Yogalehrer Ausbildung Sampurna Seminarhaus
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-goa-indien" onClick={handleCancel}>
-                      200H AYA Yogalehrer Ausbildung Goa Indien
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/200h-yogalehrer-ausbildung-mallorca" onClick={handleCancel}>
-                      200H/AYA Yogalehrer Ausbildung I Mallorca
-                    </Link>
-                  </li>
-
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-himalaya-indien" onClick={handleCancel}>
-                      Yogalehrerausbildung Himalaya Indien
-                    </Link>
-                  </li>
-
-                  {categoryData &&
-                    categoryData.map((item, index) => {
-                      return (
-                        <li className="my-3">
-                          <Link to={replaceSpacesWithUnderscores(item.category)} onClick={handleCancel}>{item.category}</Link>
-                        </li>
-                      );
-                    })}
+                    if (item.category === "200H AYA Yogalehrer Ausbildung - Intensiv") {
+                      return <ul
+                        id="yogalehrer_Ausbildung"
+                        ref={yogalehrer_Ausbildung}
+                        style={{ display: "none" }}>
+                        <p
+                          className="cancel-mega-menu"
+                          onClick={() =>
+                            handleCancelyogalehrer_Ausbildung("yogalehrer_Ausbildung")
+                          }>
+                          {" "}
+                          <IoMdArrowBack /> Go back
+                        </p>
+                        {
+                          item.courseSubCategories &&
+                          item.courseSubCategories.map((subitem) => (
+                            <li className="my-3" key={subitem.slug}>
+                              <Link to={`/module/${subitem.slug}`} onClick={handleCancel}>
+                                {subitem.modulecategory}
+                              </Link>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    }
+                  })}
 
 
-                </ul>
                 {/* ============================================================================== */}
 
 

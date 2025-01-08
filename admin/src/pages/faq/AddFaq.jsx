@@ -15,57 +15,7 @@ const AddFaqCategories = () => {
     }
   }, []);
 
-  const [courses, setCourses] = useState([
-    {
-      id: 1,
-      question: "Wie sieht mein Tag aus?",
-      answer:
-        "Unser Kurs dauert 60 Stunden in 6 Tagen, daher absolvieren wir ungefähr 10 Stunden pro Tag gemäß den Standards der Yoga-Allianz. Von diesen sind ungefähr 4 Stunden pro Tag für Yoga-Praxis geplant. Keine Sorge, der Kurs ist durchdacht, damit der Körper nicht überfordert wird und ein großer Teil der Senior-Yoga-Praxis nicht anstrengend wird - obwohl wir mit herausfordernden und straffenden Muskeln arbeiten können. Denk daran: Der Kurs in Yoga Alliance dauert 60 Minuten. Innerhalb dieses Kurses dürfen wir 10 Minuten Pause einlegen!",
-      isActive: true,
-    },
-    {
-      id: 2,
-      question: "Ablauf Beispiel",
-      answer:
-        "Beispiel für einen täglichen Fahrplan\n\n8h - 10h Yogapraxis (Asana, Pranayama und/oder Meditation)\n30 Minuten Pause\n10:30 - 12:30 Uhr: Theorie (Anatomie & Physiologie)\n1h Mittagspause\n13:30 - 15:30 Uhr Training: Techniken und Hilfsmittel\n15:30 - 16:30 Uhr Unterrichtsmethodik\n30 Minuten Pause\n17h - 19h Übung",
-      isActive: true,
-    },
-    {
-      id: 3,
-      question: "Was werde ich in der Senior Yoga Lehrer Ausbildung lernen?",
-      answer:
-        "Du lernst die wesentlichen Bestandteile eines Senior Yoga Kurses kennen und wirst dessen Unterschiede zu einer normalen geistlichen Klassenübung verstehen. Du wirst auch die Grundlagen der Unterrichtsplanung für Senioren-Yoga verstehen, dabei auf Bewegungseinschränkungen achten und eine geeignete Methode zum sicheren und effektiven Anpassen von Yogapraktiken üben und integrieren. Auf diese Weise lernen und trainieren wir, was wichtige Voraussetzungen verwendet, um eine erfüllende Senior Yoga-Praxis zu unterstützen – unter Verwendung von Stühlen, Polstern, Blöcken, Gurten usw.\nNeben dem Training in einer bestimmten Methode und dem Erlernen des Umgangs mit bestimmten Ressourcen ist es wichtig, die Bedingungen im Auge zu behalten, die möglicherweise nicht so direkt sichtbar sind, aber für den Umgang mit dieser bestimmten Gruppe von entscheidender Bedeutung sind. Mit anderen Worten, unsere Theorienfilme haben die Schüler, die Grundlagen der Anatomie und Physiologie des Alterns zu verstehen und die genauen Veränderungen zu erkennen. Es werden wichtige Informationen zu den häufigsten Gesundheitsproblemen im Zusammenhang mit dem Alter und verschiedenen Yoga-Praktiken mit diesen behandelt - Herzproblemen, Osteoporose, Arthritis usw. Indikationen, Kontraindikationen und Vorsichtsmaßnahmen sind daher sehr wichtige Bestandteile dieses Trainings.\nAls Teil nicht nur der traditionellen Perspektive, sondern auch der medizinisch fundierten Evidenz dürfen wir nicht vergessen, dass die Hilfe subtiler Praktiken wie Pranayama und Meditation zur Aufrechterhaltung eines allgemeinen Wohlbefindens auch ins Programm aufgenommen werden.",
-      isActive: true,
-    },
-    {
-      id: 4,
-      question: "Was sind die Teilnahmevoraussetzungen?",
-      answer:
-        "Teilnahmevoraussetzungen: Mindestens 18 Jahre. Es wird empfohlen, mindestens das Modul 1 als erster Yogalehrer-Ausbildung zu nehmen. Wenn du einen anerkannten Kurs für eine 200-stündige Yogalehrer-Ausbildung verfügst, sollte dies ausreichen, um das Programm vollständig in Anspruch zu nehmen.\nDie Yogalehrer Ausbildung ist für alle körperlichen Konditionsstufen geeignet. Wenn du dich wegen einer besonderen Situation unsicher fühlst, wende dich einfach an uns!",
-      isActive: true,
-    },
-    {
-      id: 6,
-      question: "Bekomme ich ein Zertifikat? Welches?",
-      answer:
-        "Wenn du NICHT an der 500-stündigen Yogalehrer-Ausbildung teilnimmst\nNach erfolgreichem Abschluss dieses Kurses erhältst du ein Senior Yoga-Ausbildung Zertifikat. Wir sind eine zertifizierte Schule der Yoga Alliance und dieser Kurs wird auch im Rahmen unserer 500h Yogalehrer-Ausbildung angeboten.\nWenn du diesen Kurs im Rahmen unserer 500h Yogalehrer-Ausbildung absolvierst, erhältst du ein Yoga Alliance zertifiziertes Senior Yoga-Zertifikat.\nZu diesem Zeitpunkt hast du bereits den Abschluss nach Modul 1 und der nächsten 200-stündige Yogalehrer-Ausbildung durch Yoga Alliance-Diplom absolviert. Danach bist du berechtigt, die 300-stündige Yogalehrer-Ausbildung abzuschließen und das Modul 3, Modul 4 und Modul 5 abzuschließen.\nDer Seniorenkurs ist Teil der 500 Stunden Ausbildung und wird mit 60 Stunden, die dem Senior Yoga Kurs 60% abschließt, erfolgreich beendet hast, erhältst du das 300-Stunden-Zertifikat und kannst dich als Senior Yoga-Lehrer qualifizieren. Danke daran, dass die bei Turiya Yoga einer Brief durchführen, indem du den Kurs machst, was genau fehlt.",
-      isActive: true,
-    },
-    {
-      id: 7,
-      question: "Bekomme ich ein Zertifikat? Welches?",
-      answer:
-        "Wenn du NICHT an der 500-stündigen Yogalehrer-Ausbildung teilnimmst\nNach erfolgreichem Abschluss dieses Kurses erhältst du ein Senior Yoga-Ausbildung Zertifikat. Wir sind eine zertifizierte Schule der Yoga Alliance und dieser Kurs wird auch im Rahmen unserer 500h Yogalehrer-Ausbildung angeboten.\nWenn du diesen Kurs im Rahmen unserer 500h Yogalehrer-Ausbildung absolvierst, erhältst du ein Yoga Alliance zertifiziertes Senior Yoga-Zertifikat.\nZu diesem Zeitpunkt hast du bereits den Abschluss nach Modul 1 und der nächsten 200-stündige Yogalehrer-Ausbildung durch Yoga Alliance-Diplom absolviert. Danach bist du berechtigt, die 300-stündige Yogalehrer-Ausbildung abzuschließen und das Modul 3, Modul 4 und Modul 5 abzuschließen.\nDer Seniorenkurs ist Teil der 500 Stunden Ausbildung und wird mit 60 Stunden, die dem Senior Yoga Kurs 60% abschließt, erfolgreich beendet hast, erhältst du das 300-Stunden-Zertifikat und kannst dich als Senior Yoga-Lehrer qualifizieren. Danke daran, dass die bei Turiya Yoga einer Brief durchführen, indem du den Kurs machst, was genau fehlt.",
-      isActive: true,
-    },
-    {
-      id: 8,
-      question: "Bekomme ich ein Zertifikat? Welches?",
-      answer:
-        "Wenn du NICHT an der 500-stündigen Yogalehrer-Ausbildung teilnimmst\nNach erfolgreichem Abschluss dieses Kurses erhältst du ein Senior Yoga-Ausbildung Zertifikat. Wir sind eine zertifizierte Schule der Yoga Alliance und dieser Kurs wird auch im Rahmen unserer 500h Yogalehrer-Ausbildung angeboten.\nWenn du diesen Kurs im Rahmen unserer 500h Yogalehrer-Ausbildung absolvierst, erhältst du ein Yoga Alliance zertifiziertes Senior Yoga-Zertifikat.\nZu diesem Zeitpunkt hast du bereits den Abschluss nach Modul 1 und der nächsten 200-stündige Yogalehrer-Ausbildung durch Yoga Alliance-Diplom absolviert. Danach bist du berechtigt, die 300-stündige Yogalehrer-Ausbildung abzuschließen und das Modul 3, Modul 4 und Modul 5 abzuschließen.\nDer Seniorenkurs ist Teil der 500 Stunden Ausbildung und wird mit 60 Stunden, die dem Senior Yoga Kurs 60% abschließt, erfolgreich beendet hast, erhältst du das 300-Stunden-Zertifikat und kannst dich als Senior Yoga-Lehrer qualifizieren. Danke daran, dass die bei Turiya Yoga einer Brief durchführen, indem du den Kurs machst, was genau fehlt.",
-      isActive: true,
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

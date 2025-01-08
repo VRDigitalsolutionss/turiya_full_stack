@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
 
 const ManageModuleCategories = () => {
@@ -21,6 +21,7 @@ const ManageModuleCategories = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [moduleCategory, setModuleCategory] = useState("");
+  const [moduleCategorySlug, setModuleCategorySlug] = useState("");
 
   const [courseCategoriesData, setCourseCategoriesData] = useState('');
 
@@ -39,39 +40,36 @@ const ManageModuleCategories = () => {
 
   };
 
+  const generateSlug = (name) => {
+    return name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  };
 
-console.log("course_categories data options", courseCategoriesData)
+  console.log("course_categories data options", courseCategoriesData)
 
   useEffect(() => {
     if (id) {
       axios
         .get(BASE_URL + `/module_categories/${id}`)
         .then((response) => {
-          console.log(response.data.data.modulecategory);
+          console.log(response.data);
           setSelectedCategory(response.data.data.category);
           setModuleCategory(response.data.data.modulecategory || "")
+          setModuleCategorySlug(response.data.data.slug || "")
         });
-    }  },[]);
-  // Sample categories for the dropdown
-  const categories = [
-    "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    "200H AYA Yogalehrer Ausbildung - Intensiv",
-    "60H Senioren Yoga",
-    "60H Yin Yoga",
-    "Alle Kommenden Kurse",
-  ];
+    }
+  }, []);
 
   // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Selected Category:", selectedCategory);
-    console.log("Entered Module Category:", moduleCategory);
-
-
-
-    const payload =  {
+    const payload = {
       "category": selectedCategory,
-      "modulecategory":moduleCategory,
+      "modulecategory": moduleCategory,
+      "slug": moduleCategorySlug,
       "status": "active"
     }
     if (id) {
@@ -82,9 +80,7 @@ console.log("course_categories data options", courseCategoriesData)
 
           if (response.status == 200) {
             alert("success");
-
-            setSelectedCategory("");
-            setModuleCategory("");
+            navigate('/courses/modulSubCategories')
           } else {
             alert("faild");
           }
@@ -94,15 +90,13 @@ console.log("course_categories data options", courseCategoriesData)
         });
     } else {
       axios
-        .post(BASE_URL + "/add_module_category", payload)
+        .post(BASE_URL + "/add_module_category_latest", payload)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
 
           if (response.status == 201) {
             alert("Success");
-
-            setSelectedCategory("");
-            setModuleCategory("");
+            navigate('/courses/modulSubCategories')
           }
         })
         .catch((err) => {
@@ -125,13 +119,15 @@ console.log("course_categories data options", courseCategoriesData)
               className="form-control"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              required>
+              required
+            >
               <option value="">Select Category</option>
-              {courseCategoriesData && courseCategoriesData.map((category, index) => (
-                <option key={index} value={category._id}>
-                  {category.category}
-                </option>
-              ))}
+              {courseCategoriesData &&
+                courseCategoriesData.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.category}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="form-group my-3">
@@ -140,8 +136,22 @@ console.log("course_categories data options", courseCategoriesData)
               type="text"
               className="form-control"
               value={moduleCategory}
-              onChange={(e) => setModuleCategory(e.target.value)}
+              onChange={(e) => {
+                setModuleCategory(e.target.value)
+                setModuleCategorySlug(generateSlug(e.target.value))
+              }}
               placeholder="Enter module category"
+              required
+            />
+          </div>
+          <div className="form-group my-3">
+            <label>Enter Slug for Module Categories :</label>
+            <input
+              type="text"
+              className="form-control"
+              value={moduleCategorySlug}
+              onChange={(e) => setModuleCategorySlug(e.target.value)}
+              placeholder="Enter slug for module category"
               required
             />
           </div>

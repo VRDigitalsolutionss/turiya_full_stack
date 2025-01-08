@@ -153,11 +153,9 @@ const YogaTraningMallorca = () => {
 
     console.log("course id: handletriggerDialogBox" + courseid, auth_token);
     if (auth_token) {
-      // navigate("/course_booking");
-      // reducePlace(courseid);
       addToCart(courseid);
     } else {
-      setIsDialogVisible(true); // Show the dialog
+      setIsDialogVisible(true);
     }
 
     // handletriggerDialogBox

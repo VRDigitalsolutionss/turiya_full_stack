@@ -222,35 +222,12 @@ const appRoutes: RouteType[] = [
   },
   {
     path: "/faq",
-    element: <DashboardPageLayout />,
+    element: <AddFaq />,
     state: "faq",
     sidebarProps: {
       displayText: "Manage FAQ",
       icon: <DashboardOutlinedIcon />
     },
-    child: [
-      {
-        index: true,
-        element: <DashboardIndex />,
-        state: "faq.index"
-      },
-      {
-        path: "/faq/add_faq_categories",
-        element: <AddFaqCategories />,
-        state: "faq.default",
-        sidebarProps: {
-          displayText: "Add FAQ Categories"
-        },
-      },
-      {
-        path: "/faq/add_faq",
-        element: <AddFaq />,
-        state: "faq.add_faq",
-        sidebarProps: {
-          displayText: "Add FAQ"
-        }
-      }
-    ]
   },
   {
     path: "/contact",

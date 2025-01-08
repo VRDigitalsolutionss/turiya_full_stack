@@ -1,106 +1,53 @@
 // const Modulecategories = require('../../model/module-subcategories'); 
 const CourseCategoriesLatest = require('../../model/CourseCategoriesLatest');
-const Modulecategories = require('../../model/moduleSubCategoryLatest'); 
+const Modulecategories = require('../../model/moduleSubCategoryLatest');
 
-// Add a module category
-// const addModuleCategory = async (req, res) => {
-//     try {
-//         const { category, modulecategory } = req.body;
 
-//         if (!category || !modulecategory) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Category and module category are required",
-//             });
-//         }
-
-//         const newModuleCategory = new Modulecategories({ category, modulecategory });
-//         await newModuleCategory.save();
-
-//         res.status(201).json({
-//             success: true,
-//             message: "Module category added successfully",
-//             data: newModuleCategory,
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "Failed to add module category",
-//             error: error.message,
-//         });
-//     }
-// };
-
-const addModuleCategory = async (req, res) => {
-    try {
-        const { category, modulecategory } = req.body;
-
-        if (!category || !modulecategory) {
-            return res.status(400).json({
-                success: false,
-                message: "Category and module category are required",
-            });
-        }
-
-        // Create a new Module Category
-        const newModuleCategory = new Modulecategories({ category, modulecategory });
-        await newModuleCategory.save();
-
-        // Update the courseSubCategory field in the CourseCategoriesLatest model
-        const updatedCourseCategory = await CourseCategoriesLatest.findByIdAndUpdate(
-            category, // The ID of the course category to update
-            { courseSubCategory: newModuleCategory._id }, // Set the courseSubCategory field
-            { new: true } // Return the updated document
-        );
-
-        if (!updatedCourseCategory) {
-            return res.status(404).json({
-                success: false,
-                message: "Course category not found",
-            });
-        }
-
-        res.status(201).json({
-            success: true,
-            message: "Module category added and course category updated successfully",
-            data: {
-                newModuleCategory,
-                updatedCourseCategory,
-            },
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Failed to add module category or update course category",
-            error: error.message,
-        });
-    }
-};
-// Edit a module category
 const editModuleCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const { category, modulecategory } = req.body;
+        const { category, modulecategory, slug } = req.body;
 
-        if (!category || !modulecategory) {
+        if (!category || !modulecategory || !slug) {
             return res.status(400).json({
                 success: false,
-                message: "Category and module category are required for update",
+                message: "Category, module category, and slug are required for update",
             });
         }
 
-        const updatedModuleCategory = await Modulecategories.findByIdAndUpdate(
-            id,
-            { category, modulecategory },
-            { new: true }
-        );
-
-        if (!updatedModuleCategory) {
+        // Fetch the current subcategory to check if the parent category changes
+        const existingModuleCategory = await Modulecategories.findById(id);
+        if (!existingModuleCategory) {
             return res.status(404).json({
                 success: false,
                 message: "Module category not found",
             });
         }
+
+        // Check if the parent category has changed
+        if (existingModuleCategory.category.toString() !== category) {
+            // Remove subcategory reference from the old category
+            await CourseCategoriesLatest.findByIdAndUpdate(existingModuleCategory.category, {
+                $pull: { courseSubCategories: id },
+            });
+
+            // Add subcategory reference to the new category
+            await CourseCategoriesLatest.findByIdAndUpdate(category, {
+                $addToSet: { courseSubCategories: id }, // Use $addToSet to avoid duplicates
+            });
+        } else {
+            // If the parent category hasn't changed, ensure the subcategory ID exists
+            await CourseCategoriesLatest.findByIdAndUpdate(category, {
+                $addToSet: { courseSubCategories: id }, // Add if not already present
+            });
+        }
+
+        // Update the module category
+        const updatedModuleCategory = await Modulecategories.findByIdAndUpdate(
+            id,
+            { category, modulecategory, slug },
+            { new: true }
+        );
 
         res.status(200).json({
             success: true,
@@ -115,6 +62,7 @@ const editModuleCategory = async (req, res) => {
         });
     }
 };
+
 
 // Toggle module category status
 const toggleModuleCategoryStatus = async (req, res) => {
@@ -150,101 +98,44 @@ const toggleModuleCategoryStatus = async (req, res) => {
 // Delete a module category
 const deleteModuleCategory = async (req, res) => {
     try {
-        const { id } = req.params;
-
-        const deletedModuleCategory = await Modulecategories.findByIdAndDelete(id);
-
-        if (!deletedModuleCategory) {
-            return res.status(404).json({
-                success: false,
-                message: "Module category not found",
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            message: "Module category deleted successfully",
-            data: deletedModuleCategory,
+      const { id } = req.params;
+  
+      // Find the module category to delete
+      const moduleCategoryToDelete = await Modulecategories.findById(id);
+  
+      if (!moduleCategoryToDelete) {
+        return res.status(404).json({
+          success: false,
+          message: "Module category not found",
         });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Failed to delete module category",
-            error: error.message,
-        });
-    }
-};
-
-// Get all module categories
-// const getAllModuleCategories = async (req, res) => {
-//     try {
-//         const moduleCategories = await Modulecategories.find().populate("Coursecategories");
-//         res.status(200).json({
-//             success: true,
-//             data: moduleCategories,
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "Failed to fetch module categories",
-//             error: error.message,
-//         });
-//     }
-// };
-
-
-// ==============================================================================
-
-const getAllModuleCategories = async (req, res) => {
-    try {
-      // Correct the populate to use "courseSubCategory" (field name from schema)
-      const moduleCategories = await Modulecategories.find().populate("courseSubCategory");
+      }
+  
+      // Remove the subcategory reference from its parent category
+      await CourseCategoriesLatest.findByIdAndUpdate(moduleCategoryToDelete.category, {
+        $pull: { courseSubCategories: id }, // Remove subcategory ID from the array
+      });
+  
+      // Delete the module category
+      const deletedModuleCategory = await Modulecategories.findByIdAndDelete(id);
+  
       res.status(200).json({
         success: true,
-        data: moduleCategories,
+        message: "Module category deleted successfully",
+        data: deletedModuleCategory,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: "Failed to fetch module categories",
+        message: "Failed to delete module category",
         error: error.message,
       });
     }
   };
-
-
-// ===========================================================================================
-const getCourseCategoryById = async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        const category = await Modulecategories.findById(id);
-        if (!category) {
-            return res.status(404).json({
-                success: false,
-                message: "Course category not found",
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            data: category,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Failed to fetch course category",
-            error: error.message,
-        });
-    }
-};
+  
 
 
 module.exports = {
-    addModuleCategory,
     editModuleCategory,
     toggleModuleCategoryStatus,
     deleteModuleCategory,
-    getAllModuleCategories,
-    getCourseCategoryById
 };

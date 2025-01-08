@@ -56,7 +56,7 @@ const getAgreement = async (req, res) => {
 
 const generateInvoicesAndSendEmail = async (req, res) => {
 
-  console.log("req.body", req.body);
+  // console.log("req.body", req.body);
   try {
     const {
       productNumber,
@@ -73,6 +73,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       email,
       user_type,
       price,
+      paid_amount,
+      invoiceType,
       ...extraFields
     } = req.body;
 
@@ -81,6 +83,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     // Save to database
     var savedModule = await purchasedModule.save();
+
+    console.log("savedModule", savedModule)
     var invoiceId = savedModule._id;
     // res.status(201).json({
     //   message: "Purchased module saved successfully",

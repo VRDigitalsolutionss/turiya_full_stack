@@ -57,7 +57,7 @@ const ManageCourseCategories = () => {
 
 
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 5; // Set rows per page
+  const rowsPerPage = 10; // Set rows per page
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Calculate pagination

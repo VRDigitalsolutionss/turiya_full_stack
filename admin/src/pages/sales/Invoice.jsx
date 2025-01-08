@@ -13,6 +13,8 @@ function Invoice() {
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false); // Initially modal is hidden
 
+  console.log("all invoice data", showModal)
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -36,17 +38,21 @@ function Invoice() {
 
   console.log("due amount");
 
-  const handleSubmit = () => {
+  const handleSubmit = (totalAmount, paidAmount, dueAmount, purchasedModuleId) => {
     console.log("Form Data Submitted:", formData);
 
-    const paidamount = transaction.due_amount;
+    if(dueAmount===0){
+      alert("You have already paid the total amount. Due Amount is 0");
+      return;
+    }
 
     const payload = {
-      purchasedModuleId: purchased_module_id,
-      transactionId: transactionId?transactionId:"000",
       amount: formData.amount,
       remark: formData.remark,
-      totalAmount: due_total_price,
+      totalAmount: totalAmount,
+      totalPaidAmount: paidAmount,
+      restAmount: dueAmount,
+      purchasedModuleId: purchasedModuleId
     };
 
     axios
@@ -54,13 +60,8 @@ function Invoice() {
       .then((response) => {
         console.log("response:", response);
         if (response.status == 201) {
-          fetchTransactionDetail();
-          setFormData({
-            amount: "",
-            remark: "",
-            totalAmount: "",
-          });
-          fetchTransactionDetail(transactionId);
+          alert("Paid Successfully")
+          fetchData();
         }
       })
       .catch((error) => {
@@ -72,7 +73,6 @@ function Invoice() {
 
   const fetchTransactionDetail = (transaction_id) => {
     if (transaction_id) {
-      console.log(fetchTransactionDetail);
       axios
         .get(BASE_URL + `/get_transactionDetail/${transaction_id}`)
         .then((response) => {
@@ -123,12 +123,12 @@ function Invoice() {
 
   const filteredData = search.trim()
     ? data &&
-      data.filter(
-        (item) =>
-          item._id === search.trim() ||
-          item.name == search.trim() ||
-          item.customerName == search.trim()
-      )
+    data.filter(
+      (item) =>
+        item._id === search.trim() ||
+        item.name == search.trim() ||
+        item.customerName == search.trim()
+    )
     : data;
 
   const totalPages = Math.ceil(
@@ -305,16 +305,18 @@ function Invoice() {
   const [due_total_price, setDue_total_price] = useState("");
   const [purchased_module_id, setPurchased_module_id] = useState("");
   const [transactionId, setTransactionId] = useState("");
+  const [currentModalRow, setCurrentModalRow] = useState();
 
   const handlePaid = (row) => {
     console.log("due amount: ", row);
-    setTransactionId(row.transactionDetail._id ? row.transactionDetail._id : "");
+    // setTransactionId(row.transactionDetail._id ? row.transactionDetail._id : "");
+    setCurrentModalRow(row)
     setShowModal(true);
     setDue_total_price(row.price);
 
-    fetchTransactionDetail(
-      row.transactionDetail._id ? row.transactionDetail._id : "0"
-    );
+    // fetchTransactionDetail(
+    //   row.transactionDetail._id ? row.transactionDetail._id : "0"
+    // );
     setPurchased_module_id(row._id);
   };
 
@@ -429,7 +431,7 @@ function Invoice() {
                     <span style={{ fontSize: "12px" }}>{row._id} </span>
                     <br />
                     <span className="text-danger" style={{ fontSize: "12px" }}>
-                      Private Invoice
+                      {row.invoiceType} Invoice
                     </span>
                     <br />
                     <span style={{ fontSize: "12px" }}>
@@ -465,16 +467,21 @@ function Invoice() {
                   </td>
                   <td className="text-center">
                     <span className="text-danger" style={{ fontSize: "12px" }}>
-                      Overdue By 0 Days
+                      Due Amount
                     </span>
                     <br />
-                    {row.price} €<br />
-                    <button
+                    {row.due_amount} €<br />
+                    {row.paid_amount===row.totalPrice ? <button
                       type="button"
                       onClick={() => handlePaid(row)}
                       className="btn btn-outline-danger btn-sm mt-2">
-                      paid
-                    </button>
+                      Paid
+                    </button> : <button
+                      type="button"
+                      onClick={() => handlePaid(row)}
+                      className="btn btn-outline-primary btn-sm mt-2">
+                      Unpaid
+                    </button>}
                   </td>
 
                   <td>
@@ -486,7 +493,7 @@ function Invoice() {
                     </button>
                     <button
                       className="btn btn-outline-danger btn-sm me-3"
-                      // onClick={() => handleUpdateStatus(row)}
+                    // onClick={() => handleUpdateStatus(row)}
                     >
                       Cancel Amount
                     </button>
@@ -554,37 +561,29 @@ function Invoice() {
                     <table className="table table-bordered text-center table-striped">
                       <thead>
                         <tr>
-                          <th>Transaction</th>
+                          <th>Date</th>
                           <th>Amount</th>
                           <th>Remark</th>
-                          <th>Status</th>
+                          <th>Due Amount</th>
                         </tr>
                       </thead>
                       <tbody id="table_data">
-                        <tr>
-                          <td>{transaction.createdAt}</td>
-                          <td>{transaction.totalPaidAmount}</td>
-                          <td>{transaction.remark}</td>
-                          <td>
-                            <button
-                              className={`btn btn-warning btn-sm ${
-                                transaction.remark == "Partially Paid"
-                                  ? "disabled"
-                                  : ""
-                              }`}>
-                              {transaction.remark !== "Partially Paid"
-                                ? "Full Paid"
-                                : "Partially Paid"}
-                            </button>
-                          </td>
-                        </tr>
+                        {currentModalRow.transactionHistory && currentModalRow.transactionHistory.length>0 ?
+                         currentModalRow.transactionHistory.map((item) => {
+                          return <tr>
+                            <td>{item.createdAt.split("T")[0]}</td>
+                            <td>{item.amount}</td>
+                            <td>{item.remark}</td>
+                            <td>{item.restAmount}</td>
+                          </tr>
+                        }) : <p className=" text-center text-danger">No transaction history found.</p>}
                       </tbody>
                     </table>
                     <h6 className="mt-3 mb-3">
-                      Total Amount: { transaction.totalAmount } €
+                      Total Amount: {currentModalRow.totalPrice} €
                       &nbsp;&nbsp;|&nbsp; Total Paid Amount:
-                      { transaction.totalPaidAmount } € &nbsp;&nbsp;|&nbsp; Rest
-                      Amount: { transaction.restAmount }€{" "}
+                      {currentModalRow.paid_amount} € &nbsp;&nbsp;|&nbsp; Rest
+                      Amount: {currentModalRow.due_amount}€{" "}
                     </h6>
                   </div>
                   <div className="modal-body">
@@ -628,7 +627,7 @@ function Invoice() {
                     <button
                       type="button"
                       id="save_amount"
-                      onClick={handleSubmit}
+                      onClick={() => handleSubmit(currentModalRow.totalPrice, currentModalRow.paid_amount, currentModalRow.due_amount, currentModalRow._id)}
                       name="save_amount"
                       className="btn btn-primary">
                       Save changes
