@@ -148,7 +148,9 @@ const editCourseWebpage = async (req, res) => {
 
         try {
             const { id } = req.params;
-            const updateFields = { ...req.body };
+            const selectedSections = JSON.parse(req.body.selectedSections);
+            const selectedFAQs = JSON.parse(req.body.faqs);
+            const updateFields = { ...req.body, selectedSections, faqs: selectedFAQs };
 
             const courseWebpage = await CourseWebpages.findById(id);
             if (!courseWebpage) {

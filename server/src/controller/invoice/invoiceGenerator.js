@@ -258,11 +258,11 @@ const generateInvoicesAndSendEmail = async (req, res) => {
             <strong>RECHNUNG</strong>
         </div>
  <p>
-          Rechnungsnummer: <strong>${req.body.invoiceNumber}</strong><br>
-                Kundennummer: <strong>${req.body.customerNumber}</strong><br>
-                Bestellnummer: <strong>${req.body.orderNumber}</strong><br>
-                Fällig am: <strong>${req.body.dueDate}</strong><br>
-                Lieferdatum: <strong>${req.body.dueDate}</strong>
+          <strong>Rechnungsnummer: </strong>${req.body.invoiceNumber}<br>
+                <strong>Kundennummer: </strong>${req.body.customerNumber}<br>
+                <strong>Bestellnummer: </strong>${req.body.orderNumber}<br>
+                <strong>Fällig am: </strong>${req.body.dueDate}<br>
+                <strong>Lieferdatum: </strong>${req.body.dueDate}
         </p>
     </div>
 </div>
@@ -310,11 +310,11 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         <strong>Gesamtbetrag: <u> ${calculatePriceWithTax(req.body.price)}€</u></strong>
     </div>
 
-    <p style="margin-top: 20px;">Zahlbar sofort rein netto.<br>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
+    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p><p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
 
     <!-- Closing Message -->
-    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.<br>
-    Mit freundlichen Grüßen</p>
+    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
+    <p>Mit freundlichen Grüßen</p>
     <p><strong>Emanuel Wintermeyer</strong></p>
 
     <!-- Footer -->

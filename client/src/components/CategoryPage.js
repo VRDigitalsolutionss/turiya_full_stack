@@ -6,8 +6,12 @@ import { BASE_URL, BASE_URL_IMAGE } from "../config";
 import SimpleBanner from "./banner/SimpleBanner3";
 import Contact from "./Contact";
 import NewsShelter from "./NewsShelter";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NoPage from "../pages/NoPage";
+import './yoga_teacher_training_Mallorca/YogaTraningMallorca.scss'
+import Gallery from "./gallery/Index";
+import Testimonial from "./Testimonial";
+import he, { decode } from "he";
 
 const Category = () => {
     useEffect(() => {
@@ -16,43 +20,25 @@ const Category = () => {
         }, 0);
     }, []);
 
-    const [closestUpcomingCourse, setClosestUpcomingCourse] = useState("");
+    const [upcomingCourse, setUpcomingCourse] = useState([]);
 
-    const fetchNextUpcomingCourse = () => {
+    const fetchCoursesData = () => {
         axios
-            .get(BASE_URL + "/getClosestUpcomingCourseswithNull")
+            .get(BASE_URL + `/getModuleBySlug/${slug}`)
             .then((response) => {
                 console.log("response of banner slower wrapper", response.data.data);
-                setClosestUpcomingCourse(response.data.data);
+                setUpcomingCourse(response.data.data);
             })
             .catch((error) => {
                 console.log("error", error);
             });
     };
 
-    const [earlyData, setEarlyData] = useState("");
-
-    const fetchEarlyBirdData = () => {
-        axios
-            .get(`${BASE_URL}/getClosestUpcomingCourseswithNull`)
-            .then((response) => {
-                console.log("respnse of fetchEarlyBirdData", response.data.data[0]);
-                const data = response.data.data[0];
-                const startDate = data && data.StartDate;
-                console.log("start date", data);
-                setEarlyData(response.data.data[0]);
-            })
-            .catch((error) => {
-                console.error("Error fetching data: ", error);
-            });
-    };
-
     useEffect(() => {
-        // fetchEarlyBirdData();
-        // fetchNextUpcomingCourse();
+        if (slug) {
+            fetchCoursesData();
+        }
     }, []);
-
-    console.log("earlyData", earlyData);
 
     const [bannerImg, setBannerImg] = useState("");
 
@@ -60,10 +46,17 @@ const Category = () => {
     const [mainData, setMainData] = useState("");
     // console.log("Mallorca");
 
+    const [decodedContent, setDecodedContent] = useState("");
+
     const { slug } = useParams();
 
     const [show404page, setShow404Page] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const [selectedSections, setSelectedSections] = useState([]);
+    const [faqItems1, setfaqItems1] = useState([]);
+
+    const navigate = useNavigate()
 
     const fetchData = () => {
         setLoading(true)
@@ -85,8 +78,11 @@ const Category = () => {
                             : ""; // Fallback image or empty string
 
                     setBannerImg(imageUrlcustum);
+                    setDecodedContent(he.decode(response.data.data[0].about_first_section_Paragraph_Content))
                     setLoading(false)
                     setShow404Page(false)
+                    setSelectedSections(data.selectedSections)
+                    setfaqItems1(data.faqs)
                 }
             })
             .catch((error) => {
@@ -155,36 +151,34 @@ const Category = () => {
                     <p className="mb-0">Loading module details. Please wait....</p>
                 </div> :
                 show404page ?
-                <NoPage/> :
-                <div>
-                    <SimpleBanner
-                        banner={bannerImg && bannerImg}
-                        heading={mainData.yogaTeamSliderHeading}
-                        para={mainData.yogaTeamSliderParagraph}
-                        videoLink={mainData.yogaTeamSliderVideoLink}
-                        buttonTxt="Play"
-                    />
-                    <section className="global_wrapper about_wrapper">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="about_wrapper__left">
-                                        <h3>
-                                            {" "}
-                                            {mainData && mainData.about_first_section_sub_Paragraph}
-                                        </h3>
-                                        <h1> {mainData && mainData.about_first_section_Heading}</h1>
-                                        <p
-                                            className="p-0"
-                                            dangerouslySetInnerHTML={{
-                                                __html:
-                                                    mainData &&
-                                                    mainData.about_first_section_Paragraph_Content,
-                                            }}></p>
+                    <NoPage /> :
+                    <div>
+                        <SimpleBanner
+                            banner={bannerImg && bannerImg}
+                            heading={mainData.yogaTeamSliderHeading}
+                            para={mainData.yogaTeamSliderParagraph}
+                            videoLink={mainData.yogaTeamSliderVideoLink}
+                            buttonTxt="Play"
+                        />
+                        <section className="global_wrapper about_wrapper">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <div className="about_wrapper__left">
+                                            <h3>
+                                                {" "}
+                                                {mainData && mainData.about_first_section_sub_Paragraph}
+                                            </h3>
+                                            <h1> {mainData && mainData.about_first_section_Heading}</h1>
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html: decodedContent,
+                                                }}
+                                            ></div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* <div className="col-lg-3">
+                                    {/* <div className="col-lg-3">
                                     <div className="about_wrapper__right mb-3">
                                         {
                                             closestUpcomingCourse[0] ? (
@@ -277,12 +271,14 @@ const Category = () => {
                                         }
                                     </div>
                                 </div> */}
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                    <Contact />
-                    <NewsShelter />
-                </div>}
+                        </section>
+                        {selectedSections.includes("gallery") && <Gallery />}
+                        {selectedSections.includes("text-testimonials") && <Testimonial />}
+                        {selectedSections.includes("contact-us-section") && <Contact />}
+                        {selectedSections.includes("newsletter") && <NewsShelter />}
+                    </div>}
         </>
     );
 };

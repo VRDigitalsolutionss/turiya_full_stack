@@ -2306,9 +2306,9 @@ p.ql-align-center {
     display: block;
   }
 
-  /* .myNav .hide_top_menu {
+  .myNav.sticky .hide_top_menu {
     display: none;
-  } */
+  }
 
   .menu-item {
     display: none !important;
