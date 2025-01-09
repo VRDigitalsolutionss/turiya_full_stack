@@ -55,8 +55,6 @@ const CourseForm = () => {
       }).catch((error) => {
         console.log("error", error);
       });
-    } else {
-      alert("page not found")
     }
   }, []);
 
@@ -245,6 +243,7 @@ const CourseForm = () => {
     { label: "Text Testimonials", value: "text-testimonials" },
     { label: "Gallery", value: "gallery" },
     { label: "Newsletter", value: "newsletter" },
+    { label: "Banner Section", value: "banner-section" },
   ];
 
   const handleButtonChange = (button) => {
@@ -384,7 +383,7 @@ const CourseForm = () => {
   const editor = useRef(null);
 
   const config = {
-    readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+    readonly: false,
     placeholder: 'Start typings...'
   }
 
@@ -775,26 +774,26 @@ const CourseForm = () => {
                   </div>
                 </div>
                 <div className="selected-faqs">
-        <h5>Selected FAQs:</h5>
-        {selectedFAQs.length > 0 ? (
-          <ul>
-            {selectedFAQs.map((faq) => (
-              <li key={faq._id} className="mb-2">
-                <strong>{faq.question}</strong>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-danger ms-2"
-                  onClick={() => removeFAQ(faq._id)}
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No FAQs selected.</p>
-        )}
-      </div>
+                  <h5>Selected FAQs:</h5>
+                  {selectedFAQs.length > 0 ? (
+                    <ul>
+                      {selectedFAQs.map((faq) => (
+                        <li key={faq._id} className="mb-2">
+                          <strong>{faq.question}</strong>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-danger ms-2"
+                            onClick={() => removeFAQ(faq._id)}
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No FAQs selected.</p>
+                  )}
+                </div>
 
                 {/* <button className="btn btn-primary" onClick={handleSubmit}>Submit</button> */}
               </div>
