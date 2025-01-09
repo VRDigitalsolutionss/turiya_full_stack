@@ -100,6 +100,7 @@ const addCourseModuleWebpage = async (req, res) => {
             // console.log("testing................................")
             const newCourseWebpage = new ModuleWebpages({
                 courseModuleCategory,
+                slug,
                 pageUrl,
                 metaTitle,
                 metaDescription,

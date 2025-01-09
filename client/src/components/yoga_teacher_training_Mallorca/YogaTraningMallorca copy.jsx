@@ -13,12 +13,12 @@ const YogaTraningMallorca = () => {
             <p>Turiya Yoga Akademie bietet eine 18 Tägige YogaleherInnen Ausbildung im traumhaften Mar Hotel Playa Mar & Spa auf Mallorca, auf den Balearen an. Eine international anerkannte Ausbildung in deutscher Sprache.</p>
               <div class="yoga-list-img">
                 <img
-                  src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/training_Mallorca.webp"
+                  src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/training_Mallorca.webp"
                   class="img-fluid"
                   alt="ccclip_image002_0001"
                 />
                 <p class="text-center">
-                  Photo by <a href="#"> DJ Nick Otronic</a> on{" "}
+                  Photo by <a href="#"> DJ Nick Otronic</a> on
                   <a href="#"> Unsplash</a>
                 </p>
               </div>
@@ -67,7 +67,7 @@ const YogaTraningMallorca = () => {
               </p>
               <div class="yoga-list-img">
                 <img
-                  src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/img2.webp"
+                  src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/img2.webp"
                   class="img-fluid"
                   alt="ccclip_image006_0000"
                 />
@@ -91,35 +91,35 @@ const YogaTraningMallorca = () => {
               <div class="sampurna_wrapper__grid">
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/hotel_room_img/img1.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img1.webp"
                     class="img-fluid"
                     alt="Mar_Hotels_Playa_Mar_and_Spa-Piscina_22"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/hotel_room_img/img2.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img2.webp"
                     class="img-fluid"
                     alt="Mar_Hotels_Playa_Mar_and_Spa-Restaurante_principal_13"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/hotel_room_img/img3.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img3.webp"
                     class="img-fluid"
                     alt="Mar_Hotels_Playa_Mar_and_Spa-Suite_01"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/hotel_room_img/img4.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img4.webp"
                     class="img-fluid"
                     alt="IMG_20220915_164155"
                   />
                 </div>
               </div>
               <p>
-                {" "}
+                
                 Das Hotel bietet allen eine tolle Zeit! Eine großzügig
                 gestaltete Landschaft, zwei unvergessliche Swimmingpools (ein
                 Außen- und ein Innenpool), ein Whirlpool, ein komplettes Spa mit
@@ -135,11 +135,11 @@ const YogaTraningMallorca = () => {
                 Nicht zuletzt bietet unser Yogasaal einen herrlichen Blick auf
                 die Berge. Bereite dich darauf vor, deine Yogaübungen in einem
                 schönen, geräumigen und lichtdurchfluteten Raum zu genießen. Für
-                weitere Bilder des Hotels...{" "}
+                weitere Bilder des Hotels...
                 <a
                   href="https://www.marhotels.com/hoteles/mallorca/puerto-de-pollensa/mar-hotels-playa-mar-spa/galeria"
                   target="_blank">
-                  klicke hier.{" "}
+                  klicke hier.
                 </a>
               </p>
               <p>
@@ -150,7 +150,7 @@ const YogaTraningMallorca = () => {
                 </a>
               </p>
               <p>
-                {" "}
+                
                 Wir verstehen, wie wichtig es ist, sich ein Bild davon zu
                 machen, wo du deine lang ersehnten 18 Tage Yogaausbildung auf
                 der wunderschönen Insel Mallorca verbringen wirst. Die
@@ -174,15 +174,15 @@ const YogaTraningMallorca = () => {
               </p>
               <h6>
                 Unterkunft (17 Nächte) &amp; Verpflegung: ca. 2.106 Euro.
-                (Junior Suit){" "}
+                (Junior Suit)
               </h6>
               <h6>
                 Unterkunft (17 Nächte) &amp; Verpflegung: ca. 3.400 Euro (
-                Single){" "}
+                Single)
               </h6>
               <h6>
                 Plus Tourist Tax- wird Vorort bei Ankunft bezahlt. ca. 3.30 Euro
-                Pro tag.{" "}
+                Pro tag.
               </h6>
               <h4>Buchung</h4>
               <p>
@@ -195,14 +195,14 @@ const YogaTraningMallorca = () => {
               <div class="sampurna_wrapper__grid">
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/travelImg1.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/travelImg1.webp"
                     class="img-fluid"
                     alt="mallorca001"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/travelImg2.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/travelImg2.webp"
                     class="img-fluid"
                     alt="mallorca002"
                   />
@@ -253,7 +253,7 @@ const YogaTraningMallorca = () => {
               </p>
               <div class="yoga-list-img">
                 <img
-                  src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/routine/img1.webp"
+                  src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/routine/img1.webp"
                   class="img-fluid"
                   alt="ccclip_image026"
                 />
@@ -271,7 +271,7 @@ const YogaTraningMallorca = () => {
               <div class="malcora--grid">
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img1.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img1.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>Golf</h3>
@@ -279,7 +279,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img2.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img2.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>kajak</h3>
@@ -287,7 +287,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img3.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img3.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>tauchen</h3>
@@ -295,7 +295,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img4.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img4.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>SUP</h3>
@@ -304,7 +304,7 @@ const YogaTraningMallorca = () => {
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
                     <img
-                      src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img5.webp"
+                      src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img5.webp"
                       class="img-fluid"
                       alt="horseriding"
                     />
@@ -316,7 +316,7 @@ const YogaTraningMallorca = () => {
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
                     <img
-                      src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img6.webp"
+                      src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img6.webp"
                       class="img-fluid"
                       alt="cycling1"
                     />
@@ -328,7 +328,7 @@ const YogaTraningMallorca = () => {
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
                     <img
-                      src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img7.webp"
+                      src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img7.webp"
                       class="img-fluid"
                       alt="Fallschirmspringen"
                     />
@@ -339,7 +339,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="http://127.0.0.1:5001/uploads/assets/images/training_malcornia/activities/img8.webp" class="img-fluid" alt="sea" />
+                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img8.webp" class="img-fluid" alt="sea" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>strand</h3>
@@ -347,7 +347,6 @@ const YogaTraningMallorca = () => {
                 </div>
               </div>
               <h4>Ein wenig darüber, was du lernen wirst :</h4>
-              {/* about turiya */}
               <div>
                 <div class="col-lg-12">
                   <div class="about_turiya__right">
@@ -356,7 +355,7 @@ const YogaTraningMallorca = () => {
                         <strong> Gewaltlosigkeit und Wahrhaftigkeit.</strong>Für
                         uns als Team geht es darum, ehrlich und sicher darin zu
                         sein, was wir euch mitteilen und anbieten, sowie, was
-                        wir wissen und lehren. Wir bieten auch{" "}
+                        wir wissen und lehren. Wir bieten auch
                         <strong> Transparenz</strong> darüber, wo sonst (oder
                         mit wem sonst) ihr nach dem Kurs selbstständig lernen
                         und wachsen könnt. Wir ermutigen euch darin, eure
@@ -415,14 +414,14 @@ const YogaTraningMallorca = () => {
                   class="sampurna_wrapper__grid-box"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal1">
-                  <img src="http://127.0.0.1:5001/uploads/assets/images/sampurna_img/video_testimonial/img1.webp" class="img-fluid" alt="hqdefault" />
+                  <img src="https://api.colddrinkfranchises.in/uploads/assets/images/sampurna_img/video_testimonial/img1.webp" class="img-fluid" alt="hqdefault" />
                 </div>
                 <div
                   class="sampurna_wrapper__grid-box"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal2">
                   <img
-                    src="http://127.0.0.1:5001/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
                     class="img-fluid"
                     alt="W1JGeAxS6gQ"
                   />
@@ -444,7 +443,7 @@ const YogaTraningMallorca = () => {
               </p>
               <div class="yoga-list-img">
                 <img
-                  src="http://127.0.0.1:5001/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
+                  src="https://api.colddrinkfranchises.in/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
                   class="img-fluid"
                   alt="ccclip_image030"
                 />

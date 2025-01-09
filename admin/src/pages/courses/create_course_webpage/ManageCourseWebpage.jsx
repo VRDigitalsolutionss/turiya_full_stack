@@ -1,11 +1,12 @@
 // ========================================================
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import SectionWebPage from "./SectionWebPage";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL,BASE_URL_IMAGE } from "../../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../../config";
+import JoditEditor from "jodit-react";
 const CourseForm = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -20,25 +21,42 @@ const CourseForm = () => {
 
 
   const [categories, setcategories] = useState([]);
-
+  const [FAQData, setFAQData] = useState([]);
+  const [selectedFAQs, setSelectedFAQs] = useState([]);
 
 
   const fetchData = () => {
     axios.get(BASE_URL + `/course_categories_latest`).then((response) => {
       console.log("response of course_categories data", response.data.data);
-      
+
       const resData = response.data.data;
       setcategories(resData)
-     console.log("res of category data", resData.category);
+      console.log("res of category data", resData.category);
     }).catch((error) => {
-    console.log("error of fetch data", error);
-  })
+      console.log("error of fetch data", error);
+    })
   }
-  
-console.log("course_categories", categories)
+
+  const fetchFAQData = () => {
+    axios.get(BASE_URL + '/faq').then((response) => {
+
+      console.log(" faq response", response);
+      if (response.status === 200) {
+        setFAQData(response.data.data)
+      } else {
+        alert("something went wrong")
+      }
+
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
+  console.log("course_categories", categories)
 
   useEffect(() => {
     fetchData();
+    fetchFAQData()
   }, []);
 
 
@@ -50,7 +68,7 @@ console.log("course_categories", categories)
 
 
         const data = response.data.data;
-        
+
         setFormData({
           courseCategory: data.courseCategory || "",
           slug: data.slug || "",
@@ -65,17 +83,16 @@ console.log("course_categories", categories)
         });
 
         setAboutFirstSectionHeading(data.about_first_section_Heading || "");
-        setAboutFirstSectionSubParagraph(data.aboutFirstSectionSubParagraph  || "");
+        setAboutFirstSectionSubParagraph(data.aboutFirstSectionSubParagraph || "");
         setBlogContent(data.about_first_section_Paragraph_Content || "");
-       
+        setSelectedSections(data.selectedSections)
+        setSelectedFAQs(data.faqs)
       }).catch((error) => {
         console.log("error", error);
       });
-    } else {
-      // alert("page not found")
     }
   }, []);
-  
+
 
 
 
@@ -133,7 +150,7 @@ console.log("course_categories", categories)
     "video",
   ];
 
-  
+
   const [blogHeading, setBlogHeading] = useState("");
   const [blogContent, setBlogContent] = useState("");
 
@@ -177,7 +194,6 @@ console.log("course_categories", categories)
   const [faqs, setFaqs] = useState([]);
   const [modulesOption, setModulesOption] = useState([]);
 
-  const [selectedFaqs, setSelectedFaqs] = useState([]);
 
   // Example FAQ options
   const faqOptions = [
@@ -195,15 +211,6 @@ console.log("course_categories", categories)
     "* All Inklusive Yogalehrer Ausbildung M3",
   ];
 
-
-  const handleFaqChange = (event) => {
-    const selectedValues = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedFaqs(selectedValues);
-  };
-
   const buttons = [
     { label: "Module button (Redirect same page)", value: "moduleSame" },
     { label: "Video Button", value: "video" },
@@ -215,22 +222,24 @@ console.log("course_categories", categories)
   ];
 
   const sections = [
-    { label: "Banner Section", value: "banner-section" },
-    { label: "Turiya Advantages", value: "turiya-advantages" },
-    {
-      label: "Turiya Training Place Section",
-      value: "turiya-training-place-section",
-    },
     { label: "Module Section", value: "module-section" },
     { label: "FAQ Section", value: "faq-section" },
     { label: "Contact Us section", value: "contact-us-section" },
-    { label: "Offer Card", value: "offer-card" },
-    { label: "Info Card", value: "info-card" },
+    // { label: "Offer Card", value: "offer-card" },
     { label: "Text Testimonials", value: "text-testimonials" },
-    { label: "Video Testimonials", value: "video-testimonials" },
     { label: "Gallery", value: "gallery" },
     { label: "Newsletter", value: "newsletter" },
+    { label: "Banner Section", value: "banner-section" },
   ];
+
+
+
+  const editor = useRef(null);
+
+  const config = {
+    readonly: false,
+    placeholder: 'Start typings...'
+  }
 
   const handleButtonChange = (button) => {
     //   setSelectedButton(value);
@@ -250,10 +259,6 @@ console.log("course_categories", categories)
     );
   };
 
-  const handleFaqsChange = (event) => {
-    setFaqs(event.target.value.split(","));
-  };
-
   const handleModulesChange = (event) => {
     setModulesOption(event.target.value.split(","));
   };
@@ -263,20 +268,10 @@ console.log("course_categories", categories)
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Prepare the selected data
-    const selectedData = {
-      ...formData,
-      selectedButton,
-      selectedSections,
-      faqs,
-      modulesOption,
-    };
-
-    console.log("Create Web Page Data:", selectedData);
 
     // Prepare the payload
     const payload = {
-      courseCategory:formData.courseCategory,
+      courseCategory: formData.courseCategory,
       slug: formData.slug,
       pageUrl: formData.pageUrl,
       metaTitle: formData.metaTitle,
@@ -288,7 +283,7 @@ console.log("course_categories", categories)
       about_first_section_Heading: aboutFirstSectionHeading,
       about_first_section_sub_Paragraph: aboutFirstSectionSubParagraph,
       about_first_section_Paragraph_Content: blogContent,
-      faqs: JSON.stringify(faqs), // Convert to JSON string
+      faqs: JSON.stringify(selectedFAQs.map((faq) => faq._id)),
       modules: JSON.stringify(modulesOption), // Convert to JSON string
       selectedButton: JSON.stringify(selectedButton), // Convert to JSON string
       selectedSections: JSON.stringify(selectedSections), // Convert to JSON string
@@ -309,6 +304,7 @@ console.log("course_categories", categories)
     console.log("Payload: ", payload);
     console.log("FormData: ", form);
 
+
     // Validation for mandatory fields
     if (
       payload.pageUrl &&
@@ -318,52 +314,72 @@ console.log("course_categories", categories)
       // Axios POST request
 
 
-      if (id) { 
+      if (id) {
         axios
-        .put(BASE_URL + `/edit_course_webpage/${id}`, form, {
-          headers: {
-            "Content-Type": "multipart/form-data", // Set content type for file uploads
-          },
-        })
-        .then((response) => {
-          console.log("Response of add_course_webpage:", response);
+          .put(BASE_URL + `/edit_course_webpage/${id}`, form, {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set content type for file uploads
+            },
+          })
+          .then((response) => {
+            console.log("Response of add_course_webpage:", response);
 
-          if (response.status == 200) {
-            alert("Course webpage updated successfully!");
-          } else {
-            alert("Failed to update course webpage. Please try again.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error while submitting form:", error);
-          alert("An error occurred while submitting the form. Check console.");
-        });
+            if (response.status == 200) {
+              alert("Course webpage updated successfully!");
+            } else {
+              alert("Failed to update course webpage. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while submitting form:", error);
+            alert("An error occurred while submitting the form. Check console.");
+          });
       } else {
         axios
-        .post(BASE_URL + "/add_course_webpage", form, {
-          headers: {
-            "Content-Type": "multipart/form-data", // Set content type for file uploads
-          },
-        })
-        .then((response) => {
-          console.log("Response of add_course_webpage:", response);
+          .post(BASE_URL + "/add_course_webpage", form, {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set content type for file uploads
+            },
+          })
+          .then((response) => {
+            console.log("Response of add_course_webpage:", response);
 
-          if (response.status == 201) {
-            alert("Course webpage created successfully!");
-            navigate('/create_course_webpage')
-          } else {
-            alert("Failed to create course webpage. Please try again.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error while submitting form:", error);
-          alert("An error occurred while submitting the form. Check console.");
-        });
+            if (response.status == 201) {
+              alert("Course webpage created successfully!");
+              navigate('/create_course_webpage')
+            } else {
+              alert("Failed to create course webpage. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while submitting form:", error);
+            alert("An error occurred while submitting the form. Check console.");
+          });
       }
-      
+
     } else {
       alert("All fields are mandatory. Please fill in all required fields.");
     }
+  };
+
+  const handleFaqsChange = (event) => {
+    const selectedId = event.target.value;
+
+    // Find the selected FAQ by its ID
+    const selectedFAQ = FAQData.find((faq) => faq._id === selectedId);
+
+    // Check if it's already in the selected list
+    if (
+      selectedFAQ &&
+      !selectedFAQs.some((faq) => faq._id === selectedFAQ._id)
+    ) {
+      setSelectedFAQs([...selectedFAQs, selectedFAQ]);
+    }
+  };
+
+  // Handle removing a selected FAQ
+  const removeFAQ = (id) => {
+    setSelectedFAQs(selectedFAQs.filter((faq) => faq._id !== id));
   };
 
   return (
@@ -580,19 +596,26 @@ console.log("course_categories", categories)
                   onChange={(e) =>
                     setAboutFirstSectionSubParagraph(e.target.value)
                   }
-                  // onChange={handleFileChange}
+                // onChange={handleFileChange}
                 />
               </div>
             </div>
 
             <div className="mb-3">
               <label className="form-label">Paragraph Content :</label>
-              <ReactQuill
+              {/* <ReactQuill
                 value={blogContent}
                 onChange={setBlogContent}
                 placeholder="Write your blog content here..."
                 style={{ height: "300px", marginBottom: "50px" }}
                 modules={modules}
+              /> */}
+              <JoditEditor
+                ref={editor}
+                value={blogContent}
+                config={config}
+                tabIndex={1} // tabIndex of textarea
+                onChange={newContent => setBlogContent(newContent)}
               />
             </div>
             <div className="row">
@@ -604,15 +627,15 @@ console.log("course_categories", categories)
                 </h4>
               </div>
               <div className="row">
-               
+
               </div>
-            
+
 
               {/* ==================================================== new added code ====================================================== */}
               <div className="container">
                 {/* <h3 className=" mb-3">Select which section you want to show on Webpage:</h3> */}
 
-                <h4>Select button which you want to show on website:</h4>
+                {/* <h4>Select button which you want to show on website:</h4>
                 <div className="row mb-4">
                   {buttons.map((button) => (
                     <div key={button.value} className="col-md-3 col-6 mb-2">
@@ -631,7 +654,7 @@ console.log("course_categories", categories)
                       </div>
                     </div>
                   ))}
-                </div>
+                </div> */}
 
                 <h4>Select sections which you want to show on website:</h4>
                 <div className="row mb-4">
@@ -659,34 +682,42 @@ console.log("course_categories", categories)
                 <div className="row mb-4">
                   <div className="col-md-6 mb-3">
                     <label className="form-label">FAQ's:</label>
-
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
-                      onChange={handleFaqsChange}>
-                      <option selected>You can Select multiple Option</option>
-                      {faqOptions.map((faq) => (
-                        <option key={faq} value={faq}>
-                          {faq}
+                      onChange={handleFaqsChange}
+                    >
+                      <option value="" selected disabled>
+                        You can select multiple options
+                      </option>
+                      {FAQData.map((faq) => (
+                        <option key={faq._id} value={faq._id}>
+                          {faq.question}
                         </option>
                       ))}
                     </select>
                   </div>
-                  <div className="col-md-6 mb-3">
-                    <label className="form-label">Modules:</label>
-
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      onChange={handleModulesChange}>
-                      <option selected>You can Select multiple Option</option>
-                      {module_option.map((faq) => (
-                        <option key={faq} value={faq}>
-                          {faq}
-                        </option>
+                </div>
+                <div className="selected-faqs">
+                  <h5>Selected FAQs:</h5>
+                  {selectedFAQs.length > 0 ? (
+                    <ul>
+                      {selectedFAQs.map((faq) => (
+                        <li key={faq._id} className="mb-2">
+                          <strong>{faq.question}</strong>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-danger ms-2"
+                            onClick={() => removeFAQ(faq._id)}
+                          >
+                            Remove
+                          </button>
+                        </li>
                       ))}
-                    </select>
-                  </div>
+                    </ul>
+                  ) : (
+                    <p>No FAQs selected.</p>
+                  )}
                 </div>
 
                 {/* <button className="btn btn-primary" onClick={handleSubmit}>Submit</button> */}
