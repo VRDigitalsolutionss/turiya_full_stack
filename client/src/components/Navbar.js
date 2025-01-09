@@ -555,6 +555,14 @@ const Navbar = () => {
             </div>
           )}
 
+          <div class="hide_top_menu">
+                <a href="tel:+49(0)69-20134987"><i class='bx bxs-mobile'></i>+49(0)69-20134987</a>
+                <a href="mailto:info@turiyayoga.de"><i class='bx bxs-envelope'></i> info@turiyayoga.de</a>
+                <a href="javascript:void(0)" class="cart-menu"><i class='bx bx-shopping-bag'></i>1[LEER]</a>
+                <a href=" #" data-bs-toggle="modal" data-bs-target="#exampleModal-form"><i
+                        class='bx bx-user'></i>Anmeldung</a>
+            </div>
+
 
           {/* mobile nav */}
           <div className={`mobile_nav ${isActive ? "active" : ""}`}>
@@ -688,50 +696,35 @@ const Navbar = () => {
 
                 {/* ========================================================================= */}
 
-                <ul
-                  id="handleEinzelmoduleClick"
-                  ref={handleEinzelmoduleClickRef}
-                  style={{ display: "none" }}>
-                  <p
-                    className="cancel-mega-menu"
-                    onClick={() =>
-                      handleCancelMegaMenu("handleEinzelmoduleClick")
-                    }>
-                    <IoMdArrowBack /> Go back
-                  </p>
+                {categoryData &&
+                  categoryData.map((item, index) => {
 
-                  <li className="my-3">
-                    <Link to="/blockausbildung-im-ueberblick" onClick={handleCancel}>
-                      Blockausbildung / Überblick
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-100h" onClick={handleCancel}>
-                      100h Yoga Ausbildung / Modul 1
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-module-200h" onClick={handleCancel}>
-                      +200h Yoga Ausbildung / Modul 2
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-300h" onClick={handleCancel}>
-                      +300h Yoga Ausbildung / Modul 3
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-400h" onClick={handleCancel}>
-                      +400h Yoga Ausbildung / Modul 4
-                    </Link>
-                  </li>
-                  <li className="my-3">
-                    <Link to="/yogalehrer-ausbildung-500h" onClick={handleCancel}>
-                      +500h Yoga Ausbildung / Modul 5
-                    </Link>
-                  </li>
-                </ul>
-                {/* ============================================================================= */}
+                    if (item.category === "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule") {
+                      return <ul
+                        id="handleEinzelmoduleClick"
+                        ref={handleEinzelmoduleClickRef}
+                        style={{ display: "none" }}>
+                        <p
+                          className="cancel-mega-menu"
+                          onClick={() =>
+                            handleCancelMegaMenu("yogalehrer_Ausbildung")
+                          }>
+                          {" "}
+                          <IoMdArrowBack /> Go back
+                        </p>
+                        {
+                          item.courseSubCategories &&
+                          item.courseSubCategories.map((subitem) => (
+                            <li className="my-3" key={subitem.slug}>
+                              <Link to={`/module/${subitem.slug}`} onClick={handleCancel}>
+                                {subitem.modulecategory}
+                              </Link>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    }
+                  })}
                 {categoryData &&
                   categoryData.map((item, index) => {
 

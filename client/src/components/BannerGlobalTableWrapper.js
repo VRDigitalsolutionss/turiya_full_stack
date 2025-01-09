@@ -448,12 +448,12 @@ const BannerGlobalTableWrapper = () => {
                                 : `Noch ${item.Place} Plätze frei`}
                             </td>
 
-                            <td style={{ backgroundColor: "rgb(198, 132, 27)" }}>
+                            <td style={{backgroundColor: "#EDEDED" }}>
                               <button
                                 onClick={() => handletriggerDialogBox(item._id)}
                                 style={{
                                   backgroundColor:
-                                    item.Place <= 3 ? "#FF5722" : "#9BBB59",
+                                    item.Place <= 3 ? "rgb(198, 132, 27)" : "#9BBB59",
                                   border: "0px solid",
                                 }}
                                 className="table-btn triggerDialogBox"
