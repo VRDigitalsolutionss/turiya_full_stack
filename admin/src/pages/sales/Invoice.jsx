@@ -253,7 +253,7 @@ function Invoice() {
 
   const handleDeleteInvoice = (id) => {
     axios
-      .delete(BASE_URL + `/delete_invoice/${id}`)
+      .delete(BASE_URL + `/delete_purchased_module/${id}`)
       .then((response) => {
         console.log(response);
         fetchData();
@@ -384,7 +384,7 @@ function Invoice() {
             </button>
           </div>
         </div>
-        <div
+        {/* <div
           className="input-group mb-3 mt-3"
           style={{ width: "300px", position: "relative" }}>
           <input
@@ -412,7 +412,7 @@ function Invoice() {
               ✖
             </button>
           )}
-        </div>
+        </div> */}
         <table className="table table-bordered">
           <thead>
             <tr>

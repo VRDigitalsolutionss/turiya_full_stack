@@ -34,7 +34,7 @@ const get_purchasedModule = async (req, res) => {
 
         const Purchased_course = await PurchasedModule.find().populate({
             path: "transactionHistory",
-        });
+        }).sort({ createdAt: -1 });
         if (!Purchased_course) {
             return res.status(404).json({
                 success: false,
@@ -55,6 +55,34 @@ const get_purchasedModule = async (req, res) => {
         });
     }
 
+};
+
+const deletePurchasedModule = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const invoice = await PurchasedModule.findById(id);
+        if (!invoice) {
+            return res.status(404).json({
+                success: false,
+                message: "Module not found",
+            });
+        }
+
+        await PurchasedModule.findByIdAndDelete(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Purchased Module deleted successfully",
+        });
+    } catch (error) {
+        console.error("Error deleting Purchased Module:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to delete Purchased Module",
+            error: error.message,
+        });
+    }
 };
 
 const deleteOldPurchasedModules = async (req, res) => {
@@ -173,4 +201,4 @@ const get_totalpurchasedModule = async (req, res) => {
 };
 
 
-module.exports = { get_purchasedModuleById, get_purchasedModule, get_totalpurchasedModule, get_purchasedModule2, deleteOldPurchasedModules }
+module.exports = { deletePurchasedModule, get_purchasedModuleById, get_purchasedModule, get_totalpurchasedModule, get_purchasedModule2, deleteOldPurchasedModules }
