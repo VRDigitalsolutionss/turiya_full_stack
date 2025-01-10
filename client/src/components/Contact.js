@@ -126,7 +126,6 @@ const Contact = () => {
             <div className="col-lg-6">
               <div
                 className="contact_wrapper__left"
-                data-aos="fade-up"
                 data-aos-delay={100}>
                 <h3>Wir Helfen Immer</h3>
                 <h1>Noch Fragen?</h1>
@@ -142,7 +141,6 @@ const Contact = () => {
             <div className="col-lg-6">
               <div
                 className="contact_wrapper__right"
-                data-aos="fade-up"
                 data-aos-delay={200}>
                 <div className="contact_form">
                   <form id="contactForm" onSubmit={handleSubmit}>

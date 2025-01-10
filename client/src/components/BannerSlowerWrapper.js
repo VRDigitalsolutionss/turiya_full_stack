@@ -129,17 +129,17 @@ const BannerSlowerWrapper = () => {
                   className="slower_wrapper__center-icon aos-init"
                   data-aos="fade-up">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/turiya_yoga_yogalehrer_ausbildungen_aya_rys200-150x150.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/new/turiya_yoga_yogalehrer_ausbildungen_aya_rys200-150x150.webp"
                     className="img-fluid"
                     alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 200"
                   />
                   <img
-                    src="https://www.turiyayoga.de/assets/images/turiya_yoga_yogalehrer_ausbildungen_aya_rys300-150x150.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/new/turiya_yoga_yogalehrer_ausbildungen_aya_rys300-150x150.webp"
                     className="img-fluid"
                     alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 300"
                   />
                   <img
-                    src="https://www.turiyayoga.de/assets/images/turiya_yoga_yogalehrer_ausbildungen_aya_rys500-150x150.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/new/turiya_yoga_yogalehrer_ausbildungen_aya_rys500-150x150.webp"
                     className="img-fluid"
                     alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 500"
                   />
@@ -152,7 +152,7 @@ const BannerSlowerWrapper = () => {
                 data-aos="zoom-in-up"
                 data-aos-duration="2000">
                 <img
-                  src="https://www.turiyayoga.de/assets/images/yogalehrer.webp"
+                  src="https://api.turiyayoga.de/uploads/assets/new/yogalehrer.webp"
                   className="img-fluid"
                   alt="yogalehrer"
                 />
@@ -245,7 +245,7 @@ const BannerSlowerWrapper = () => {
                 data-aos="zoom-in-up"
                 data-aos-duration="2000">
                 <img
-                  src="https://www.turiyayoga.de/assets/images/img1.webp"
+                  src="https://api.turiyayoga.de/uploads/assets/new/img1.webp"
                   className="img-fluid"
                   alt="ÜBER UNS"
                 />

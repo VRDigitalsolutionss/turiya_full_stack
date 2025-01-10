@@ -87,7 +87,7 @@ const BannerGlobalWrapper5 = () => {
                 data-aos-delay={200}>
                 <div className="fifth_section__bg-img">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/yogamen.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/new/yogamen.webp"
                     className="img-fluid"
                     alt="yogamen"
                   />
@@ -112,7 +112,7 @@ const BannerGlobalWrapper5 = () => {
                 data-aos-delay={300}>
                 <div className="fifth_section__bg-img">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/yogalady.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/new/yogalady.webp"
                     className="img-fluid"
                     alt="yogalady"
                   />

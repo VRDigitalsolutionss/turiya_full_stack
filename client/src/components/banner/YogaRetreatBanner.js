@@ -7,7 +7,7 @@ const YogaRetreatBanner = () => {
               
           <section className="banner_wrapper">
             <div className="banner_bg"       style={{
-                    backgroundImage: "url('https://www.turiyayoga.de/assets/images/goa-indien-bg.webp')",
+                    backgroundImage: "url('https://api.turiyayoga.de/uploads/assets/new/goa-indien-bg.webp')",
                   }}
               
               

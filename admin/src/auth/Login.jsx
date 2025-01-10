@@ -79,7 +79,7 @@ const Login = () => {
                 <div className="pt-4">
                   <div className="ammin-logo text-center">
                     <img
-                      src="https://www.turiyayoga.de/admin/assets/images/logo.webp"
+                      src="https://api.turiyayoga.de/uploads/assets/new/logo.webp"
                       alt="Logo"
                       style={{ width: "11rem" }}
                     />

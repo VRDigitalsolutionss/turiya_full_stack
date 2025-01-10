@@ -19,7 +19,7 @@ const index = () => {
   return (
     <>
       <YogaRetreatBanner/>
-      {/* <SimpleBanner banner='https://www.turiyayoga.de/assets/images/goa-indien-bg.webp'   para="null"    heading="Yoga Retreat am Strand"
+      {/* <SimpleBanner banner='https://api.turiyayoga.de/uploads/assets/new/goa-indien-bg.webp'   para="null"    heading="Yoga Retreat am Strand"
         
           buttonTxt="KUNDENSTIMMEN VIDEO"/> */}
 

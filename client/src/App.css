@@ -1284,7 +1284,7 @@ p.ql-align-center {
 /* parralax_wrapper */
 .parralax_wrapper {
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.26)),
-    url("https://www.turiyayoga.de/assets/images/werden-sir.webp");
+    url("https://api.turiyayoga.de/uploads/assets/new/werden-sir.webp");
   /* background-image: url('https://www.turiyayoga.de//werden-sir.webp'); */
   background-repeat: no-repeat;
   /* background-attachment: fixed; */
@@ -1293,7 +1293,7 @@ p.ql-align-center {
 }
 
 .parralax_wrapper2 {
-  background-image: url("https://www.turiyayoga.de/assets/images/werden-mam.webp");
+  background-image: url("https://api.turiyayoga.de/uploads/assets/new/werden-mam.webp");
   background-repeat: no-repeat;
   /* background-attachment: fixed; */
   background-size: cover;
