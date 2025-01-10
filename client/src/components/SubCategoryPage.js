@@ -476,7 +476,7 @@ const SubCategory = () => {
 
                         {selectedSections.includes("5-module-card-section") && <BannerGlobalWrapper />}
 
-                        {selectedSections.includes("faq-section") && <section className="yin_yoga_faq">
+                        {selectedSections.includes("faq-section") && <section className="yin_yoga_faq" id="myFaq">
                             <div className="container">
                                 {faqItems1 && Object.entries(faqItems1).map(([categoryName, faqCategory], categoryIndex) => (
                                     <div className="faq_wrapper__content" key={categoryIndex}>

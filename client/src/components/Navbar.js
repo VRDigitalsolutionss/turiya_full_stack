@@ -463,7 +463,7 @@ const Navbar = () => {
                                     <del style={{ color: '#c3c3c3' }}>€{module.price}</del>
                                   </>
                                 ) : (
-                                  <>€{module.price}</>
+                                  <>€{module?.price}</>
                                 )}
                               </p>
                             </div>
@@ -482,7 +482,7 @@ const Navbar = () => {
                               <p>
                                 {isValidOffer && module.Offerprice > 0
                                   ? `€${module.Offerprice}`
-                                  : `€${module.price}`}
+                                  : `€${module?.price}`}
                               </p>
                             </div>
                           </div>

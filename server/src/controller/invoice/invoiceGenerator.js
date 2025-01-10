@@ -314,8 +314,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     <!-- Closing Message -->
     <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
-    <p>Mit freundlichen Grüßen</p>
-    <p><strong>Emanuel Wintermeyer</strong></p>
+    <p>Mit freundlichen Grüßen<br/><strong>Emanuel Wintermeyer</strong></p>
 
     <!-- Footer -->
     <div class="footer">

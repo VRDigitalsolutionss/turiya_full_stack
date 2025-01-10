@@ -10,7 +10,7 @@ const SimpleBanner = ({ banner, heading, para, buttonTxt, videoLink }) => {
 
   return (
     <>
-      <section className="banner_wrapper">
+      <section className="banner_wrapper" id="termine">
         <div
           className="banner_bg"
           style={{ backgroundImage: `url(${banner})` }}>

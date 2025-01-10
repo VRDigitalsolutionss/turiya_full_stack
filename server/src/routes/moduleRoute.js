@@ -16,7 +16,7 @@ const { createModulelatest,
     updateModulelatest,
      updatePriceWithOfferPricelatest, } = require('../controller/course_and_modules/addmoduleControllerLatestnew');
 const { reduceAvailablePlaces } = require('../controller/course_and_modules/reducePlace');
-const { get_purchasedModule, get_totalpurchasedModule, get_purchasedModule2, deleteOldPurchasedModules, get_purchasedModuleById } = require('../controller/course_and_modules/purchasedModule');
+const { get_purchasedModule, get_totalpurchasedModule, get_purchasedModule2, deleteOldPurchasedModules, get_purchasedModuleById, deletePurchasedModule } = require('../controller/course_and_modules/purchasedModule');
 const { getInvoice, getAgreement } = require('../controller/invoice/invoiceGenerator');
 const moduleRoute = express.Router();
 
@@ -54,6 +54,7 @@ moduleRoute.get('/get_purchasedModule', get_purchasedModule);
 moduleRoute.get('/get_purchasedModule/:id', get_purchasedModuleById);
 moduleRoute.delete('/delete_purchasedModule/',deleteOldPurchasedModules)
 moduleRoute.get('/get_purchasedModule_invoice/:id', getInvoice);
+moduleRoute.delete('/delete_purchased_module/:id', deletePurchasedModule);
 moduleRoute.get('/getAgreement_invoice/:id', getAgreement);
 moduleRoute.get('/get_totalpurchasedModule', get_totalpurchasedModule);
 moduleRoute.get('/get_totalpurchasedModule/:id', get_totalpurchasedModule);

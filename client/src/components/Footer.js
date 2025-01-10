@@ -74,7 +74,7 @@ const Footer = () => {
                     </li>
                     <li>
                       <span />
-                      <Link to="/kommende-kurse"> YOGALEHRER AUSBILDUNGEN</Link>
+                      <Link to="/category/alle-kommenden-kurse"> YOGALEHRER AUSBILDUNGEN</Link>
                     </li>
                     <li>
                       <span />
@@ -85,7 +85,7 @@ const Footer = () => {
                     </li>
                     <li>
                       <span />
-                      <Link to="/module/200h-aya-yogalehrer-ausbildung">
+                      <Link to="/module/200h-yoga-ausbildung-modul-2">
                         +200H YOGA AUSBILDUNG / MODUL 2
                       </Link>
                     </li>
@@ -266,7 +266,7 @@ const Footer = () => {
                       <span />
                       <Link to="/module/stuttgart-yoga-ausbildung">
                         {" "}
-                        YOGS AUSBILDUNG STUTTGART
+                        YOGA AUSBILDUNG STUTTGART
                       </Link>
                     </li>
                   </ul>

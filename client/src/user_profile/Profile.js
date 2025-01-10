@@ -237,7 +237,7 @@ const Profile = () => {
                             <b>Padi Amount : €{item.paid_amount}</b>
                             {/*<span> Überfällig seit 0 Tage </span>*/}
                             <b>&nbsp;&nbsp;Total Amount : €{item.price}</b>
-                            <b>&nbsp;&nbsp;Left Amount : €{item.price}</b>
+                            <b>&nbsp;&nbsp;Left Amount : €{item.due_amount}</b>
                           </p>
                           <p>
                             <span>Unbezahlt </span>
