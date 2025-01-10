@@ -225,10 +225,10 @@ const SubCategory = () => {
                                     <div className="row">
                                         <div className="col-lg-9">
                                             <div className="about_wrapper__left">
-                                                <h3>
+                                                {mainData.about_first_section_sub_Paragraph !== "null" && <h3>
                                                     {mainData && mainData.about_first_section_sub_Paragraph}
-                                                </h3>
-                                                <h1> {mainData && mainData.about_first_section_Heading}</h1>
+                                                </h3>}
+                                                {mainData.about_first_section_Heading !== "null" && <h1> {mainData && mainData.about_first_section_Heading}</h1>}
                                                 <div
                                                     dangerouslySetInnerHTML={{
                                                         __html: decodedContent,
@@ -332,11 +332,10 @@ const SubCategory = () => {
                                     <div className="row">
                                         <div className="col-lg-12">
                                             <div className="about_wrapper__left">
-                                                <h3>
-                                                    {" "}
+                                                {mainData.about_first_section_sub_Paragraph !== "null" && <h3>
                                                     {mainData && mainData.about_first_section_sub_Paragraph}
-                                                </h3>
-                                                <h1> {mainData && mainData.about_first_section_Heading}</h1>
+                                                </h3>}
+                                                {mainData.about_first_section_Heading !== "null" && <h1> {mainData && mainData.about_first_section_Heading}</h1>}
                                                 <div
                                                     dangerouslySetInnerHTML={{
                                                         __html: decodedContent,
