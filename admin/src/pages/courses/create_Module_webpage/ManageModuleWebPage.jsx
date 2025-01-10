@@ -170,7 +170,7 @@ const CourseForm = () => {
     const [selectedFAQs, setSelectedFAQs] = useState({});
 
   const fetchFAQData = () => {
-    axios.get(BASE_URL + '/faq').then((response) => {
+    axios.get(BASE_URL + '/faq_category').then((response) => {
 
       console.log(" faq response", response);
       if (response.status === 200) {
