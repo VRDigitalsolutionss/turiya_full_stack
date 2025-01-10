@@ -13,6 +13,10 @@ const courseWebpageSchema = new mongoose.Schema(
             trim: true,
             unique: true,
         },
+        bannerButton: {
+            type: String,
+            required: false,
+        },
         pageUrl: {
             type: String,
             required: true,
@@ -67,13 +71,13 @@ const courseWebpageSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-        }, faqs: {
-            type: Array,
+        },
+        faqs: {
+            type: Object,
             required: false,
         },
         modules: {
             type: Array,
-
         },
         selectedButton: {
             type: Array,

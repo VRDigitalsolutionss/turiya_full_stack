@@ -15,28 +15,28 @@ function ManageFaqCategories() {
   }, []);
 
   const { id } = useParams();
-// Example parameter ID
-console.log("paramsId: " , id);
+  // Example parameter ID
+  console.log("paramsId: ", id);
   useEffect(() => {
     if (id) {
       axios
         .get(BASE_URL + `/faq_category/${id}`)
         .then((response) => {
 
-          console.log("response params id",response.data.data)
-  
-setFaqCategory(response.data.data.
-  faqCategory
-)  
+          console.log("response params id", response.data.data)
+
+          setFaqCategory(response.data.data.
+            faqCategory
+          )
           // Set the name fsetield
-        
+
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
       // Reset form fields if no paramsId is provided
-     
+
     }
   }, []);
 
@@ -47,7 +47,7 @@ setFaqCategory(response.data.data.
     setFaqCategory(e.target.value);
   };
 
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Entered FAQ Category Name:", faqCategory);
@@ -57,41 +57,39 @@ setFaqCategory(response.data.data.
 
 
     if (id) {
-          
-
-      axios.put(BASE_URL + `/edit_faq_category/${id}`,payload).then((response) => {
+      axios.put(BASE_URL + `/edit_faq_category/${id}`, payload).then((response) => {
         console.log(response);
 
 
         if (response.status == 200) {
           alert("success");
-          setFaqCategory('');
+          navigate('/faq/add_faq_categories')
         } else {
           alert('faild');
         }
-  
-        
+
+
 
       }).catch((err) => {
         console.log(err);
-       
+
       });
-  
-} else {
-  axios.post(BASE_URL +  '/add_faq_category',payload).then((response) => {
-    console.log(response);
 
-    if (response.status == 201) {
-      alert('Success');
-      setFaqCategory('');
+    } else {
+      axios.post(BASE_URL + '/add_faq_category', payload).then((response) => {
+        console.log(response);
+
+        if (response.status == 201) {
+          alert('Success');
+          navigate('/faq/add_faq_categories')
+        }
+
+      }).catch((err) => {
+
+        console.log(err);
+        alert('faild');
+      });
     }
-
-  }).catch((err) => {
-
-    console.log(err);
-    alert('faild');
-  });
-}
 
   };
 

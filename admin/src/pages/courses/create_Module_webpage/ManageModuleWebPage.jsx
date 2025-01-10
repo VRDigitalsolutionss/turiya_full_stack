@@ -38,6 +38,7 @@ const CourseForm = () => {
           courseModuleCategory: data.courseModuleCategory || "",
           slug: data.slug || "",
           pageUrl: data.pageUrl || "",
+          bannerButton: data.bannerButton || "",
           metaTitle: data.metaTitle || "",
           metaDescription: data.metaDescription || "",
           metaKeywords: data.metaKeywords || "",
@@ -120,6 +121,7 @@ const CourseForm = () => {
   const [formData, setFormData] = useState({
     courseModuleCategory: "",
     slug: "",
+    bannerButton: "",
     pageUrl: "",
     metaTitle: "",
     metaDescription: "",
@@ -162,6 +164,8 @@ const CourseForm = () => {
 
   const [courseModuleCategories, setCourseModuleCategories] = useState([]);
   const [FAQData, setFAQData] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedFAQs, setSelectedFAQs] = useState({});
 
   const fetchFAQData = () => {
     axios.get(BASE_URL + '/faq').then((response) => {
@@ -206,8 +210,6 @@ const CourseForm = () => {
   const [selectedSections, setSelectedSections] = useState([]);
   const [modulesOption, setModulesOption] = useState([]);
 
-  const [selectedFAQs, setSelectedFAQs] = useState([]);
-
   // Example FAQ options
   const faqOptions = [
     "What certificate do I get? Can I teach after the 200-hour yoga teacher training?",
@@ -244,6 +246,11 @@ const CourseForm = () => {
     { label: "Gallery", value: "gallery" },
     { label: "Newsletter", value: "newsletter" },
     { label: "Banner Section", value: "banner-section" },
+    { label: "Module Earlybid Card", value: "module-earlybid-card" },
+    { label: "Benefits", value: "benefits" },
+    { label: "Bottom Banner", value: "bottom-banner" },
+    { label: "5 Modules Cards Section", value: "5-module-card-section" },
+    { label: "4 Locations Cards Section", value: "4-location-card-section" },
   ];
 
   const handleButtonChange = (button) => {
@@ -277,21 +284,11 @@ const CourseForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Prepare the selected data
-    const selectedData = {
-      ...formData,
-      selectedButton,
-      selectedSections,
-      selectedFAQs,
-      modulesOption,
-    };
-
-    console.log("Create Web Page Data:", selectedData);
-
     // Prepare the payload
     const payload = {
       courseModuleCategory: formData.courseModuleCategory,
       slug: formData.slug,
+      bannerButton: formData.bannerButton,
       pageUrl: formData.pageUrl,
       metaTitle: formData.metaTitle,
       metaDescription: formData.metaDescription,
@@ -302,7 +299,7 @@ const CourseForm = () => {
       about_first_section_Heading: aboutFirstSectionHeading,
       about_first_section_sub_Paragraph: aboutFirstSectionSubParagraph,
       about_first_section_Paragraph_Content: blogContent,
-      faqs: JSON.stringify(selectedFAQs.map((faq) => faq._id)), // Convert to JSON string
+      faqs: JSON.stringify(selectedFAQs),
       modules: JSON.stringify(modulesOption), // Convert to JSON string
       selectedButton: JSON.stringify(selectedButton), // Convert to JSON string
       selectedSections: JSON.stringify(selectedSections)
@@ -387,24 +384,52 @@ const CourseForm = () => {
     placeholder: 'Start typings...'
   }
 
-  const handleFaqsChange = (event) => {
-    const selectedId = event.target.value;
 
-    // Find the selected FAQ by its ID
-    const selectedFAQ = FAQData.find((faq) => faq._id === selectedId);
+  // Handle category change
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
 
-    // Check if it's already in the selected list
-    if (
-      selectedFAQ &&
-      !selectedFAQs.some((faq) => faq._id === selectedFAQ._id)
-    ) {
-      setSelectedFAQs([...selectedFAQs, selectedFAQ]);
+  const handleFaqChange = (event) => {
+    const selectedFaqId = event.target.value;
+
+    // Find the selected FAQ by ID within the selected category
+    const selectedFaq = FAQData
+      .find((category) => category.faqCategory === selectedCategory)
+      ?.faqs.find((faq) => faq._id === selectedFaqId);
+
+    if (selectedFaq) {
+      setSelectedFAQs((prev) => {
+        const updated = { ...prev };
+
+        // Initialize the category if it doesn't exist
+        if (!updated[selectedCategory]) {
+          updated[selectedCategory] = [];
+        }
+
+        // Add FAQ to the category if it doesn't already exist
+        if (!updated[selectedCategory].some((faq) => faq._id === selectedFaq._id)) {
+          updated[selectedCategory].push(selectedFaq);
+        }
+
+        return updated;
+      });
     }
   };
 
-  // Handle removing a selected FAQ
-  const removeFAQ = (id) => {
-    setSelectedFAQs(selectedFAQs.filter((faq) => faq._id !== id));
+  // Handle FAQ removal
+  const removeFAQ = (category, faqId) => {
+    setSelectedFAQs((prev) => {
+      const updated = { ...prev };
+      updated[category] = updated[category].filter((faq) => faq._id !== faqId);
+
+      // Remove the category if no FAQs are left
+      if (updated[category].length === 0) {
+        delete updated[category];
+      }
+
+      return updated;
+    });
   };
 
   return (
@@ -586,6 +611,21 @@ const CourseForm = () => {
               />
             </div>
           </div>
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <label htmlFor="bannerButton" className="form-label">
+                Banner Button Title(type null for no button)
+              </label>
+              <input
+                type="text"
+                id="bannerButton"
+                name="bannerButton"
+                className="form-control"
+                value={formData.bannerButton}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
 
           <div className="row">
             <div
@@ -751,42 +791,72 @@ const CourseForm = () => {
                   ))}
                 </div>
 
-                <h4>
-                  Select FAQ and modules which you want to show on website:
-                </h4>
+                <h4>Select FAQ and modules which you want to show on website:</h4>
+
+                {/* Dropdown to select FAQ category */}
                 <div className="row mb-4">
                   <div className="col-md-6 mb-3">
-                    <label className="form-label">FAQ's:</label>
+                    <label className="form-label">FAQ Categories:</label>
                     <select
                       className="form-select"
-                      aria-label="Default select example"
-                      onChange={handleFaqsChange}
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
                     >
-                      <option value="" selected disabled>
-                        You can select multiple options
+                      <option value="" disabled>
+                        Select a category
                       </option>
-                      {FAQData.map((faq) => (
-                        <option key={faq._id} value={faq._id}>
-                          {faq.question}
+                      {FAQData.map((category) => (
+                        <option key={category._id} value={category.faqCategory}>
+                          {category.faqCategory}
                         </option>
                       ))}
                     </select>
                   </div>
+
+                  {/* Dropdown to select FAQs within the selected category */}
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label">FAQs:</label>
+                    <select
+                      className="form-select"
+                      disabled={!selectedCategory}
+                      onChange={handleFaqChange}
+                    >
+                      <option value="">
+                        Select an FAQ
+                      </option>
+                      {FAQData
+                        .find((category) => category.faqCategory === selectedCategory)
+                        ?.faqs.map((faq) => (
+                          <option key={faq._id} value={faq._id}>
+                            {faq.question}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
                 </div>
+
+                {/* Display selected FAQs */}
                 <div className="selected-faqs">
                   <h5>Selected FAQs:</h5>
-                  {selectedFAQs.length > 0 ? (
+                  {Object.keys(selectedFAQs).length > 0 ? (
                     <ul>
-                      {selectedFAQs.map((faq) => (
-                        <li key={faq._id} className="mb-2">
-                          <strong>{faq.question}</strong>
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-danger ms-2"
-                            onClick={() => removeFAQ(faq._id)}
-                          >
-                            Remove
-                          </button>
+                      {Object.keys(selectedFAQs).map((category) => (
+                        <li key={category} className="mb-3">
+                          <strong>{category}</strong>
+                          <ul>
+                            {selectedFAQs[category].map((faq) => (
+                              <li key={faq._id}>
+                                {faq.question}
+                                <button
+                                  type="button"
+                                  className="btn btn-sm btn-danger ms-2"
+                                  onClick={() => removeFAQ(category, faq._id)}
+                                >
+                                  Remove
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
                         </li>
                       ))}
                     </ul>

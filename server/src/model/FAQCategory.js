@@ -11,23 +11,29 @@
 
 
 
-const mongoose = require("../config/db"); 
+const mongoose = require("../config/db");
 
 
 const faqCategorySchema = new mongoose.Schema({
     faqCategory: {
         type: String,
-        required: true, 
-        trim: true,    
-    } ,status: {
+        required: true,
+        trim: true,
+    },
+    status: {
         type: String,
-        trim: true, 
+        trim: true,
         default: 'active',
-    
-}
-   
+    },
+    faqs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FAQ",
+      },
+    ],
+
 }, {
-    timestamps: true, 
+    timestamps: true,
 });
 
 

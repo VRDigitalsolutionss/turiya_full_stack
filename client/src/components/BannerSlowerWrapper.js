@@ -213,7 +213,7 @@ const BannerSlowerWrapper = () => {
                           style={{
                             border: "0px solid",
                             color: "white",
-                            backgroundColor: "rgb(198, 132, 27)",
+                            backgroundColor: "#E07542",
                           }}
                           data-id={9}
                           onClick={handletriggerDialogBox}

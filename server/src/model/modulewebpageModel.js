@@ -13,6 +13,10 @@ const modulewebpageschema = new mongoose.Schema(
             trim: true,
             unique: true,
         },
+        bannerButton: {
+            type: String,
+            required: false
+        },
         pageUrl: {
             type: String,
             required: true,
@@ -68,12 +72,10 @@ const modulewebpageschema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        faqs: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "FAQ",
-            },
-        ],
+        faqs: {
+            type: Object,
+            required: false,
+        },
         modules: {
             type: Array,
             required: true,

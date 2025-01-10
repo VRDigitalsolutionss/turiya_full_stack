@@ -6,11 +6,11 @@ const mongoose = require("../config/db");
 
 const faqSchema = new mongoose.Schema({
 
-    // category: {
-    //     type: mongoose.Schema.Types.ObjectId, 
-    //     ref: 'FAQCategory', // Reference to the FAQCategory model
-    //     required: true, 
-    // },
+    category: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'FAQCategory',
+        required: true, 
+    },
     question: {
         type: String,
         required: true,
