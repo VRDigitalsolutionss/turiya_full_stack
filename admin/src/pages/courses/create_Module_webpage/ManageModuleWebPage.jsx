@@ -840,9 +840,9 @@ const CourseForm = () => {
                 {/* Display selected FAQs */}
                 <div className="selected-faqs">
                   <h5>Selected FAQs:</h5>
-                  {Object.keys(selectedFAQs).length > 0 ? (
+                  {selectedFAQs && Object.keys(selectedFAQs).length > 0 ? (
                     <ul>
-                      {Object.keys(selectedFAQs).map((category) => (
+                      {selectedFAQs && Object.keys(selectedFAQs).map((category) => (
                         <li key={category} className="mb-3">
                           <strong>{category}</strong>
                           <ul>
