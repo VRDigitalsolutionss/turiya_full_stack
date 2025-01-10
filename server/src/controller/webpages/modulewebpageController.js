@@ -155,7 +155,7 @@ const editCourseModuleWebpage = async (req, res) => {
             const { id } = req.params;
             
             const selectedSections = JSON.parse(req.body.selectedSections);
-            const selectedFAQs = JSON.parse(req.body.faqs);
+            const selectedFAQs = (req.body.faqs && req.body.faqs!=='undefined') ? JSON.parse(req.body.faqs) : {};
             const updateFields = { ...req.body, selectedSections, faqs: selectedFAQs };
 
 

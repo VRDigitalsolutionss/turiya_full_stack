@@ -231,7 +231,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Header Section -->
     <header>
         <div class="logo">
-           <img src="https://api.colddrinkfranchises.in/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
         </div>
         <div class="info">
             <p><b>Emanuel Wintermeyer</b><br>
@@ -464,7 +464,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Header Section -->
     <header>
         <div class="logo">
-           <img src="https://api.colddrinkfranchises.in/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
         </div>
         <div class="info">
             <p><b>Emanuel Wintermeyer</b><br>
@@ -584,7 +584,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Second Page Content (Duplicate) -->
     <header>
         <div class="logo">
-            <img src="https://api.colddrinkfranchises.in/uploads/logo/header_logo_new.png" alt="Turiya Yoga Logo">
+            <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png" alt="Turiya Yoga Logo">
         </div>
         <div class="info">
             <p>Emanuel Wintermeyer<br>
@@ -599,25 +599,25 @@ const generateInvoicesAndSendEmail = async (req, res) => {
    <div class="section">
     <h2>Mein Ausbildungsstatus</h2>
     <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img src="https://api.colddrinkfranchises.in/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
         <p style="margin: 0;">Ich bin bereits Yogalehrer</p>
     </div>
 
     <h2>Ausbildungserwartung</h2>
     <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img src="https://api.colddrinkfranchises.in/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
         <p style="margin: 0;">Ich mache die Ausbildung als reine Freizeitbeschäftigung für mich</p>
     </div>
     <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img src="https://api.colddrinkfranchises.in/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
         <p style="margin: 0;">Ich bin bereits selbstständig und möchte Yoga mit ins Programm nehmen</p>
     </div>
     <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img src="https://api.colddrinkfranchises.in/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
         <p style="margin: 0;">Die Widerrufsbelehrung/AGB habe ich zur Kenntnis genommen. Die Widerrufsmöglichkeit beträgt ab dem Tag der Anmeldung 14 Tage.</p>
     </div>
     <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img src="https://api.colddrinkfranchises.in/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
         <p style="margin: 0;">
             Ich akzeptiere die allgemeinen Geschäftsbedingungen, die Bestandteil dieser Vereinbarung sind.<br>
             <em>“Die Ausbildung ist bei Privatpersonen inkl. MwSt. Nach Erhalt der Anmeldung/ Vereinbarung erhältst du von Turiya Yoga eine ordnungsgemäße Teilnahmebestätigung/Rechnung, die alle Zahlungsinformationen nochmals enthält. Für Firmen ist die MwSt. zusätzlich zu den Ausbildungsgebühren hinzuzurechnen.”</em>
@@ -625,7 +625,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     </div>
     <p style="margin: 0; margin-bottom: 10px;">Nicht enthalten sind z. B. Pflichtbücher, Reisekosten zum Seminarort. Solche trägt der Teilnehmer zusätzlich.</p>
     <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img src="https://api.colddrinkfranchises.in/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
         <p style="margin: 0;">ICH STIMME DEN Turiya Yoga</p>
     </div>
 </div>
@@ -993,7 +993,7 @@ const generateInvoicesAndSendEmail2 = async (req, res) => {
 //       <body>
 //         <header>
 //           <div class="logo">
-//             <img src="https://api.colddrinkfranchises.in/uploads/logo/header_logo_new.png" alt="Turiya Yoga Logo">
+//             <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png" alt="Turiya Yoga Logo">
 //           </div>
 //           <div class="info">
 //             <p>${customerName}<br>${customerAddress}</p>

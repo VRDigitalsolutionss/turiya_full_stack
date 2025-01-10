@@ -13,7 +13,7 @@ const YogaTraningMallorca = () => {
             <p>Turiya Yoga Akademie bietet eine 18 Tägige YogaleherInnen Ausbildung im traumhaften Mar Hotel Playa Mar & Spa auf Mallorca, auf den Balearen an. Eine international anerkannte Ausbildung in deutscher Sprache.</p>
               <div class="yoga-list-img">
                 <img
-                  src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/training_Mallorca.webp"
+                  src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/training_Mallorca.webp"
                   class="img-fluid"
                   alt="ccclip_image002_0001"
                 />
@@ -67,7 +67,7 @@ const YogaTraningMallorca = () => {
               </p>
               <div class="yoga-list-img">
                 <img
-                  src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/img2.webp"
+                  src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/img2.webp"
                   class="img-fluid"
                   alt="ccclip_image006_0000"
                 />
@@ -91,28 +91,28 @@ const YogaTraningMallorca = () => {
               <div class="sampurna_wrapper__grid">
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img1.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/hotel_room_img/img1.webp"
                     class="img-fluid"
                     alt="Mar_Hotels_Playa_Mar_and_Spa-Piscina_22"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img2.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/hotel_room_img/img2.webp"
                     class="img-fluid"
                     alt="Mar_Hotels_Playa_Mar_and_Spa-Restaurante_principal_13"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img3.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/hotel_room_img/img3.webp"
                     class="img-fluid"
                     alt="Mar_Hotels_Playa_Mar_and_Spa-Suite_01"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/hotel_room_img/img4.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/hotel_room_img/img4.webp"
                     class="img-fluid"
                     alt="IMG_20220915_164155"
                   />
@@ -195,14 +195,14 @@ const YogaTraningMallorca = () => {
               <div class="sampurna_wrapper__grid">
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/travelImg1.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/travelImg1.webp"
                     class="img-fluid"
                     alt="mallorca001"
                   />
                 </div>
                 <div class="sampurna_wrapper__grid-box">
                   <img
-                    src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/travelImg2.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/travelImg2.webp"
                     class="img-fluid"
                     alt="mallorca002"
                   />
@@ -253,7 +253,7 @@ const YogaTraningMallorca = () => {
               </p>
               <div class="yoga-list-img">
                 <img
-                  src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/routine/img1.webp"
+                  src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/routine/img1.webp"
                   class="img-fluid"
                   alt="ccclip_image026"
                 />
@@ -271,7 +271,7 @@ const YogaTraningMallorca = () => {
               <div class="malcora--grid">
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img1.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img1.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>Golf</h3>
@@ -279,7 +279,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img2.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img2.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>kajak</h3>
@@ -287,7 +287,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img3.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img3.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>tauchen</h3>
@@ -295,7 +295,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img4.webp" class="img-fluid" alt="golf" />
+                    <img src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img4.webp" class="img-fluid" alt="golf" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>SUP</h3>
@@ -304,7 +304,7 @@ const YogaTraningMallorca = () => {
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
                     <img
-                      src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img5.webp"
+                      src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img5.webp"
                       class="img-fluid"
                       alt="horseriding"
                     />
@@ -316,7 +316,7 @@ const YogaTraningMallorca = () => {
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
                     <img
-                      src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img6.webp"
+                      src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img6.webp"
                       class="img-fluid"
                       alt="cycling1"
                     />
@@ -328,7 +328,7 @@ const YogaTraningMallorca = () => {
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
                     <img
-                      src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img7.webp"
+                      src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img7.webp"
                       class="img-fluid"
                       alt="Fallschirmspringen"
                     />
@@ -339,7 +339,7 @@ const YogaTraningMallorca = () => {
                 </div>
                 <div class="malcora_box">
                   <div class="malcora--grid-box">
-                    <img src="https://api.colddrinkfranchises.in/uploads/assets/images/training_malcornia/activities/img8.webp" class="img-fluid" alt="sea" />
+                    <img src="https://api.turiyayoga.de/uploads/assets/images/training_malcornia/activities/img8.webp" class="img-fluid" alt="sea" />
                   </div>
                   <div class="malcora--grid-content">
                     <h3>strand</h3>
@@ -414,14 +414,14 @@ const YogaTraningMallorca = () => {
                   class="sampurna_wrapper__grid-box"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal1">
-                  <img src="https://api.colddrinkfranchises.in/uploads/assets/images/sampurna_img/video_testimonial/img1.webp" class="img-fluid" alt="hqdefault" />
+                  <img src="https://api.turiyayoga.de/uploads/assets/images/sampurna_img/video_testimonial/img1.webp" class="img-fluid" alt="hqdefault" />
                 </div>
                 <div
                   class="sampurna_wrapper__grid-box"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal2">
                   <img
-                    src="https://api.colddrinkfranchises.in/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
+                    src="https://api.turiyayoga.de/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
                     class="img-fluid"
                     alt="W1JGeAxS6gQ"
                   />
@@ -443,7 +443,7 @@ const YogaTraningMallorca = () => {
               </p>
               <div class="yoga-list-img">
                 <img
-                  src="https://api.colddrinkfranchises.in/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
+                  src="https://api.turiyayoga.de/uploads/assets/images/sampurna_img/video_testimonial/img1.webp"
                   class="img-fluid"
                   alt="ccclip_image030"
                 />

@@ -256,15 +256,15 @@ const Banner = () => {
             <li><i className="bx bx-check" />+ erfahrene Yogalehrer</li>
           </div>
           <div className="slower_wrapper__center-icon aos-init" data-aos="fade-up">
-            <img src="https://www.turiyayoga.de/assets/images/turiya_yoga_yogalehrer_ausbildungen_aya_rys200-150x150.webp" className="img-fluid" alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 200" />
-            <img src="https://www.turiyayoga.de/assets/images/turiya_yoga_yogalehrer_ausbildungen_aya_rys300-150x150.webp" className="img-fluid" alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 300" />
-            <img src="https://www.turiyayoga.de/assets/images/turiya_yoga_yogalehrer_ausbildungen_aya_rys500-150x150.webp" className="img-fluid" alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 500" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/turiya_yoga_yogalehrer_ausbildungen_aya_rys200-150x150.webp" className="img-fluid" alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 200" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/turiya_yoga_yogalehrer_ausbildungen_aya_rys300-150x150.webp" className="img-fluid" alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 300" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/turiya_yoga_yogalehrer_ausbildungen_aya_rys500-150x150.webp" className="img-fluid" alt="Turiya Yoga Yogalehrer Ausbildungen AYA RYS 500" />
           </div>
         </div>
       </div>
       <div className="col-xl-4">
         <div className="slower_wrapper__right same-box aos-init" data-aos="zoom-in-up">
-          <img src="https://www.turiyayoga.de/assets/images/yogalehrer.webp" className="img-fluid" alt="yogalehrer" />
+          <img src="https://api.turiyayoga.de/uploads/assets/new/yogalehrer.webp" className="img-fluid" alt="yogalehrer" />
           <div className="slower_wrapper__right-content">
             <h3>YOGALEHRER AUSBILDUNGEN</h3>
             <p /><h6 className="subtitle2" style={{fontSize: '1.3em', fontFamily: 'Roboto, sans-serif', marginRight: 0, marginLeft: 0, textTransform: 'capitalize', backgroundColor: 'rgb(235, 235, 235)', marginTop: '0.8em !important', marginBottom: '0.8em !important', fontWeight: '300 !important', color: 'rgb(68, 68, 68) !important', letterSpacing: '2px !important'}}>200h AYA Intensivausbildung</h6><p style={{margin: '4px 0px 0px', color: 'rgb(85, 85, 85)', lineHeight: '1.8', fontFamily: 'Roboto, sans-serif', fontSize: '14.4px', backgroundColor: 'rgb(235, 235, 235)'}}>Hatha-Vinyasa Yogalehrer Intensivausbildung ab 2.699€,&nbsp;<span style={{fontWeight: 'bolder'}}>Yoga Alliance zertifiziert,&nbsp;international anerkannt!</span>&nbsp;Werde ein&nbsp;<span style={{fontWeight: 'bolder'}}>selbstsicherer</span>&nbsp;Yogalehrer.</p><p style={{margin: '4px 0px 0px', color: 'rgb(85, 85, 85)', lineHeight: '1.8', fontFamily: 'Roboto, sans-serif', fontSize: '14.4px', backgroundColor: 'rgb(235, 235, 235)'}}>Lerne die Anwendung von&nbsp;<span style={{fontWeight: 'bolder'}}>Hilfsmitteln</span>, wesentliche&nbsp;<span style={{fontWeight: 'bolder'}}>hands-on</span>&nbsp;Techniken und sichere&nbsp;<span style={{fontWeight: 'bolder'}}>Ausrichtung</span>. Lasse dich von&nbsp;<span style={{fontWeight: 'bolder'}}>Yoga Sutras, Upanishaden&nbsp;</span>und&nbsp;<span style={{fontWeight: 'bolder'}}>Hatha Texte&nbsp;</span>inspirieren.</p><p />
@@ -283,7 +283,7 @@ const Banner = () => {
       </div>
       <div className="col-xl-4">
         <div className="slower_wrapper__left same-box aos-init" data-aos="zoom-in-up">
-          <img src="https://www.turiyayoga.de/assets/images/img1.webp" className="img-fluid" alt="ÜBER UNS" />
+          <img src="https://api.turiyayoga.de/uploads/assets/new/img1.webp" className="img-fluid" alt="ÜBER UNS" />
           <div className="slower_wrapper__content aos-init" data-aos="fade-up">
             <h1> ÜBER UNS</h1>
             <p>Ehrliches Engagement, Zugänglichkeit, Offenheit und solides Wissen. <span>Nach diesen
@@ -354,7 +354,7 @@ const Banner = () => {
       <div className="third_section__grid">
         <div className="third_section__box aos-init aos-animate" data-aos="fade-up" data-aos-delay={100}>
           <div className="box_img">
-            <img src="https://www.turiyayoga.de/assets/images/yoga1.webp" className="img-fluid" alt="yoga" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/yoga1.webp" className="img-fluid" alt="yoga" />
           </div>
           <div className="box_content">
             <h3>MODUL 1</h3>
@@ -369,7 +369,7 @@ const Banner = () => {
         </div>
         <div className="third_section__box aos-init aos-animate" data-aos="fade-up" data-aos-delay={200}>
           <div className="box_img">
-            <img src="https://www.turiyayoga.de/assets/images/yoga2.webp" className="img-fluid" alt="yoga" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/yoga2.webp" className="img-fluid" alt="yoga" />
           </div>
           <div className="box_content">
             <h3>MODUL 2</h3>
@@ -384,7 +384,7 @@ const Banner = () => {
         </div>
         <div className="third_section__box aos-init aos-animate" data-aos="fade-up" data-aos-delay={300}>
           <div className="box_img">
-            <img src="https://www.turiyayoga.de/assets/images/yoga3.webp" className="img-fluid" alt="yoga" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/yoga3.webp" className="img-fluid" alt="yoga" />
           </div>
           <div className="box_content">
             <h3>MODUL 3</h3>
@@ -398,7 +398,7 @@ const Banner = () => {
         </div>
         <div className="third_section__box aos-init aos-animate" data-aos="fade-up" data-aos-delay={400}>
           <div className="box_img">
-            <img src="https://www.turiyayoga.de/assets/images/yoga4.webp" className="img-fluid" alt="yoga" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/yoga4.webp" className="img-fluid" alt="yoga" />
           </div>
           <div className="box_content">
             <h3>MODUL 4</h3>
@@ -414,7 +414,7 @@ const Banner = () => {
         </div>
         <div className="third_section__box aos-init aos-animate" data-aos="fade-up" data-aos-delay={500}>
           <div className="box_img">
-            <img src="https://www.turiyayoga.de/assets/images/yoga5.webp" className="img-fluid" alt="yoga" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/yoga5.webp" className="img-fluid" alt="yoga" />
           </div>
           <div className="box_content">
             <h3>MODUL 5</h3>
@@ -605,7 +605,7 @@ const Banner = () => {
       <div className="col-lg-4 col-sm-6">
         <div className="fifth_section__bg aos-init aos-animate" data-aos="fade-up" data-aos-delay={200}>
           <div className="fifth_section__bg-img">
-            <img src="https://www.turiyayoga.de/assets/images/yogamen.webp" className="img-fluid" alt="yogamen" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/yogamen.webp" className="img-fluid" alt="yogamen" />
           </div>
           <div className="fifth_section__bg-content">
             <p> "Manu’s Unterricht ist immer voller Liebe &amp; Energie für alle!"</p>
@@ -619,7 +619,7 @@ const Banner = () => {
       <div className="col-lg-4 col-sm-6">
         <div className="fifth_section__bg aos-init aos-animate" data-aos="fade-up" data-aos-delay={300}>
           <div className="fifth_section__bg-img">
-            <img src="https://www.turiyayoga.de/assets/images/yogalady.webp" className="img-fluid" alt="yogalady" />
+            <img src="https://api.turiyayoga.de/uploads/assets/new/yogalady.webp" className="img-fluid" alt="yogalady" />
           </div>
           <div className="fifth_section__bg-content">
             <p> "Eine Erfahrung, die ich definitiv jedem empfehlen würde."</p>

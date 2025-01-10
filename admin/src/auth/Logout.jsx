@@ -16,14 +16,14 @@ const Logout = () => {
                       <div className="auth-brand p-2 text-center">
                         <a href="index.html" className="logo-light">
                           <img
-                            src="https://www.turiyayoga.de/admin/assets/images/logo.webp"
+                            src="https://api.turiyayoga.de/uploads/assets/new/logo.webp"
                             alt="logo"
                             width={185}
                           />
                         </a>
                         <a href="index.html" className="logo-dark">
                           <img
-                            src="https://www.turiyayoga.de/admin/assets/images/logo.webp"
+                            src="https://api.turiyayoga.de/uploads/assets/new/logo.webp"
                             alt="dark logo"
                             width={185}
                           />
