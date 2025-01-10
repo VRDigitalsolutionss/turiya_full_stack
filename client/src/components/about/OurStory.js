@@ -561,7 +561,7 @@ const OurStory = () => {
                 <div className="col-lg-3">
                   <div className="about_turiya__left" data-aos="fade-up">
                     <div className="about_turiya__box">
-                      <Link to="/yogalehrer-ausbildung-200h">
+                      <Link to="/category/200h-aya-yogalehrer-ausbildung-intensiv">
                         <div className="about_turiya__box-img">
                           <img
                             src={turiaImg3}
@@ -579,7 +579,7 @@ const OurStory = () => {
                       {/* ========================= */}
                     </div>
                     <div className="about_turiya__box">
-                      <Link to="/blockausbildung-im-ueberblick">
+                      <Link to="/module/blockausbildung-berblick">
                         <div className="about_turiya__box-img">
                           <img
                             src={turiaImg2}

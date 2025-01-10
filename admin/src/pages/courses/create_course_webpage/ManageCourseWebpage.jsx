@@ -92,7 +92,11 @@ const CourseForm = () => {
         setAboutFirstSectionSubParagraph(data.aboutFirstSectionSubParagraph || "");
         setBlogContent(data.about_first_section_Paragraph_Content || "");
         setSelectedSections(data.selectedSections)
-        setSelectedFAQs(data.faqs)
+        if (!Array.isArray(data.faqs)) {
+          setSelectedFAQs(data.faqs);
+        }
+
+
       }).catch((error) => {
         console.log("error", error);
       });

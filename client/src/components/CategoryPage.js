@@ -105,7 +105,9 @@ const Category = () => {
                     setLoading(false)
                     setShow404Page(false)
                     setSelectedSections(data.selectedSections)
-                    setfaqItems1(data.faqs)
+                    if (!Array.isArray(data.faqs)) {
+                        setfaqItems1(data.faqs)
+                    }
                 }
             })
             .catch((error) => {
