@@ -252,15 +252,15 @@ const appRoutes: RouteType[] = [
       }
     ]
   },
-  {
-    path: "/contact",
-    element: <Contact />,
-    state: "contact",
-    sidebarProps: {
-      displayText: "Contact Us Page",
-      icon: <FormatListBulletedOutlinedIcon />
-    }
-  },
+  // {
+  //   path: "/contact",
+  //   element: <Contact />,
+  //   state: "contact",
+  //   sidebarProps: {
+  //     displayText: "Contact Us Page",
+  //     icon: <FormatListBulletedOutlinedIcon />
+  //   }
+  // },
 
   {
     path: "/reports",

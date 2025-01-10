@@ -241,7 +241,7 @@ const SubCategory = () => {
                                                 {
                                                     closestUpcomingCourse[0] ? (
                                                         <div>
-                                                            <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0].Ausbildung : null}</h3>
+                                                            <h3>{closestUpcomingCourse[0] ? closestUpcomingCourse[0]?.Ausbildung : null}</h3>
                                                             <div className="price-tag">
                                                                 <h6>
                                                                     <i className="bx bxs-purchase-tag" />
@@ -308,7 +308,7 @@ const SubCategory = () => {
                                                     ) : (
                                                         <div className="div">
                                                             <div className="about-text">
-                                                                <p>{closestUpcomingCourse[0].Ausbildung}</p>
+                                                                <p>{closestUpcomingCourse[0]?.Ausbildung}</p>
                                                                 <p>
                                                                     Reise und Unterkunft sind nicht immer im Schulungspreis
                                                                     enthalten. Wenn Sie weitere Fragen haben, rufen Sie uns
@@ -565,7 +565,7 @@ const SubCategory = () => {
                                                     return item.Place && item.Place !== "0" ? (
                                                         <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
                                                             <th style={{ backgroundColor: "#F9F9F9" }}>
-                                                                {item.Ausbildung}
+                                                                {item?.Ausbildung}
                                                             </th>
                                                             <td style={{ backgroundColor: "#F9F9F9" }}>
                                                                 <i className="bx bxs-calendar me-1" />
@@ -646,7 +646,7 @@ const SubCategory = () => {
                                                         return item.Place && item.Place !== "0" ? (
                                                             <tr style={{ backgroundColor: "#F9F9F9" }} key={index}>
                                                                 <th style={{ backgroundColor: "#F9F9F9" }}>
-                                                                    {item.Ausbildung}
+                                                                    {item?.Ausbildung}
                                                                 </th>
                                                                 <td style={{ backgroundColor: "#F9F9F9" }}>
                                                                     <i className="bx bxs-calendar me-1" />

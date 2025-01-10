@@ -78,44 +78,44 @@ const Footer = () => {
                     </li>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-200h">
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung">
                         {" "}
                         200H AYA YOGALEHRER AUSBILDUNG - INTENSIV
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-200h">
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung">
                         +200H YOGA AUSBILDUNG / MODUL 2
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/blockausbildung-im-ueberblick">
+                      <Link to="/module/blockausbildung-berblick">
                       BLOCKAUSBILDUNG / ÜBERBLICK
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <a href="/blockausbildung-im-ueberblick">
+                      <a href="/module/blockausbildung-berblick">
                         500H AYA YOGALEHRER BLOCKAUSBILDUNG | 100H EINZELMODULE
                       </a>
                     </li>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-goa-indien">
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung-goa-indien">
                         200H AYA YOGALEHRER AUSBILDUNG GOA INDIEN
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-himalaya-indien">
+                      <Link to="/module/yogalehrerausbildung-himalaya-indien">
                         YOGALEHRERAUSBILDUNG HIMALAYA INDIEN
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/200h-yogalehrer-ausbildung-mallorca">
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung-i-mallorca">
                         {" "}
                         200H/AYA YOGALEHRER AUSBILDUNG I MALLORCA
                       </Link>
@@ -153,28 +153,28 @@ const Footer = () => {
                   <ul>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-200h">
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung">
                         {" "}
                         200H AYA YOGALEHRER AUSBILDUNG{" "}
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/blockausbildung-im-ueberblick">
+                      <Link to="/module/blockausbildung-berblick">
                         {" "}
                         BLOCKAUSBILDUNG / ÜBERBLICK{" "}
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-100h">
+                      <Link to="/module/100h-yoga-ausbildung-modul-1">
                         {" "}
                         100H YOGA AUSBILDUNG / MODUL 1{" "}
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-300h">
+                      <Link to="/module/300h-yoga-ausbildung-modul-3">
                         {" "}
                         +300H YOGA AUSBILDUNG / MODUL 3
                       </Link>
@@ -182,24 +182,24 @@ const Footer = () => {
                     <li>
                       <span />
                       <Link to=
-                        "/yogalehrer-ausbildung-400h">
+                        "/module/400h-yoga-ausbildung-modul-4">
                         {" "}
                         +400H YOGA AUSBILDUNG / MODUL 4
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/yogalehrer-ausbildung-500h">
+                      <Link to="/module/500h-yoga-ausbildung-modul-5">
                         500H YOGA AUSBILDUNG / MODUL 5
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/senioren-yoga">60H SENIOREN YOGA</Link>
+                      <Link to="/category/60h-senioren-yoga">60H SENIOREN YOGA</Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/yin-yoga">60H YIN YOGA</Link>
+                      <Link to="/category/60h-yin-yoga">60H YIN YOGA</Link>
                     </li>
                     <li>
                       <span />
@@ -236,35 +236,35 @@ const Footer = () => {
 
                     <li>
                       <span />
-                      <Link to="/YOGALEHRERAUSBILDUNG-BERLIN">
+                      <Link to="/module/berlin-yoga-ausbildung">
                         {" "}
                         YOGALEHRERAUSBILDUNG BERLIN
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="/YOGALEHRERAUSBILDUNG-HAMBURG">
+                      <Link to="/module/hamburg-yoga-ausbildung">
                         {" "}
                         YOGALEHRERAUSBILDUNG HAMBURG
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="YOGALEHRERAUSBILDUNG-COLOGNE">
+                      <Link to="/module/cologne-yoga-ausbildung">
                         {" "}
                         YOGALEHRERAUSBILDUNG COLOGNE
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="munchen-yoga-ausbildung">
+                      <Link to="/module/munchen-yoga-ausbildung">
                         {" "}
                         YOGALEHRERAUSBILDUNG MUNCHEN
                       </Link>
                     </li>
                     <li>
                       <span />
-                      <Link to="Yogalehrer-Ausbildungen-Stuttgart">
+                      <Link to="/module/stuttgart-yoga-ausbildung">
                         {" "}
                         YOGS AUSBILDUNG STUTTGART
                       </Link>
