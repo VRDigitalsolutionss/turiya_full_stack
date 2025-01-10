@@ -479,7 +479,7 @@ const SubCategory = () => {
 
                         {selectedSections.includes("faq-section") && <section className="yin_yoga_faq">
                             <div className="container">
-                                {Object.entries(faqItems1).map(([categoryName, faqCategory], categoryIndex) => (
+                                {faqItems1 && Object.entries(faqItems1).map(([categoryName, faqCategory], categoryIndex) => (
                                     <div className="faq_wrapper__content" key={categoryIndex}>
                                         <div className="faq_heading">
                                             <h3>{categoryName}</h3>
