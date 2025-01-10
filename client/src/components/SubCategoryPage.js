@@ -105,7 +105,9 @@ const SubCategory = () => {
                     setLoading(false)
                     setShow404Page(false)
                     setSelectedSections(data.selectedSections)
-                    setfaqItems1(data.faqs)
+                    if (!Array.isArray(data.faqs)) {
+                        setfaqItems1(data.faqs)
+                    }
                 }
             })
             .catch((error) => {
@@ -198,7 +200,7 @@ const SubCategory = () => {
     const handleToggle = (section, index) => {
         setActiveIndex1(activeIndex1 === index ? null : index);
     };
-    
+
     return (
         <>
             {loading ?
