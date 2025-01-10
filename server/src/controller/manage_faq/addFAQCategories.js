@@ -1,4 +1,5 @@
 const FAQCategory = require("../../model/FAQCategory");
+const FAQ = require("../../model/Faq");
 
 const AddFaqCategory =async  (req, res) => {
     try {
@@ -120,7 +121,7 @@ const toggleFAQCategoryStatus = async (req, res) => {
 const FAQCategorys = (req, res) => {
 
 
-    FAQCategory.find().then((data) => {
+    FAQCategory.find().populate("faqs").then((data) => {
         res.status(200).json({ success: true, data })
     }).catch((error) => {
         res.status(500).json({ success: false, error: error.message })
@@ -133,7 +134,7 @@ const getFAQCategory = (req, res) => {
     const { id } = req.params;
 
     if (id) {
-        FAQCategory.findById(id).then((data) => {
+        FAQCategory.findById(id).populate("faqs").then((data) => {
             res.status(200).json({ success: true, data })
         }).catch((error) => {
             res.status(500).json({ success: false, error: error.message })

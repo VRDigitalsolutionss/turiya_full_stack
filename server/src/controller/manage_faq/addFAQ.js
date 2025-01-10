@@ -3,87 +3,101 @@ const FAQ = require("../../model/Faq");
 const FAQCategory = require("../../model/FAQCategory");
 
 
-
 const handleAddFAQ = async (req, res) => {
-
     try {
-        const { question, answer } = req.body;
+        const { category, question, answer } = req.body;
 
-        // // Check if the category exists
-        // const category = await FAQCategory.findById(categoryId);
-
-
-        // if (!category) {
-        //     return res.status(400).json({ success: false, message: "Category not found" });
-        // }
+        // Check if the category exists
+        const categoryData = await FAQCategory.findById(category);
+        if (!categoryData) {
+            return res.status(400).json({ success: false, message: "Category not found" });
+        }
 
         if (!question || !answer) {
             return res.status(400).json({
                 success: false,
-                message: "question and answer are required",
+                message: "Question and answer are required",
             });
         }
 
         // Create a new FAQ document
         const newFAQ = new FAQ({
+            category,
             question,
             answer,
         });
 
         // Save the FAQ document to the database
         const savedFAQ = await newFAQ.save();
+
+        // Add the FAQ to the category's `faqs` array
+        categoryData.faqs.push(savedFAQ._id);
+        await categoryData.save();
+
         res.status(201).json({ success: true, data: savedFAQ });
     } catch (error) {
-        res.status(400).json({ success: false, error: error.message });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
-const editFAQ = async (req, res) => {
 
+
+const editFAQ = async (req, res) => {
     const id = req.params.id;
 
     try {
-        // Extract data from the request body
-        const { question, answer } = req.body;
+        const { category, question, answer } = req.body;
 
-        if(!id){
-            return res.status(400).json({ success: false, message: "FAQ id is required"})
+        if (!id) {
+            return res.status(400).json({ success: false, message: "FAQ ID is required" });
         }
 
-        // Validate required fields
-        if (!question || !answer) {
+        if (!category || !question || !answer) {
             return res.status(400).json({
                 success: false,
-                message: "question and answer are required",
+                message: "Category, question, and answer are required",
             });
         }
-        const updatedcategory = await FAQ.findByIdAndUpdate(
+
+        // Update the FAQ document
+        const updatedFAQ = await FAQ.findByIdAndUpdate(
             id,
-            { question, answer },
+            { category, question, answer },
+            { new: true }
         );
 
-        if (!updatedcategory) {
+        if (!updatedFAQ) {
             return res.status(404).json({
                 success: false,
                 message: "FAQ not found for update",
             });
         }
 
-        // Send success response for update
-        return res.status(200).json({
+        // Check if the FAQ is already in the category's `faqs` array
+        const categoryData = await FAQCategory.findById(category);
+        if (!categoryData) {
+            return res.status(400).json({ success: false, message: "Category not found" });
+        }
+
+        if (!categoryData.faqs.includes(id)) {
+            categoryData.faqs.push(id);
+            await categoryData.save();
+        }
+
+        res.status(200).json({
             success: true,
             message: "FAQ updated successfully",
-            data: updatedcategory,
+            data: updatedFAQ,
         });
     } catch (error) {
-        // Handle any errors
         res.status(500).json({
             success: false,
-            message: "Failed to add or update fAQ",
+            message: "Failed to update FAQ",
             error: error.message,
         });
     }
 };
+
 
 
 const toggleFAQStatus = async (req, res) => {

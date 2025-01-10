@@ -54,6 +54,7 @@ const addCourseModuleWebpage = async (req, res) => {
             const {
                 courseModuleCategory,
                 slug,
+                bannerButton,
                 pageUrl,
                 metaTitle,
                 metaDescription,
@@ -76,6 +77,7 @@ const addCourseModuleWebpage = async (req, res) => {
             if (
                 !courseModuleCategory ||
                 !slug ||
+                !bannerButton ||
                 !pageUrl ||
                 !metaTitle ||
                 !metaDescription ||
@@ -101,6 +103,7 @@ const addCourseModuleWebpage = async (req, res) => {
             const newCourseWebpage = new ModuleWebpages({
                 courseModuleCategory,
                 slug,
+                bannerButton,
                 pageUrl,
                 metaTitle,
                 metaDescription,

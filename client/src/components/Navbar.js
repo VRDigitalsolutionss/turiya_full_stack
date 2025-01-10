@@ -556,12 +556,18 @@ const Navbar = () => {
           )}
 
           <div class="hide_top_menu">
-                <a href="tel:+49(0)69-20134987"><i class='bx bxs-mobile'></i>+49(0)69-20134987</a>
-                <a href="mailto:info@turiyayoga.de"><i class='bx bxs-envelope'></i> info@turiyayoga.de</a>
-                <a href="javascript:void(0)" class="cart-menu"><i class='bx bx-shopping-bag'></i>1[LEER]</a>
-                <a href=" #" data-bs-toggle="modal" data-bs-target="#exampleModal-form"><i
-                        class='bx bx-user'></i>Anmeldung</a>
-            </div>
+            <a href="tel:+49(0)69-20134987"><i class='bx bxs-mobile'></i>+49(0)69-20134987</a>
+            <a href="mailto:info@turiyayoga.de"><i class='bx bxs-envelope'></i> info@turiyayoga.de</a>
+            <a href="javascript:void(0)" class="cart-menu" onClick={handleSidBar}>
+              <i class='bx bx-shopping-bag'></i><span className="me-1">
+                {cartFetchedData && cartFetchedData.length > 0
+                  ? cartFetchedData.length
+                  : 0}
+              </span>[LEER]
+            </a>
+            <a href=" #" data-bs-toggle="modal" data-bs-target="#exampleModal-form"><i
+              class='bx bx-user'></i>Anmeldung</a>
+          </div>
 
 
           {/* mobile nav */}

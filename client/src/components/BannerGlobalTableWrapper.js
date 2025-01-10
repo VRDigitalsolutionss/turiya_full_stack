@@ -333,7 +333,7 @@ const BannerGlobalTableWrapper = () => {
                                 <>
                                   <span
                                     style={{
-                                      color: "rgb(198, 132, 27)",
+                                      color: "#E07542",
                                     }}
                                   >
                                     € {item.Offerprice}
@@ -355,7 +355,7 @@ const BannerGlobalTableWrapper = () => {
                             <td
                               style={{
                                 backgroundColor: "#EDEDED",
-                                color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is red
+                                color: item.Place <= 3 ? "#E07542" : "black", // Optional: change text color to white if background is red
                               }}>
                               {item.Place <= 3
                                 ? `only Noch ${item.Place} Plätze frei`
@@ -367,7 +367,7 @@ const BannerGlobalTableWrapper = () => {
                                 onClick={() => handletriggerDialogBox(item._id)}
                                 style={{
                                   backgroundColor:
-                                    item.Place <= 3 ? "rgb(198, 132, 27)" : "#9BBB59",
+                                    item.Place <= 3 ? "#E07542" : "#9BBB59",
                                   border: "0px solid",
                                 }}
                                 className="table-btn triggerDialogBox"
@@ -419,7 +419,7 @@ const BannerGlobalTableWrapper = () => {
                                 <>
                                   <span
                                     style={{
-                                      color: "rgb(198, 132, 27)",
+                                      color: "#E07542",
                                     }}
                                   >
                                     € {item.Offerprice}
@@ -441,7 +441,7 @@ const BannerGlobalTableWrapper = () => {
                             <td
                               style={{
                                 backgroundColor: "#EDEDED",
-                                color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black",
+                                color: item.Place <= 3 ? "#E07542" : "black",
                               }}>
                               {item.Place <= 3
                                 ? `only Noch ${item.Place} Plätze frei`
@@ -453,7 +453,7 @@ const BannerGlobalTableWrapper = () => {
                                 onClick={() => handletriggerDialogBox(item._id)}
                                 style={{
                                   backgroundColor:
-                                    item.Place <= 3 ? "rgb(198, 132, 27)" : "#9BBB59",
+                                    item.Place <= 3 ? "#E07542" : "#9BBB59",
                                   border: "0px solid",
                                 }}
                                 className="table-btn triggerDialogBox"

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import axios from "axios";
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
 const AddFaqCategories = () => {
   const navigate = useNavigate();
@@ -16,41 +16,29 @@ const AddFaqCategories = () => {
 
 
 
-  const [courses, setCourses] = useState([
-    { id: 1, name: "60H Senioren Yoga", isActive: true },
-    { id: 2, name: "60H Yin Yoga", isActive: true },
-    {
-      id: 3,
-      name: "200H AYA Yogalehrer Ausbildung - Intensiv",
-      isActive: true,
-    },
-    { id: 4, name: "Yoga für Anfänger", isActive: true },
-    { id: 5, name: "Yoga für Fortgeschrittene", isActive: true },
-    { id: 6, name: "Meditation Basics", isActive: true },
-    // Add more courses here...
-  ]);
+  const [courses, setCourses] = useState([]);
 
   const fetchData = () => {
     axios
-    .get(BASE_URL + "/faq_category")
-    .then((response) => {
-      console.log("faq category",response.data.data);
+      .get(BASE_URL + "/faq_category")
+      .then((response) => {
+        console.log("faq category", response.data.data);
 
-      if (response.status == 200) {
-        setCourses(response.data.data);
-      } else {
-        alert("somthing went wrong: ");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+        if (response.status == 200) {
+          setCourses(response.data.data);
+        } else {
+          alert("somthing went wrong: ");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
 
   useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
 
 
 
@@ -63,31 +51,23 @@ const AddFaqCategories = () => {
 
   // Function to toggle the active status
   const toggleActive = (id) => {
-    // setCourses((prevCourses) =>
-    //   prevCourses.map((course) =>
-    //     course.id === id ? { ...course, isActive: !course.isActive } : course
-    //   )
-    // );
-
-
-   
 
     if (id) {
       axios
-    .put(
-      `http://127.0.0.1:7000/api/toggle_faq_category/${id}`
-    )
-    .then((response) => {
-      console.log("response toggle", response.data.data);
-      // setGalleries(response.data.data);
-      fetchData();
-    })
-    .catch((err) => {
-      console.log("Error: toggle", err);
-    });
+        .put(
+          `${BASE_URL}/toggle_faq_category/${id}`
+        )
+        .then((response) => {
+          console.log("response toggle", response.data.data);
+          // setGalleries(response.data.data);
+          fetchData();
+        })
+        .catch((err) => {
+          console.log("Error: toggle", err);
+        });
     } else {
       console.log("id not found")
-}
+    }
   };
 
 
@@ -102,38 +82,27 @@ const AddFaqCategories = () => {
 
   // Delete category
   const handleDeleteConfirm = () => {
-    // setCourses((prevList) =>
-    //   prevList.filter((item) => item.id !== deleteItemId)
-    // );
-
-    // setGalleries(galleries.filter((item) => item.id !== deleteItemId));
-    // setBlogs((prevUsers) => prevUsers.filter((user) => user.id !== deleteItemId)); // Filter out the user with matching id
-
-
-
-
-
     if (deleteItemId) {
       axios
-    .delete(
-      BASE_URL + `/delete_faq_category/${deleteItemId}`,
-    )
-    .then((response) => {
-      console.log("delete response", response);
-  
-      fetchData();
-      setShowDeleteModal(false); // Close the modal
-      setDeleteItemId("");
-    })
-    .catch((err) => {
-      console.log("Error:", err);
-    });
+        .delete(
+          BASE_URL + `/delete_faq_category/${deleteItemId}`,
+        )
+        .then((response) => {
+          console.log("delete response", response);
+
+          fetchData();
+          setShowDeleteModal(false); // Close the modal
+          setDeleteItemId("");
+        })
+        .catch((err) => {
+          console.log("Error:", err);
+        });
     } else {
       console.log("id not found")
     }
 
 
-    
+
   };
 
   // =========================================================================================================================
@@ -163,7 +132,7 @@ const AddFaqCategories = () => {
   };
 
 
-  
+
   return (
     <div className="container-fluid mt-3">
       <div className="card p-4 shadow-sm" style={{ border: "none" }}>
@@ -202,21 +171,21 @@ const AddFaqCategories = () => {
 
 
                   <button
-                      className={`btn ${course.status === "active" ? "btn-warning" : "btn-secondary"}`}
-                  
+                    className={`btn ${course.status === "active" ? "btn-warning" : "btn-secondary"}`}
+
                     onClick={() => toggleActive(course._id)}
                   >
                     {course.status}
                   </button>
 
-                  
+
 
                   <Link
-                  to={`/manage_faq_categories/${course._id}`}
+                    to={`/manage_faq_categories/${course._id}`}
                     className="btn btn-primary me-2 ms-2">
                     Edit
                   </Link>
-                  
+
                   <button
                     className="btn btn-danger"
                     onClick={() => deleteModule(course._id)}>
@@ -249,9 +218,6 @@ const AddFaqCategories = () => {
                   </h4>
                 </div>
                 <div className="col-sm-6 d-flex justify-content-end">
-                  {/* <span className="exitButtonTrigger" onClick={closeDialogBox}>
-          ×
-        </span> */}
                   <span
                     className="exitButtonTrigger"
                     onClick={() => setShowDeleteModal(false)}>

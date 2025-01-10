@@ -547,7 +547,7 @@ const Berlin = () => {
                                 <sub>
                                   <del
                                     style={{
-                                      color: "rgb(198, 132, 27)",
+                                      color: "#E07542",
                                       fontSize: "17px",
                                       marginLeft: "10px",
                                     }}
@@ -705,7 +705,7 @@ const Berlin = () => {
                                 <>
                                   <span
                                     style={{
-                                      color: "rgb(198, 132, 27)",
+                                      color: "#E07542",
                                     }}
                                   >
                                     € {item.Offerprice}
@@ -728,7 +728,7 @@ const Berlin = () => {
                             <td
                               style={{
                                 backgroundColor: "#F9F9F9",
-                                color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is rgb(198, 132, 27)
+                                color: item.Place <= 3 ? "#E07542" : "black", // Optional: change text color to white if background is #E07542
                               }}>
                               {item.Place <= 3
                                 ? `only Noch ${item.Place} Plätze frei`
@@ -789,7 +789,7 @@ const Berlin = () => {
                                 <>
                                   <span
                                     style={{
-                                      color: "rgb(198, 132, 27)",
+                                      color: "#E07542",
                                     }}
                                   >
                                     € {item.Offerprice}
@@ -812,7 +812,7 @@ const Berlin = () => {
                             <td
                               style={{
                                 backgroundColor: "#F9F9F9",
-                                color: item.Place <= 3 ? "rgb(198, 132, 27)" : "black", // Optional: change text color to white if background is rgb(198, 132, 27)
+                                color: item.Place <= 3 ? "#E07542" : "black", // Optional: change text color to white if background is #E07542
                               }}>
                               {item.Place <= 3
                                 ? `only Noch ${item.Place} Plätze frei`

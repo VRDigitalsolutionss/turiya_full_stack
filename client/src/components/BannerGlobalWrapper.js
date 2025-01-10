@@ -33,7 +33,7 @@ const BannerGlobalWrapper = () => {
                 data-aos-delay={100}>
                 <div className="box_img">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/yoga1.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/new/yoga1.webp"
                     className="img-fluid"
                     alt="yoga"
                   />
@@ -62,7 +62,7 @@ const BannerGlobalWrapper = () => {
                 data-aos-delay={200}>
                 <div className="box_img">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/yoga2.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/new/yoga2.webp"
                     className="img-fluid"
                     alt="yoga"
                   />
@@ -87,7 +87,7 @@ const BannerGlobalWrapper = () => {
                 data-aos-delay={300}>
                 <div className="box_img">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/yoga3.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/new/yoga3.webp"
                     className="img-fluid"
                     alt="yoga"
                   />
@@ -112,7 +112,7 @@ const BannerGlobalWrapper = () => {
                 data-aos-delay={400}>
                 <div className="box_img">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/yoga4.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/new/yoga4.webp"
                     className="img-fluid"
                     alt="yoga"
                   />
@@ -137,7 +137,7 @@ const BannerGlobalWrapper = () => {
                 data-aos-delay={500}>
                 <div className="box_img">
                   <img
-                    src="https://www.turiyayoga.de/assets/images/yoga5.webp"
+                    src="https://api.colddrinkfranchises.in/uploads/assets/new/yoga5.webp"
                     className="img-fluid"
                     alt="yoga"
                   />

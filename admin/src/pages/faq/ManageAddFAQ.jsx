@@ -19,6 +19,8 @@ const ManageAddFAQ = () => {
   // Example parameter ID
   console.log("paramsId: ", id);
 
+  const [faqCategories, setFaqCategories] = useState([]);
+
   const fetchFaqCategory = () => {
     // Fetch the FAQ category based on the provided ID
     // Example API call
@@ -27,12 +29,16 @@ const ManageAddFAQ = () => {
       .then((response) => {
         console.log("response of faq category", response.data.data);
         // Set the category field
-        setOptions(response.data.data)
+        setFaqCategories(response.data.data)
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
+  useEffect(() => {
+    fetchFaqCategory()
+  },[])
 
   useEffect(() => {
     if (id) {
@@ -107,6 +113,7 @@ const ManageAddFAQ = () => {
 
     // =============================================================================================
     const payload = {
+      category: category,
       question: question,
       answer: answer,
       status: "active",
@@ -120,7 +127,7 @@ const ManageAddFAQ = () => {
 
           if (response.status == 200) {
             alert("success");
-            navigate('/faq')
+            navigate('/faq/add_faq')
           } else {
             alert("faild");
           }
@@ -136,7 +143,7 @@ const ManageAddFAQ = () => {
 
           if (response.status == 201) {
             alert("Success");
-            navigate('/faq')
+            navigate('/faq/add_faq')
           }
         })
         .catch((err) => {
@@ -146,12 +153,6 @@ const ManageAddFAQ = () => {
     }
   };
 
-  const [options, setOptions] = useState([
-    { value: "", label: "Select Category" },
-    { value: "1", label: "200H AYA Yogalehrer Ausbildung - Intensiv" },
-    { value: "3", label: "60H Senioren Yoga" },
-    { value: "2", label: "60H Yin Yoga" },
-  ]);
 
   return (
     <div className="container-fluid mt-4">
@@ -198,7 +199,7 @@ const ManageAddFAQ = () => {
           </div> */}
 
           {/* Category selection using a dropdown */}
-          {/* <div className="my-3">
+          <div className="my-3">
             <label htmlFor="dynamicSelect" className="form-label">
               Select an Option
             </label>
@@ -208,15 +209,14 @@ const ManageAddFAQ = () => {
               value={category}
               onChange={handleCategoryChange}>
               <option value="">Select Category</option>
-              {options.map((item, index) => (
-                <option key={index} value={item.faqCategory
-                }>
+              {faqCategories.map((item, index) => (
+                <option key={index} value={item._id}>
                   {item.faqCategory
                   }
                 </option>
               ))}
             </select>
-          </div> */}
+          </div>
 
           {/* Question input */}
           <div className="mb-3">

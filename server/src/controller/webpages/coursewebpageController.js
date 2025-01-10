@@ -4,6 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const  CourseWebpages = require('../../model/coursewebpageModel')
+const FAQ = require("../../model/Faq");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -52,6 +53,7 @@ const addCourseWebpage = async (req, res) => {
             const {
                 courseCategory,
                 slug,
+                bannerButton,
                 pageUrl,
                 metaTitle,
                 metaDescription,
@@ -74,6 +76,7 @@ const addCourseWebpage = async (req, res) => {
             if (
                 !courseCategory ||
                 !slug ||
+                !bannerButton ||
                 !pageUrl ||
                 !metaTitle ||
                 !metaDescription ||
@@ -99,6 +102,7 @@ const addCourseWebpage = async (req, res) => {
             const newCourseWebpage = new CourseWebpages({
                 courseCategory,
                 slug,
+                bannerButton,
                 pageUrl,
                 metaTitle,
                 metaDescription,
