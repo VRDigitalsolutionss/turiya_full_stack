@@ -8,7 +8,7 @@ const Topbar = () => {
 
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('admintoken');
     navigate('/logout');
   }
 
