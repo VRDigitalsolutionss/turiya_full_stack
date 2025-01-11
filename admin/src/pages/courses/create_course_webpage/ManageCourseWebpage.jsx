@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, BASE_URL_IMAGE } from "../../../config";
 import JoditEditor from "jodit-react";
+import ImageUploadModal from "../../../components/ImageUploadModal";
 const CourseForm = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -25,6 +26,7 @@ const CourseForm = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFAQs, setSelectedFAQs] = useState({});
   const [filteredFAQs, setFilteredFAQs] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
 
   const fetchData = () => {
@@ -659,6 +661,19 @@ const CourseForm = () => {
                 />
               </div>
             </div>
+
+            <div className="col-sm-6">
+              <div className="mb-3">
+                <button className="btn btn-success" onClick={(e) => {
+                  e.preventDefault();
+                  setShowModal(true);
+                }}>
+                  Click here to use uploaded images in content
+                </button>
+              </div>
+            </div>
+
+            {showModal && <ImageUploadModal setShowModal={setShowModal} />}
 
             <div className="mb-3">
               <label className="form-label">Paragraph Content :</label>
