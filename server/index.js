@@ -45,6 +45,7 @@ const verifyEmailRoute = require("./src/routes/VerifyEmailRoute");
 const purchasedModuleRoute = require("./src/routes/purchasedModuleRoute");
 const transactionDetailRoute = require("./src/routes/transactionDetail");
 const imageUploadRoute = require("./src/routes/imageUploadRoutes");
+const adminLoginRoute = require("./src/routes/adminLogin");
 // const test = require('./uploads')
 app.use(cors());
 app.use(express.json());
@@ -99,6 +100,7 @@ app.use("/api", resetPasswordRoute);
 app.use("/api", verifyEmailRoute);
 app.use("/api", transactionDetailRoute)
 app.use("/api", imageUploadRoute)
+app.use("/api", adminLoginRoute)
 
 const port = process.env.PORT || 5001;
 app.listen(port, () => {

@@ -34,12 +34,15 @@ const Login = () => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
 
-    axios.post(BASE_URL + '/login',{formData}).then((response) => {
+    axios.post(BASE_URL + '/admin-login',{
+      email: formData.email,
+      password: formData.password
+    }).then((response) => {
       console.log("response", response);
       
 
       if (response.status == 200) {
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("admintoken", response.data.token);
 
 
         Swal.fire({
@@ -123,11 +126,11 @@ const Login = () => {
                           {showPassword ? <LuEyeOff /> : <LuEye />}
                         </div>
                       </div>
-                      <a
+                      {/* <a
                         href="forget.php"
                         className="text-muted float-end py-2">
                         <small><Link to="/forgot_password" >Forgot your password?</Link></small>
-                      </a>
+                      </a> */}
                     </div>
                     <div className="mb-2 text-start">
                       <button
