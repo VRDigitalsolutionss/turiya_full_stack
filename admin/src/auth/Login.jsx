@@ -43,6 +43,7 @@ const Login = () => {
 
       if (response.status == 200) {
         localStorage.setItem("admintoken", response.data.token);
+        localStorage.setItem("token", response.data.token);
 
 
         Swal.fire({
