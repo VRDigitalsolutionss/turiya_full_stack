@@ -125,7 +125,7 @@ const addModule = async (req, res) => {
     });
 };
 
- 
+
 
 // Edit an existing module
 const editModule = async (req, res) => {
@@ -244,8 +244,8 @@ const getAllModules = async (req, res) => {
     try {
         // Find all modules and populate meal and room fields, sorted by start date in ascending order
         const modules = await Module.find()
-            .populate("meal")
-            .populate("room")
+            .populate("availableMeals")
+            .populate("availableRooms")
             .sort({ startDate: 1 }); // 1 for ascending order, -1 for descending order
 
         res.status(200).json({
@@ -291,7 +291,9 @@ const toggleModuleStatus = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const module = await Module.findById(id);
+        const module = await Module.findById(id)
+            .populate("availableMeals")
+            .populate("availableRooms");
         if (!module) {
             return res.status(404).json({
                 success: false,
@@ -324,7 +326,9 @@ const getModuleById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const module = await Module.findById(id);
+        const module = await Module.findById(id)
+            .populate("availableMeals")
+            .populate("availableRooms");
         if (!module) {
             return res.status(404).json({
                 success: false,

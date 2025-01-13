@@ -24,7 +24,7 @@ const AddModule = () => {
     axios
       .get(BASE_URL + "/modules")
       .then((response) => {
-        console.log(response.data.data);
+        console.log("qwertyuiop", response.data.data);
         setModules(response.data.data);
       })
       .catch((error) => {

@@ -3,11 +3,15 @@ const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const PurchasedModule = require("../../model/PurchasedModule");
+const Meal = require("../../model/addmealModel");
+const Room = require("../../model/addroomModel");
 
 const getInvoice = async (req, res) => {
   try {
     const { id } = req.params; // Get the invoice ID from the request parameters
-    const purchasedModule = await PurchasedModule.findById(id);
+    const purchasedModule = await PurchasedModule.findById(id)
+      .populate('selectedMeal')
+      .populate('selectedRoom');
 
     console.log("purchased module invoice", purchasedModule);
 
@@ -58,7 +62,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
   // console.log("req.body", req.body);
   try {
-    const {
+    var {
       productNumber,
       invoiceNumber,
       customerNumber,
@@ -75,16 +79,27 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       price,
       paid_amount,
       invoiceType,
+      selectedMeal,
+      selectedRoom,
       ...extraFields
     } = req.body;
 
+    var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : null;
+    var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : null;
+
+    console.log(parsedSelectedRoom)
+
     // Create new document instance
-    const purchasedModule = new PurchasedModule(req.body);
+    const purchasedModule = new PurchasedModule({
+      ...req.body,
+      selectedMeal: parsedSelectedMeal._id,
+      selectedRoom: parsedSelectedRoom._id,
+    });
 
     // Save to database
     var savedModule = await purchasedModule.save();
 
-    console.log("savedModule", savedModule)
+    // console.log("savedModule", savedModule)
     var invoiceId = savedModule._id;
     // res.status(201).json({
     //   message: "Purchased module saved successfully",
@@ -112,11 +127,11 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     const page = await browser.newPage();
 
     // HTML template for Invoice PDF (similar to the image)
-    console.log("req.body", req.body);
+    // console.log("req.body", req.body);
     function formatDate(dateString) {
       // Split the input date into an array [year, month, day]
       const [year, month, day] = dateString.split("-");
-  
+
       // Return the date in the desired format: dd.mm.yyyy
       return `${day}.${month}.${year}`;
     }
@@ -126,7 +141,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     function calculatePriceWithTax(price) {
 
 
-      if (req.body.userDetails.invoiceType  !== "Private_Invoice") {
+      if (req.body.userDetails.invoiceType !== "Private_Invoice") {
         const price_number = Number(price);
         const taxRate = 0.19;
         const taxAmount = price_number * taxRate;
@@ -143,7 +158,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice PDF</title>
+    <title>Rechnung PDF</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -161,7 +176,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         }
 
         .logo img {
-            height: 80px;
+            height: 100px;
         }
 
         .info {
@@ -289,32 +304,52 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         <tbody>
    
 
-<tr>
+              <tr>
                 <td>1</td>
                 <td>${req.body.productDescription}</td>
                 <td>${req.body.quantity}</td>
                 <td>Stk.</td>
                 <td>${req.body.price}€</td>
-                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'}
+                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}
                                </td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
-            </tr>
+              </tr>
+              ${parsedSelectedRoom ? `
+                <tr>
+                    <td>2</td>
+                    <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${parsedSelectedRoom.RoomPrice}€</td>
+                    <td>zzgl. 0%</td>
+                    <td>${parsedSelectedRoom.RoomPrice}€</td>
+                </tr>` : null}
+              ${parsedSelectedMeal ? `
+                <tr>
+                    <td>2</td>
+                    <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${parsedSelectedMeal.MealPrice}€</td>
+                    <td>zzgl. 0%</td>
+                    <td>${parsedSelectedMeal.MealPrice}€</td>
+                </tr>` : null}
 
         </tbody>
     </table>
 
     <!-- Totals -->
     <div class="totals">
-        <strong>Zwischensumme:  ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price} €</strong>
-        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'} USt aus ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price}€</p>
-        <strong>Gesamtbetrag: <u> ${calculatePriceWithTax(req.body.price)}€</u></strong>
+        <strong>Zwischensumme:  ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price} €</strong>
+        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'} USt aus ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price}€</p>
+        ${parsedSelectedRoom ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
+        ${parsedSelectedMeal ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
     <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p><p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
-
-    <!-- Closing Message -->
     <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
-    <p>Mit freundlichen Grüßen<br/><strong>Emanuel Wintermeyer</strong></p>
+    <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
 
     <!-- Footer -->
     <div class="footer">
@@ -352,7 +387,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contract PDF</title>
+    <title>Vereinbarung PDF</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -370,7 +405,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         }
 
         .logo img {
-            height: 80px;
+            height: 100px;
         }
 
         .info {
@@ -520,38 +555,52 @@ const generateInvoicesAndSendEmail = async (req, res) => {
             </tr>
         </thead>
         <tbody>
-     
-
-
             <tr>
- 
                 <td>1</td>
                 <td>${req.body.productDescription}</td>
                 <td>${req.body.quantity}</td>
                 <td>Stk.</td>
                 <td>${req.body.price}€</td>
-                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'}
+                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}
                                </td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
-        
             </tr>
+            ${parsedSelectedRoom ? `
+                <tr>
+                    <td>2</td>
+                    <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${parsedSelectedRoom.RoomPrice}€</td>
+                    <td>zzgl. 0%</td>
+                    <td>${parsedSelectedRoom.RoomPrice}€</td>
+                </tr>` : null}
+              ${parsedSelectedMeal ? `
+                <tr>
+                    <td>2</td>
+                    <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${parsedSelectedMeal.MealPrice}€</td>
+                    <td>zzgl. 0%</td>
+                    <td>${parsedSelectedMeal.MealPrice}€</td>
+                </tr>` : null}
         </tbody>
     </table>
 
     <!-- Totals -->
     <div class="totals">
-        <strong>Zwischensumme:  ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price} €</strong>
-        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice'?'0%': '19 %'} USt aus ${req.body.courseData.Offerprice?req.body.courseData.Offerprice:req.body.courseData.price}€</p>
-        <strong>Gesamtbetrag: <u> ${calculatePriceWithTax(req.body.price)}€</u></strong>
+        <strong>Zwischensumme:  ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price} €</strong>
+        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'} USt aus ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price}€</p>
+        ${parsedSelectedRoom ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
+        ${parsedSelectedMeal ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
 
-    <p style="margin-top: 20px;">Zahlbar sofort rein netto.<br>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
-
-    <!-- Closing Message -->
-    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.<br>
-    Mit freundlichen Grüßen</p>
-    <p><strong>Emanuel Wintermeyer</strong></p>
+    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p><p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
+    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
+    <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
 
     <!-- Footer -->
     <div class="footer">
@@ -651,8 +700,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 </html>`;
 
     // Step 2: Generate PDF for the invoice
-    const invoicePath = path.join(__dirname, "invoice.pdf");
-    const contractPath = path.join(__dirname, "rechnung.pdf");
+    const invoicePath = path.join(__dirname, "Rechnung.pdf");
+    const contractPath = path.join(__dirname, "Vereinbarung.pdf");
 
     const additionalPdfPath1 = path.join(
       __dirname,
@@ -781,8 +830,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         </body>
       </html>`,
       attachments: [
-        { filename: "invoice.pdf", path: invoicePath },
-        { filename: "rechnung.pdf", path: contractPath },
+        { filename: "Rechnung.pdf", path: invoicePath },
+        { filename: "Vereinbarung.pdf", path: contractPath },
         {
           filename: "AGB_Turiya_Yoga_Frankfurt_2021.pdf", // Name to appear in the email
           path: additionalPdfPath1, // Path to the first additional PDF

@@ -16,7 +16,7 @@ const ModulesConfig = () => {
       navigate("/login");
     
     }
-  }, []);
+  }, [id]);
   const [roomDetails, setRoomDetails] = useState('');
 
   const all_rooms = () => {

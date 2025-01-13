@@ -3,9 +3,8 @@ const mongoose = require("../config/db");
 const mealSchema = new mongoose.Schema(
     {
         moduleId: {
-            type: String,
-            required: true,
-            trim: true,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "module",
         },
         MealOffers: {
             type: String,
@@ -22,7 +21,7 @@ const mealSchema = new mongoose.Schema(
             trim: true,
             default: "active",
         },
-       
+
     },
     {
         timestamps: true,

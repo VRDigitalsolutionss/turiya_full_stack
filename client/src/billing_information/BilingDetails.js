@@ -9,6 +9,19 @@ const BilingDetails = () => {
   const [registerId, setregisterAuthId] = useState("");
   const navigate = useNavigate();
   const [address, setAddress] = useState("");
+  const [selectedRoom, setSelectedRoom] = useState({})
+  const [selectedMeal, setSelectedMeal] = useState({})
+  const selectedMealFromLocalStorage = localStorage.getItem('selectedMeal')
+  const selectedRoomFromLocalStorage = localStorage.getItem('selectedRoom')
+
+  useEffect(() => {
+    if (selectedMealFromLocalStorage) {
+      setSelectedMeal(JSON.parse(selectedMealFromLocalStorage))
+    }
+    if (selectedRoomFromLocalStorage) {
+      setSelectedRoom(JSON.parse(selectedRoomFromLocalStorage))
+    }
+  }, [])
 
   const fetchOtherAddress = () => {
     axios
@@ -21,7 +34,7 @@ const BilingDetails = () => {
         alert("something went wrong");
       });
   };
- 
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -124,12 +137,11 @@ const BilingDetails = () => {
     const custumer_num = generateCustomerNumber();
     const order_num = generateOrderNumber();
     const due_date = getTodayDate();
-    const taxCalculationnewv = calculatePriceWithTax(courseData.price, courseData.OfferEndDate, courseData.Offerprice);
+    const taxCalculationnewv = calculatePriceWithTax(courseData.price, courseData.OfferEndDate, courseData.Offerprice, selectedRoom?.RoomPrice, selectedMeal?.MealPrice);
     // generateInvoiceNumber();
     // generateCustomerNumber();
     // generateOrderNumber();
 
-    console.log("taxCalculationnew", taxCalculationnewv)
     const payload = {
       productnumber: courseData._id,
       invoiceNumber: invoice_num,
@@ -137,17 +149,19 @@ const BilingDetails = () => {
       orderNumber: order_num,
       dueDate: due_date,
       customerName: userDetails.company ? userDetails.company : userDetails.First_name,
-      customerAddress: userDetails.address,
+      customerAddress: `${userDetails.address}, ${userDetails.city}, ${userDetails.federal_state}, ${userDetails.postal_code}, ${userDetails.country}`,
       productDescription: courseData.Ausbildung,
       quantity: 1,
       totalPrice: taxCalculationnewv,
       email: userDetails.email,
       user_type: userDetails.userType,
       price: courseData.Offerprice ? courseData.Offerprice : courseData.price,
-      due_amount:taxCalculationnewv,
+      due_amount: taxCalculationnewv,
       courseData: courseData,
       userDetails: userDetails,
       paid_amount: 0,
+      selectedMeal: selectedMeal ? JSON.stringify(selectedMeal) : '00.00',
+      selectedRoom: selectedRoom ? JSON.stringify(selectedRoom) : '00.00',
       invoiceType: userDetails.invoiceType === "Private_Invoice" ? "private" : "company"
     };
     setInvoiceLoading(true)
@@ -213,23 +227,32 @@ const BilingDetails = () => {
     return today <= offerEnd;
   }
 
-  function calculatePriceWithTax(price, offerEndDate, offerPrice) {
+  function calculatePriceWithTax(price, offerEndDate, offerPrice, roomPrice, mealPrice) {
     const isOfferStillValid = isOfferValid(offerEndDate) && offerPrice > 0;
-
     const priceToCalculate = isOfferStillValid ? offerPrice : price;
-
+  
+    let totalPrice = Number(priceToCalculate);
+  
+    if (roomPrice) {
+      totalPrice += Number(roomPrice);
+    }
+  
+    if (mealPrice) {
+      totalPrice += Number(mealPrice);
+    }
+  
     if (userDetails.invoiceType !== "Private_Invoice") {
-      const price_number = Number(priceToCalculate);
       const taxRate = 0.19;
-      const taxAmount = price_number * taxRate;
-      const finalPrice = price_number + taxAmount;
-      return finalPrice;
+      const taxAmount = totalPrice * taxRate;
+      const finalPrice = totalPrice + taxAmount;
+      return finalPrice.toFixed(2);
     } else {
-      return priceToCalculate;
+      return totalPrice.toFixed(2);
     }
   }
+  
 
-  console.log("sfsfsfsf", loading)
+  // console.log("sfsfsfsf", loading)
 
 
   return (
@@ -270,18 +293,14 @@ const BilingDetails = () => {
                       <strong>places</strong> left
                     </span>
                   </div>
-                  <div className="cart_details__heading">
-                    <h6 />
-                    <p>€0.00</p>
-                  </div>
-                  {/* <div class="cart_details__heading">
-                  <h6>VAT (0%)</h6>
-                  <p>€0</p>
-              </div> */}
-                  <div className="cart_details__heading">
-                    <h6 />
-                    <p>€0.00</p>
-                  </div>
+                  {selectedRoom && <div className="cart_details__heading">
+                    <h6>Room</h6>
+                    <p>€{selectedRoom.RoomPrice}</p>
+                  </div>}
+                  {selectedMeal && <div className="cart_details__heading">
+                    <h6>Meal</h6>
+                    <p>€{selectedMeal.MealPrice}</p>
+                  </div>}
                   {
                     userDetails.invoiceType
                       !== "Private_Invoice" ? <div className="cart_details__heading">
@@ -316,7 +335,9 @@ const BilingDetails = () => {
                       {calculatePriceWithTax(
                         courseData.price,
                         courseData.OfferEndDate,
-                        courseData.Offerprice
+                        courseData.Offerprice,
+                        selectedRoom?.RoomPrice,
+                        selectedMeal?.MealPrice
                       )}
                     </p>
                   </div>
@@ -593,7 +614,7 @@ const BilingDetails = () => {
                         //   type="submit"
                         onClick={fetchModuleDetails}>
                         Gebührenpflichtig bestellen
-                        {invoiceLoading && <div class="spinner-border text-light" role="status"> 
+                        {invoiceLoading && <div class="spinner-border text-light" role="status">
                         </div>}
                       </button>
                     </div>

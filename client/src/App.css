@@ -867,7 +867,7 @@ p.ql-align-center {
 }
 
 .price {
-  margin-top: 2rem;
+  margin-top: 5.4rem;
   display: flex;
   justify-content: end;
 }
@@ -4232,11 +4232,11 @@ p {
 }
 
 table tr th {
-  background-color: #aa2e2e; /* Light gray background */
+  /* background-color: #aa2e2e; */
 }
 
 table tr td {
-  background-color: #aa2e2e; /* Light gray background */
+  /* background-color: #aa2e2e; */
 }
 
 /* .cart-overlay-content button {

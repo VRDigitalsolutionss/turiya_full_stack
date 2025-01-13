@@ -16,6 +16,8 @@ const BookingDetail = () => {
   const [invoiceType, setInvoiceType] = useState("Private_Invoice"); // State for invoice type
   const [addressType, setAddressType] = useState("Other_Address"); // State for address type
   const [loading, setLoading] = useState(true)
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedMeal, setSelectedMeal] = useState(null);
 
   const [formData, setFormData] = useState({
     registeredUserId: userId, // Pre-filled ID
@@ -55,6 +57,8 @@ const BookingDetail = () => {
   };
 
   const [courseData, setCourseData] = useState("");
+  const [availableRooms, setAvailableRooms] = useState([])
+  const [availableMeals, setAvailableMeals] = useState([])
 
   const fetchCourseById = () => {
     if (id) {
@@ -64,6 +68,8 @@ const BookingDetail = () => {
         .then((resonse) => {
           console.log("response of billing module", resonse.data.data);
           setCourseData(resonse.data.data);
+          setAvailableRooms(resonse.data.data.availableRooms)
+          setAvailableMeals(resonse.data.data.availableMeals)
           setLoading(false)
         })
         .catch((error) => {
@@ -116,7 +122,7 @@ const BookingDetail = () => {
   };
 
 
-  const updateInvoiceType = async  () => {
+  const updateInvoiceType = async () => {
 
     const userid = localStorage.getItem("turiya_auth_id");
     const payload = {
@@ -135,8 +141,15 @@ const BookingDetail = () => {
 
 
   const generateInvoice = async () => {
-
     if (id) {
+      if (addMeal) {
+        localStorage.setItem('selectedMeal', JSON.stringify(selectedMeal));
+      }
+
+      if (addRoom) {
+        localStorage.setItem('selectedRoom', JSON.stringify(selectedRoom));
+      }
+
       await updateInvoiceType();
       if (addressType == 'Other_Address') {
         addOtherAddress();
@@ -145,8 +158,16 @@ const BookingDetail = () => {
     } else {
       console.log("id not found")
     }
-
   };
+
+  useEffect(() => {
+    if (!addMeal) {
+      localStorage.removeItem('selectedMeal');
+    }
+    if (!addRoom) {
+      localStorage.removeItem('selectedRoom');
+    }
+  }, [])
 
   // Function to handle input changes
   const handleChange = (e) => {
@@ -179,7 +200,7 @@ const BookingDetail = () => {
   };
 
   // ========================================================================
-  
+
 
   const originalPrice = 2699;
   const finalPrice = calculatePriceWithTax(originalPrice);
@@ -202,9 +223,9 @@ const BookingDetail = () => {
 
   function calculatePriceWithTax(price, offerEndDate, offerPrice) {
     const isOfferStillValid = isOfferValid(offerEndDate) && offerPrice > 0;
-  
+
     const priceToCalculate = isOfferStillValid ? offerPrice : price;
-  
+
     if (invoiceType !== "Private_Invoice") {
       const price_number = Number(priceToCalculate);
       const taxRate = 0.19; // 19% tax rate
@@ -216,6 +237,16 @@ const BookingDetail = () => {
     }
   }
 
+  // Handler to select a room
+  const handleRoomSelect = (room) => {
+    setSelectedRoom(room);
+  };
+
+  // Handler to select a meal
+  const handleMealSelect = (meal) => {
+    setSelectedMeal(meal);
+  };
+
 
   return (
     <>
@@ -226,296 +257,380 @@ const BookingDetail = () => {
           </div>
           <p className="mb-0">Loading your details..</p>
         </div> : <div className="BookingDetail">
-        <div className="global_content">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-4">
-                <div className="cart_wrapper__left">
-                  <h3>Auftragsrüberblick</h3>
-                  <div className="cart_wrapper__left-box">
-                    <div className="cart_left__heading">
-                      <h6> {courseData && courseData.Ausbildung}</h6>
-                      <div className="del cart-price">
-                        <p>{isOfferValid(courseData.OfferEndDate) && courseData.Offerprice > 0 ? (
-                          <span>
-                            € {courseData.Offerprice}
-                          </span>
-                        ) : (
-                          <span>€{courseData.price}</span>
-                        )} </p>
-                      </div>
-                    </div>
-
-                    <div className="cart-list">
-                      {/* Place  */}
-                      <ul>
-                        <li>
-                          <i className="bx bxs-calendar me-2" />
-                          {courseData.StartDate}
-                        </li>
-                        <li>{courseData.Location}</li>
-                        <li>
-                          {" "}
-                          {"Noch" +
-                            " " +
-                            courseData.Place +
-                            " " +
-                            "Plätze frei"}{" "}
-                        </li>
-                        {addMeal && <li>Meal : € 00.00</li>}
-                        {addRoom && <li>Room : € 00.00</li>}
-                      </ul>
-                    </div>
-                    <div className="cart-total">
-                      <h6>TOTAL</h6>
-                      <p>
-                        €{" "}
-                        {calculatePriceWithTax(
-                          courseData.price,
-                          courseData.OfferEndDate,
-                          courseData.Offerprice   
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-8">
-                <div className="cart-right">
-                  <form method="post">
-                    <div className="registration_box">
-                      <div className="registration-second">
-                        <h6>Informationen zur Rechnungsstellung</h6>
-                        <div className="registration-second-radio">
-                          <div className="second-radio-flex">
-                            <input
-                              type="radio"
-                              name="invoice_type"
-                              value="Private_Invoice"
-                              checked={invoiceType === "Private_Invoice"}
-                              onChange={handleInvoiceTypeChange}
-                            />
-                            <label htmlFor="PRIVATRECHNUNG">
-                              PRIVATRECHNUNG
-                            </label>
-                          </div>
-                          <div className="second-radio-flex">
-                            <input
-                              type="radio"
-                              name="invoice_type"
-                              value="Company_invoice"
-                              checked={invoiceType === "Company_invoice"}
-                              onChange={handleInvoiceTypeChange}
-                            />
-                            <label htmlFor="FIRMENRECHNUNG">
-                              FIRMENRECHNUNG
-                            </label>
-                          </div>
+          <div className="global_content">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-4">
+                  <div className="cart_wrapper__left">
+                    <h3>Auftragsrüberblick</h3>
+                    <div className="cart_wrapper__left-box">
+                      <div className="cart_left__heading">
+                        <h6> {courseData && courseData.Ausbildung}</h6>
+                        <div className="del cart-price">
+                          <p>{isOfferValid(courseData.OfferEndDate) && courseData.Offerprice > 0 ? (
+                            <span>
+                              € {courseData.Offerprice}
+                            </span>
+                          ) : (
+                            <span>€{courseData.price}</span>
+                          )} </p>
                         </div>
                       </div>
 
-                      {invoiceType === "Company_invoice" && (
-                        <div>
+                      <div className="cart-list">
+                        {/* Place  */}
+                        <ul>
+                          <li>
+                            <i className="bx bxs-calendar me-2" />
+                            {courseData.StartDate}
+                          </li>
+                          <li>{courseData.Location}</li>
+                          <li>
+                            {" "}
+                            {"Noch" +
+                              " " +
+                              courseData.Place +
+                              " " +
+                              "Plätze frei"}{" "}
+                          </li>
+                          {addMeal && <li>Meal : € {selectedMeal?.MealPrice ? selectedMeal?.MealPrice : '00.00'}</li>}
+                          {addRoom && <li>Room : € {selectedRoom?.RoomPrice ? selectedRoom?.RoomPrice : '00.00'}</li>}
+                        </ul>
+                      </div>
+                      <div className="cart-total">
+                        <h6>TOTAL</h6>
+                        <p>
+                          €{" "}
+                          {calculatePriceWithTax(
+                            courseData.price,
+                            courseData.OfferEndDate,
+                            courseData.Offerprice
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-8">
+                  <div className="cart-right">
+                    <form method="post">
+                      <div className="registration_box">
+                        <div className="registration-second">
+                          <h6>Informationen zur Rechnungsstellung</h6>
                           <div className="registration-second-radio">
                             <div className="second-radio-flex">
                               <input
                                 type="radio"
-                                name="address_type"
-                                value="Other_Address"
-                                id="ANDERE"
-                                checked={addressType === "Other_Address"}
-                                onChange={handleAddressTypeChange}
+                                name="invoice_type"
+                                value="Private_Invoice"
+                                checked={invoiceType === "Private_Invoice"}
+                                onChange={handleInvoiceTypeChange}
                               />
-                              <label htmlFor="ANDERE">ANDERE ADRESSE</label>
+                              <label htmlFor="PRIVATRECHNUNG">
+                                PRIVATRECHNUNG
+                              </label>
                             </div>
                             <div className="second-radio-flex">
                               <input
                                 type="radio"
-                                name="address_type"
-                                value="Registration_Address"
-                                id="IDENTISCH"
-                                checked={addressType === "Registration_Address"}
-                                onChange={handleAddressTypeChange}
+                                name="invoice_type"
+                                value="Company_invoice"
+                                checked={invoiceType === "Company_invoice"}
+                                onChange={handleInvoiceTypeChange}
                               />
-                              <label htmlFor="IDENTISCH">
-                                IDENTISCH MIT REGISTRIERUNGS ADRESSE
+                              <label htmlFor="FIRMENRECHNUNG">
+                                FIRMENRECHNUNG
                               </label>
                             </div>
                           </div>
+                        </div>
 
-                          {/* Conditionally render the second_data_form */}
-                          {addressType === "Other_Address" && (
-                            <div
-                              className="second_data_form"
-                              style={{ display: "block" }}>
-                              <div className="registration_box__flex">
-                                <div
-                                  className="modal_input"
-                                  style={{
-                                    display: "none",
-                                  }}>
-                                  <label>
-                                    Vorname <span>*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="inv_fname"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <div
-                                  className="modal_input"
-                                  style={{
-                                    display: "none",
-                                  }}>
-                                  <label>
-                                    Nachname <span>*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="inv_lname"
-                                    onChange={handleChange}
-                                    value={formData.inv_lname}
-                                  />
-                                </div>
+                        {invoiceType === "Company_invoice" && (
+                          <div>
+                            <div className="registration-second-radio">
+                              <div className="second-radio-flex">
+                                <input
+                                  type="radio"
+                                  name="address_type"
+                                  value="Other_Address"
+                                  id="ANDERE"
+                                  checked={addressType === "Other_Address"}
+                                  onChange={handleAddressTypeChange}
+                                />
+                                <label htmlFor="ANDERE">ANDERE ADRESSE</label>
                               </div>
-                              <div className="registration_box__flex">
-                                <div
-                                  className="modal_input"
-                                  id="company_name_input"
-                                  style={{ display: "block" }}>
-                                  <label>
-                                    Enter company name : <span>*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="inv_company"
-                                    id="inv_company"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                              </div>
-                              <div className="registration_box__flex">
-                                <div className="modal_input">
-                                  <label>E-Mail</label>
-                                  <input
-                                    type="email"
-                                    name="inv_email"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <div className="modal_input">
-                                  <label>HANDY / TELEFON</label>
-                                  <input
-                                    type="number"
-                                    name="inv_num"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                              </div>
-                              <div
-                                className="registration_box__flex"
-                                onChange={handleChange}>
-                                <div className="modal_input">
-                                  <label>Adresse</label>
-                                  <input
-                                    type="text"
-                                    name="inv_address"
-                                    placeholder="Straße / Haus Nr."
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <div className="modal_input">
-                                  <label>LAND</label>
-                                  <input
-                                    type="text"
-                                    name="inv_country"
-                                    placeholder="Deutschland"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                              </div>
-                              <div className="registration_box__flex">
-                                <div className="modal_input">
-                                  <label>Bundesstaat</label>
-                                  <input
-                                    type="text"
-                                    name="inv_state"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <div className="modal_input">
-                                  <label>STADT</label>
-                                  <input
-                                    type="text"
-                                    name="inv_city"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <div className="modal_input">
-                                  <label>Postleitzahl</label>
-                                  <input
-                                    type="text"
-                                    name="inv_pcode"
-                                    onChange={handleChange}
-                                  />
-                                </div>
+                              <div className="second-radio-flex">
+                                <input
+                                  type="radio"
+                                  name="address_type"
+                                  value="Registration_Address"
+                                  id="IDENTISCH"
+                                  checked={addressType === "Registration_Address"}
+                                  onChange={handleAddressTypeChange}
+                                />
+                                <label htmlFor="IDENTISCH">
+                                  IDENTISCH MIT REGISTRIERUNGS ADRESSE
+                                </label>
                               </div>
                             </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
 
-                    {/* ============== */}
-                    <div>
+                            {/* Conditionally render the second_data_form */}
+                            {addressType === "Other_Address" && (
+                              <div
+                                className="second_data_form"
+                                style={{ display: "block" }}>
+                                <div className="registration_box__flex">
+                                  <div
+                                    className="modal_input"
+                                    style={{
+                                      display: "none",
+                                    }}>
+                                    <label>
+                                      Vorname <span>*</span>
+                                    </label>
+                                    <input
+                                      type="text"
+                                      name="inv_fname"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                  <div
+                                    className="modal_input"
+                                    style={{
+                                      display: "none",
+                                    }}>
+                                    <label>
+                                      Nachname <span>*</span>
+                                    </label>
+                                    <input
+                                      type="text"
+                                      name="inv_lname"
+                                      onChange={handleChange}
+                                      value={formData.inv_lname}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="registration_box__flex">
+                                  <div
+                                    className="modal_input"
+                                    id="company_name_input"
+                                    style={{ display: "block" }}>
+                                    <label>
+                                      Enter company name : <span>*</span>
+                                    </label>
+                                    <input
+                                      type="text"
+                                      name="inv_company"
+                                      id="inv_company"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="registration_box__flex">
+                                  <div className="modal_input">
+                                    <label>E-Mail</label>
+                                    <input
+                                      type="email"
+                                      name="inv_email"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                  <div className="modal_input">
+                                    <label>HANDY / TELEFON</label>
+                                    <input
+                                      type="number"
+                                      name="inv_num"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                </div>
+                                <div
+                                  className="registration_box__flex"
+                                  onChange={handleChange}>
+                                  <div className="modal_input">
+                                    <label>Adresse</label>
+                                    <input
+                                      type="text"
+                                      name="inv_address"
+                                      placeholder="Straße / Haus Nr."
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                  <div className="modal_input">
+                                    <label>LAND</label>
+                                    <input
+                                      type="text"
+                                      name="inv_country"
+                                      placeholder="Deutschland"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="registration_box__flex">
+                                  <div className="modal_input">
+                                    <label>Bundesstaat</label>
+                                    <input
+                                      type="text"
+                                      name="inv_state"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                  <div className="modal_input">
+                                    <label>STADT</label>
+                                    <input
+                                      type="text"
+                                      name="inv_city"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                  <div className="modal_input">
+                                    <label>Postleitzahl</label>
+                                    <input
+                                      type="text"
+                                      name="inv_pcode"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* ============== */}
+                      <div>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={addMeal}
+                            onChange={handleMealCheckboxChange}
+                            className="me-3"
+                          />
+                          Add Meal
+                        </label>
+                      </div>
                       <label>
                         <input
                           type="checkbox"
-                          checked={addMeal}
-                          onChange={handleMealCheckboxChange}
+                          checked={addRoom}
                           className="me-3"
+                          onChange={handleRoomCheckboxChange}
                         />
-                        Add Meal
+                        Add Room
                       </label>
-                    </div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={addRoom}
-                        className="me-3"
-                        onChange={handleRoomCheckboxChange}
-                      />
-                      Add Room
-                    </label>
 
-                    <div className="registration-btn">
-                      {/* <button
-                        className="global_btn"
-                        type="submit"
-                        name="booking_form"
-                      onClick={generateInvoice}
-                      >
-                        Anmeldung Überprüfen
-                      </button> */}
+                      {addRoom && <div>
+                        <h2>Available Rooms</h2>
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th>Room Offer</th>
+                              <th>Room Price (in €)</th>
+                              <th>Select</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {availableRooms.map((room) => (
+                              <tr
+                                key={room?._id}
+                                className={
+                                  selectedRoom?._id === room?._id ? "table-success" : "table-light"
+                                }
+                              >
+                                <td>{room.RoomOffers}</td>
+                                <td>{room.RoomPrice}</td>
+                                <td>
+                                  <input
+                                    type="radio"
+                                    name="room"
+                                    value={room?._id}
+                                    checked={selectedRoom?._id === room?._id}
+                                    onChange={() => handleRoomSelect(room)}
+                                  />
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>}
+                      {addMeal && <div>
+                        <h2>Available Meals</h2>
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th>Meal Offer</th>
+                              <th>Meal Price (in €)</th>
+                              <th>Select</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {availableMeals.map((meal) => (
+                              <tr
+                                key={meal?._id}
+                                className={
+                                  selectedMeal?._id === meal?._id ? "table-success" : "table-light"
+                                }
+                              >
+                                <td>{meal.MealOffers}</td>
+                                <td>{meal.MealPrice}</td>
+                                <td>
+                                  <input
+                                    type="radio"
+                                    name="meal"
+                                    value={meal?._id}
+                                    checked={selectedMeal?._id === meal?._id}
+                                    onChange={() => handleMealSelect(meal)}
+                                  />
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>}
 
-                      <button
-                        className="global_btn"
-                        type="button"
-                        // name="booking_form"
-                        onClick={generateInvoice}>
-                        Anmeldung Überprüfen
-                      </button>
-                    </div>
-                  </form>
+                      <div className="registration-btn">
+                        <button
+                          className="global_btn"
+                          type="button"
+                          // name="booking_form"
+                          onClick={generateInvoice}>
+                          Anmeldung Überprüfen
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>}
+        </div>}
     </>
   );
 };
+
+const styles = {
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    marginBottom: "20px",
+  },
+  row: {
+    backgroundColor: "#fff",
+    textAlign: "left",
+    borderBottom: "1px solid #ddd",
+  },
+  selectedRow: {
+    backgroundColor: "#e0f7e9 !important", // Light green background for selected row
+    textAlign: "left",
+    borderBottom: "1px solid #ddd",
+  },
+  header: {
+    backgroundColor: "#f4f4f4",
+    textAlign: "left",
+    fontWeight: "bold",
+  },
+};
+
 
 export default BookingDetail;

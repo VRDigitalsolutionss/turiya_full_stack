@@ -7,10 +7,10 @@ const Meal = require('../../model/addmealModel');
 
 const getAllMeals = async (req, res) => {
   try {
-    const { moduleId } = req.query; // Get moduleId from query parameters
+    const { moduleId } = req.params; 
 
     // Query to find rooms
-    const query = moduleId ? { moduleId } : {};  // If mealId is provided, filter by it; otherwise, get all meals
+    const query = moduleId ? { moduleId } : {};
       const meals = await Meal.find(query);
 
       res.status(200).json({
@@ -36,39 +36,44 @@ const addMealAndUpdateModule = async (req, res) => {
         MealPrice,
         status
       } = req.body;
+
+      if (!moduleId || !MealOffers || !MealPrice) {
+        return res.status(400).json({
+          success: false,
+          message: "moduleId, MealOffers, and MealPrice are required",
+        });
+      }
   
-      // Step 1: Create the Meal
-      const newMeal = new Meal({
+      // Create a new Meal
+      const newMeal = await Meal.create({
         moduleId,
         MealOffers,
         MealPrice,
-        status
+        status: status || "active",
       });
   
-
-      // console.log("new meal", newMeal);
-      // Save the Meal
-      await newMeal.save();
-  
-      // Step 2: Find the Module and update it with the newly created mealId
+      // Update the corresponding module to add the Meal to availableMeals
       const updatedModule = await Module.findByIdAndUpdate(
         moduleId,
-        { meal: newMeal._id }, // Update the meal reference in the module
-        // Return the updated module
+        { $push: { availableMeals: newMeal._id } },
+        { new: true } // Return the updated module
       );
   
       if (!updatedModule) {
         return res.status(404).json({
           success: false,
-          message: "Module not found with the given moduleId",
+          message: "Module not found",
         });
       }
   
+      // Respond with success
       res.status(201).json({
         success: true,
-        message: "Meal added and Module updated successfully",
-        data: updatedModule,
+        message: "Meal added and module updated successfully",
+        data: { Meal: newMeal, module: updatedModule },
       });
+  
+  
     } catch (error) {
       res.status(500).json({
         success: false,

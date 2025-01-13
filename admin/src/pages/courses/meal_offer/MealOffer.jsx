@@ -16,7 +16,7 @@ const MealOffer = () => {
 
   useEffect(() => {
     all_meals();
-  }, []);
+  }, [id]);
 
 
   const all_meals = () => {
@@ -55,11 +55,7 @@ const MealOffer = () => {
   }, []);
 
   // Adding dummy data to the entries state
-  const [entries, setEntries] = useState([
-    { id: 1, meal: "Spaghetti", price: "10" },
-    { id: 2, meal: "Pizza", price: "12" },
-    { id: 3, meal: "Salad", price: "8" },
-  ]);
+  const [entries, setEntries] = useState([]);
   const [meal, setMeal] = useState("");
   const [price, setPrice] = useState("");
 
@@ -92,7 +88,7 @@ const MealOffer = () => {
       </div> */}
       <div className="card shadow-sm" style={{ border: "none" }}>
         <div className="bg-light d-flex justify-content-between p-3">
-          <Link to="/meal_offer" id className="btn btn-info">
+          <Link to="/courses/addModule" id className="btn btn-info">
             Back To Modules
           </Link>
 

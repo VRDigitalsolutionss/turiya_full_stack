@@ -202,8 +202,8 @@ function App() {
           <Route path="bilingDetails/:id" element={<BilingDetails />} />
           <Route path="thank-you" element={<ThankYouPage />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="privacy_policy" element={<Privacy_Policy />} />
-          <Route path="imprint" element={<Imprint />} />
+          <Route path="impressum" element={<Privacy_Policy />} />
+          <Route path="datenschutz" element={<Imprint />} />
           <Route path="term" element={<Term_Condition />} />
           <Route path="product" element={<Product />} />
           <Route path="product-billing" element={<ProductBilling />} />

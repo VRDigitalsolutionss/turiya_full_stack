@@ -1,102 +1,103 @@
-const mongoose = require("../config/db"); 
+const mongoose = require("../config/db");
 
 const moduleSchema = new mongoose.Schema({
     modulecategory: {
         type: String,
-        required: false, 
-        trim: true,    
+        required: false,
+        trim: true,
     },
     modulesubcategory: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     moduleheading: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     modulesubheading: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     Ausbildung: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     StartDate: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     EndDate: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     Location: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     price: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     Offerprice: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     OfferEndDate: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     Place: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     AboutCourse: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     Homepage_cardcontent: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     Images: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     redirectUrl: {
         type: String,
-        required: false, 
+        required: false,
         trim: true,
     },
     status: {
         type: String,
-        trim: true, 
-        default: 'active',   
+        trim: true,
+        default: 'active',
     },
-    // Reference to Meal Schema
-    meal: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "meal", // Reference to the Meal model
-        required: false,
-    },
-    room: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "room", // Reference to the Meal model
-        required: false,
-    }
+    availableMeals: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "meal",
+        },
+    ],
+    availableRooms: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "room",
+        },
+    ],
 }, {
     timestamps: true,
     strictPopulate: false,

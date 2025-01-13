@@ -13,7 +13,6 @@ const ManageMealOffer = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    roomNumber: "",
     mealOffers: "",
     price: "",
   });
@@ -29,7 +28,7 @@ const ManageMealOffer = () => {
 
 
     const payload = {
-      'moduleId':id,  // The ID of the module to be updated with the meal
+      'moduleId':id,
       'MealOffers':formData.mealOffers,
       'MealPrice':formData.price,
       'status':"active"
@@ -43,13 +42,7 @@ const ManageMealOffer = () => {
       .then((response) => {
         console.log("response of adding room:", response);
         alert('meal added successfully');
-        setFormData({
-
-      
-          roomNumber: "",
-          mealOffers: "",
-          price: "",
-        });
+        navigate(`/mealOffer/${id}`);
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -67,20 +60,6 @@ const ManageMealOffer = () => {
         </div>
         <div className="card-body">
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="roomNumber" className="form-label">
-                Room Number
-              </label>
-              <input
-                type="text"
-                id="roomNumber"
-                name="roomNumber"
-                value={formData.roomNumber}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="Enter Room Number"
-              />
-            </div>
             <div className="mb-3">
               <label htmlFor="mealOffers" className="form-label">
                 Enter Your Meals Offers

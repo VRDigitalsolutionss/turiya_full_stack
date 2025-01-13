@@ -3,9 +3,8 @@ const mongoose = require("../config/db");
 const roomSchema = new mongoose.Schema(
     {
         moduleId: {
-            type: String,
-            required: true,
-            trim: true,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "module",
         },
         RoomOffers: {
             type: String,

@@ -34,9 +34,9 @@ const Footer = () => {
                     </p>
                   </div>
                   <div className="link">
-                    <Link to="/privacy_policy">Impressum</Link>
+                    <Link to="/impressum">Impressum</Link>
                     <span>/</span>
-                    <Link to="/imprint">Datenschutz</Link>
+                    <Link to="/datenschutz">Datenschutz</Link>
                   </div>
                   <div className="social-media">
                     <Link to="https://www.facebook.com/turiyayogainternational">
