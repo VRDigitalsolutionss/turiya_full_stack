@@ -87,7 +87,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : null;
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : null;
 
-    console.log(parsedSelectedRoom)
+    console.log(parsedSelectedRoom) 
 
     // Create new document instance
     const purchasedModule = new PurchasedModule({
@@ -314,7 +314,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                                </td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
               </tr>
-              ${parsedSelectedRoom ? `
+              ${parsedSelectedRoom?.RoomOffers ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
@@ -324,7 +324,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>zzgl. 0%</td>
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
                 </tr>` : null}
-              ${parsedSelectedMeal ? `
+              ${parsedSelectedMeal?.MealOffers ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
@@ -342,8 +342,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <div class="totals">
         <strong>Zwischensumme:  ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price} €</strong>
         <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'} USt aus ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price}€</p>
-        ${parsedSelectedRoom ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
-        ${parsedSelectedMeal ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
+        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
         <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
@@ -565,7 +565,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                                </td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
             </tr>
-            ${parsedSelectedRoom ? `
+            ${parsedSelectedRoom.RoomPrice ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
@@ -575,7 +575,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>zzgl. 0%</td>
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
                 </tr>` : null}
-              ${parsedSelectedMeal ? `
+              ${parsedSelectedMeal.MealPrice ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
@@ -592,8 +592,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <div class="totals">
         <strong>Zwischensumme:  ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price} €</strong>
         <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'} USt aus ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price}€</p>
-        ${parsedSelectedRoom ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
-        ${parsedSelectedMeal ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
+        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
         <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
