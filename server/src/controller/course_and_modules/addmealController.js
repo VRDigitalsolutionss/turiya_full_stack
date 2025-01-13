@@ -93,7 +93,11 @@ const deleteMeal = async (req, res) => {
 // **Get All Meals**
 const getAllMeals = async (req, res) => {
     try {
-        const meals = await Meal.find();
+        const { moduleId } = req.params; // Get moduleId from query parameters
+
+        // Query to find rooms
+        const query = moduleId ? { moduleId } : {};
+        const meals = await Meal.find(query);
         res.status(200).json({
             success: true,
             data: meals,

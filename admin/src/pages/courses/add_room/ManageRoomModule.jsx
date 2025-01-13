@@ -49,6 +49,7 @@ const ManageRoomModule = () => {
       console.log("response", response.status);
       if (response.status === 201) {
         alert("Room Added Successfully");
+        navigate(`/add_room/${id}`);
       } else {
         alert("Room Added Error");
       }

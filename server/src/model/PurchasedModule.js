@@ -8,7 +8,7 @@ const PurchasedModuleschema = new mongoose.Schema(
     customerNumber: { type: String, required: false },
     orderNumber: { type: String, required: false },
     dueDate: { type: Date, required: false },
-    due_amount:{ type: Number, required: false},
+    due_amount: { type: Number, required: false },
     customerName: { type: String, required: false },
     customerAddress: { type: String, required: false },
     productDescription: { type: String, required: false },
@@ -19,11 +19,19 @@ const PurchasedModuleschema = new mongoose.Schema(
     price: { type: Number, required: false },
     courseData: { type: mongoose.Schema.Types.Mixed, required: false },
     userDetails: { type: mongoose.Schema.Types.Mixed, required: false },
-    invoice: { type: Buffer ,required: false}, // Store PDF as a binary buffer
+    invoice: { type: Buffer, required: false }, // Store PDF as a binary buffer
     agreement: { type: Buffer, required: false }, // Store PDF as a binary buffer
-    transactionDetail:{ type: mongoose.Schema.Types.Mixed, required: false },
-    paid_amount: { type: Number, required: true},
-    invoiceType: {type: String, required: true},
+    transactionDetail: { type: mongoose.Schema.Types.Mixed, required: false },
+    paid_amount: { type: Number, required: true },
+    invoiceType: { type: String, required: true },
+    selectedMeal: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "meal",
+    },
+    selectedRoom: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "room",
+    },
     transactionHistory: [
       {
         type: mongoose.Schema.Types.ObjectId,

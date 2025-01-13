@@ -93,11 +93,13 @@ const deleteRoom = async (req, res) => {
 // **Get All Rooms**
 const getAllRooms = async (req, res) => {
     try {
-        const { moduleId } = req.query; // Get moduleId from query parameters
+        const { moduleId } = req.params; // Get moduleId from query parameters
 
         // Query to find rooms
-        const query = moduleId ? { moduleId } : {}; // If moduleId is provided, filter by it; otherwise, get all rooms
+        const query = moduleId ? { moduleId } : {};
         const rooms = await Room.find(query);
+
+        // console.log(rooms)
 
         res.status(200).json({
             success: true,
