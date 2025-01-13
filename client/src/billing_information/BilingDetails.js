@@ -293,13 +293,13 @@ const BilingDetails = () => {
                       <strong>places</strong> left
                     </span>
                   </div>
-                  {selectedRoom && <div className="cart_details__heading">
+                  {selectedRoom?.RoomPrice && <div className="cart_details__heading">
                     <h6>Room</h6>
-                    <p>€{selectedRoom.RoomPrice}</p>
+                    <p>€{selectedRoom?.RoomPrice}</p>
                   </div>}
-                  {selectedMeal && <div className="cart_details__heading">
+                  {selectedMeal?.MealPrice && <div className="cart_details__heading">
                     <h6>Meal</h6>
-                    <p>€{selectedMeal.MealPrice}</p>
+                    <p>€{selectedMeal?.MealPrice}</p>
                   </div>}
                   {
                     userDetails.invoiceType
