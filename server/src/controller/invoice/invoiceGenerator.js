@@ -220,7 +220,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 200px;
+            margin-top: 160px;
             font-size: 12px;
         }
             .footer a{
@@ -465,7 +465,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 200px;
+            margin-top: 160px;
             font-size: 12px;
         }
 
@@ -496,7 +496,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         }
 
         .footer-with-high-marginTop{
-          margin-top: 35rem !important;
+          margin-top: 33rem !important;
         }
     </style>
 </head>
