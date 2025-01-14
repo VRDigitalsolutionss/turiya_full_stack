@@ -22,7 +22,7 @@ import blog20 from "../../assets/blog_images/39711230_2148285206.webp";
 import NewsShelter from "../NewsShelter";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 const Index = () => {
 
   useEffect(() => {
@@ -74,9 +74,9 @@ const Index = () => {
 
 
 
-//   const payload = {
-// `<p>Bald darauf traf ich Suzana, eine brasilianische Rucksackreisende, die eine einjährige Yogalehrer-Ausbildung am renommierten Kaivalyadhama-Institut absolviert hatte. Gemeinsam reisten wir nach Indien, Deutschland, Thailand und Brasilien, boten erschwingliche Yoga-Kurse an und vertieften unsere Praxis durch Iyengar- und Vinyasa Flow-Trainings. Währenddessen entstand unsere Vision, eine Yoga-Akademie zu gründen. Wir wollten bessere Yogalehrer ausbilden und verbesserte Programme anbieten.</p><p>Suzana hatte vor ihrer Indienreise bereits umfassende Yoga-Praxiserfahrung. Sie erkannte die Bedeutung eines klaren Verständnisses der Yoga-Geschichte und philosophischen Traditionen, die oft in Yogalehrerausbildungen vernachlässigt wurden. Wir fanden viele schlecht ausgebildete Yogalehrer in verschiedenen Ländern, was uns dazu motivierte, hochwertige Ausbildungen anzubieten.</p><p>Suzanas familiärer Hintergrund umfasste eine Vielzahl spiritueller Praktiken und tiefgründiger Perspektiven zur menschlichen Psyche, darunter japanisches Zen, christliche Mystik, jungianische Psychologie und Hypnotherapie. Diese Vielfalt inspirierte sie früh, das Potenzial des Glücks durch Yoga zu erkennen. Sie absolvierte ihre Hatha Yoga-Lehrerausbildung und wagte dann den Neuanfang in Indien, eine prägende Entscheidung für ihr Leben.</p><p>Unsere Zusammenkunft mit der indischen Kultur und unsere persönliche Begegnung veränderten uns nachhaltig. Turiya Yoga entstand aus diesem Austausch heraus, eine Mischung aus vielen Elementen, geschaffen von leidenschaftlichen Yogalehrern. Nach erfolgreichen internationalen Ausbildungen in Indien sind wir nun bereit, unsere Programme auch in Deutschland anzubieten.</p><p>Wir gründeten diese Akademie als Antwort auf eine Welt, in der Yogalehrerausbildungen oft vernachlässigt werden. Trotz des florierenden Yoga-Geschäfts verdient dieser Beruf Respekt und Anerkennung. Unsere Akademie bietet eine sichere Lernumgebung, qualitativ hochwertigen Unterricht und hat zahlreichen Schülern geholfen, selbstbewusste internationale Yogalehrer zu werden.</p><p>Unsere Mission ist es, einen integrativen Gesundheitsstil zugänglich zu machen und Menschen zu vereinen, die die uralte Schule der Selbsterkenntnis lernen, lehren und erleben möchten. Die Akademie fördert den ehrlichen Austausch zwischen Lehrern, Praktizierenden, Studenten und unterstützenden Unternehmen.</p>`
-//   };
+  //   const payload = {
+  // `<p>Bald darauf traf ich Suzana, eine brasilianische Rucksackreisende, die eine einjährige Yogalehrer-Ausbildung am renommierten Kaivalyadhama-Institut absolviert hatte. Gemeinsam reisten wir nach Indien, Deutschland, Thailand und Brasilien, boten erschwingliche Yoga-Kurse an und vertieften unsere Praxis durch Iyengar- und Vinyasa Flow-Trainings. Währenddessen entstand unsere Vision, eine Yoga-Akademie zu gründen. Wir wollten bessere Yogalehrer ausbilden und verbesserte Programme anbieten.</p><p>Suzana hatte vor ihrer Indienreise bereits umfassende Yoga-Praxiserfahrung. Sie erkannte die Bedeutung eines klaren Verständnisses der Yoga-Geschichte und philosophischen Traditionen, die oft in Yogalehrerausbildungen vernachlässigt wurden. Wir fanden viele schlecht ausgebildete Yogalehrer in verschiedenen Ländern, was uns dazu motivierte, hochwertige Ausbildungen anzubieten.</p><p>Suzanas familiärer Hintergrund umfasste eine Vielzahl spiritueller Praktiken und tiefgründiger Perspektiven zur menschlichen Psyche, darunter japanisches Zen, christliche Mystik, jungianische Psychologie und Hypnotherapie. Diese Vielfalt inspirierte sie früh, das Potenzial des Glücks durch Yoga zu erkennen. Sie absolvierte ihre Hatha Yoga-Lehrerausbildung und wagte dann den Neuanfang in Indien, eine prägende Entscheidung für ihr Leben.</p><p>Unsere Zusammenkunft mit der indischen Kultur und unsere persönliche Begegnung veränderten uns nachhaltig. Turiya Yoga entstand aus diesem Austausch heraus, eine Mischung aus vielen Elementen, geschaffen von leidenschaftlichen Yogalehrern. Nach erfolgreichen internationalen Ausbildungen in Indien sind wir nun bereit, unsere Programme auch in Deutschland anzubieten.</p><p>Wir gründeten diese Akademie als Antwort auf eine Welt, in der Yogalehrerausbildungen oft vernachlässigt werden. Trotz des florierenden Yoga-Geschäfts verdient dieser Beruf Respekt und Anerkennung. Unsere Akademie bietet eine sichere Lernumgebung, qualitativ hochwertigen Unterricht und hat zahlreichen Schülern geholfen, selbstbewusste internationale Yogalehrer zu werden.</p><p>Unsere Mission ist es, einen integrativen Gesundheitsstil zugänglich zu machen und Menschen zu vereinen, die die uralte Schule der Selbsterkenntnis lernen, lehren und erleben möchten. Die Akademie fördert den ehrlichen Austausch zwischen Lehrern, Praktizierenden, Studenten und unterstützenden Unternehmen.</p>`
+  //   };
 
 
 
@@ -192,11 +192,10 @@ updatedAt
                   <a href="tel:+ 49 (0)69 - 20134987">
                     <i className="bx bx-headphone" /> + 49 (0)69 - 20134987
                   </a>
-                  <a href="#">[email protected]</a>
                   <div className="map_flex">
-                    <a href="impressum.php">Impressum</a>
+                    <Link to="/impressum">Impressum</Link>
                     <span>/</span>
-                    <a href="data-privacy.php"> Datenschutz</a>
+                    <Link to="/datenschutz">Datenschutz</Link>
                   </div>
                 </div>
               </div>

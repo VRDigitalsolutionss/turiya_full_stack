@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./blog.scss";
 import axios from 'axios';
-import { useParams } from "react-router-dom";
-import { BASE_URL,BASE_URL_IMAGE } from "../../../config";
+import { Link, useParams } from "react-router-dom";
+import { BASE_URL, BASE_URL_IMAGE } from "../../../config";
 
 const Index = ({
   topDetails,
@@ -26,20 +26,20 @@ const Index = ({
 
       setBlogDetals(response.data.data);
     }).catch((error) => {
-    console.log("error: " + error)
-  })
-}
+      console.log("error: " + error)
+    })
+  }
 
-  
+
   useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
 
 
 
-  console.log("Blog Details Details",blog_detals)
+  console.log("Blog Details Details", blog_detals)
 
- 
+
 
   const [post, setPost] = useState(null);
 
@@ -85,19 +85,19 @@ const Index = ({
           {/* <h4>blog detals</h4> */}
           <div className="blog_details__content">
             <div className="blog-details-img">
-              <img src={BASE_URL_IMAGE + `/images/blogs/`+blog_detals.blogImage} className="img-fluid" alt="blog-details-img" />
+              <img src={BASE_URL_IMAGE + `/images/blogs/` + blog_detals.blogImage} className="img-fluid" alt="blog-details-img" />
             </div>
 
 
-       <div className="shariff" data-title="Hatha Yoga erklärt | Turiya Yoga" data-info-url="http://ct.de/-2467514" data-backend-url="https://www.turiyayoga.de/blog/wp-content/plugins/shariff-sharing/backend/index.php" data-temp="/tmp" data-ttl={60} data-service="gftr" data-services="[&quot;googleplus&quot;,&quot;facebook&quot;,&quot;twitter&quot;,&quot;reddit&quot;,&quot;info&quot;]" data-image data-url="https://www.turiyayoga.de/blog/hatha-yoga-erklart-turiya-yoga/" data-lang="en" data-theme="colored" data-orientation="horizontal">
-  <ul className="theme-colored orientation-horizontal">
-    <li className="shariff-button googleplus"><a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Google+"><span className="fa fa-google-plus" /><span className="share_text">+1</span></a></li>
-    <li className="shariff-button facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Facebook"><span className="fa fa-facebook" /><span className="share_text">share</span></a></li>
-    <li className="shariff-button twitter"><a href="https://twitter.com/intent/tweet?text=Hatha%20Yoga%20erkl%C3%A4rt%20%7C%20Turiya%20Yoga&url=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Twitter"><span className="fa fa-twitter" /><span className="share_text">tweet</span></a></li>
-    <li className="shariff-button reddit"><a href="//www.reddit.com/submit?url=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Reddit"><span className="fa fa-reddit" /><span className="share_text">share</span></a></li>
-    <li className="shariff-button info"><a href="http://ct.de/-2467514" target="_blank" title="more information"><span className="share_text"><i className="bx bx-info-circle" /></span></a></li>
-  </ul>
-</div>
+            <div className="shariff" data-title="Hatha Yoga erklärt | Turiya Yoga" data-info-url="http://ct.de/-2467514" data-backend-url="https://www.turiyayoga.de/blog/wp-content/plugins/shariff-sharing/backend/index.php" data-temp="/tmp" data-ttl={60} data-service="gftr" data-services="[&quot;googleplus&quot;,&quot;facebook&quot;,&quot;twitter&quot;,&quot;reddit&quot;,&quot;info&quot;]" data-image data-url="https://www.turiyayoga.de/blog/hatha-yoga-erklart-turiya-yoga/" data-lang="en" data-theme="colored" data-orientation="horizontal">
+              <ul className="theme-colored orientation-horizontal">
+                <li className="shariff-button googleplus"><a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Google+"><span className="fa fa-google-plus" /><span className="share_text">+1</span></a></li>
+                <li className="shariff-button facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Facebook"><span className="fa fa-facebook" /><span className="share_text">share</span></a></li>
+                <li className="shariff-button twitter"><a href="https://twitter.com/intent/tweet?text=Hatha%20Yoga%20erkl%C3%A4rt%20%7C%20Turiya%20Yoga&url=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Twitter"><span className="fa fa-twitter" /><span className="share_text">tweet</span></a></li>
+                <li className="shariff-button reddit"><a href="//www.reddit.com/submit?url=https%3A%2F%2Fwww.turiyayoga.de%2Fblog%2Fhatha-yoga-erklart-turiya-yoga%2F" rel="popup" title="Share on Reddit"><span className="fa fa-reddit" /><span className="share_text">share</span></a></li>
+                <li className="shariff-button info"><a href="http://ct.de/-2467514" target="_blank" title="more information"><span className="share_text"><i className="bx bx-info-circle" /></span></a></li>
+              </ul>
+            </div>
 
 
             <div className="blog-details-content">
@@ -126,60 +126,59 @@ const Index = ({
 
           <div style={{ marginBottom: '0px' }}>
 
-      <div
+            <div
               dangerouslySetInnerHTML={{ __html: blog_detals.blogContent }}
-        
- 
-              
-              // Render HTML content
-      />
-      {/* <img src={post.image} alt={post.title} /> */}
-    </div>
+
+
+
+            // Render HTML content
+            />
+            {/* <img src={post.image} alt={post.title} /> */}
+          </div>
 
         </div>
       </section>
       <section className="map_wrapper mb-5">
-          <div className="row">
-            <div className="col-lg-3">
-              <div className="map_wrapper__left">
-                <div className="map_wrapper__left-top">
-                  <p>
-                    Emanuel Wintermeyer
-                    <br />
-                    Turiya Yoga
-                    <br /> Herbartstrasse 12
-                    <br />
-                    60316 Frankfurt am Main
-                  </p>
-                </div>
-                <div className="map_wrapper__left-bottom">
-                  <a href="tel:+ 49 (0)69 - 20134987">
-                    <i className="bx bx-headphone" /> + 49 (0)69 - 20134987
-                  </a>
-                  <a href="#">[email protected]</a>
-                  <div className="map_flex">
-                    <a href="impressum.php">Impressum</a>
-                    <span>/</span>
-                    <a href="data-privacy.php"> Datenschutz</a>
-                  </div>
-                </div>
+        <div className="row">
+          <div className="col-lg-3">
+            <div className="map_wrapper__left">
+              <div className="map_wrapper__left-top">
+                <p>
+                  Emanuel Wintermeyer
+                  <br />
+                  Turiya Yoga
+                  <br /> Herbartstrasse 12
+                  <br />
+                  60316 Frankfurt am Main
+                </p>
               </div>
-            </div>
-            <div className="col-lg-9">
-              <div className="map-enter">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5116.2361985505095!2d8.696904!3d50.121512!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bd0bb4c915430b%3A0xcc73e3d7b3ea7b10!2sTuriya%20Yoga%20%7C%20Yogalehrerausbildung%20%7C%20Yoga%20Teacher%20Training%20Course!5e0!3m2!1sen!2sin!4v1722319511773!5m2!1sen!2sin"
-                  width={600}
-                  height={450}
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+              <div className="map_wrapper__left-bottom">
+                <a href="tel:+ 49 (0)69 - 20134987">
+                  <i className="bx bx-headphone" /> + 49 (0)69 - 20134987
+                </a>
+                <div className="map_flex">
+                  <Link to="/impressum">Impressum</Link>
+                  <span>/</span>
+                  <Link to="/datenschutz">Datenschutz</Link>
+                </div>
               </div>
             </div>
           </div>
-        </section>
+          <div className="col-lg-9">
+            <div className="map-enter">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5116.2361985505095!2d8.696904!3d50.121512!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bd0bb4c915430b%3A0xcc73e3d7b3ea7b10!2sTuriya%20Yoga%20%7C%20Yogalehrerausbildung%20%7C%20Yoga%20Teacher%20Training%20Course!5e0!3m2!1sen!2sin!4v1722319511773!5m2!1sen!2sin"
+                width={600}
+                height={450}
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

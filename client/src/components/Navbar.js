@@ -362,7 +362,7 @@ const Navbar = () => {
                     </ul>
                   </li>
                   <li className="dropdown_menu">
-                    <Link to="/yogalehrer-ausbildung-200h">
+                    <Link to="#">
                       Yogalehrer Ausbildungen
                       <i className="bx bx-chevron-down" />
                     </Link>
@@ -390,7 +390,7 @@ const Navbar = () => {
                     </ul>
                   </li>
                   <li className="dropdown_menu">
-                    <Link to="/yoga_retreat">
+                    <Link to="#">
                       Yoga Retreat
                       <i className="bx bx-chevron-down" />
                     </Link>
