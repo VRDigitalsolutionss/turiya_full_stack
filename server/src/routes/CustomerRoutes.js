@@ -17,7 +17,7 @@ customerRoutes.post("/add_customer", addCustomer);
 customerRoutes.put("/edit_customer/:id", editCustomer);
 
 // Delete a customer
-customerRoutes.delete("/delete_customer/:id", deleteCustomer);
+// customerRoutes.delete("/delete_customer/:id", deleteCustomer);
 
 // Get all customers
 customerRoutes.get("/all_customers", getAllCustomers);

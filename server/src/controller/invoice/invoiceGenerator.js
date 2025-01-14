@@ -84,10 +84,11 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       ...extraFields
     } = req.body;
 
-    var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : null;
-    var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : null;
+    var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
+    var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
 
     console.log(parsedSelectedRoom) 
+    console.log(parsedSelectedMeal) 
 
     // Create new document instance
     const purchasedModule = new PurchasedModule({
@@ -219,7 +220,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 70px;
+            margin-top: 200px;
             font-size: 12px;
         }
             .footer a{
@@ -326,7 +327,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                 </tr>` : null}
               ${parsedSelectedMeal?.MealOffers ? `
                 <tr>
-                    <td>2</td>
+                    <td>${parsedSelectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
                     <td>1</td>
                     <td>Stk.</td>
@@ -464,7 +465,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 70px;
+            margin-top: 200px;
             font-size: 12px;
         }
 
@@ -492,6 +493,10 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
         .page-break {
             page-break-before: always; /* Forces content to start on a new page */
+        }
+
+        .footer-with-high-marginTop{
+          margin-top: 35rem !important;
         }
     </style>
 </head>
@@ -565,7 +570,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                                </td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
             </tr>
-            ${parsedSelectedRoom.RoomPrice ? `
+            ${parsedSelectedRoom?.RoomPrice ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
@@ -575,9 +580,9 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>zzgl. 0%</td>
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
                 </tr>` : null}
-              ${parsedSelectedMeal.MealPrice ? `
+              ${parsedSelectedMeal?.MealPrice ? `
                 <tr>
-                    <td>2</td>
+                    <td>${parsedSelectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
                     <td>1</td>
                     <td>Stk.</td>
@@ -679,7 +684,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     </div>
 </div>
 
-    <div class="footer">
+    <div class="footer footer-with-high-marginTop">
         <div>
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
@@ -860,6 +865,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         console.log("Email sent:", info.response);
         // Clean up generated PDF
         fs.unlinkSync(invoicePath);
+        fs.unlinkSync(contractPath);
         return res
           .status(200)
           .json({ message: "Invoice PDF sent successfully!" });
