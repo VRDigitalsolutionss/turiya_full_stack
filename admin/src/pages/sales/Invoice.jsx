@@ -491,12 +491,12 @@ function Invoice() {
                       onClick={() => downloadInvoice(row._id)}>
                       Download Detail
                     </button>
-                    <button
+                    {/* <button
                       className="btn btn-outline-danger btn-sm me-3"
                     // onClick={() => handleUpdateStatus(row)}
                     >
                       Cancel Amount
-                    </button>
+                    </button> */}
 
                     <button
                       className="btn btn-danger btn-sm"

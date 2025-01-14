@@ -203,7 +203,7 @@ const Footer = () => {
                     </li>
                     <li>
                       <span />
-                      <Link to="/privacy_policy"> IMPRESSUM</Link>
+                      <Link to="/impressum"> IMPRESSUM</Link>
                     </li>
                     <li>
                       <span />

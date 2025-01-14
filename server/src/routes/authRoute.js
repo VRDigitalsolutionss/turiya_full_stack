@@ -8,7 +8,7 @@ const { registerController } = require('../controller/registerController');
 const { resetPasswordController } = require('../controller/resetPasswordController');
 const { getUserDetailById } = require('../controller/loginnewController');
 const { addOtherAddress, getOtherAddress } = require('../controller/addOtherAddress');
-const { getRegisteredUser, getallRegisteredUser } = require('../controller/register2');
+const { getRegisteredUser, getallRegisteredUser, deleteUser } = require('../controller/register2');
 const verifyEmail = require('../controller/verifyEmail');
 // const { getUserDetailById } = require('../controller/loginnewController');
 
@@ -20,6 +20,7 @@ authRoute.post('/verify-email',verifyEmail);
 // authRoute.post('/forgot_password', forgotPasswordController);
 authRoute.post('/send_reset_password', resetPasswordController);
 authRoute.get('/getUserDetailById/:id', getUserDetailById);
+authRoute.delete("/delete_customer/:id", deleteUser);
 authRoute.post('/add_otherAddress',  addOtherAddress);
 authRoute.get('/get_otherAddress/:registeredUserId', getOtherAddress);
 authRoute.get('/getRegisteredUser', getRegisteredUser);

@@ -123,4 +123,33 @@ const getallRegisteredUser = (req,res) => {
     });
   })
 }
-module.exports = { getallRegisteredUser,registerController ,getRegisteredUser};
+
+const deleteUser = async (req, res) => {
+  try {
+      const { id } = req.params;
+
+      const customer = await RegisteredUser.findById(id);
+      if (!customer) {
+          return res.status(404).json({
+              success: false,
+              message: "User not found",
+          });
+      }
+
+      await RegisteredUser.findByIdAndDelete(id);
+
+      res.status(200).json({
+          success: true,
+          message: "User deleted successfully",
+      });
+  } catch (error) {
+      console.error("Error deleting customer:", error);
+      res.status(500).json({
+          success: false,
+          message: "Failed to delete customer",
+          error: error.message,
+      });
+  }
+};
+
+module.exports = { getallRegisteredUser,registerController ,getRegisteredUser, deleteUser};
