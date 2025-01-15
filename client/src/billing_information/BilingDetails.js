@@ -230,17 +230,17 @@ const BilingDetails = () => {
   function calculatePriceWithTax(price, offerEndDate, offerPrice, roomPrice, mealPrice) {
     const isOfferStillValid = isOfferValid(offerEndDate) && offerPrice > 0;
     const priceToCalculate = isOfferStillValid ? offerPrice : price;
-  
+
     let totalPrice = Number(priceToCalculate);
-  
+
     if (roomPrice) {
       totalPrice += Number(roomPrice);
     }
-  
+
     if (mealPrice) {
       totalPrice += Number(mealPrice);
     }
-  
+
     if (userDetails.invoiceType !== "Private_Invoice") {
       const taxRate = 0.19;
       const taxAmount = totalPrice * taxRate;
@@ -250,7 +250,7 @@ const BilingDetails = () => {
       return totalPrice.toFixed(2);
     }
   }
-  
+
 
   // console.log("sfsfsfsf", loading)
 
@@ -305,7 +305,14 @@ const BilingDetails = () => {
                     userDetails.invoiceType
                       !== "Private_Invoice" ? <div className="cart_details__heading">
                       <h6>VAT (19%)</h6>
-                      <p> {(Number(courseData.price) * 0.19).toFixed(2)} </p>
+                      <p>
+                        €{(
+                          (Number(courseData.price) +
+                            Number(selectedRoom?.RoomPrice || 0) +
+                            Number(selectedMeal?.MealPrice || 0)) *
+                          0.19
+                        ).toFixed(2)}
+                      </p>
                     </div> : null
                   }
 

@@ -24,6 +24,12 @@ const PurchasedModuleschema = new mongoose.Schema(
     transactionDetail: { type: mongoose.Schema.Types.Mixed, required: false },
     paid_amount: { type: Number, required: true },
     invoiceType: { type: String, required: true },
+    isInvoiceCancelled: { type: Boolean, default: false },
+    cancelledInvoice: { type: Buffer, required: false},
+    cancelledInvoiceNumber: { type: String, required: false},
+    refundedAmount: { type: Number, default: 0 },
+    refundRemarks: { type: String, required: false },
+    refundedDate: { type: Date, required: false },
     selectedMeal: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "meal",

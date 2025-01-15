@@ -28,6 +28,11 @@ function Invoice() {
     remark: "",
   });
 
+  const [cancelInvoiceFormData, setCancelInvoiceFormData] = useState({
+    amount: "",
+    remark: "",
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -41,8 +46,13 @@ function Invoice() {
   const handleSubmit = (totalAmount, paidAmount, dueAmount, purchasedModuleId) => {
     console.log("Form Data Submitted:", formData);
 
-    if(dueAmount===0){
+    if (dueAmount === 0) {
       alert("You have already paid the total amount. Due Amount is 0");
+      return;
+    }
+
+    if (Number(formData.amount) > Number(dueAmount)) {
+      alert("You can't pay more than the due amount");
       return;
     }
 
@@ -61,6 +71,34 @@ function Invoice() {
         console.log("response:", response);
         if (response.status == 201) {
           alert("Paid Successfully")
+          fetchData();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleCancelInvoiceSubmit = (refundableAmount, purchasedModuleId) => {
+    console.log("Form Data Submitted:", cancelInvoiceFormData);
+
+    if (Number(cancelInvoiceFormData.amount) > Number(refundableAmount)) {
+      alert("You can't pay more than the refundable amount");
+      return;
+    }
+
+    const payload = {
+      purchasedModuleId: purchasedModuleId,
+      amount: cancelInvoiceFormData.amount,
+      remark: cancelInvoiceFormData.remark,
+    };
+
+    axios
+      .post(BASE_URL + `/generateCancelInvoice`, payload)
+      .then((response) => {
+        console.log("response:", response);
+        if (response) {
+          alert("Success!")
           fetchData();
         }
       })
@@ -307,18 +345,21 @@ function Invoice() {
   const [transactionId, setTransactionId] = useState("");
   const [currentModalRow, setCurrentModalRow] = useState();
 
+  const [showCancelAmountModal, setShowCancelAmountModal] = useState(false)
+
   const handlePaid = (row) => {
     console.log("due amount: ", row);
-    // setTransactionId(row.transactionDetail._id ? row.transactionDetail._id : "");
     setCurrentModalRow(row)
     setShowModal(true);
     setDue_total_price(row.price);
-
-    // fetchTransactionDetail(
-    //   row.transactionDetail._id ? row.transactionDetail._id : "0"
-    // );
     setPurchased_module_id(row._id);
   };
+
+  const handleCancelInvoice = (row) => {
+    console.log("cancel row", row)
+    setCurrentModalRow(row)
+    setShowCancelAmountModal(true);
+  }
 
   const handleClose = () => {
     setShowModal(false);
@@ -470,8 +511,8 @@ function Invoice() {
                       Due Amount
                     </span>
                     <br />
-                    {row.due_amount} €<br />
-                    {row.paid_amount===row.totalPrice ? <button
+                    {row?.due_amount?.toFixed(2)} €<br />
+                    {row.paid_amount === row.totalPrice ? <button
                       type="button"
                       onClick={() => handlePaid(row)}
                       className="btn btn-outline-danger btn-sm mt-2">
@@ -491,12 +532,12 @@ function Invoice() {
                       onClick={() => downloadInvoice(row._id)}>
                       Download Detail
                     </button>
-                    {/* <button
+                    <button
                       className="btn btn-outline-danger btn-sm me-3"
-                    // onClick={() => handleUpdateStatus(row)}
+                      onClick={() => handleCancelInvoice(row)}
                     >
-                      Cancel Amount
-                    </button> */}
+                      Cancel Invoice
+                    </button>
 
                     <button
                       className="btn btn-danger btn-sm"
@@ -568,17 +609,20 @@ function Invoice() {
                         </tr>
                       </thead>
                       <tbody id="table_data">
-                        {currentModalRow.transactionHistory && currentModalRow.transactionHistory.length>0 ?
-                         currentModalRow.transactionHistory.map((item) => {
-                          return <tr>
-                            <td>{item.createdAt.split("T")[0]}</td>
-                            <td>{item.amount}</td>
-                            <td>{item.remark}</td>
-                            <td>{item.restAmount}</td>
-                          </tr>
-                        }) : <p className=" text-center text-danger">No transaction history found.</p>}
+                        {currentModalRow.transactionHistory && currentModalRow.transactionHistory.length > 0 ?
+                          currentModalRow.transactionHistory.map((item) => {
+                            return <>
+                              <tr>
+                                <td>{item.createdAt.split("T")[0]}</td>
+                                <td>{item.amount}</td>
+                                <td>{item.remark}</td>
+                                <td>{Number(item.restAmount)?.toFixed(2)}</td>
+                              </tr>
+                            </>
+                          }) : <p className=" text-center text-danger">No transaction history found.</p>}
                       </tbody>
                     </table>
+                    {(currentModalRow.isInvoiceCancelled) && <tr><h5 className="text-danger">This invoice is cancelled! You cannot pay more amount</h5></tr>}
                     <h6 className="mt-3 mb-3">
                       Total Amount: {currentModalRow.totalPrice} €
                       &nbsp;&nbsp;|&nbsp; Total Paid Amount:
@@ -629,11 +673,99 @@ function Invoice() {
                       id="save_amount"
                       onClick={() => handleSubmit(currentModalRow.totalPrice, currentModalRow.paid_amount, currentModalRow.due_amount, currentModalRow._id)}
                       name="save_amount"
+                      disabled={currentModalRow.isInvoiceCancelled}
                       className="btn btn-primary">
                       Save changes
                     </button>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showCancelAmountModal && (
+          <div className="login-container">
+            <div
+              className="custom-modal-overlay"
+              onClick={() => setShowCancelAmountModal(false)} // Close on backdrop click
+            >
+              <div
+                className="custom-modal-content"
+                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+              >
+                <div className="div d-flex justify-content-end">
+                  <IoCloseSharp
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: "500",
+                      cursor: "pointer",
+                      marginBottom: "20px",
+                    }}
+                    onClick={() => setShowCancelAmountModal(false)}
+                  />
+                </div>
+
+                {(currentModalRow.isInvoiceCancelled && (currentModalRow.refundedAmount === currentModalRow.paid_amount)) ?
+                  <div className="modal-body pt-4" id="AmountmodalBody">
+                    <h6 className="mt-3 mb-3 text-center">
+                      This invoice is cancelled, whole amount({currentModalRow.refundedAmount} €) paid by the user is refunded, there is no amount left to refund.
+                    </h6>
+                  </div> : <div>
+                  <div className="modal-body pt-4" id="AmountmodalBody">
+                    <h6 className="mt-3 mb-3">
+                      Amount Available to Refund: {Number(currentModalRow.paid_amount) - (Number(currentModalRow.refundedAmount) || 0)} €
+                    </h6>
+                  </div>
+                  <div className="modal-body">
+                    <div className="mb-3">
+                      <label htmlFor="amount" className="form-label">
+                        Refund Amount*
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="amount"
+                        name="amount"
+                        placeholder="Enter amount"
+                        value={cancelInvoiceFormData.amount}
+                        onChange={(e) => setCancelInvoiceFormData({ ...cancelInvoiceFormData, amount: e.target.value })}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="remark" className="form-label">
+                        Remarks? *
+                      </label>
+                      <textarea
+                        className="form-control"
+                        id="remark"
+                        name="remark"
+                        rows={3}
+                        value={cancelInvoiceFormData.remark}
+                        onChange={(e) => setCancelInvoiceFormData({ ...cancelInvoiceFormData, remark: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary me-3"
+                      data-bs-dismiss="modal"
+                      onClick={() => setShowCancelAmountModal(false)} >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      id="save_amount"
+                      onClick={() => handleCancelInvoiceSubmit((Number(currentModalRow.paid_amount) - (Number(currentModalRow.refundedAmount) || 0)), currentModalRow._id)}
+                      name="save_amount"
+                      disabled={(Number(currentModalRow.paid_amount) - Number(currentModalRow.refundedAmount))===0}
+                      className="btn btn-primary">
+                      Save changes
+                    </button>
+                  </div>
+                </div>}
               </div>
             </div>
           </div>
