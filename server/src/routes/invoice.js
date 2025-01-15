@@ -8,13 +8,15 @@ const {
     toggleInvoiceStatus,
 } = require("../controller/sales/invoiceController");
 // const { generateInvoice } = require("../controller/sales/invoiceController");
-const { generateInvoice, generateInvoices, generateInvoiceAndSendEmail, generateInvoicesAndSendEmail } = require("../controller/invoice/invoiceGenerator");
+const { generateInvoice, generateInvoices, generateInvoiceAndSendEmail, generateInvoicesAndSendEmail, generateCancelInvoice } = require("../controller/invoice/invoiceGenerator");
 
 const invoicegenerateRoutes = express.Router();
 
 // Add Invoice
 // invoicegenerateRoutes.post("/generateInvoice", generateInvoices);
 invoicegenerateRoutes.post("/generateInvoice", generateInvoicesAndSendEmail);
+
+invoicegenerateRoutes.post("/generateCancelInvoice", generateCancelInvoice);
 
 // Edit Invoice
 invoicegenerateRoutes.put("/edit_invoice/:id", editInvoice);

@@ -87,8 +87,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
 
-    console.log(parsedSelectedRoom) 
-    console.log(parsedSelectedMeal) 
+    console.log(parsedSelectedRoom)
+    console.log(parsedSelectedMeal)
 
     // Create new document instance
     const purchasedModule = new PurchasedModule({
@@ -140,8 +140,6 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
 
     function calculatePriceWithTax(price) {
-
-
       if (req.body.userDetails.invoiceType !== "Private_Invoice") {
         const price_number = Number(price);
         const taxRate = 0.19;
@@ -220,7 +218,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 160px;
+            margin-top: 100px;
             font-size: 12px;
         }
             .footer a{
@@ -322,8 +320,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>1</td>
                     <td>Stk.</td>
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
-                    <td>zzgl. 0%</td>
-                    <td>${parsedSelectedRoom.RoomPrice}€</td>
+                    <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</td>
                 </tr>` : null}
               ${parsedSelectedMeal?.MealOffers ? `
                 <tr>
@@ -332,19 +330,17 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>1</td>
                     <td>Stk.</td>
                     <td>${parsedSelectedMeal.MealPrice}€</td>
-                    <td>zzgl. 0%</td>
-                    <td>${parsedSelectedMeal.MealPrice}€</td>
+                    <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</td>
                 </tr>` : null}
-
         </tbody>
     </table>
 
     <!-- Totals -->
     <div class="totals">
-        <strong>Zwischensumme:  ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price} €</strong>
-        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'} USt aus ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price}€</p>
-        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
-        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        <p>Zwischensumme:  ${calculatePriceWithTax(req.body.price)} € </p>
+        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</p>` : ''}
+        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</p>` : ''}
         <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
@@ -465,7 +461,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 160px;
+            margin-top: 100px;
             font-size: 12px;
         }
 
@@ -566,8 +562,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                 <td>${req.body.quantity}</td>
                 <td>Stk.</td>
                 <td>${req.body.price}€</td>
-                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}
-                               </td>
+                <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
             </tr>
             ${parsedSelectedRoom?.RoomPrice ? `
@@ -577,8 +572,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>1</td>
                     <td>Stk.</td>
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
-                    <td>zzgl. 0%</td>
-                    <td>${parsedSelectedRoom.RoomPrice}€</td>
+                    <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</td>
                 </tr>` : null}
               ${parsedSelectedMeal?.MealPrice ? `
                 <tr>
@@ -587,18 +582,17 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>1</td>
                     <td>Stk.</td>
                     <td>${parsedSelectedMeal.MealPrice}€</td>
-                    <td>zzgl. 0%</td>
-                    <td>${parsedSelectedMeal.MealPrice}€</td>
+                    <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</td>
                 </tr>` : null}
         </tbody>
     </table>
 
     <!-- Totals -->
     <div class="totals">
-        <strong>Zwischensumme:  ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price} €</strong>
-        <p>  ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'} USt aus ${req.body.courseData.Offerprice ? req.body.courseData.Offerprice : req.body.courseData.price}€</p>
-        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
-        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        <p>Zwischensumme:  ${calculatePriceWithTax(req.body.price)} € </p>
+        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</p>` : ''}
+        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</p>` : ''}
         <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
@@ -877,82 +871,324 @@ const generateInvoicesAndSendEmail = async (req, res) => {
   }
 };
 
-const generateInvoicesAndSendEmail2 = async (req, res) => {
+const generateInvoiceNumber = () => {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1; // Month is zero-based
+  const randomNumber = Math.floor(1000 + Math.random() * 9000);
+  return `TY-WEB-STO ${randomNumber}/${month}/${year}`;
+};
+
+const getCurrentDate = () => {
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}.${month}.${year}`;
+  return formattedDate;
+}
+
+const generateCancelInvoice = async (req, res) => {
+  const { purchasedModuleId, amount, remark } = req.body;
+  const cancelledInvoiceNumber = generateInvoiceNumber();
+
+  const savedModule = await PurchasedModule.findById(purchasedModuleId).populate('selectedRoom').populate('selectedMeal');
+  if (!savedModule) {
+    return res.status(404).json({ error: "Module not found" });
+  }
+
+  if (amount > (savedModule.paid_amount - savedModule.refundedAmount)) {
+    return res.status(400).json({ error: "Amount exceeds available amount" });
+  }
+
+  savedModule.isInvoiceCancelled = true;
+  savedModule.cancelledInvoiceNumber = cancelledInvoiceNumber;
+  if(savedModule.isInvoiceCancelled){
+    savedModule.refundedAmount += Number(amount);
+  }else{
+    savedModule.refundedAmount = Number(amount);
+  }
+  savedModule.refundRemarks = remark;
+  savedModule.refundedDate = new Date().toISOString();
+
   try {
-    const {
-      invoiceNumber,
-      customerName,
-      customerAddress,
-      productDescription,
-      quantity,
-      totalPrice,
-      dueDate,
-      email,
-      ...extraFields
-    } = req.body;
-
-    // Create and Save Document to Database
-    const purchasedModule = new PurchasedModule(req.body);
-    const savedModule = await purchasedModule.save();
-    const invoiceId = savedModule._id;
-
-    // Puppeteer Setup
-    const browser = await puppeteer.launch();
+    // Step 1: Start Puppeteer
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
 
-    // Invoice and Contract Templates
+    const invoiceDate = savedModule.createdAt.toISOString().split('T')[0];
+
+    const currentDate = getCurrentDate();
+
+
+
+    function calculatePriceWithTax(price) {
+      if (savedModule.userDetails.invoiceType !== "Private_Invoice") {
+        const price_number = Number(price);
+        const taxRate = 0.19;
+        const taxAmount = price_number * taxRate;
+        const finalPrice = price_number + taxAmount;
+        return finalPrice;
+      } else {
+        return price;
+      }
+    }
+
     const invoiceHTML = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Invoice</title>
-        </head>
-        <body>
-          <h1>Invoice for ${customerName}</h1>
-          <p>Product: ${productDescription}</p>
-          <p>Quantity: ${quantity}</p>
-          <p>Total Price: ${totalPrice}€</p>
-        </body>
-      </html>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechnung PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+              border-bottom: 1px solid black;
+        }
+
+        .logo img {
+            height: 100px;
+        }
+
+        .info {
+            text-align: right;
+            font-size: 12px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 30px; /* Add this line */
+}
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .totals {
+            margin-top: 60px;
+            text-align: right;
+             margin-bottom: 50px; /* Add this line */
+        }
+
+        .totals strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 100px;
+            font-size: 12px;
+        }
+            .footer a{
+             text-decoration: none; /* Removes underline */
+    color: black; /* Sets the color to black */
+            
+            }
+
+        .footer div {
+            flex: 1;
+        }
+
+        .footer div:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer div:nth-child(3) {
+            text-align: right;
+        }
+         
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
+        </div>
+        <div class="info">
+            <p><b>Emanuel Wintermeyer</b><br>
+            Herbartstrasse 12<br>
+            60316 Frankfurt am Main<br>
+            +49 (0)69 - 20134987<br>
+            info@turiyayoga.de<br>
+            St.-Nr.: 013/882/05939</p>
+        </div>
+    </header>
+
+   <!-- Invoice Recipient and Details -->
+<div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+    <!-- Left Column -->
+    <div style="flex: 1;">
+        <strong style="margin-bottom:20px"> ${savedModule.customerName}</strong><br>
+         ${savedModule.customerAddress}<br>
+       
+    </div>
+
+    <!-- Right Column -->
+    <div style="flex: 1; text-align: right;">
+        <div>
+            <strong>RECHNUNG</strong>
+        </div>
+ <p>
+          <strong>Storno Rechnungsnummer: </strong>${cancelledInvoiceNumber}<br>
+          <strong>Storno Rechnungsdatum: </strong>${currentDate}<br>
+                <strong>Kundennummer: </strong>${savedModule.customerNumber}<br>
+                <strong>Bestellnummer: </strong>${savedModule.orderNumber}<br>
+        </p>
+    </div>
+</div>
+
+
+    <!-- Content -->
+    <h1>Stornorechnung</h1>
+    <p>Hallo ${savedModule.customerName},</p>
+    <p>vereinbarungsgemäß eine Gutschrift zu unserer Rechnung Nr ${savedModule.invoiceNumber} vom ${invoiceDate}  Umbuchung</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Pos.</th>
+                <th>Bezeichnung</th>
+                <th>Menge</th>
+                <th>Einheit</th>
+                <th>Preis (€)</th>
+                <th>Steuer</th>
+                <th>Gesamt</th>
+            </tr>
+        </thead>
+        <tbody>
+   
+
+              <tr>
+                <td>1</td>
+                <td>${savedModule.productDescription}</td>
+                <td>${savedModule.quantity}</td>
+                <td>Stk.</td>
+                <td>${savedModule.price}€</td>
+                <td>zzgl. ${savedModule.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}
+                               </td>
+                <td>${calculatePriceWithTax(savedModule.price)}€</td>
+              </tr>
+              ${savedModule?.selectedRoom?.RoomOffers ? `
+                <tr>
+                    <td>2</td>
+                    <td>Zimmer: ${savedModule?.selectedRoom?.RoomOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${savedModule.selectedRoom?.RoomPrice}€</td>
+                    <td>zzgl. ${savedModule.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(savedModule.selectedRoom?.RoomPrice)}€</td>
+                </tr>` : null}
+              ${savedModule.selectedMeal?.MealOffers ? `
+                <tr>
+                    <td>${savedModule.selectedRoom?.RoomOffers ? '3' : '2'}</td>
+                    <td>Zimmer: ${savedModule.selectedMeal?.MealOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${savedModule.selectedMeal?.MealPrice}€</td>
+                    <td>zzgl. ${savedModule.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(savedModule.selectedMeal?.MealPrice)}€</td>
+                </tr>` : null}
+        </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="totals">
+        <p>Zwischensumme:  ${calculatePriceWithTax(savedModule.price)} € </p>
+        ${savedModule.selectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${calculatePriceWithTax(savedModule.selectedRoom?.RoomPrice)}€</p>` : ''}
+        ${savedModule.selectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${calculatePriceWithTax(savedModule.selectedMeal?.MealPrice)}€</p>` : ''}
+        <strong>Gesamtbetrag: ${savedModule.totalPrice}€</strong>
+        <p>Bereits bezahlter Betrag: ${savedModule.paid_amount} €</p>
+        <strong><p>Rückerstattungsbetrag: ${amount} €</p></strong>
+    </div>
+
+    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p><p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
+    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
+    <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
+
+    <!-- Footer -->
+    <div class="footer">
+        <!-- Column 1 -->
+        <div>
+            <p>Emanuel Wintermeyer<br>
+            Herbartstrasse 12<br>
+            60316 Frankfurt am Main</p>
+        </div>
+
+        <!-- Column 2 -->
+        <div>
+            <p>web. <a href="http://www.turiyayoga.de">www.turiyayoga.de</a><br>
+            Tel. (069) - 20134987<br>
+            Email: <a href="mailto:info@turiyayoga.de">info@turiyayoga.de</a></p>
+        </div>
+
+        <!-- Column 3 -->
+        <div>
+            <p>Kontoinhaber: Emanuel Wintermeyer<br>
+            IBAN: DE64 5005 0201 0200 6907 28<br>
+            Kreditinstitut: Frankfurter Sparkasse</p>
+        </div>
+    </div>
+</body>
+</html>
+
     `;
 
-    const contractHTML = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Contract</title>
-        </head>
-        <body>
-          <h1>Contract for ${customerName}</h1>
-          <p>Product: ${productDescription}</p>
-          <p>Total Price: ${totalPrice}€</p>
-        </body>
-      </html>
-    `;
 
-    // Generate Invoice PDF
+    // Step 2: Generate PDF for the invoice
+    const invoicePath = path.join(__dirname, "Stornorechnung.pdf");
+
     await page.setContent(invoiceHTML, { waitUntil: "networkidle0" });
+    await page.pdf({
+      path: invoicePath,
+      format: "A4",
+      printBackground: true,
+    });
+
     const invoiceBuffer = await page.pdf({
       format: "A4",
       printBackground: true,
     });
+    console.log("Stornorechnung PDF generated successfully!");
 
-    // Generate Contract PDF
-    await page.setContent(contractHTML, { waitUntil: "networkidle0" });
-    const contractBuffer = await page.pdf({
-      format: "A4",
-      printBackground: true,
-    });
+    savedModule.cancelledInvoice = Buffer.from(invoiceBuffer);
 
-    // Clean up Puppeteer
-    await browser.close();
-
-    // Save Buffers to Database
-    savedModule.invoice = invoiceBuffer;
-    savedModule.contract = contractBuffer;
     await savedModule.save();
 
-    // Send Email with Attachments
+    res.status(200).json({
+      message: "Invoice generated and saved successfully!",
+      savedModule,
+    });
+
+    // Step 3: Send Email with PDFs using Nodemailer
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -963,12 +1199,25 @@ const generateInvoicesAndSendEmail2 = async (req, res) => {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Your Invoice and Contract",
-      text: "Please find your invoice and contract attached.",
+      to: savedModule.email,
+      subject: "Deine Buchung bei Turiya Yoga",
+      text: "Please find the attached Invoice PDF.",
+      cc: process.env.ADMIN_USER2,
+      html: `
+      <html>
+        <body>
+          <p>Hallo ${savedModule.customerName},</p>
+          <p>wir möchten Dich darüber informieren, dass wir Deine Rückerstattung bearbeitet haben. Anbei findest Du die Stornorechnung sowie weitere Informationen zu der Rückerstattung.</p>
+          <p>Rückerstattungsbetrag: <strong>${amount} €</strong></p>
+          <p>Telefon: 069 2013 4987</p>
+          <p>Mit freundlichen Grüßen,</p>
+          <p><strong>Turiya Yoga Team</strong></p>
+          <br>
+        </body>
+      </html>
+`,
       attachments: [
-        { filename: "Invoice.pdf", content: invoiceBuffer },
-        { filename: "Contract.pdf", content: contractBuffer },
+        { filename: "Stornorechnung.pdf", path: invoicePath }
       ],
     };
 
@@ -976,114 +1225,19 @@ const generateInvoicesAndSendEmail2 = async (req, res) => {
       if (error) {
         console.error("Error sending email:", error);
         return res.status(500).json({ error: "Email could not be sent" });
+      } else {
+        console.log("Email sent:", info.response);
+        fs.unlinkSync(invoicePath);
+        return res
+          .status(200)
+          .json({ message: "Invoice PDF sent successfully!" });
       }
-      console.log("Email sent:", info.response);
-      res
-        .status(200)
-        .json({
-          message: "Invoice and contract saved and emailed successfully!",
-        });
     });
   } catch (error) {
-    console.error("Error generating PDFs or sending email:", error);
-    res.status(500).json({ error: "An error occurred." });
+    console.error("Error:", error);
+    return res.status(500).json({ error: "An error occurred" });
   }
-};
 
-// =================================================================
+}
 
-// const generateInvoicesAndSendEmail = async (req, res) => {
-//   try {
-//     const {
-//       productNumber,
-//       invoiceNumber,
-//       customerNumber,
-//       orderNumber,
-//       dueDate,
-//       customerName,
-//       customerAddress,
-//       productDescription,
-//       quantity,
-//       totalPrice,
-//       email,
-//       user_type,
-//       price,
-//       ...extraFields
-//     } = req.body;
-
-//     // Create new document instance
-//     const purchasedModule = new PurchasedModule(req.body);
-
-//     // Save to database
-//     const savedModule = await purchasedModule.save();
-//     const invoiceId = savedModule._id; // Get the unique _id of the saved module
-
-//     // Define file paths
-//     const invoiceFolder = path.join(__dirname, "../invoice");
-//     if (!fs.existsSync(invoiceFolder)) {
-//       fs.mkdirSync(invoiceFolder, { recursive: true }); // Create folder if it doesn't exist
-//     }
-
-//     const invoicePath = path.join(invoiceFolder, `${invoiceId}.pdf`);
-//     const contractPath = path.join(invoiceFolder, `${invoiceId}_contract.pdf`);
-
-//     // Step 1: Start Puppeteer
-//     const browser = await puppeteer.launch();
-//     const page = await browser.newPage();
-
-//     // HTML template for Invoice PDF
-//     console.log("req.body", req.body);
-
-//     const invoiceHTML = `
-//       <!DOCTYPE html>
-//       <html lang="en">
-//       <head>
-//         <meta charset="UTF-8">
-//         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//         <title>Invoice PDF</title>
-//         <style>
-//           /* Styles here */
-//         </style>
-//       </head>
-//       <body>
-//         <header>
-//           <div class="logo">
-//             <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png" alt="Turiya Yoga Logo">
-//           </div>
-//           <div class="info">
-//             <p>${customerName}<br>${customerAddress}</p>
-//           </div>
-//         </header>
-//         <h1>Invoice</h1>
-//         <p>Invoice Number: ${invoiceNumber}</p>
-//         <!-- Add more invoice details -->
-//       </body>
-//       </html>
-//     `;
-
-//     // Step 2: Generate PDF for the invoice
-//     await page.setContent(invoiceHTML, { waitUntil: "networkidle0" });
-//     await page.pdf({
-//       path: invoicePath,
-//       format: "A4",
-//       printBackground: true,
-//     });
-
-//     console.log(`Invoice PDF generated and saved at: ${invoicePath}`);
-
-//     // Clean up Puppeteer
-//     await browser.close();
-
-//     // Step 3: Respond with success and saved file path
-//     res.status(200).json({
-//       message: "Invoice generated and saved successfully!",
-//       invoicePath,
-//       purchasedModule: savedModule,
-//     });
-//   } catch (error) {
-//     console.error("Error generating invoice:", error);
-//     return res.status(500).json({ error: "An error occurred while generating the invoice." });
-//   }
-// };
-
-module.exports = { generateInvoicesAndSendEmail, getInvoice, getAgreement };
+module.exports = { generateInvoicesAndSendEmail, getInvoice, getAgreement, generateCancelInvoice };

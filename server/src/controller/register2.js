@@ -102,7 +102,7 @@ const getRegisteredUser = (req,res) => {
 
 
 const getallRegisteredUser = (req,res) => {
-  RegisteredUser.find().then((users) => {
+  RegisteredUser.find().sort({ createdAt: -1 }).then((users) => {
 
     if (users.length > 0) {
       res.status(200).json({
