@@ -151,6 +151,18 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       }
     }
 
+    const hasRoom = !!parsedSelectedRoom?.RoomOffers;
+    const hasMeal = !!parsedSelectedMeal?.MealOffers;
+
+    let footerMarginTop;
+    if (hasRoom && hasMeal) {
+      footerMarginTop = '70px';
+    } else if (hasRoom || hasMeal) {
+      footerMarginTop = '120px';
+    } else {
+      footerMarginTop = '170px';
+    }
+
     const invoiceHTML = `
   <!DOCTYPE html>
 <html lang="en">
@@ -219,7 +231,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 70px;
+            margin-top: ${footerMarginTop};
             font-size: 12px;
         }
             .footer a{
@@ -314,7 +326,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                                </td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
               </tr>
-              ${parsedSelectedRoom?.RoomOffers && `
+              ${parsedSelectedRoom?.RoomOffers ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
@@ -323,8 +335,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</td>
-                </tr>`}
-              ${parsedSelectedMeal?.MealOffers && `
+                </tr>` : ''}
+              ${parsedSelectedMeal?.MealOffers ? `
                 <tr>
                     <td>${parsedSelectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
@@ -333,7 +345,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedMeal.MealPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</td>
-                </tr>`}
+                </tr>` : ''}
         </tbody>
     </table>
 
@@ -463,7 +475,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 70px;
+            margin-top: ${footerMarginTop};
             font-size: 12px;
         }
 
@@ -567,7 +579,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                 <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
             </tr>
-            ${parsedSelectedRoom?.RoomPrice && `
+            ${parsedSelectedRoom?.RoomPrice ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
@@ -576,8 +588,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</td>
-                </tr>`}
-              ${parsedSelectedMeal?.MealPrice && `
+                </tr>` : ''}
+              ${parsedSelectedMeal?.MealPrice ? `
                 <tr>
                     <td>${parsedSelectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
@@ -586,7 +598,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedMeal.MealPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</td>
-                </tr>`}
+                </tr>` : ''}
         </tbody>
     </table>
 
@@ -905,13 +917,25 @@ const generateCancelInvoice = async (req, res) => {
 
   savedModule.isInvoiceCancelled = true;
   savedModule.cancelledInvoiceNumber = cancelledInvoiceNumber;
-  if(savedModule.isInvoiceCancelled){
+  if (savedModule.isInvoiceCancelled) {
     savedModule.refundedAmount += Number(amount);
-  }else{
+  } else {
     savedModule.refundedAmount = Number(amount);
   }
   savedModule.refundRemarks = remark;
   savedModule.refundedDate = new Date().toISOString();
+
+  const hasRoom = !!savedModule?.selectedRoom?.RoomOffers;
+  const hasMeal = !!savedModule.selectedMeal?.MealOffers;
+
+  let footerMarginTop;
+  if (hasRoom && hasMeal) {
+    footerMarginTop = '70px';
+  } else if (hasRoom || hasMeal) {
+    footerMarginTop = '120px';
+  } else {
+    footerMarginTop = '170px';
+  }
 
   try {
     // Step 1: Start Puppeteer
@@ -1007,7 +1031,7 @@ const generateCancelInvoice = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 70px;
+            margin-top: ${footerMarginTop};
             font-size: 12px;
         }
             .footer a{
@@ -1100,7 +1124,7 @@ const generateCancelInvoice = async (req, res) => {
                                </td>
                 <td>${calculatePriceWithTax(savedModule.price)}€</td>
               </tr>
-              ${savedModule?.selectedRoom?.RoomOffers && `
+              ${savedModule?.selectedRoom?.RoomOffers ? `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${savedModule?.selectedRoom?.RoomOffers}</td>
@@ -1109,8 +1133,8 @@ const generateCancelInvoice = async (req, res) => {
                     <td>${savedModule.selectedRoom?.RoomPrice}€</td>
                     <td>zzgl. ${savedModule.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(savedModule.selectedRoom?.RoomPrice)}€</td>
-                </tr>` }
-              ${savedModule.selectedMeal?.MealOffers && `
+                </tr>` : ''}
+              ${savedModule.selectedMeal?.MealOffers ? `
                 <tr>
                     <td>${savedModule.selectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${savedModule.selectedMeal?.MealOffers}</td>
@@ -1119,7 +1143,7 @@ const generateCancelInvoice = async (req, res) => {
                     <td>${savedModule.selectedMeal?.MealPrice}€</td>
                     <td>zzgl. ${savedModule.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(savedModule.selectedMeal?.MealPrice)}€</td>
-                </tr>`}
+                </tr>` : ''}
         </tbody>
     </table>
 
