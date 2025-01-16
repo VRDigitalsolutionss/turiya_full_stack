@@ -1004,7 +1004,7 @@ const generateCancelInvoice = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 80px;
+            margin-top: 70px;
             font-size: 12px;
         }
             .footer a{
@@ -1070,7 +1070,7 @@ const generateCancelInvoice = async (req, res) => {
     <!-- Content -->
     <h1>Stornorechnung</h1>
     <p>Hallo ${savedModule.customerName},</p>
-    <p>vereinbarungsgemäß eine Gutschrift zu unserer Rechnung Nr ${savedModule.invoiceNumber} vom ${invoiceDate}  Umbuchung</p>
+    <p>vereinbarungsgemäß eine Gutschrift zu unserer Rechnung Nr ${savedModule.invoiceNumber} vom ${invoiceDate}  ${remark}</p>
 
     <table>
         <thead>
@@ -1130,8 +1130,7 @@ const generateCancelInvoice = async (req, res) => {
         <strong><p>Rückerstattungsbetrag: ${amount} €</p></strong>
     </div>
 
-    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p><p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
-    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
+    <p style="margin-top: 20px;">Wir werden den Betrag innerhalb der nächsten Tage auf dein Konto überweisen.<br/>Für weitere Fragen stehen wir dir gerne zur Verfügung.</p>
     <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
 
     <!-- Footer -->
