@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import dilogImg from "../assets/images/high-important.png";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { BASE_URL, BASE_URL_IMAGE } from "../config";
 
@@ -199,6 +199,8 @@ const BannerGlobalTableWrapper = () => {
   console.log(formattedDate); // Output: 09.01.2025
   const UserId = localStorage.getItem('turiya_auth_id');
 
+  const {pathname} = useLocation()
+
 
   const addToCart = (courseid) => {
     const payload = {
@@ -305,7 +307,7 @@ const BannerGlobalTableWrapper = () => {
                   className="table-body desktop"
                   style={{ backgroundColor: "#EDEDED" }}>
                   {data &&
-                    data.map((item, index) => {
+                    (pathname==='/' ? data.slice(0,6) : data).map((item, index) => {
                       console.log("row of upcoming courses", item);
 
                       return (
@@ -358,7 +360,7 @@ const BannerGlobalTableWrapper = () => {
                                 color: item.Place <= 3 ? "#E07542" : "black", // Optional: change text color to white if background is red
                               }}>
                               {item.Place <= 3
-                                ? `only Noch ${item.Place} Plätze frei`
+                                ? `Noch ${item.Place} Plätze frei`
                                 : `Noch ${item.Place} Plätze frei`}
                             </td>
 
@@ -386,7 +388,7 @@ const BannerGlobalTableWrapper = () => {
 
 
                   {data &&
-                    data.map((item, index) => {
+                    (pathname==='/' ? data.slice(0,6) : data).map((item, index) => {
                       console.log("row of upcoming courses", item);
 
                       return (
@@ -444,7 +446,7 @@ const BannerGlobalTableWrapper = () => {
                                 color: item.Place <= 3 ? "#E07542" : "black",
                               }}>
                               {item.Place <= 3
-                                ? `only Noch ${item.Place} Plätze frei`
+                                ? `Noch ${item.Place} Plätze frei`
                                 : `Noch ${item.Place} Plätze frei`}
                             </td>
 
@@ -472,7 +474,7 @@ const BannerGlobalTableWrapper = () => {
 
             </div>
             <div className="all-btn aos-init" data-aos="fade-up">
-              <Link to="/kommende-kurse">
+              <Link to="/category/alle-kommenden-kurse">
                 <i className="bx bxs-calendar" /> ALLE AUSBILDUNGEN
               </Link>
             </div>

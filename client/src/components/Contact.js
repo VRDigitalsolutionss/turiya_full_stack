@@ -123,9 +123,9 @@ const Contact = () => {
       <section className="global_wrapper contact_wrapper">
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-6 pe-5">
               <div
-                className="contact_wrapper__left"
+                className="contact_wrapper__left me-5 pe-5"
                 data-aos-delay={100}>
                 <h3>Wir Helfen Immer</h3>
                 <h1>Noch Fragen?</h1>

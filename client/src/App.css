@@ -866,6 +866,13 @@ p.ql-align-center {
   align-items: center;
 }
 
+.custom-margin{
+  margin-top: 12rem !important;
+}
+.custom-margin-2{
+  margin-top: 15rem !important;
+}
+
 .price {
   margin-top: 5.4rem;
   display: flex;
@@ -1897,6 +1904,13 @@ p.ql-align-center {
 
   .price {
     margin-top: 8.6rem;
+  }
+
+  .custom-margin{
+    margin-top: 20rem !important;
+  }
+  .custom-margin-2{
+    margin-top: 14rem !important;
   }
 
   .banner_bg {

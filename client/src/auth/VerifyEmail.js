@@ -14,7 +14,7 @@ const VerifyEmail = () => {
                 const response = await axios.post(`${BASE_URL}/verify-email`, {
                     token: token
                 });
-                setMessage(response.data);
+                setMessage("E-Mail erfolgreich verifiziert");
                 setVerified(true);
             } catch (err) {
                 setMessage(err.response?.data || "Invalid or expired token");
@@ -32,7 +32,7 @@ const VerifyEmail = () => {
         <>
             <div className='text-center my-5' style={{height: '70vh'}}>
                 <h5>{message}</h5>
-                {verified && <NavLink className='back-to-home-button' to='/login'>Click here to login</NavLink>}
+                {verified && <NavLink className='back-to-home-button' to='/login'>Enlogin</NavLink>}
             </div>
         </>
     )

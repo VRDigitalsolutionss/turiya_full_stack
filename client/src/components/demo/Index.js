@@ -688,7 +688,7 @@ const Index = () => {
                                 color: item.Place <= 3 ? "red" : "black", // Optional: change text color to white if background is red
                               }}>
                               {item.Place <= 3
-                                ? `only Noch ${item.Place} Plätze frei`
+                                ? `Noch ${item.Place} Plätze frei`
                                 : `Noch ${item.Place} Plätze frei`}
                             </td>
 

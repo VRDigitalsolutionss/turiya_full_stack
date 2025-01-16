@@ -235,7 +235,7 @@ const Profile = () => {
                         <div className="profile-row">
                           <p>
                             <b>Padi Amount : €{item.paid_amount}</b>
-                            <b>&nbsp;&nbsp;Left Amount : €{item.due_amount}</b>
+                            <b>&nbsp;&nbsp;Left Amount : €{(Number(item.due_amount)).toFixed(2)}</b>
                           </p>
                           <p>
                             <span>Unbezahlt </span>

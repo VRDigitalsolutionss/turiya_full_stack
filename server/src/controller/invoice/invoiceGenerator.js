@@ -218,7 +218,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 100px;
+            margin-top: 70px;
             font-size: 12px;
         }
             .footer a{
@@ -461,7 +461,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 100px;
+            margin-top: 70px;
             font-size: 12px;
         }
 
@@ -1004,7 +1004,7 @@ const generateCancelInvoice = async (req, res) => {
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 100px;
+            margin-top: 80px;
             font-size: 12px;
         }
             .footer a{
