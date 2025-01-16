@@ -176,6 +176,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
         .logo img {
             height: 100px;
+            width: auto;
         }
 
         .info {
@@ -245,7 +246,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Header Section -->
     <header>
         <div class="logo">
-           <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/logo.jpg"  alt="Turiya Yoga Logo">
         </div>
         <div class="info">
             <p><b>Emanuel Wintermeyer</b><br>
@@ -313,7 +314,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                                </td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
               </tr>
-              ${parsedSelectedRoom?.RoomOffers ? `
+              ${parsedSelectedRoom?.RoomOffers && `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
@@ -322,8 +323,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</td>
-                </tr>` : null}
-              ${parsedSelectedMeal?.MealOffers ? `
+                </tr>`}
+              ${parsedSelectedMeal?.MealOffers && `
                 <tr>
                     <td>${parsedSelectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
@@ -332,7 +333,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedMeal.MealPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</td>
-                </tr>` : null}
+                </tr>`}
         </tbody>
     </table>
 
@@ -403,6 +404,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
         .logo img {
             height: 100px;
+            width: auto;
         }
 
         .info {
@@ -500,7 +502,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Header Section -->
     <header>
         <div class="logo">
-           <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/logo.jpg"  alt="Turiya Yoga Logo">
         </div>
         <div class="info">
             <p><b>Emanuel Wintermeyer</b><br>
@@ -565,7 +567,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                 <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                 <td>${calculatePriceWithTax(req.body.price)}€</td>
             </tr>
-            ${parsedSelectedRoom?.RoomPrice ? `
+            ${parsedSelectedRoom?.RoomPrice && `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${parsedSelectedRoom.RoomOffers}</td>
@@ -574,8 +576,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedRoom.RoomPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</td>
-                </tr>` : null}
-              ${parsedSelectedMeal?.MealPrice ? `
+                </tr>`}
+              ${parsedSelectedMeal?.MealPrice && `
                 <tr>
                     <td>${parsedSelectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
@@ -584,7 +586,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
                     <td>${parsedSelectedMeal.MealPrice}€</td>
                     <td>zzgl. ${req.body.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</td>
-                </tr>` : null}
+                </tr>`}
         </tbody>
     </table>
 
@@ -632,7 +634,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Second Page Content (Duplicate) -->
     <header>
         <div class="logo">
-            <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png" alt="Turiya Yoga Logo">
+            <img src="https://api.turiyayoga.de/uploads/logo/logo.jpg" alt="Turiya Yoga Logo">
         </div>
         <div class="info">
             <p>Emanuel Wintermeyer<br>
@@ -962,6 +964,7 @@ const generateCancelInvoice = async (req, res) => {
 
         .logo img {
             height: 100px;
+            width: auto;
         }
 
         .info {
@@ -1031,7 +1034,7 @@ const generateCancelInvoice = async (req, res) => {
     <!-- Header Section -->
     <header>
         <div class="logo">
-           <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png"  alt="Turiya Yoga Logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/logo.jpg"  alt="Turiya Yoga Logo">
         </div>
         <div class="info">
             <p><b>Emanuel Wintermeyer</b><br>
@@ -1097,7 +1100,7 @@ const generateCancelInvoice = async (req, res) => {
                                </td>
                 <td>${calculatePriceWithTax(savedModule.price)}€</td>
               </tr>
-              ${savedModule?.selectedRoom?.RoomOffers ? `
+              ${savedModule?.selectedRoom?.RoomOffers && `
                 <tr>
                     <td>2</td>
                     <td>Zimmer: ${savedModule?.selectedRoom?.RoomOffers}</td>
@@ -1106,8 +1109,8 @@ const generateCancelInvoice = async (req, res) => {
                     <td>${savedModule.selectedRoom?.RoomPrice}€</td>
                     <td>zzgl. ${savedModule.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(savedModule.selectedRoom?.RoomPrice)}€</td>
-                </tr>` : null}
-              ${savedModule.selectedMeal?.MealOffers ? `
+                </tr>` }
+              ${savedModule.selectedMeal?.MealOffers && `
                 <tr>
                     <td>${savedModule.selectedRoom?.RoomOffers ? '3' : '2'}</td>
                     <td>Zimmer: ${savedModule.selectedMeal?.MealOffers}</td>
@@ -1116,7 +1119,7 @@ const generateCancelInvoice = async (req, res) => {
                     <td>${savedModule.selectedMeal?.MealPrice}€</td>
                     <td>zzgl. ${savedModule.userDetails.invoiceType == 'Private_Invoice' ? '0%' : '19 %'}</td>
                     <td>${calculatePriceWithTax(savedModule.selectedMeal?.MealPrice)}€</td>
-                </tr>` : null}
+                </tr>`}
         </tbody>
     </table>
 
