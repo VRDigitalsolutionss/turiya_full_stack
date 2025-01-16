@@ -86,7 +86,7 @@ function Banner() {
                   <div className="banner_bg__content-btn animate__animated animate__fadeInUp">
                     <div className="mehr-btn">
                       {/* <Link to="#">MEHR</Link> */}
-                      <Link to="/yogalehrer-ausbildung-himalaya-indien">MEHR</Link>
+                      <Link to="/module/yogalehrerausbildung-himalaya-indien">MEHR</Link>
                     </div>
                     {/* <div
                       className="video-btn mehr-btn"
@@ -122,7 +122,7 @@ function Banner() {
                   </p>
                   <div className="banner_bg__content-btn animate__animated animate__fadeInUp">
                     <div className="mehr-btn">
-                      <Link to="/yogalehrer-ausbildung-in-sampurna-seminarhaus">MEHR</Link>
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung-sampurna-seminarhaus">MEHR</Link>
                     </div>
                     <div
                       className="video-btn mehr-btn"
@@ -160,7 +160,7 @@ function Banner() {
                   </p>
                   <div className="banner_bg__content-btn animate__animated animate__fadeInUp">
                     <div className="mehr-btn">
-                      <Link to="/200h-yogalehrer-ausbildung-mallorca">MEHR</Link>
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung-i-mallorca">MEHR</Link>
                     </div>
                     <div
                       className="video-btn mehr-btn"
@@ -197,7 +197,7 @@ function Banner() {
                   </p>
                   <div className="banner_bg__content-btn animate__animated animate__fadeInUp">
                     <div className="mehr-btn">
-                      <Link to="/yogalehrer-ausbildung-goa-indien">MEHR</Link>
+                      <Link to="/module/200h-aya-yogalehrer-ausbildung-goa-indien">MEHR</Link>
                     </div>
                     <div
                       className="video-btn mehr-btn"
@@ -207,6 +207,29 @@ function Banner() {
                       <button>
                         <i className="bx bx-play" /> video
                       </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SwiperSlide>
+      <SwiperSlide key={`${animationKey}-6`}>
+        <div className="banner_bg banner_bg6">
+          <div className="banner-content container">
+            <div className="row">
+              <div className="col-lg-6">
+                <div className="banner_bg__content" data-aos="fade-up">
+                  <h1 className="animate__animated animate__fadeInUp">
+                    YogalehrerInnen Ausbildung auf Bali
+                  </h1>
+                  <p className="animate__animated animate__fadeInUp">
+                  Tauche ein in eine 21-tägige transformative YogalehrerInnen-Ausbildung im paradiesischen Bali. Lerne in deutscher Sprache, vertiefe deine Praxis und werde zertifizierter Yogalehrer – umgeben von atemberaubender Natur und einer friedlichen Atmosphäre.
+                  </p>
+                  <div className="banner_bg__content-btn animate__animated animate__fadeInUp">
+                    <div className="mehr-btn">
+                      <Link to="/module/yogalehrerinnen-ausbildung-bali">MEHR</Link>
                     </div>
                   </div>
                 </div>

@@ -20,7 +20,10 @@ const storage = multer.diskStorage({
 });
 
 
-const upload = multer({ storage }).single('BlogImage');
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 5 MB = 5 * 1024 * 1024 bytes
+}).single('BlogImage');
  
 
 const addBlog = async (req, res) => {
