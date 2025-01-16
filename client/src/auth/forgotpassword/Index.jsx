@@ -80,7 +80,7 @@ const Index = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="E-Mail-Adresse"
+                  placeholder=""
                 />
                 {errors.email && <span className="error">{errors.email}</span>}
               </div>

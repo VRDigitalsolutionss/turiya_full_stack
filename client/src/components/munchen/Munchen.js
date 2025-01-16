@@ -710,7 +710,7 @@ const Munchen = () => {
                                 color: item.Place <= 3 ? "#E07542" : "black", // Optional: change text color to white if background is #E07542
                               }}>
                               {item.Place <= 3
-                                ? `only Noch ${item.Place} Plätze frei`
+                                ? `Noch ${item.Place} Plätze frei`
                                 : `Noch ${item.Place} Plätze frei`}
                             </td>
 

@@ -126,7 +126,7 @@ const BannerSlowerWrapper = () => {
                   </li>
                 </div>
                 <div
-                  className="slower_wrapper__center-icon aos-init"
+                  className="slower_wrapper__center-icon aos-init custom-margin-2"
                   data-aos="fade-up">
                   <img
                     src="https://api.turiyayoga.de/uploads/assets/new/turiya_yoga_yogalehrer_ausbildungen_aya_rys200-150x150.webp"
@@ -198,11 +198,7 @@ const BannerSlowerWrapper = () => {
                     </ul>
                   </div>
 
-
-
-
-
-                  <div className="price">
+                  <div className="price custom-margin">
                     {
                       closestUpcomingCourse &&
                         closestUpcomingCourse[0] &&
