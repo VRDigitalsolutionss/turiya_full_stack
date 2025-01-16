@@ -33,7 +33,10 @@ const editBlog = async (req, res) => {
       },
     });
 
-    const upload = multer({ storage }).single('blogImage'); // 'blogImage' is the field name in the form
+    const upload = multer({ 
+      storage,
+      limits: { fileSize: 10 * 1024 * 1024 }, 
+    }).single('blogImage'); // 'blogImage' is the field name in the form
 
     // Handle the file upload
     upload(req, res, async (err) => {

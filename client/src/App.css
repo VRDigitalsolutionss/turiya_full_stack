@@ -404,6 +404,10 @@ p.ql-align-center {
   background-image: url("./assets/banner/goa-banner.webp");
 }
 
+.banner_bg6 {
+  background-image: url("./assets/banner/bali.jpeg");
+}
+
 .banner_bg {
   position: relative;
 }

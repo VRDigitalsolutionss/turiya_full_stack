@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
 // Multer instance for handling the file upload
 const upload = multer({
   storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|webp/; // Allow only specific file types
     const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
@@ -33,7 +34,7 @@ const upload = multer({
       cb(new Error("Only JPEG, JPG, and PNG files are allowed!"));
     }
   },
-}).single("profileImage"); // Field name: "profileImage"
+}).single("profileImage");
 
 
 // API to add a testimonial

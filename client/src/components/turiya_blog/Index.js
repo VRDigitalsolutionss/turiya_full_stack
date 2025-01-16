@@ -41,7 +41,7 @@ const Index = () => {
         const allBlogs = response.data.data;
         // Filter only the active blogs
         const activeBlogs = allBlogs.filter((blog) => blog.status === "active");
-        console.log("Filtered active blogs:", activeBlogs);
+        console.log("Filtered active blogs:", allBlogs);
         setBlog(activeBlogs); // Update the blog state variable with active blogs
       })
       .catch((error) => {

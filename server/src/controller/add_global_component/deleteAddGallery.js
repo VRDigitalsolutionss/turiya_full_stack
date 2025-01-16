@@ -15,7 +15,10 @@ const handleAddGallery = async (req, res) => {
     },
   });
 
-  const upload = multer({ storage }).single("file"); // Handle single file uploads
+  const upload = multer({ 
+    storage,
+    limits: { fileSize: 10 * 1024 * 1024 }, 
+  }).single("file"); // Handle single file uploads
 
   // Use Multer to process the file upload
   upload(req, res, async (err) => {
