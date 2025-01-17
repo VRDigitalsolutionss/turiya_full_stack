@@ -59,7 +59,7 @@ const addCourseModuleWebpage = async (req, res) => {
                 pageUrl,
                 metaTitle,
                 metaDescription,
-                metaKeywords,
+                canonicalLink,
                 yogaTeamSliderHeading,
                 yogaTeamSliderParagraph,
                 yogaTeamSliderVideoLink,
@@ -82,7 +82,7 @@ const addCourseModuleWebpage = async (req, res) => {
                 !pageUrl ||
                 !metaTitle ||
                 !metaDescription ||
-                !metaKeywords ||
+                !canonicalLink ||
                 !yogaTeamSliderHeading ||
                 !yogaTeamSliderParagraph ||
                 !yogaTeamSliderVideoLink ||
@@ -108,7 +108,7 @@ const addCourseModuleWebpage = async (req, res) => {
                 pageUrl,
                 metaTitle,
                 metaDescription,
-                metaKeywords,
+                canonicalLink,
                 yogaTeamSliderHeading,
                 yogaTeamSliderParagraph,
                 yogaTeamSliderVideoLink,

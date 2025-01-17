@@ -39,7 +39,7 @@ const SimpleBanner = ({ banner, heading, para, buttonTxt, videoLink }) => {
                       </span>
                     </p>
                   )}
-                  {buttonTxt!=="null" && (
+                  {buttonTxt!=="null" && buttonTxt!=='' && (
                     <div
                       className="banner_bg__content-btn animate__animated"
                       data-animation-in="animate__fadeInUp"

@@ -58,7 +58,7 @@ const addCourseWebpage = async (req, res) => {
                 pageUrl,
                 metaTitle,
                 metaDescription,
-                metaKeywords,
+                canonicalLink,
                 yogaTeamSliderHeading,
                 yogaTeamSliderParagraph,
                 yogaTeamSliderVideoLink,
@@ -81,7 +81,7 @@ const addCourseWebpage = async (req, res) => {
                 !pageUrl ||
                 !metaTitle ||
                 !metaDescription ||
-                !metaKeywords ||
+                !canonicalLink ||
                 !yogaTeamSliderHeading ||
                 !yogaTeamSliderParagraph ||
                 !yogaTeamSliderVideoLink ||
@@ -107,7 +107,7 @@ const addCourseWebpage = async (req, res) => {
                 pageUrl,
                 metaTitle,
                 metaDescription,
-                metaKeywords,
+                canonicalLink,
                 yogaTeamSliderHeading,
                 yogaTeamSliderParagraph,
                 yogaTeamSliderVideoLink,
@@ -154,7 +154,7 @@ const editCourseWebpage = async (req, res) => {
         try {
             const { id } = req.params;
             const selectedSections = JSON.parse(req.body.selectedSections);
-            const selectedFAQs = JSON.parse(req.body.faqs);
+            const selectedFAQs = (req.body.faqs && req.body.faqs!=='undefined') ? JSON.parse(req.body.faqs) : {};
             const updateFields = { ...req.body, selectedSections, faqs: selectedFAQs };
 
             const courseWebpage = await CourseWebpages.findById(id);

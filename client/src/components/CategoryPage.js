@@ -20,6 +20,7 @@ import thumbImg1 from "../assets/images/mallorca_thumb.webp";
 import thumbImg2 from "../assets/images/sampurna_thumb.webp";
 import thumbImg3 from "../assets/images/himachal_thumb.webp";
 import thumbImg4 from "../assets/images/goa_thumb.webp";
+import { Helmet } from "react-helmet";
 
 const Category = () => {
     useEffect(() => {
@@ -123,7 +124,7 @@ const Category = () => {
         fetchData();
     }, [slug]);
 
-    console.log("all courses data", mainData, bannerImg);
+    console.log("all courses data", mainData);
     console.log("banner image", bannerImg);
 
     function formatDate(dateString) {
@@ -185,6 +186,20 @@ const Category = () => {
                 show404page ?
                     <NoPage /> :
                     <div>
+                        {mainData.metaTitle || mainData.metaDescription ? (
+                            <Helmet>
+                                <meta charSet="utf-8" />
+                                {mainData.metaTitle && <title>{mainData.metaTitle}</title>}
+                                {mainData.metaDescription && <meta name="description" content={mainData.metaDescription} />}
+                                <link rel="canonical" href={mainData.canonicalLink || window.location.href} />
+                            </Helmet>
+                        ) : (
+                            <Helmet>
+                                <title>Zertifizierte Yogalehrer Ausbildung bei Turiya Yoga | Starte Deine Karriere im Yoga</title>
+                                <meta name="description" content="Entdecke die zertifizierte Yogalehrer Ausbildung bei Turiya Yoga – international anerkannt und umfassend. Ich werde ein professioneller Yogalehrer mit fundierten Kenntnissen und Praxis. Melde dich jetzt an und starte deine Reise zu einem erfüllten Yoga-Leben!" />
+                                <link rel="canonical" href={window.location.href} />
+                            </Helmet>
+                        )}
                         {selectedSections.includes("banner-section") && <SimpleBanner
                             banner={bannerImg && bannerImg}
                             heading={mainData.yogaTeamSliderHeading}
@@ -198,10 +213,10 @@ const Category = () => {
                                     <div className="row">
                                         <div className="col-lg-9">
                                             <div className="about_wrapper__left">
-                                                {mainData.about_first_section_sub_Paragraph !== "null" && <h3>
+                                                {mainData.about_first_section_sub_Paragraph !== "null" && mainData.about_first_section_sub_Paragraph !== "" && <h3>
                                                     {mainData && mainData.about_first_section_sub_Paragraph}
                                                 </h3>}
-                                                {mainData.about_first_section_Heading !== "null" && <h1> {mainData && mainData.about_first_section_Heading}</h1>}
+                                                {mainData.about_first_section_Heading !== "null" && mainData.about_first_section_Heading !== "" && <h1> {mainData && mainData.about_first_section_Heading}</h1>}
                                                 <div
                                                     dangerouslySetInnerHTML={{
                                                         __html: decodedContent,
