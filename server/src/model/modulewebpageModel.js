@@ -19,57 +19,46 @@ const modulewebpageschema = new mongoose.Schema(
         },
         pageUrl: {
             type: String,
-            required: true,
             trim: true,
         },
         metaTitle: {
             type: String,
-            required: true,
             trim: true,
         },
         metaDescription: {
             type: String,
-            required: true,
             trim: true,
         },
-        metaKeywords: {
+        canonicalLink: {
             type: String,
-            required: true,
             trim: true,
         },
         yogaTeamSliderHeading: {
             type: String,
-            required: true,
             trim: true,
         },
         yogaTeamSliderParagraph: {
             type: String,
-            required: true,
             trim: true,
         },
         yogaTeamSliderVideoLink: {
             type: String,
-            required: true,
             trim: true,
         },
         yogaTeamSlideImage: {
             type: String,
-            required: true,
             trim: true,
         },
         about_first_section_Heading: {
             type: String,
-            required: true,
             trim: true,
         },
         about_first_section_sub_Paragraph: {
             type: String,
-            required: true,
             trim: true,
         },
         about_first_section_Paragraph_Content: {
             type: String,
-            required: true,
             trim: true,
         },
         faqs: {

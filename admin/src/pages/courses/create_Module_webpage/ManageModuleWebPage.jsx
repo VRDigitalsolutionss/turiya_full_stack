@@ -42,7 +42,7 @@ const CourseForm = () => {
           bannerButton: data.bannerButton || "",
           metaTitle: data.metaTitle || "",
           metaDescription: data.metaDescription || "",
-          metaKeywords: data.metaKeywords || "",
+          canonicalLink: data.canonicalLink || "",
           sliderHeading: data.yogaTeamSliderHeading || "",
           sliderParagraph: data.yogaTeamSliderParagraph || "",
           sliderVideoLink: data.yogaTeamSliderVideoLink || "",
@@ -128,7 +128,7 @@ const CourseForm = () => {
     pageUrl: "",
     metaTitle: "",
     metaDescription: "",
-    metaKeywords: "",
+    canonicalLink: "",
     sliderHeading: "",
     sliderParagraph: "",
     sliderVideoLink: "",
@@ -295,7 +295,7 @@ const CourseForm = () => {
       pageUrl: formData.pageUrl,
       metaTitle: formData.metaTitle,
       metaDescription: formData.metaDescription,
-      metaKeywords: formData.metaKeywords,
+      canonicalLink: formData.canonicalLink,
       yogaTeamSliderHeading: formData.sliderHeading,
       yogaTeamSliderParagraph: formData.sliderParagraph,
       yogaTeamSliderVideoLink: formData.sliderVideoLink,
@@ -322,14 +322,6 @@ const CourseForm = () => {
 
     console.log("Payload: ", payload);
     console.log("FormData: ", form);
-
-    // Validation for mandatory fields
-    if (
-      payload.pageUrl &&
-      payload.yogaTeamSliderHeading &&
-      payload.yogaTeamSliderParagraph
-    ) {
-      // Axios POST request
 
 
       if (id) {
@@ -374,10 +366,6 @@ const CourseForm = () => {
             alert("An error occurred while submitting the form. Check console.");
           });
       }
-
-    } else {
-      alert("All fields are mandatory. Please fill in all required fields.");
-    }
   };
 
   const editor = useRef(null);
@@ -535,15 +523,15 @@ const CourseForm = () => {
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="metaKeywords" className="form-label">
-                Meta Keywords
+              <label htmlFor="canonicalLink" className="form-label">
+                Canonical Link
               </label>
               <input
                 type="text"
-                id="metaKeywords"
-                name="metaKeywords"
+                id="canonicalLink"
+                name="canonicalLink"
                 className="form-control"
-                value={formData.metaKeywords}
+                value={formData.canonicalLink}
                 onChange={handleChange}
               />
             </div>

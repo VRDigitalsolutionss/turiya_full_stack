@@ -1,3 +1,11 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /login/
+Allow: /turiyayoga.de/blog
+Allow: /module/berlin-yoga-ausbildung
+Allow: /module/hamburg-yoga-ausbildung
+Allow: /module/cologne-yoga-ausbildung
+Allow: /module/munchen-yoga-ausbildung
+Allow: /module/stuttgart-yoga-ausbildung
+
+Allow: /
+Sitemap: https://www.turiyayoga.de/sitemap.xml

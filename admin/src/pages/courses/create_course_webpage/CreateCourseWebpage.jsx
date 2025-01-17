@@ -292,7 +292,7 @@ const CourseTable = () => {
             <tr>
               <th>#</th>
               <th>Course Categories</th>
-              <th>Title</th>
+              {/* <th>Title</th> */}
               <th>Name</th>
               <th>Action</th>
             </tr>
@@ -303,7 +303,7 @@ const CourseTable = () => {
                 <tr key={course.id}>
                   <td>{indexOfFirstCourse + index + 1}</td>
                   <td>{course.courseCategory}</td>
-                  <td>{course.metaTitle}</td>
+                  {/* <td>{course.metaTitle}</td> */}
                   <td>{truncateText(course.courseCategory, 15)}</td>
                   <td>
                   
