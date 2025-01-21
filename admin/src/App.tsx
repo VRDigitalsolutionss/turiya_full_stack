@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import MainLayout from "./components/layout/MainLayout";
 import { routes } from "./routes";
 import "./styles/comman.scss";
