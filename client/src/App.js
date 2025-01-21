@@ -17,7 +17,6 @@ import Privacy_Policy from "./components/privacy_policy/Privacy_Policy";
 import axios from "axios";
 import { BASE_URL } from "./config";
 import ThankYouPage from "./components/ThankYouPage";
-import YogaTeacherTrainingBali from "./components/bali/YogaTeacherTrainingBali";
 import YogaTeacherTraining200HNew from './components/yoga_teacher_training/Index'
 import VerifyEmail from "./auth/VerifyEmail";
 import ResetPassword from "./auth/ResetPassword";
@@ -36,45 +35,6 @@ const Contact = lazy(() => import("./components/contact/Index"));
 const Team = lazy(() => import("./components/team/Team"));
 const Blog = lazy(() => import("./components/turiya_blog/Index"));
 const AllCourses = lazy(() => import("./components/all_courses/Index"));
-const YogaTeacher = lazy(() => import("./components/yoga_teacher/Index"));
-const YogaTraningGoa = lazy(() =>
-  import("./components/teacher_training_goa/index")
-);
-const YogaTraningMallorca = lazy(() =>
-  import("./components/yoga_teacher_training_Mallorca/YogaTraningMallorca")
-);
-const YogaTraningSampurna = lazy(() =>
-  import("./components/yoga_training_Sampurna/index")
-);
-const YogaTraningHimalaya = lazy(() =>
-  import("./components/yoga_training_Himalaya/index")
-);
-const Yin_YogaTraning = lazy(() => import("./components/yin_yoga/YinYoga"));
-const Senior_yogaTraning = lazy(() =>
-  import("./components/senior_yoga/Senior_Yoga")
-);
-const Block_yogaTraning = lazy(() =>
-  import("./components/block_training/Index")
-);
-const Block_yogamodule1 = lazy(() =>
-  import("./components/yoga_training_module/module1/Index2")
-);
-// const Block_yogamodule2= lazy(() => import('./components/yoga_training_module/module2/Index'));
-const Block_yogamodule2 = lazy(() =>
-  import("./components/yoga_training_module/module2/Index2")
-);
-const Block_yogamodule3 = lazy(() =>
-  import("./components/yoga_training_module/module3/Index2")
-);
-const Block_yogamodule4 = lazy(() =>
-  import("./components/yoga_training_module/module4/Index")
-);
-const Block_yogamodule5 = lazy(() =>
-  import("./components/yoga_training_module/module5/Index")
-);
-const YogaTraningHybrid = lazy(() =>
-  import("./components/hybrid_yoga_training/Index")
-);
 const Yoga_retreat = lazy(() => import("./components/yoga_retreat/index"));
 const Blog1 = lazy(() => import("./components/blog_detail/blog1/Index"));
 const Blog2 = lazy(() => import("./components/blog_detail/blog2/Index"));
@@ -92,12 +52,6 @@ const Product = lazy(() => import("./components/product/Index"));
 const ProductBilling = lazy(() => import("./components/product_billing/Index"));
 // =======================
 
-
-const Berlin = lazy(() => import("./components/berlin/Index"));
-const Hamburg = lazy(() => import('./components/hamburg/Index'));
-const YOGALEHRERAUSBILDUNGCOLOGNE = lazy(() => import('./components/cologne/Clogne'))
-const Munchen = lazy(() => import('./components/munchen/Munchen'));
-const Stuttgart = lazy(() => import('./components/Stuttgart/Stuttgart'));
 // const yogaTeacherTraining200H = lazy(() => import('./components/yoga_teacher_training/Index'));
 const RISHIKESH = lazy(() => import('./components/rishikesh/Index'))
 const YogaTeacherTraining200h = lazy(() => import('./components/200hyogateachertraining/Index'));
@@ -142,61 +96,10 @@ function App() {
           <Route path="team" element={<Team />} />
           <Route path="blog" element={<Blog />} />
           <Route path="kommende-kurse" element={<AllCourses />} />
-          <Route path="yogalehrer-ausbildung-200h" element={<YogaTeacher />} />
-          <Route path="yogalehrer-ausbildung-goa-indien"
-
-
-
-            element={<YogaTraningGoa />} />
-          <Route path="200h-yogalehrer-ausbildung-mallorca"
-
-
-
-            element={<YogaTraningMallorca />} />
-          <Route path="yoga-teacher-training-bali" element={<YogaTeacherTrainingBali />} />
-          <Route path="yogalehrer-ausbildung-200h" element={<YogaTeacher />} />
+          
           <Route path="yogateachertraining" element={<YogaTeacherTraining200HNew />} />
           <Route path="yoga-teacher-training-rishikesh" element={<RISHIKESH />} />
 
-
-          <Route path="yogalehrer-ausbildung-in-sampurna-seminarhaus"
-
-
-
-            element={<YogaTraningSampurna />} />
-          <Route path="yogalehrer-ausbildung-himalaya-indien"
-
-
-
-
-            element={<YogaTraningHimalaya />} />
-          <Route path="yin-yoga" element={<Yin_YogaTraning />} />
-          <Route path="senioren-yoga" element={<Senior_yogaTraning />} />
-          <Route path="blockausbildung-im-ueberblick" element={<Block_yogaTraning />} />
-          <Route path="yogalehrer-ausbildung-100h"
-
-
-
-            element={<Block_yogamodule1 />} />
-          <Route path="yogalehrer-ausbildung-module-200h"
-
-
-
-
-            element={<Block_yogamodule2 />} />
-          <Route path="yogalehrer-ausbildung-300h"
-
-
-            element={<Block_yogamodule3 />} />
-          <Route path="yogalehrer-ausbildung-400h"
-
-
-            element={<Block_yogamodule4 />} />
-          <Route path="yogalehrer-ausbildung-500h"
-
-
-            element={<Block_yogamodule5 />} />
-          <Route path="hybride-yogalehrer-ausbildung" element={<YogaTraningHybrid />} />
           <Route path="yoga_retreat" element={<Yoga_retreat />} />
           <Route path="course_booking/:id" element={<BookingDetail />} />
           <Route path="bilingDetails/:id" element={<BilingDetails />} />
@@ -207,7 +110,6 @@ function App() {
           <Route path="term" element={<Term_Condition />} />
           <Route path="product" element={<Product />} />
           <Route path="product-billing" element={<ProductBilling />} />
-          <Route path="demo" element={<Demo />} />
 
 
 
@@ -223,34 +125,6 @@ function App() {
           {/* ====================================================================== */}
 
 
-          <Route path="/200h-aya-yogalehrer-ausbildung" element={<YogaTeacher />} />
-
-          <Route path="/200h-aya-yogalehrer-ausbildung-sampurna-seminarhaus" element={<YogaTraningSampurna />} />
-
-          <Route path="/200h-aya-yogalehrer-ausbildung-goa-indien" element={<YogaTraningGoa />} />
-
-          <Route path="/200h-aya-yogalehrer-ausbildung-i-mallorca" element={<YogaTraningMallorca />} />
-
-          <Route path="/yogalehrerausbildung-himalaya-indien" element={<YogaTraningHimalaya />} />
-
-          <Route path="/blockausbildung-ueberblick" element={<Block_yogaTraning />} />
-
-          <Route path="100h-yoga-ausbildung-modul-1" element={<Block_yogamodule1 />} />
-
-          <Route path="200h-yoga-ausbildung-modul-2" element={<Block_yogamodule2 />} />
-
-          <Route path="300h-yoga-ausbildung-modul-3" element={<Block_yogamodule3 />} />
-
-          <Route path="400h-yoga-ausbildung-modul-4" element={<Block_yogamodule4 />} />
-
-          <Route path="500h-yoga-ausbildung-modul-5" element={<Block_yogamodule5 />} />
-
-
-          <Route path="YOGALEHRERAUSBILDUNG-BERLIN" element={<Berlin />} />
-          <Route path="YOGALEHRERAUSBILDUNG-HAMBURG" element={<Hamburg />} />
-          <Route path="YOGALEHRERAUSBILDUNG-COLOGNE" element={<YOGALEHRERAUSBILDUNGCOLOGNE />} />
-          <Route path="munchen-yoga-ausbildung" element={<Munchen />} />
-          <Route path="Yogalehrer-Ausbildungen-Stuttgart" element={<Stuttgart />} />
           <Route path="200-hour-yoga-teacher-training" element={<YogaTeacherTraining200h />} />
           <Route path="yoga-teacher-training-course-india" element={<YogateacherTrainingCourseIndia />} />
 

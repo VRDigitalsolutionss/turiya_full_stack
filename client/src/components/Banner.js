@@ -29,6 +29,9 @@ function Banner() {
       //   delay: 3500,
       //   disableOnInteraction: false,
       // }}
+      lazy={{
+        loadPrevNext: true,
+      }}
       modules={[Autoplay, Navigation]}
       onSlideChange={handleSlideChange}
       className="mySwiper"
@@ -225,7 +228,7 @@ function Banner() {
                     YogalehrerInnen Ausbildung auf Bali
                   </h1>
                   <p className="animate__animated animate__fadeInUp">
-                  Tauche ein in eine 21-tägige transformative YogalehrerInnen-Ausbildung im paradiesischen Bali. Lerne in deutscher Sprache, vertiefe deine Praxis und werde zertifizierter Yogalehrer – umgeben von atemberaubender Natur und einer friedlichen Atmosphäre.
+                    Tauche ein in eine 21-tägige transformative YogalehrerInnen-Ausbildung im paradiesischen Bali. Lerne in deutscher Sprache, vertiefe deine Praxis und werde zertifizierter Yogalehrer – umgeben von atemberaubender Natur und einer friedlichen Atmosphäre.
                   </p>
                   <div className="banner_bg__content-btn animate__animated animate__fadeInUp">
                     <div className="mehr-btn">
