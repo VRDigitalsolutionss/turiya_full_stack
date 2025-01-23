@@ -139,7 +139,7 @@ const EditBlog = () => {
                 {typeof blogImage === "string" ? (
                   // Display image if it's a URL
                   <img
-                    src={blogImage}
+                    src={`${BASE_URL_IMAGE}/images/blogs/` + blogImage}
                     alt="Blog Preview"
                     style={{ maxWidth: "200px", height: "auto" }}
                   />
