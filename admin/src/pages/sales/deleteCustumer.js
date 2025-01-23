@@ -17,7 +17,7 @@ const TableComponent = () => {
 
 
   const fetchData = () => {
-    axios.get('http://127.0.0.1:7000/api/all_customers').then((response) => {
+    axios.get(`${BASE_URL}/all_customers`).then((response) => {
       console.log("custumer response", response.data.data);
       
       setData(response.data.data);
@@ -103,7 +103,7 @@ const TableComponent = () => {
 
 
   const handleDelete = (id) => {
-    axios.delete(`http://127.0.0.1:7000/api/delete_customer/${id}`).then((response) => {
+    axios.delete(`${BASE_URL}/delete_customer/${id}`).then((response) => {
       console.log("custumer deleted successfully", response);
       fetchData();
     }).catch((error) => {

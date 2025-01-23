@@ -9,6 +9,7 @@ import * as XLSX from "xlsx";
 import "./custumer.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 
 
 
@@ -96,7 +97,7 @@ function Invoice() {
   ]);
 
   const fetchData = () => {
-    axios.get('http://127.0.0.1:7000/api/all_invoices').then((response) => {
+    axios.get(`${BASE_URL}/all_invoices`).then((response) => {
       console.log("invoice response", response.data.data);
       setData(response.data.data);
     }).catch((error) => {

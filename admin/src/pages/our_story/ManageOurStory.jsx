@@ -328,7 +328,7 @@ const ManageOurStory = () => {
       try {
         // Send a POST request to the API endpoint
         const response = await axios.put(
-          `http://127.0.0.1:7000/api/edit_our_story/${id}`,
+          `${BASE_URL}/edit_our_story/${id}`,
           formData
         );
 
@@ -401,7 +401,7 @@ const ManageOurStory = () => {
       try {
         // Send a POST request to the API endpoint
         const response = await axios.post(
-          "http://127.0.0.1:7000/api/add_our_story/",
+          `${BASE_URL}/add_our_story/`,
           formData
         );
 

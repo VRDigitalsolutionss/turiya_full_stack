@@ -10,6 +10,7 @@ import "jspdf-autotable";
 import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { BASE_URL } from "../../config";
 
 
 // const data = [
@@ -38,7 +39,7 @@ const CustumerEmail = () => {
 
 
   const fetchData = () => {
-    axios.get('http://127.0.0.1:7000/api/all_subscriptions').then((response) => {
+    axios.get(`${BASE_URL}/all_subscriptions`).then((response) => {
       console.log(response.data.data);
       setData(response.data.data)
     }).catch((error) => {
@@ -115,7 +116,7 @@ const CustumerEmail = () => {
 
   const handleDeleteConfirm = () => {
 
-    axios.delete(`http://127.0.0.1:7000/api/delete_subscription/${deleteItemId}`).then((response) => {
+    axios.delete(`${BASE_URL}/delete_subscription/${deleteItemId}`).then((response) => {
       console.log(response)
       setDeleteItemId("");
       setShowDeleteModal(false); // Close the modal
