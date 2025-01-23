@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import "./comman.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Index = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:7000/api/our_story/${id}`)
+      .get(`${BASE_URL}/our_story/${id}`)
       .then((response) => {
         console.log("response received", response.data.data);
 
@@ -370,7 +371,7 @@ const Index = () => {
       try {
         // Send a POST request to the API endpoint
         const response = await axios.put(
-          `http://127.0.0.1:7000/api/edit_our_story/${id}`,
+          `${BASE_URL}/edit_our_story/${id}`,
           formData
         );
 
@@ -433,7 +434,7 @@ const Index = () => {
       try {
         // Send a POST request to the API endpoint
         const response = await axios.post(
-          "http://127.0.0.1:7000/api/add_our_story/",
+          `${BASE_URL}/add_our_story/`,
           formData
         );
 

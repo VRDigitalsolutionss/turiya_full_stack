@@ -7,6 +7,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const ManageAboutUs = () => {
   const [data, setData] = useState([]);
@@ -25,7 +26,7 @@ const ManageAboutUs = () => {
 
   const fetchData = async () => {
     axios
-      .get("http://127.0.0.1:7000/api/our_stories")
+      .get(`${BASE_URL}/our_stories`)
       .then((response) => {
         console.log(response.data.data);
         setData(response.data.data);
@@ -129,7 +130,7 @@ const ManageAboutUs = () => {
   const handleDeleteConfirm = () => {
     //   setData((prevData) => prevData.filter((item) => item.id !== deleteItemId));
     
-    axios.delete(`http://127.0.0.1:7000/api/delete_our_story/${deleteItemId}`).then((response) => {
+    axios.delete(`${BASE_URL}/delete_our_story/${deleteItemId}`).then((response) => {
       console.log(response);
       
       fetchData();

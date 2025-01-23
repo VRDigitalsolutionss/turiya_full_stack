@@ -170,7 +170,7 @@ const BlogTable = () => {
                 <td>{indexOfFirstBlog + index + 1}</td>
                 <td>{blog.blogHeading}</td>
                 <td>
-                  <img src={`http://127.0.0.1:5001/uploads/images/blogs/`+blog.blogImage} alt={blog.blogImage} width="50" height="50" />
+                  <img src={`${BASE_URL_IMAGE}/images/blogs/`+ blog.blogImage} alt={blog.blogImage} width="50" height="50" />
                 </td>
                 <td>{blog.createdAt?formatCreatedAt(blog.createdAt):null  }</td>
                 <td>

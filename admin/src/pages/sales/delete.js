@@ -456,6 +456,7 @@ import { MdOutlineDateRange } from "react-icons/md";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
+import { BASE_URL } from "../../config";
 
 const TableComponent = () => {
   const [showModal, setShowModal] = useState("");
@@ -476,7 +477,7 @@ const TableComponent = () => {
   }, []);
 
   const fetchData = () => {
-    axios.get('http://127.0.0.1:7000/api/all_customers').then((response) => {
+    axios.get(`${BASE_URL}/all_customers`).then((response) => {
       setData(response.data.data);
     }).catch((error) => {
       console.error("Error fetching data: ", error);
@@ -621,7 +622,7 @@ const [showUserProfile,setShowUserProfile] = useState(false)
 
   const handleDeleteConfirm = () => {
 
-    axios.delete(`http://127.0.0.1:7000/api/delete_customer/${deleteId}`).then((response) => {
+    axios.delete(`${BASE_URL}/delete_customer/${deleteId}`).then((response) => {
       
       console.log(response)
       fetchData();

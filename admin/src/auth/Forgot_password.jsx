@@ -4,6 +4,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import admin_logo from "../assets/images/forgot_password_logo.webp";
 import axios from 'axios';
+import { BASE_URL } from "../config";
 
 
 const Forgot_password = () => {
@@ -27,7 +28,7 @@ const Forgot_password = () => {
     console.log("Form Data Submitted:", formData);
 
 
-    axios.post('http://127.0.0.1:7000/api/forgot_password',formData).then((response) => {
+    axios.post(`${BASE_URL}/forgot_password`,formData).then((response) => {
       console.log("response", response.status);
 
       // if (response.status === 200) {
