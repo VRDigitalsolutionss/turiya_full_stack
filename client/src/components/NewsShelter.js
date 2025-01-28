@@ -74,7 +74,7 @@ const NewsShelter = () => {
           <div className="newsletter-btn">
             <button className=' d-flex justify-content-center align-items-center gap-3' type="submit" name="submit">
             Abonnieren
-            {!loading && <div class="spinner-border text-light" role="status"></div>}
+            {loading && <div class="spinner-border text-light" role="status"></div>}
             </button>
           </div>
         </div>
