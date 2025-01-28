@@ -9,6 +9,7 @@ const NewsShelter = () => {
 
     const [email, setEmail] = useState('');
     const [submittedEmail, setSubmittedEmail] = useState(null);
+    const [loading, setLoading] = useState(false)
   
     const handleChange = (e) => {
       setEmail(e.target.value);
@@ -16,8 +17,9 @@ const NewsShelter = () => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      setSubmittedEmail(email); // Save the email value after submission
+      setSubmittedEmail(email);
 
+      setLoading(true)
 
       const payload = {
         "email": email
@@ -27,6 +29,7 @@ const NewsShelter = () => {
         console.log("response add_subscription", response);
 
         if (response.status == 201) {
+          setLoading(false)
 
            Swal.fire({
                     title: "Danke!",
@@ -36,11 +39,14 @@ const NewsShelter = () => {
 
           setEmail('');
         } else {
+          setLoading(false)
           alert("something went wrong")
         }
-  
+        
       }).catch((error) => {
+        setLoading(false)
         console.log("error",error)
+        alert("something went wrong")
       })
   
     };
@@ -66,7 +72,10 @@ const NewsShelter = () => {
         </div>
         <div className="col-lg-4">
           <div className="newsletter-btn">
-            <button type="submit" name="submit">Abonnieren</button>
+            <button className=' d-flex justify-content-center align-items-center gap-3' type="submit" name="submit">
+            Abonnieren
+            {!loading && <div class="spinner-border text-light" role="status"></div>}
+            </button>
           </div>
         </div>
       </div>

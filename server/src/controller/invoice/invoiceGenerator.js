@@ -823,7 +823,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"Turiyoga Team" <${process.env.EMAIL_USER}>`,
       to: req.body.email,
       subject: "Deine Buchung bei Turiya Yoga",
       text: "Please find the attached Invoice and Contract PDFs.",
@@ -1224,7 +1224,7 @@ const generateCancelInvoice = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"Turiyoga Team" <${process.env.EMAIL_USER}>`,
       to: savedModule.email,
       subject: "Deine Buchung bei Turiya Yoga",
       text: "Please find the attached Invoice PDF.",

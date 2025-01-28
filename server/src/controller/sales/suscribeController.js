@@ -1,4 +1,5 @@
 const SubscribeEmail = require("../../model/subscribeemailModel");
+const nodemailer = require("nodemailer");
 
 // **Add Subscription**
 const addSubscription = async (req, res) => {
@@ -15,6 +16,33 @@ const addSubscription = async (req, res) => {
 
         const newSubscription = new SubscribeEmail({ email });
         const savedSubscription = await newSubscription.save();
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+
+        const adminMailOptions = {
+            from: `"Turiyoga Notifications" <${process.env.EMAIL_USER}>`,
+            to: "info@turiyoga.com",
+            subject: "New Subscription Alert",
+            text: `A new user has subscribed to your newsletter. Subscriber email: ${email}`,
+        };
+
+        const userMailOptions = {
+            from: `"Turiyoga Team" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: "Vielen Dank für Ihre Anmeldung!",
+            text: `Liebe/r Abonnent/in,\n\nVielen Dank, dass Sie sich für den Turiyoga-Newsletter angemeldet haben! Wir freuen uns darauf, Ihnen spannende Neuigkeiten und Updates zukommen zu lassen.\n\nMit herzlichen Grüßen,\nIhr Turiyoga-Team`,
+        };
+
+        await transporter.sendMail(adminMailOptions);
+        await transporter.sendMail(userMailOptions);
+
+        console.log("Email is sent")
 
         res.status(201).json({
             success: true,

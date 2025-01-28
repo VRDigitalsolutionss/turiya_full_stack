@@ -25,13 +25,14 @@ function Banner() {
   return (
     <Swiper
       navigation={true}
-      // autoplay={{
-      //   delay: 3500,
-      //   disableOnInteraction: false,
-      // }}
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false,
+      }}
       lazy={{
         loadPrevNext: true,
       }}
+      speed={1500}
       modules={[Autoplay, Navigation]}
       onSlideChange={handleSlideChange}
       className="mySwiper"
