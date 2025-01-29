@@ -158,7 +158,7 @@ updatedAt
                             <h6>{blog.blogHeading}</h6>
                             <div className="read-more mt-3">
                               <Link
-                                to={`/blog-detail/${blog._id}`}
+                                to={`/blog-detail/${blog.slug}`}
                                 className="global_btn">
                                 Read more
                               </Link>

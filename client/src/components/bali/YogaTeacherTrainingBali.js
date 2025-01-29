@@ -16,6 +16,7 @@ import Testimonial from "../Testimonial";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config";
+import BannerGlobalTableWrapper from "../BannerGlobalTableWrapper";
 
 const YogaTeacherTrainingBali = () => {
   // =============================================================
@@ -282,43 +283,43 @@ const YogaTeacherTrainingBali = () => {
                     <div className="row">
                       <div className="col-sm-7">
 
-                      <h6>Small group dynamics</h6>
-                    <p>
-                      We truly believe in the power of personal connection. Our
-                      training fosters a sense of community with small class
-                      size allowing you to get customized attention, open
-                      communication and a supportive network that goes beyond
-                      the duration of the program.
-                    </p>
-                    <h6>Practical teaching opportunities</h6>
-                    <p>
-                      The opportunity for practical teaching is integral to our
-                      program. You will be guided by our experienced
-                      instructors, and you can get hands-on experience refining
-                      your teaching skills and building the confidence to lead
-                      your own classes after certification.
-                    </p>
-                    <h6>Culinary exploration</h6>
-                    <p>
-                      The culinary offerings of Bali offer a great treat for
-                      your senses. Our program also includes culinary
-                      explorations so you can introduce yourself to the Balinese
-                      flavors and nutrition that aligned with the yogic
-                      principles nourishing your mind and body
-                    </p>
-                    <h6>Post training support and community</h6>
-                    <p>
-                      Graduating from our program marks the beginning of a
-                      lifelong journey. We offer post training support resources
-                      and a global community network which ensures statistics
-                      continue to evolve and share the transformative power of
-                      yoga no matter where you go.
-                    </p>
+                        <h6>Small group dynamics</h6>
+                        <p>
+                          We truly believe in the power of personal connection. Our
+                          training fosters a sense of community with small class
+                          size allowing you to get customized attention, open
+                          communication and a supportive network that goes beyond
+                          the duration of the program.
+                        </p>
+                        <h6>Practical teaching opportunities</h6>
+                        <p>
+                          The opportunity for practical teaching is integral to our
+                          program. You will be guided by our experienced
+                          instructors, and you can get hands-on experience refining
+                          your teaching skills and building the confidence to lead
+                          your own classes after certification.
+                        </p>
+                        <h6>Culinary exploration</h6>
+                        <p>
+                          The culinary offerings of Bali offer a great treat for
+                          your senses. Our program also includes culinary
+                          explorations so you can introduce yourself to the Balinese
+                          flavors and nutrition that aligned with the yogic
+                          principles nourishing your mind and body
+                        </p>
+                        <h6>Post training support and community</h6>
+                        <p>
+                          Graduating from our program marks the beginning of a
+                          lifelong journey. We offer post training support resources
+                          and a global community network which ensures statistics
+                          continue to evolve and share the transformative power of
+                          yoga no matter where you go.
+                        </p>
 
                       </div>
                       <div className="col-sm-5 d-flex justify-content-end">
                         <div>
-                        <img src={manu_img} className="img-fluid" />
+                          <img src={manu_img} className="img-fluid" />
                         </div>
 
 
@@ -326,7 +327,7 @@ const YogaTeacherTrainingBali = () => {
 
                       </div>
                     </div>
-                   
+
                     <h6>Upcoming yoga teacher training programs in Bali</h6>
                     <p>
                       You can embark on a transformative journey with our yoga
@@ -343,130 +344,131 @@ const YogaTeacherTrainingBali = () => {
           </div>
         </section>
         <section className="global_wrapper third_section">
-                  <div className="container">
-                    <div className="global_wrapper__content" data-aos="zoom-in-up">
-                      <div className="leaf">
-                        <i className="bx bxs-leaf" />
-                      </div>
-                      <div className="main_heading">
-                        <h1>Turiya Yoga bietet Yogalehrer-Ausbildungen in</h1>
-                      </div>
+          <div className="container">
+            <div className="global_wrapper__content" data-aos="zoom-in-up">
+              <div className="leaf">
+                <i className="bx bxs-leaf" />
+              </div>
+              <div className="main_heading">
+                <h1>Turiya Yoga bietet Yogalehrer-Ausbildungen in</h1>
+              </div>
+            </div>
+          </div>
+          <div className="global_content">
+            <div className="container">
+              <div className="yogalehrer-grid">
+                <div
+                  className="third_section__box"
+                  data-aos="fade-up"
+                  data-aos-delay={100}>
+                  <div className="box_img">
+                    <img src={img3} className="img-fluid" alt="yoga" />
+                  </div>
+                  <div className="box_content">
+                    <h3>Deutschland</h3>
+                    <p>
+                      Für diejenigen, die ihre Yogalehrerausbildung in einem
+                      behaglichen Rückzugsort im eigenen Land absolvieren
+                      möchten – umgeben von Quellen, frischer Luft und den
+                      Wäldern des Taunus, ist das Sampurna Seminarhaus nur 30
+                      Minuten von Wiesbaden und Mainz entfernt und somit ideal
+                      erreichbar.
+                    </p>
+                    <div className="mehr--btn">
+                      <Link to='/module/200h-aya-yogalehrer-ausbildung-sampurna-seminarhaus'  >
+                        MEHR
+                      </Link>
                     </div>
                   </div>
-                  <div className="global_content">
-                    <div className="container">
-                      <div className="yogalehrer-grid">
-                        <div
-                          className="third_section__box"
-                          data-aos="fade-up"
-                          data-aos-delay={100}>
-                          <div className="box_img">
-                            <img src={img3} className="img-fluid" alt="yoga" />
-                          </div>
-                          <div className="box_content">
-                            <h3>Deutschland</h3>
-                            <p>
-                              Für diejenigen, die ihre Yogalehrerausbildung in einem
-                              behaglichen Rückzugsort im eigenen Land absolvieren
-                              möchten – umgeben von Quellen, frischer Luft und den
-                              Wäldern des Taunus, ist das Sampurna Seminarhaus nur 30
-                              Minuten von Wiesbaden und Mainz entfernt und somit ideal
-                              erreichbar.
-                            </p>
-                            <div className="mehr--btn">
-                              <Link   to='/yogalehrer-ausbildung-in-sampurna-seminarhaus'  >
-                                MEHR
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="third_section__box"
-                          data-aos="fade-up"
-                          data-aos-delay={200}>
-                          <div className="box_img">
-                            <img
-                              src={img4}
-                              className="img-fluid"
-                              alt="sampurna_thumb"
-                            />
-                          </div>
-                          <div className="box_content">
-                            <h3>Mallorca</h3>
-                            <p>
-                              Für all jene, die die berühmten Sandstrände Mallorcas
-                              genießen möchten – bieten wir die Yogalehrer-Ausbildung
-                              auf Mallorca an. Besuche uns und erlebe eine wundervolle
-                              Zeit in der Turiya Yoga Finca. Unser Paket beinhaltet
-                              erstklassige Verpflegung und Unterkunft.
-                            </p>
-                            <div className="mehr--btn">
-                              <Link  to='/200h-yogalehrer-ausbildung-mallorca' >
-                                MEHR
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="third_section__box"
-                          data-aos="fade-up"
-                          data-aos-delay={300}>
-                          <div className="box_img">
-                            <img
-                              src={img1}
-                              className="img-fluid"
-                              alt="goa_thumb"
-                            />
-                          </div>
-                          <div className="box_content">
-                            <h3>Goa, Indien</h3>
-                            <p>
-                              Wenn du deine Yogaausbildung am Strand absolvieren
-                              möchtest, jedoch auch einen Einblick in die Wurzeln des
-                              Yoga erhalten willst, bieten wir dir die Möglichkeit, in
-                              Goa, Indien, deine Ausbildung zu machen. Dort, vor der
-                              Kulisse von Kokosnussplantagen und grünen Hügeln,
-                              findest du zweifellos einige der schönsten Strände.
-                            </p>
-                            <div className="mehr--btn">
-                            <Link  to='/yogalehrer-ausbildung-goa-indien' >
-                                MEHR
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="third_section__box"
-                          data-aos="fade-up"
-                          data-aos-delay={400}>
-                          <div className="box_img">
-                            <img
-                              src={img2}
-                              className="img-fluid"
-                              alt="himachal_thumb"
-                            />
-                          </div>
-                          <div className="box_content">
-                            <h3>Himachal, Indien</h3>
-                            <p>
-                              Himachal in Indien ist bekannt für seine fröhlichen
-                              Menschen, die immergrüne Natur und die außerordentlich
-                              frische Luft. Es ist ein herausragender Ort für die
-                              Yoga-Praxis in Indien. Das Dorf Bhagsu, das etwa 2100
-                              Meter über dem Meeresspiegel liegt und in der Nähe des
-                              Haupttempels des Dalai Lama zu finden ist...
-                            </p>
-                            <div className="mehr--btn">
-                            <Link  to='/yogalehrer-ausbildung-himalaya-indien' >
-                                MEHR
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                </div>
+                <div
+                  className="third_section__box"
+                  data-aos="fade-up"
+                  data-aos-delay={200}>
+                  <div className="box_img">
+                    <img
+                      src={img4}
+                      className="img-fluid"
+                      alt="sampurna_thumb"
+                    />
+                  </div>
+                  <div className="box_content">
+                    <h3>Mallorca</h3>
+                    <p>
+                      Für all jene, die die berühmten Sandstrände Mallorcas
+                      genießen möchten – bieten wir die Yogalehrer-Ausbildung
+                      auf Mallorca an. Besuche uns und erlebe eine wundervolle
+                      Zeit in der Turiya Yoga Finca. Unser Paket beinhaltet
+                      erstklassige Verpflegung und Unterkunft.
+                    </p>
+                    <div className="mehr--btn">
+                      <Link to='/module/200h-aya-yogalehrer-ausbildung-i-mallorca' >
+                        MEHR
+                      </Link>
                     </div>
                   </div>
-                </section>
+                </div>
+                <div
+                  className="third_section__box"
+                  data-aos="fade-up"
+                  data-aos-delay={300}>
+                  <div className="box_img">
+                    <img
+                      src={img1}
+                      className="img-fluid"
+                      alt="goa_thumb"
+                    />
+                  </div>
+                  <div className="box_content">
+                    <h3>Goa, Indien</h3>
+                    <p>
+                      Wenn du deine Yogaausbildung am Strand absolvieren
+                      möchtest, jedoch auch einen Einblick in die Wurzeln des
+                      Yoga erhalten willst, bieten wir dir die Möglichkeit, in
+                      Goa, Indien, deine Ausbildung zu machen. Dort, vor der
+                      Kulisse von Kokosnussplantagen und grünen Hügeln,
+                      findest du zweifellos einige der schönsten Strände.
+                    </p>
+                    <div className="mehr--btn">
+                      <Link to='/module/200h-aya-yogalehrer-ausbildung-goa-indien' >
+                        MEHR
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="third_section__box"
+                  data-aos="fade-up"
+                  data-aos-delay={400}>
+                  <div className="box_img">
+                    <img
+                      src={img2}
+                      className="img-fluid"
+                      alt="himachal_thumb"
+                    />
+                  </div>
+                  <div className="box_content">
+                    <h3>Himachal, Indien</h3>
+                    <p>
+                      Himachal in Indien ist bekannt für seine fröhlichen
+                      Menschen, die immergrüne Natur und die außerordentlich
+                      frische Luft. Es ist ein herausragender Ort für die
+                      Yoga-Praxis in Indien. Das Dorf Bhagsu, das etwa 2100
+                      Meter über dem Meeresspiegel liegt und in der Nähe des
+                      Haupttempels des Dalai Lama zu finden ist...
+                    </p>
+                    <div className="mehr--btn">
+                      <Link to='/module/yogalehrerausbildung-himalaya-indien' >
+                        MEHR
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <BannerGlobalTableWrapper />
         <div className="container">
           <div className="training_bali__list">
             <h6>Yoga Teacher Training Modules</h6>
@@ -705,16 +707,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems1.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex1 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex1 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(1, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex1 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex1 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -743,16 +743,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems2.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex2 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex2 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(2, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex2 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex2 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -782,16 +780,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems3.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex3 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex3 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(3, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex3 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex3 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -878,16 +874,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems4.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex4 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex4 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(4, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex4 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex4 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -908,16 +902,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems5.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex5 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex5 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(5, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex5 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex5 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -939,16 +931,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems6.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex6 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex6 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(6, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex6 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex6 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -976,18 +966,16 @@ const YogaTeacherTrainingBali = () => {
                       {faqItems7.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex7 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex7 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(7, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex7 === index
+                                className={`bx ${activeIndex7 === index
                                     ? "bx-minus"
                                     : "bx-plus"
-                                }`}
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -1010,18 +998,16 @@ const YogaTeacherTrainingBali = () => {
                       {faqItems8.map((faq, index) => (
                         <div
                           key={index}
-                          className={`faq_box__content ${
-                            activeIndex8 === index ? "active" : ""
-                          }`}
+                          className={`faq_box__content ${activeIndex8 === index ? "active" : ""
+                            }`}
                           onClick={() => handleToggle(8, index)}>
                           <div className="question">
                             <div className="plus">
                               <i
-                                className={`bx ${
-                                  activeIndex8 === index
+                                className={`bx ${activeIndex8 === index
                                     ? "bx-minus"
                                     : "bx-plus"
-                                }`}
+                                  }`}
                               />
                             </div>
                             <h6>{faq.question}</h6>
@@ -1046,16 +1032,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems9.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex9 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex9 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(9, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex9 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex9 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -1085,16 +1069,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems10.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex10 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex10 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(10, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex10 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex10 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -1123,16 +1105,14 @@ const YogaTeacherTrainingBali = () => {
                     {faqItems11.map((faq, index) => (
                       <div
                         key={index}
-                        className={`faq_box__content ${
-                          activeIndex11 === index ? "active" : ""
-                        }`}
+                        className={`faq_box__content ${activeIndex11 === index ? "active" : ""
+                          }`}
                         onClick={() => handleToggle(11, index)}>
                         <div className="question">
                           <div className="plus">
                             <i
-                              className={`bx ${
-                                activeIndex11 === index ? "bx-minus" : "bx-plus"
-                              }`}
+                              className={`bx ${activeIndex11 === index ? "bx-minus" : "bx-plus"
+                                }`}
                             />
                           </div>
                           <h6>{faq.question}</h6>
@@ -1144,12 +1124,12 @@ const YogaTeacherTrainingBali = () => {
                                 key={index}
                                 className="mb-3"
 
-                                //   style={{
-                                //   fontWeight:
-                                //   index === 2 || index === 3
-                                //       ? "bold"
-                                //       : "normal",
-                                // }}
+                              //   style={{
+                              //   fontWeight:
+                              //   index === 2 || index === 3
+                              //       ? "bold"
+                              //       : "normal",
+                              // }}
                               >
                                 {paragraph}
                               </p>

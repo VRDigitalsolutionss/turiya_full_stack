@@ -1,34 +1,38 @@
 
 
 
-const mongoose = require("../config/db"); 
+const mongoose = require("../config/db");
 
 
 
 const blogSchema = new mongoose.Schema({
     blogHeading: {
         type: String,
-        required: true, 
-        trim: true,    
+        required: true,
+        trim: true,
     },
     blogContent: {
         type: String,
-        required: true, 
+        required: true,
         trim: true,
     },
     blogImage: {
         type: String,
-    required:false,
-       
+        required: false,
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
     },
     status: {
         type: String,
-        trim: true, 
+        trim: true,
         default: 'active',
-    
-}
+
+    }
 }, {
-    timestamps: true, 
+    timestamps: true,
 });
 
 
