@@ -27,7 +27,7 @@
 //           <h4>Edit Blog</h4>
 
 //               </div>
-       
+
 //         <form onSubmit={handleSubmit}>
 //           <div className="mb-3">
 //             <label className="form-label">Enter Blog Heading:</label>
@@ -77,13 +77,15 @@ import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { BASE_URL,BASE_URL_IMAGE } from '../../config';
+import { BASE_URL, BASE_URL_IMAGE } from '../../config';
 
 const EditBlog = () => {
   const [blogHeading, setBlogHeading] = useState('');
   const [blogImage, setBlogImage] = useState(null);
   const [blogContent, setBlogContent] = useState('');
   const fileInputRef = useRef(null); // Ref for the file input
+  const [slug, setSlug] = useState("");
+  
 
   const modules = {
     toolbar: [
@@ -122,20 +124,21 @@ const EditBlog = () => {
 
 
   const { id } = useParams();
-// Example parameter ID
-console.log("paramsId: " , id);
+  // Example parameter ID
+  console.log("paramsId: ", id);
   useEffect(() => {
     if (id) {
       axios
         .get(BASE_URL + `/blog/${id}`)
         .then((response) => {
 
-          console.log("response params id",response)
+          console.log("response params id", response)
           const data = response.data.data;
 
           // Set the name field
           setBlogHeading(data.blogHeading);
           setBlogContent(data.blogContent)
+          setSlug(data.slug || "")
           // Set the file URL (assume API returns file URL)
           setBlogImage(data.blogImage);
         })
@@ -170,64 +173,56 @@ console.log("paramsId: " , id);
     e.preventDefault();
 
     const payload = {
-      "blogHeading":blogHeading,
-      "blogContent":blogContent,
+      "blogHeading": blogHeading,
+      "blogContent": blogContent,
       "blogImage": blogImage
     }
 
     const formData = new FormData();
     formData.append("blogHeading", blogHeading);
     formData.append("blogContent", blogContent);
-    formData.append("BlogImage", blogImage); // The field name must match the one expected by the backend
+    formData.append("BlogImage", blogImage);
+    formData.append("slug", slug)
 
 
 
-    console.log("payload",payload)
-      if (blogHeading && blogContent && blogImage) {
-       
-        if (id) {
-          
+    console.log("payload", payload)
+    if (blogHeading && slug && blogContent && blogImage) {
 
-            axios.put(BASE_URL + `/edit_blog/${id}`,formData).then((response) => {
-              console.log(response);
-  
-              if(response.status == 200){
-                alert("Blog Created successfully");
-  
-              setBlogHeading('');
-              setBlogImage(null);
-              setBlogContent('');
-              if (fileInputRef.current) {
-                fileInputRef.current.value = ''; // Reset file input field
-              }
-  
-              } else {
-                alert("something went wrong")
-              }
-              
-  
-            }).catch((err) => {
-              console.log(err);
-            });
-        
-      } else {
-        axios.post(BASE_URL + '/add_blog',formData).then((response) => {
+      if (id) {
+        axios.put(BASE_URL + `/edit_blog/${id}`, formData).then((response) => {
           console.log(response);
 
-          if(response.status == 201){
+          if (response.status == 200) {
+            alert("Blog Updated successfully");
+          } else {
+            alert("something went wrong")
+          }
+
+
+        }).catch((err) => {
+          console.log(err);
+        });
+
+      } else {
+        axios.post(BASE_URL + '/add_blog', formData).then((response) => {
+          console.log(response);
+
+          if (response.status == 201) {
             alert("Blog Created successfully");
 
-          setBlogHeading('');
-          setBlogImage(null);
-          setBlogContent('');
-          if (fileInputRef.current) {
-            fileInputRef.current.value = ''; // Reset file input field
-          }
+            setBlogHeading('');
+            setBlogImage(null);
+            setBlogContent('');
+            setSlug('');
+            if (fileInputRef.current) {
+              fileInputRef.current.value = ''; // Reset file input field
+            }
 
           } else {
             alert("something went wrong")
           }
-          
+
 
         }).catch((err) => {
           console.log(err);
@@ -236,13 +231,21 @@ console.log("paramsId: " , id);
     } else {
 
       alert("All fields are required");
-  
-}
+
+    }
 
   };
 
+  const generateSlug = (name) => {
+    return name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  };
 
-  
+
+
   return (
     <div className="container-fluid mt-3">
       <div className="card p-4 shadow-sm" style={{ border: 'none' }}>
@@ -257,44 +260,56 @@ console.log("paramsId: " , id);
               type="text"
               className="form-control"
               value={blogHeading}
-              onChange={(e) => setBlogHeading(e.target.value)}
+              onChange={(e) => {
+                setBlogHeading(e.target.value)
+                setSlug(generateSlug(e.target.value))
+              }}
               placeholder="Enter blog heading"
             />
           </div>
 
-     
+          <div className="form-group my-3">
+            <label>Enter slug:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              placeholder="Enter slug"
+            />
+          </div>
+
+
           {/* =============================================================================== */}
-          
+
           <div className="mb-3">
-  <label className="form-label">Upload Blog Images:</label>
-  <input
-    type="file"
-    className="form-control"
-    onChange={handleFileChange}
+            <label className="form-label">Upload Blog Images:</label>
+            <input
+              type="file"
+              className="form-control"
+              onChange={handleFileChange}
 
 
 
-    accept="image/*"
+              accept="image/*"
 
- 
-  />
-  {blogImage && (
-    <div className="mt-3">
-      <label>Preview:</label>
-      {typeof blogImage === "string" ? (
-        // Display image if it's a URL
-        <img src={blogImage} alt="Blog Preview" style={{ maxWidth: '200px', height: 'auto' }} />
-      ) : (
-        // Display image preview if it's a file
-        <img
-          src={URL.createObjectURL(blogImage)}
-          alt="Blog Preview"
-          style={{ maxWidth: '200px', height: 'auto' }}
-        />
-      )}
-    </div>
-  )}
-</div>
+
+            />
+            {blogImage && (
+              <div className="mt-3">
+                <label>Preview:</label>
+                {typeof blogImage === "string" ? (
+                  <img src={`${BASE_URL_IMAGE}/images/blogs/${blogImage}`} alt="Blog Preview" style={{ maxWidth: '200px', height: 'auto' }} />
+                ) : (
+                  <img
+                    src={URL.createObjectURL(blogImage)}
+                    alt="Blog Preview"
+                    style={{ maxWidth: '200px', height: 'auto' }}
+                  />
+                )}
+              </div>
+            )}
+          </div>
 
           {/* ==================================================================================== */}
           <div className="mb-3">
@@ -304,8 +319,8 @@ console.log("paramsId: " , id);
               onChange={setBlogContent}
               modules={modules}
               formats={formats}
-              style={{ height: "100px",marginBottom:"50px" }}
-            
+              style={{ height: "100px", marginBottom: "50px" }}
+
 
 
               placeholder="Write your blog content here..."

@@ -307,7 +307,7 @@ const BannerGlobalTableWrapper = () => {
                   className="table-body desktop"
                   style={{ backgroundColor: "#EDEDED" }}>
                   {data &&
-                    (pathname==='/' ? data.slice(0,6) : data).map((item, index) => {
+                    ((pathname==='/' || pathname==='/yoga-teacher-training-bali') ? data.slice(0,6) : data).map((item, index) => {
                       console.log("row of upcoming courses", item);
 
                       return (

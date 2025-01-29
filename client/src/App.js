@@ -22,6 +22,7 @@ import VerifyEmail from "./auth/VerifyEmail";
 import ResetPassword from "./auth/ResetPassword";
 import SubCategory from "./components/SubCategoryPage";
 import Category from "./components/CategoryPage";
+import YogaTeacherTrainingBali from "./components/bali/YogaTeacherTrainingBali";
 
 
 // Lazy load other components
@@ -127,6 +128,7 @@ function App() {
 
           <Route path="200-hour-yoga-teacher-training" element={<YogaTeacherTraining200h />} />
           <Route path="yoga-teacher-training-course-india" element={<YogateacherTrainingCourseIndia />} />
+          <Route path="yoga-teacher-training-bali" element={<YogaTeacherTrainingBali />} />
 
 
 

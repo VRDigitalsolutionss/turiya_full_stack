@@ -21,7 +21,7 @@ const Index = ({
 
 
   const fetchData = () => {
-    axios.get(BASE_URL + `/blog/${id}`).then((response) => {
+    axios.get(BASE_URL + `/blog/slug/${id}`).then((response) => {
       console.log("response of blog details: ", response.data.data);
 
       setBlogDetals(response.data.data);

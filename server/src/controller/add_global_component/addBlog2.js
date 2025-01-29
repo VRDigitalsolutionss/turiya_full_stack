@@ -45,7 +45,7 @@ const addBlog = async (req, res) => {
       const sanitizedFilename = req.file.filename.replace(/\s+/g, '');
       const fileUrl = sanitizedFilename;
 
-      const { blogHeading, blogContent } = req.body;
+      const { blogHeading, blogContent, slug } = req.body;
 
       if (!blogHeading || !blogContent) {
         return res.status(400).json({ success: false, message: 'blogHeading and blogContent are required' });
@@ -54,6 +54,7 @@ const addBlog = async (req, res) => {
       const newBlog = new Blog({
         blogHeading,
         blogContent,
+        slug: slug,
         blogImage: fileUrl,
       });
 
@@ -90,7 +91,7 @@ const editBlog = async (req, res) => {
       }
 
       const { id } = req.params; // Extract the blog ID from the request parameters
-      const { blogHeading, blogContent } = req.body; // Extract fields from the request body
+      const { blogHeading, blogContent, slug } = req.body; // Extract fields from the request body
 
       if (!blogHeading || !blogContent) {
         return res.status(400).json({
@@ -123,6 +124,7 @@ const editBlog = async (req, res) => {
       blog.blogHeading = blogHeading;
       blog.blogContent = blogContent;
       blog.blogImage = fileUrl;
+      blog.slug = slug;
 
       // Save the updated blog entry
       await blog.save();
@@ -250,8 +252,30 @@ const getBlogById = async (req, res) => {
 };
 
 
+const getBlogBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const blog = await Blog.findOne({slug: slug});
 
-module.exports = { addBlog, toggleBlogStatus, editBlog, getAllBlogs, deleteBlog, getBlogById };
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Blog found successfully",
+      data: blog,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch blogs", error });
+  }
+};
+
+
+module.exports = { addBlog, toggleBlogStatus, editBlog, getAllBlogs, deleteBlog, getBlogById, getBlogBySlug };
 
 
 
