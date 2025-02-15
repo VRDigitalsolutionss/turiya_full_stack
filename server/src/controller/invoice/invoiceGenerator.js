@@ -122,9 +122,16 @@ const generateInvoicesAndSendEmail = async (req, res) => {
   try {
     // Step 1: Start Puppeteer
     const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: 'new',  // Use 'new' instead of true for better compatibility
+      // executablePath: '/usr/bin/google-chrome', // Manually specify Chrome path
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-gpu',
+        '--disable-dev-shm-usage',
+      ],
     });
+    
     const page = await browser.newPage();
 
     // HTML template for Invoice PDF (similar to the image)
