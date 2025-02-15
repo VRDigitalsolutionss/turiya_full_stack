@@ -7,11 +7,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 import { IoCloseSharp } from "react-icons/io5";
+import DatePicker from "react-datepicker";
+import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 function Invoice() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false); // Initially modal is hidden
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   console.log("all invoice data", showModal)
 
@@ -71,7 +75,8 @@ function Invoice() {
         console.log("response:", response);
         if (response.status == 201) {
           alert("Paid Successfully")
-          fetchData();
+          // fetchData();
+          window.location.reload();
         }
       })
       .catch((error) => {
@@ -99,7 +104,7 @@ function Invoice() {
         console.log("response:", response);
         if (response) {
           alert("Success!")
-          fetchData();
+          window.location.reload()
         }
       })
       .catch((error) => {
@@ -158,16 +163,23 @@ function Invoice() {
     const formattedTime = `${hours12}:${minutes}:${seconds} ${period}`;
     return `${year}-${month}-${day} ${formattedTime}`;
   };
+  const filteredData = (startDate || endDate)
+  ? data &&
+    data.filter((item) => {
+        const itemDate = new Date(item.createdAt);
+        const start = new Date(startDate);
+        const end = new Date(endDate);
 
-  const filteredData = search.trim()
-    ? data &&
-    data.filter(
-      (item) =>
-        item._id === search.trim() ||
-        item.name == search.trim() ||
-        item.customerName == search.trim()
-    )
-    : data;
+        // Set end date time to 23:59:59
+        end.setHours(23, 59, 59, 999);
+
+        console.log("Item Date: ", itemDate);
+        console.log("Start Date: ", start);
+        console.log("End Date (23:59:59): ", end);
+
+        return itemDate >= start && itemDate <= end;
+    })
+  : data;
 
   const totalPages = Math.ceil(
     filteredData && filteredData.length / itemsPerPage
@@ -389,6 +401,31 @@ function Invoice() {
     }
   };
 
+  const fetchAggreementPDF = async (invoiceId) => {
+    const invoiceId2 = "6763c0a093898e80869c4552";
+    console.log("invoiceId", invoiceId);
+    try {
+      const response = await axios.get(
+        BASE_URL + `/getAgreement_invoice/${invoiceId}`,
+        {
+          responseType: "blob", // Ensure the response is treated as a file
+        }
+      );
+
+      // Create a Blob URL for the PDF
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `agreement_${invoiceId}.pdf`); // Set the file name
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error downloading the agreement:", error);
+    }
+
+  }
+
   return (
     <div className="container-fluid mt-3">
       <div className="card p-4 shadow-sm" style={{ border: "none" }}>
@@ -397,63 +434,54 @@ function Invoice() {
             <h4>User Query</h4>
           </div>
         </div>
-        <div className="my-3">
-          <div className="btn-group" role="group" aria-label="Export options">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={copyTableData}>
-              Copy
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={exportCSV}>
-              CSV
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={exportExcel}>
-              Excel
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={exportPDF}>
-              PDF
-            </button>
+        <div className=" d-flex align-items-center justify-content-between">
+          <div className="my-3">
+            <div className="btn-group" role="group" aria-label="Export options">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={copyTableData}>
+                Copy
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={exportCSV}>
+                CSV
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={exportExcel}>
+                Excel
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={exportPDF}>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div className=" d-flex flex-column gap-2 mb-4">
+            <p className="m-0"><b>Filter Invoices: </b></p>
+            <div className=" d-flex gap-4">
+              <div className=" d-flex gap-2">
+                <label>Start Date:</label>
+                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+              </div>
+              <div className=" d-flex gap-2">
+                <label>End Date:</label>
+                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
+              </div>
+              <button className="btn btn-danger py-0" onClick={() => {
+                setStartDate(null);
+                setEndDate(null);
+              }}>Clear Filters</button>
+            </div>
           </div>
         </div>
-        {/* <div
-          className="input-group mb-3 mt-3"
-          style={{ width: "300px", position: "relative" }}>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search"
-            onChange={handleSearch}
-            value={search}
-          />
-          {search && (
-            <button
-              className="btn-clear"
-              onClick={clearSearch}
-              type="button"
-              style={{
-                position: "absolute",
-                right: "10px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "16px",
-              }}>
-              ✖
-            </button>
-          )}
-        </div> */}
+
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -525,13 +553,21 @@ function Invoice() {
                     </button>}
                   </td>
 
-                  <td>
-                    <button
-                      className="btn btn-success btn-sm me-3"
-                      // onClick={() => handleDownloadDetial(row)}
-                      onClick={() => downloadInvoice(row._id)}>
-                      Download Detail
-                    </button>
+                  <td className=" d-flex align-items-start">
+                    <div className=" d-flex flex-column gap-2">
+                      <button
+                        className="btn btn-success btn-sm me-3"
+                        // onClick={() => handleDownloadDetial(row)}
+                        onClick={() => downloadInvoice(row._id)}>
+                        Rechnung
+                      </button>
+                      <button
+                        className="btn btn-success btn-sm me-3"
+                        // onClick={() => handleDownloadDetial(row)}
+                        onClick={() => fetchAggreementPDF(row._id)}>
+                        Vereinbarung
+                      </button>
+                    </div>
                     <button
                       className="btn btn-outline-danger btn-sm me-3"
                       onClick={() => handleCancelInvoice(row)}
@@ -712,60 +748,60 @@ function Invoice() {
                       This invoice is cancelled, whole amount({currentModalRow.refundedAmount} €) paid by the user is refunded, there is no amount left to refund.
                     </h6>
                   </div> : <div>
-                  <div className="modal-body pt-4" id="AmountmodalBody">
-                    <h6 className="mt-3 mb-3">
-                      Amount Available to Refund: {Number(currentModalRow.paid_amount) - (Number(currentModalRow.refundedAmount) || 0)} €
-                    </h6>
-                  </div>
-                  <div className="modal-body">
-                    <div className="mb-3">
-                      <label htmlFor="amount" className="form-label">
-                        Refund Amount*
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="amount"
-                        name="amount"
-                        placeholder="Enter amount"
-                        value={cancelInvoiceFormData.amount}
-                        onChange={(e) => setCancelInvoiceFormData({ ...cancelInvoiceFormData, amount: e.target.value })}
-                      />
+                    <div className="modal-body pt-4" id="AmountmodalBody">
+                      <h6 className="mt-3 mb-3">
+                        Amount Available to Refund: {Number(currentModalRow.paid_amount) - (Number(currentModalRow.refundedAmount) || 0)} €
+                      </h6>
                     </div>
-                    <div className="mb-3">
-                      <label htmlFor="remark" className="form-label">
-                        Remarks? *
-                      </label>
-                      <textarea
-                        className="form-control"
-                        id="remark"
-                        name="remark"
-                        rows={3}
-                        value={cancelInvoiceFormData.remark}
-                        onChange={(e) => setCancelInvoiceFormData({ ...cancelInvoiceFormData, remark: e.target.value })}
-                      />
+                    <div className="modal-body">
+                      <div className="mb-3">
+                        <label htmlFor="amount" className="form-label">
+                          Refund Amount*
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="amount"
+                          name="amount"
+                          placeholder="Enter amount"
+                          value={cancelInvoiceFormData.amount}
+                          onChange={(e) => setCancelInvoiceFormData({ ...cancelInvoiceFormData, amount: e.target.value })}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="remark" className="form-label">
+                          Remarks? *
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="remark"
+                          name="remark"
+                          rows={3}
+                          value={cancelInvoiceFormData.remark}
+                          onChange={(e) => setCancelInvoiceFormData({ ...cancelInvoiceFormData, remark: e.target.value })}
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary me-3"
-                      data-bs-dismiss="modal"
-                      onClick={() => setShowCancelAmountModal(false)} >
-                      Close
-                    </button>
-                    <button
-                      type="button"
-                      id="save_amount"
-                      onClick={() => handleCancelInvoiceSubmit((Number(currentModalRow.paid_amount) - (Number(currentModalRow.refundedAmount) || 0)), currentModalRow._id)}
-                      name="save_amount"
-                      disabled={(Number(currentModalRow.paid_amount) - Number(currentModalRow.refundedAmount))===0}
-                      className="btn btn-primary">
-                      Save changes
-                    </button>
-                  </div>
-                </div>}
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary me-3"
+                        data-bs-dismiss="modal"
+                        onClick={() => setShowCancelAmountModal(false)} >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        id="save_amount"
+                        onClick={() => handleCancelInvoiceSubmit((Number(currentModalRow.paid_amount) - (Number(currentModalRow.refundedAmount) || 0)), currentModalRow._id)}
+                        name="save_amount"
+                        disabled={(Number(currentModalRow.paid_amount) - Number(currentModalRow.refundedAmount)) === 0}
+                        className="btn btn-primary">
+                        Save changes
+                      </button>
+                    </div>
+                  </div>}
               </div>
             </div>
           </div>

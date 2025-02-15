@@ -1,12 +1,5 @@
 const express = require('express');
-const {
-    handleAddCourseCategory,
-    editCourseCategory,
-    toggleCourseCategoryStatus,
-    deleteCourseCategory,
-    getAllCourseCategories
-} = require('../controller/course_and_modules/courseCategories');
-const { handleAddCourseCategorylatest, getAllCourseCategoriesLatest, editCourseCategoryLatest, getCourseCategoryById } = require('../controller/course_and_modules/courseCategoryLatest');
+const { handleAddCourseCategorylatest, getAllCourseCategoriesLatest, editCourseCategoryLatest, getCourseCategoryById, toggleCourseCategoryStatus, deleteCourseCategory } = require('../controller/course_and_modules/courseCategoryLatest');
 
 const courseCategoryLatestRoute = express.Router();
 

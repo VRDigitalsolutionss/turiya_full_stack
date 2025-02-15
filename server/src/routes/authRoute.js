@@ -15,7 +15,7 @@ const verifyEmail = require('../controller/verifyEmail');
 const authRoute = express.Router();
 
 authRoute.post('/register', registerController);
-authRoute.post('/login',loginController);
+// authRoute.post('/login',loginController);
 authRoute.post('/verify-email',verifyEmail);
 // authRoute.post('/forgot_password', forgotPasswordController);
 authRoute.post('/send_reset_password', resetPasswordController);

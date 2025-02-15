@@ -143,7 +143,7 @@ const BilingDetails = () => {
     // generateOrderNumber();
 
     const payload = {
-      productnumber: courseData._id,
+      productNumber: courseData._id,
       invoiceNumber: invoice_num,
       customerNumber: userDetails._id,
       orderNumber: order_num,
@@ -175,7 +175,7 @@ const BilingDetails = () => {
       .catch((error) => {
         console.log("error", error);
         setInvoiceLoading(false)
-        alert("Some error occurred")
+        alert(error.response?.data?.message || "Some error occurred")
       });
   };
 
@@ -364,10 +364,10 @@ const BilingDetails = () => {
                                   "" +
                                   userDetails?.Last_name}{" "}
                               </li>
-                              <li>
+                              {userDetails && userDetails.company &&  <li>
                                 Company Name:
                                 {userDetails && userDetails.company}{" "}
-                              </li>
+                              </li>}
 
 
 
@@ -616,7 +616,7 @@ const BilingDetails = () => {
                     </div>
                     <div className="order-now">
                       <button
-                        className="btn-primary d-flex align-items-center gap-3"
+                        className="btn btn-primary d-flex align-items-center gap-3"
                         // name="book_order"
                         //   type="submit"
                         onClick={fetchModuleDetails}>

@@ -3,22 +3,7 @@ import "./comman.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import axios from "axios";
-import { BASE_URL,BASE_URL_IMAGE } from "../../config";
-
-// Sample course categories data
-const courseCategoriesData = [
-  { id: 1, name: "Hybride Wochenend Yogalehrer Ausbildung", isActive: true },
-  { id: 2, name: "60H Senioren Yoga", isActive: true },
-  { id: 3, name: "60H Yin Yoga", isActive: true },
-  {
-    id: 4,
-    name: "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule",
-    isActive: true,
-  },
-  { id: 5, name: "200H AYA Yogalehrer Ausbildung - Intensiv", isActive: true },
-  { id: 6, name: "Alle Kommenden Kurse", isActive: true },
-  // Add more as needed
-];
+import { BASE_URL, BASE_URL_IMAGE } from "../../config";
 
 const ManageCourseCategories = () => {
   const navigate = useNavigate();
@@ -64,17 +49,14 @@ const ManageCourseCategories = () => {
   const indexOfLastItem = currentPage * rowsPerPage;
   const indexOfFirstItem = indexOfLastItem - rowsPerPage;
   const currentRows = courseCategoriesData && courseCategoriesData.slice(indexOfFirstItem, indexOfLastItem);
-console.log("course categories",currentRows)
+  console.log("course categories", currentRows)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // Toggle active status
-  const toggleActive = (id) =>
-  {
-    
-    if (id) {
+  const toggleActive = (id) => {
     axios
       .put(
-        BASE_URL +  `/toggle_course_category/${id}`
+        BASE_URL + `/toggle_course_category/${id}`
       )
       .then((response) => {
         console.log("response toggle", response.data.data);
@@ -84,9 +66,6 @@ console.log("course categories",currentRows)
       .catch((err) => {
         console.log("Error: toggle", err);
       });
-  } else {
-    console.log("id not found");
-  }
   };
 
 
@@ -96,7 +75,7 @@ console.log("course categories",currentRows)
     // alert("Delete category")
     setDeleteItemId(id);
     setShowDeleteModal(true);
-   
+
   };
 
   const handleDeleteConfirm = () => {
@@ -109,20 +88,20 @@ console.log("course categories",currentRows)
 
     if (deleteItemId) {
       axios
-    .delete(
-      BASE_URL + `/delete_course_category/${deleteItemId}`,
-    )
-    .then((response) => {
-      console.log("delete response", response);
-     
-  
-      fetchData();
-      setDeleteItemId("");
-      setShowDeleteModal(false); // Close the modal
-    })
-    .catch((err) => {
-      console.log("Error:", err);
-    });
+        .delete(
+          BASE_URL + `/delete_course_category/${deleteItemId}`,
+        )
+        .then((response) => {
+          console.log("delete response", response);
+
+
+          fetchData();
+          setDeleteItemId("");
+          setShowDeleteModal(false); // Close the modal
+        })
+        .catch((err) => {
+          console.log("Error:", err);
+        });
     } else {
       console.log("id not found")
     }
@@ -150,20 +129,20 @@ console.log("course categories",currentRows)
             {currentRows && currentRows.map((item, index) => (
               <tr key={item.id}>
                 <td>{indexOfFirstItem + index + 1}</td>
-                {console.log("testing category name",item)}
-                <td>{item.modulecategory?item.modulecategory:item.category
+                {console.log("testing category name", item)}
+                <td>{item.modulecategory ? item.modulecategory : item.category
                 }</td>
                 <td>
-            
+
 
                   <button
                     onClick={() => toggleActive(item._id)}
                     className={`btn ${item.status === "active" ? "btn-warning" : "btn-secondary"}`}>
-                   {item.status}
+                    {item.status}
                   </button>
 
 
-                  <Link   to={`/manage_Categories/${item._id}`}  className="btn btn-info ms-2">
+                  <Link to={`/manage_Categories/${item._id}`} className="btn btn-info ms-2">
                     Edit
                   </Link>
                   {/* <Link to={`/edit_course_category/${item.id}`} className="btn btn-info ms-2">Edit</Link> */}

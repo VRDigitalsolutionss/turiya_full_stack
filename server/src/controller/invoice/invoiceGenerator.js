@@ -5,6 +5,7 @@ const path = require("path");
 const PurchasedModule = require("../../model/PurchasedModule");
 const Meal = require("../../model/addmealModel");
 const Room = require("../../model/addroomModel");
+const RegisteredUser = require("../../model/Register");
 
 const getInvoice = async (req, res) => {
   try {
@@ -84,6 +85,24 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       ...extraFields
     } = req.body;
 
+    var user = await RegisteredUser.findById(req.body?.userDetails?._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log(user)
+    console.log(productNumber)
+    
+    const alreadyPurchased = user.coursePurchased?.some(
+      (purchase) => purchase.course_id.toString() === productNumber.toString()
+    );
+    console.log(alreadyPurchased)
+
+    if (alreadyPurchased) {
+      console.log("Course already purchased!");
+      return res.status(400).json({ message: "Course already purchased!" });
+    }
+
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
 
@@ -131,7 +150,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         '--disable-dev-shm-usage',
       ],
     });
-    
+
     const page = await browser.newPage();
 
     // HTML template for Invoice PDF (similar to the image)
@@ -795,6 +814,15 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     savedModule.agreement = Buffer.from(contractBuffer); // Ensure the format is Buffer
 
     await savedModule.save();
+
+    // console.log(req.body.userDetails)
+
+    user.coursePurchased?.push({
+      course_id: productNumber,
+      order_id: savedModule._id
+    });
+
+    await user.save();
 
     res.status(200).json({
       message: "Invoice generated and saved successfully!",

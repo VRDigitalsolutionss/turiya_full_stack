@@ -243,14 +243,16 @@ const getModuleBySlug = async (req, res) => {
   try {
     // Extract the location parameter from the request
     const { slug } = req.params;
+    console.log(slug)
 
     if (!slug) {
       return res.status(400).json({ message: 'Slug parameter is required.' });
     }
 
     // Find data in MongoDB based on the location
-    const modules = await Module.find({redirectUrl: slug});
+    const modules = await Module.find({redirectUrl: slug, status: 'active'});
 
+    console.log(modules)
     if (modules.length === 0) {
       return res.status(404).json({ message: 'No modules found for the specified location.' });
     }
@@ -515,14 +517,19 @@ const getUpcoming_course = async (req, res) => {
 
     // Step 6: After updating expired offers, query the modules again for upcoming ones
     const upcomingModules = await Module.find({
-      $or: [
-        { EndDate: { $gte: formattedToday } },    // EndDate is today or in the future
-        { StartDate: { $gte: formattedToday } }   // StartDate is today or in the future
+      $and: [
+        { status: "active" }, // Check for active status
+        { 
+          $or: [
+            { EndDate: { $gte: formattedToday } },    // EndDate is today or in the future
+            { StartDate: { $gte: formattedToday } }   // StartDate is today or in the future
+          ]
+        }
       ]
     })
     .populate('meal') // Populate 'meal' reference if needed
     .populate('room'); // Populate 'room' reference if needed
-
+    
     // Step 7: Send the filtered modules as a response
     res.status(200).json({
       success: true, 

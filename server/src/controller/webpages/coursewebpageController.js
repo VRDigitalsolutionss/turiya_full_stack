@@ -317,7 +317,7 @@ const getCourseWebpageByCategory = async (req, res) => {
     const { slug } = req.params;
     
     try {
-        const response = await CourseWebpages.find({slug: slug});
+        const response = await CourseWebpages.find({slug: slug, status: "active"}).populate("faqs");
         // console.log(response)
         if (response && response.length > 0) {
             console.log(response)
