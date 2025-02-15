@@ -250,9 +250,9 @@ const Footer = () => {
                     </li>
                     <li>
                       <span />
-                      <Link to="/module/cologne-yoga-ausbildung">
+                      <Link to="/module/Koln-yoga-ausbildung">
                         {" "}
-                        YOGALEHRERAUSBILDUNG COLOGNE
+                        YOGALEHRERAUSBILDUNG Köln
                       </Link>
                     </li>
                     <li>

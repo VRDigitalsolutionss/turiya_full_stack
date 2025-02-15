@@ -115,6 +115,21 @@ const ManageModuleSubcategories = () => {
     }
   };
 
+  const toggleActive = (id) => {
+    axios
+      .put(
+        BASE_URL + `/toggle_module_category/${id}`
+      )
+      .then((response) => {
+        console.log("response toggle", response.data.data);
+        // setGalleries(response.data.data);
+        fetchData();
+      })
+      .catch((err) => {
+        console.log("Error: toggle", err);
+      });
+  };
+
   return (
     <div className="container-fluid mt-2">
       <div className="card p-4 shadow-sm" style={{ border: "none" }}>
@@ -141,6 +156,11 @@ const ManageModuleSubcategories = () => {
                   <td>{item.modulecategory}</td>
                   <td>{item?.category?.category}</td>
                   <td>
+                  <button
+                    onClick={() => toggleActive(item._id)}
+                    className={`btn ${item.status === "active" ? "btn-warning" : "btn-secondary"}`}>
+                    {item.status}
+                  </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => deleteSubcategory(item._id)}>

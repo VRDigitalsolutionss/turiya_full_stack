@@ -80,7 +80,7 @@ const sendConfirmationEmail = async (email, firstName, lastName, token) => {
     html: `
       <html>
         <body>
-          <p>Hallo ,${firstName + lastName}</p>
+          <p>Hallo, ${firstName + " " + lastName}</p>
           <p>vielen Dank für deine Registrierung! Bitte klicke auf den untenstehenden Link, um deine E-Mail-Adresse zu bestätigen.</p>
           <p><a href="${process.env.CLIENT_URL}/verify-email/${token}">E-Mail-Adresse bestätigen</a></p>
       

@@ -143,7 +143,8 @@ const Navbar = () => {
       .get(BASE_URL + "/course_categories_latest")
       .then((response) => {
         console.log("response of course_categories_latest", response.data.data);
-        setcategoryData(response.data.data);
+        const activeCategories = response.data.data.filter(category => category.status === "active");
+        setcategoryData(activeCategories);
       })
       .catch((error) => {
         console.error("Error fetching course category", error);
@@ -373,18 +374,23 @@ const Navbar = () => {
                             {item.category}
                           </Link>
                           {item.courseSubCategories.length > 0 && <i className="bx bx-chevron-right" />}
-                          {item.courseSubCategories.length > 0 && <div className="mega_dropdown__list">
-                            <ul style={{ overflowY: 'scroll', maxHeight: '400px' }}>
-                              {item.courseSubCategories.map((subitem) => (
-
-                                <li>
-                                  <Link to={`/module/${subitem.slug}`}>
-                                    {subitem.modulecategory}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>}
+                          {item.courseSubCategories.filter(sub => sub.status === "active").length > 0 && (
+                            <>
+                              <div className="mega_dropdown__list">
+                                <ul style={{ overflowY: 'scroll', maxHeight: '400px' }}>
+                                  {item.courseSubCategories
+                                    .filter(sub => sub.status === "active") // Filter only active subcategories
+                                    .map((subitem) => (
+                                      <li key={subitem._id}>
+                                        <Link to={`/module/${subitem.slug}`}>
+                                          {subitem.modulecategory}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                </ul>
+                              </div>
+                            </>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -504,7 +510,7 @@ const Navbar = () => {
                                 }}
                                 className="triggerDialogBox"
                                 data-id={9}>
-                                ANMELDEN
+                                Gehen Sie zur Kasse
                               </button> :
                                 <p>
                                   Bitte melden Sie sich an, um zur Kasse zu gehen.

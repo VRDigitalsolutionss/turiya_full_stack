@@ -271,6 +271,7 @@ const Index = () => {
                         aria-invalid="false"
                         onChange={handlechange}
                         value={formData.c_name}
+                        required
                       />
                     </div>
                   )}

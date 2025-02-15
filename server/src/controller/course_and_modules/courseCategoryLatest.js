@@ -92,6 +92,8 @@ const toggleCourseCategoryStatus = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // console.log(id)
+
         const category = await CourseCategoriesLatest.findById(id);
 
         if (!category) {

@@ -35,16 +35,17 @@ const SubCategory = () => {
 
     const fetchNextUpcomingCourse = () => {
         axios
-            .get(BASE_URL + "/getClosestUpcomingCourseswithNull")
-            .then((response) => {
-                console.log("response of banner slower wrapper", response.data.data);
-                setClosestUpcomingCourse(response.data.data);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
+        .get(BASE_URL + "/getClosestUpcomingCourseswithNull")
+        .then((response) => {
+            console.log("response of banner slower wrapper", response.data.data);
+            setClosestUpcomingCourse(response.data.data);
+        })
+        .catch((error) => {
+            console.log("error", error);
+        });
     };
-
+    
+    const { slug } = useParams();
     const fetchCoursesData = () => {
         axios
             .get(BASE_URL + `/getModuleBySlug/${slug}`)
@@ -62,7 +63,7 @@ const SubCategory = () => {
             fetchCoursesData();
         }
         fetchNextUpcomingCourse();
-    }, []);
+    }, [slug]);
     const [bannerImg, setBannerImg] = useState("");
 
     const [galleries, setGalleries] = useState("");
@@ -71,7 +72,6 @@ const SubCategory = () => {
 
     const [decodedContent, setDecodedContent] = useState("");
 
-    const { slug } = useParams();
 
     const [show404page, setShow404Page] = useState(false);
     const [loading, setLoading] = useState(false);

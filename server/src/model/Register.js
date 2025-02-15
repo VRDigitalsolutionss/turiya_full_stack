@@ -75,6 +75,18 @@ const registerschema = new mongoose.Schema({
         type: String,        // It can be a string or any other type you need (e.g., Enum for specific invoice types)
         trim: true,
     },
+    coursePurchased: [
+        {
+            course_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Course",
+            },
+            order_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "PurchasedModule",
+            }
+        }
+    ]
 }, {
     timestamps: true, 
 });

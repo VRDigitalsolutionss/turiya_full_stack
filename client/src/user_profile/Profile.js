@@ -179,13 +179,7 @@ const Profile = () => {
 
     axios.post(BASE_URL + '/add_profile_query', formData).then((response) => {
       console.log("response of profile", response);
-
-      //       if (response.status == 201) {
-
-      //       } else {
-
-      // }
-
+      alert("Query added successfully")
     }).catch((error) => {
       console.log("error", error)
     })

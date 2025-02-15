@@ -326,7 +326,7 @@ const findModuleWebpagesByCategory = async (req, res) => {
     const { slug } = req.params;
     
     try {
-        const response = await ModuleWebpages.find({ slug: slug }).populate("faqs");
+        const response = await ModuleWebpages.find({ slug: slug, status: "active"}).populate("faqs");
 
         if (response && response.length > 0) {
             res.status(200).json({
