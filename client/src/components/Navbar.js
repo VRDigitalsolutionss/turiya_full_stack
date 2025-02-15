@@ -303,28 +303,36 @@ const Navbar = () => {
                     [LEER]
                   </p>
                 </Link>
-                {/* <p  data-bs-toggle="modal" data-bs-target="registermodal" className="registerLink" style={{ cursor: "pointer" }}>
-                  <i className="bx bx-user" />
-                  Anmeldung/Registrierung
-                </p> */}
-                {/* <a data-bs-toggle="modal" data-bs-target="#exampleModal-form" className="registerLink" style={{ cursor: "pointer" }}>
-  <i className="bx bx-user" />
-  Anmeldung/Registrierung
-                </a> */}
-                {/* ========================================================= */}
-
                 {user ? (
-                  <p
-                    onClick={handleRedirect}
-                    className="registerLink"
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "20px",
-                      textTransform: "capitalize",
-                    }}>
-                    <i className="bx bx-user" />
-                    {user && user}
-                  </p>
+                  <>
+
+                    <p
+                      onClick={handleRedirect}
+                      className="registerLink"
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "20px",
+                        textTransform: "capitalize",
+                      }}>
+                      <i className="bx bx-user" />
+                      {user && user}
+                    </p>
+                    <p
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "20px",
+                        textTransform: "capitalize",
+                      }}
+                      className="registerLink"
+                      onClick={() => {
+                        console.log("Logging out...");
+                        localStorage.removeItem("turiya_auth_id");
+                        localStorage.removeItem("turiya_auth_token");
+                        localStorage.removeItem("user");
+                        navigate('/login')
+                      }}
+                    >Logout</p>
+                  </>
                 ) : (
                   <p
                     onClick={handleRedirect}
@@ -571,8 +579,44 @@ const Navbar = () => {
                   : 0}
               </span>[LEER]
             </a>
-            <a href=" #" data-bs-toggle="modal" data-bs-target="#exampleModal-form"><i
-              class='bx bx-user'></i>Anmeldung</a>
+            {user ? (
+                  <>
+                    <p
+                      onClick={handleRedirect}
+                      className="registerLink"
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "16px",
+                        textTransform: "capitalize",
+                      }}>
+                      <i className="bx bx-user" />
+                      {user && user}
+                    </p>
+                    <p
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "16px",
+                        textTransform: "capitalize",
+                      }}
+                      className="registerLink"
+                      onClick={() => {
+                        console.log("Logging out...");
+                        localStorage.removeItem("turiya_auth_id");
+                        localStorage.removeItem("turiya_auth_token");
+                        localStorage.removeItem("user");
+                        navigate('/login')
+                      }}
+                    >Logout</p>
+                  </>
+                ) : (
+                  <p
+                    onClick={handleRedirect}
+                    className="registerLink"
+                    style={{ cursor: "pointer" }}>
+                    <i className="bx bx-user" />
+                    Anmeldung/Registrierung
+                  </p>
+                )}
           </div>
 
 
