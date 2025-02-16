@@ -172,7 +172,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         const finalPrice = price_number + taxAmount;
         return finalPrice.toFixed(2);
       } else {
-        return price.toFixed(2);
+        return price;
       }
     }
 
@@ -999,7 +999,7 @@ const generateCancelInvoice = async (req, res) => {
         const finalPrice = price_number + taxAmount;
         return finalPrice.toFixed(2);
       } else {
-        return price.toFixed(2) ;
+        return price ;
       }
     }
 
