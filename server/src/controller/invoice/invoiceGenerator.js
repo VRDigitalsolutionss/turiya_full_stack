@@ -90,9 +90,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log(user)
-    console.log(productNumber)
-    
+    // console.log(req.body)
+
     const alreadyPurchased = user.coursePurchased?.some(
       (purchase) => purchase.course_id.toString() === productNumber.toString()
     );
@@ -171,9 +170,9 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         const taxRate = 0.19;
         const taxAmount = price_number * taxRate;
         const finalPrice = price_number + taxAmount;
-        return finalPrice;
+        return finalPrice.toFixed(2);
       } else {
-        return price;
+        return price.toFixed(2);
       }
     }
 
@@ -365,7 +364,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
               ${parsedSelectedMeal?.MealOffers ? `
                 <tr>
                     <td>${parsedSelectedRoom?.RoomOffers ? '3' : '2'}</td>
-                    <td>Zimmer: ${parsedSelectedMeal.MealOffers}</td>
+                    <td>Verpflegung: ${parsedSelectedMeal.MealOffers}</td>
                     <td>1</td>
                     <td>Stk.</td>
                     <td>${parsedSelectedMeal.MealPrice}€</td>
@@ -377,9 +376,12 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     <!-- Totals -->
     <div class="totals">
-        <p>Zwischensumme:  ${calculatePriceWithTax(req.body.price)} € </p>
-        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</p>` : ''}
-        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</p>` : ''}
+        <p>Zwischensumme:  ${req.body.price} € </p>
+        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
+        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        ${req.body.userDetails.invoiceType == 'Private_Invoice' ?
+        `<p>0% USt aus €${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)}</p>` 
+        : `<p>19% USt aus €${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)}: ${((Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0))*0.19).toFixed(2)}€</p>`}
         <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
@@ -630,9 +632,12 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     <!-- Totals -->
     <div class="totals">
-        <p>Zwischensumme:  ${calculatePriceWithTax(req.body.price)} € </p>
-        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${calculatePriceWithTax(parsedSelectedRoom.RoomPrice)}€</p>` : ''}
-        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${calculatePriceWithTax(parsedSelectedMeal.MealPrice)}€</p>` : ''}
+        <p>Zwischensumme:  ${req.body.price} € </p>
+        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice}€</p>` : ''}
+        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice}€</p>` : ''}
+        ${req.body.userDetails.invoiceType == 'Private_Invoice' ?
+        `<p>0% USt aus €${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)}</p>` 
+        : `<p>19% USt aus €${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)}: ${((Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0))*0.19).toFixed(2)}€</p>`}
         <strong>Gesamtbetrag: <u> ${totalPrice}€</u></strong>
     </div>
 
@@ -992,9 +997,9 @@ const generateCancelInvoice = async (req, res) => {
         const taxRate = 0.19;
         const taxAmount = price_number * taxRate;
         const finalPrice = price_number + taxAmount;
-        return finalPrice;
+        return finalPrice.toFixed(2);
       } else {
-        return price;
+        return price.toFixed(2) ;
       }
     }
 
