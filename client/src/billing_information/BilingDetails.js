@@ -129,6 +129,17 @@ const BilingDetails = () => {
 
   const fetchModuleDetails = (e) => {
     e.preventDefault();
+
+    const requiredCheckboxes = document.querySelectorAll('.info_desc input[type="checkbox"]');
+
+    // Check if all required checkboxes are checked
+    const allChecked = Array.from(requiredCheckboxes).every(checkbox => checkbox.checked);
+
+    if (!allChecked) {
+      alert("Bitte stimmen Sie allen erforderlichen Bedingungen in der Info-Sektion zu, bevor Sie fortfahren.");
+      return;
+    }
+
     console.log("generateInvoiceNumber", generateInvoiceNumber());
     console.log("generateCustomerNumber", generateCustomerNumber());
     console.log("generateOrderNumber", generateOrderNumber());
@@ -155,7 +166,7 @@ const BilingDetails = () => {
       totalPrice: taxCalculationnewv,
       email: userDetails.email,
       user_type: userDetails.userType,
-      price: courseData.Offerprice ? courseData.Offerprice : courseData.price,
+      price: courseData.Offerprice && isOfferValid(courseData.OfferEndDate) ? courseData.Offerprice : courseData.price,
       due_amount: taxCalculationnewv,
       courseData: courseData,
       userDetails: userDetails,
@@ -364,7 +375,7 @@ const BilingDetails = () => {
                                   "" +
                                   userDetails?.Last_name}{" "}
                               </li>
-                              {userDetails && userDetails.company &&  <li>
+                              {userDetails && userDetails.company && <li>
                                 Company Name:
                                 {userDetails && userDetails.company}{" "}
                               </li>}
@@ -549,7 +560,7 @@ const BilingDetails = () => {
                           der Anmeldung 14 Tage.{" "}
                         </label>
                       </div>
-                      <div
+                      {/* <div
                         className="info_desc__radio "
                         style={{ display: "none" }}>
                         <input
@@ -562,7 +573,7 @@ const BilingDetails = () => {
                           abonnieren um immer auf dem neusten Stand über
                           Ausbildungen, Angebote und Rabatte zu sein.
                         </label>
-                      </div>
+                      </div> */}
                       <div className="info_desc__radio">
                         <input
                           name="name5"

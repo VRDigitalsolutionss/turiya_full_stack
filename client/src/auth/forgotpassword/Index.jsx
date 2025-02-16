@@ -10,6 +10,7 @@ const Index = () => {
     email: ""
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
   const handleChange = (e) => {
@@ -38,6 +39,7 @@ const Index = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     if (validate()) {
       try {
@@ -45,6 +47,7 @@ const Index = () => {
           email: formData.email
         });
 
+        setLoading(false)
         Swal.fire({
           text: "Bitte überprüfen Sie Ihre E-Mails und bestätigen Sie Ihre E-Mail-Adresse!",
           icon: "success",
@@ -55,6 +58,7 @@ const Index = () => {
         navigate('/')
 
       } catch (err) {
+        setLoading(false)
         alert(err.response?.data)
       }
     }
@@ -85,8 +89,9 @@ const Index = () => {
                 {errors.email && <span className="error">{errors.email}</span>}
               </div>
               <div className="send">
-                <button className="global_btn" type="submit" name="forget">
+                <button className="global_btn d-flex align-items-center gap-2" type="submit" name="forget">
                   Submit
+                  {loading && <div class="spinner-border text-light spinner-border-sm" role="status"></div>}
                 </button>
               </div>
             </form>

@@ -24,31 +24,24 @@ code {
   text-align: center;
 }
 
-.back-to-home-button:hover {
-  font: 26px Arial, Helvetica, sans-serif;
-  text-align: center;
-  color: #ffffff;
-  display: block;
-  text-decoration: none;
-  width: 250px;
-  background: #F96700;
-  margin: 10px auto 0px;
-  padding: 15px 20px 15px;
-  border-bottom: 5px solid #F96700;
-}
+
 
 .back-to-home-button {
-  font: 26px Arial, Helvetica, sans-serif;
+  font: 22px Arial, Helvetica, sans-serif;
   text-align: center;
   color: #ffffff;
   display: block;
   text-decoration: none;
-  width: 250px;
+  /* width: 250px; */
   background: #E47425;
   margin: 20px auto 0px;
-  padding: 15px 20px 15px;
-  border-bottom: 5px solid #F96700;
+  padding: 15px 30px;
+  border-radius: 10px;
 }
+.back-to-home-button:active {
+  background: #c3580c;
+}
+
 
 @media (max-width: 400px) {
   .thank-you-page h3 {
