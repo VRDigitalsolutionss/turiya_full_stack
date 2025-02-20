@@ -359,9 +359,6 @@ const Navbar = () => {
                       <li>
                         <Link to="/unsere-Philosophie">Unsere Philosophie</Link>
                       </li>
-                      <li>
-                        <Link to="/kundenstimmen">Kundenstimmen</Link>
-                      </li>
                       {/* <li>
                         <Link to="/team">Turiya Yoga Team</Link>
                       </li> */}
@@ -405,14 +402,13 @@ const Navbar = () => {
                   </li>
                   <li className="dropdown_menu">
                     <Link to="#">
-                      Yoga Retreat
+                    Kundenstimmen
                       <i className="bx bx-chevron-down" />
                     </Link>
                     <ul className="dropdown_menu__list">
+
                       <li>
-                        <Link to="/yoga_retreat">
-                          YOGA RETREAT IN GOA INDIEN
-                        </Link>
+                        <Link to="/kundenstimmen">Kundenstimmen</Link>
                       </li>
                     </ul>
                   </li>
@@ -580,43 +576,43 @@ const Navbar = () => {
               </span>[LEER]
             </a>
             {user ? (
-                  <>
-                    <p
-                      onClick={handleRedirect}
-                      className="registerLink"
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "16px",
-                        textTransform: "capitalize",
-                      }}>
-                      <i className="bx bx-user" />
-                      {user && user}
-                    </p>
-                    <p
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "16px",
-                        textTransform: "capitalize",
-                      }}
-                      className="registerLink"
-                      onClick={() => {
-                        console.log("Logging out...");
-                        localStorage.removeItem("turiya_auth_id");
-                        localStorage.removeItem("turiya_auth_token");
-                        localStorage.removeItem("user");
-                        navigate('/login')
-                      }}
-                    >Logout</p>
-                  </>
-                ) : (
-                  <p
-                    onClick={handleRedirect}
-                    className="registerLink"
-                    style={{ cursor: "pointer" }}>
-                    <i className="bx bx-user" />
-                    Anmeldung/Registrierung
-                  </p>
-                )}
+              <>
+                <p
+                  onClick={handleRedirect}
+                  className="registerLink"
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    textTransform: "capitalize",
+                  }}>
+                  <i className="bx bx-user" />
+                  {user && user}
+                </p>
+                <p
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    textTransform: "capitalize",
+                  }}
+                  className="registerLink"
+                  onClick={() => {
+                    console.log("Logging out...");
+                    localStorage.removeItem("turiya_auth_id");
+                    localStorage.removeItem("turiya_auth_token");
+                    localStorage.removeItem("user");
+                    navigate('/login')
+                  }}
+                >Logout</p>
+              </>
+            ) : (
+              <p
+                onClick={handleRedirect}
+                className="registerLink"
+                style={{ cursor: "pointer" }}>
+                <i className="bx bx-user" />
+                Anmeldung/Registrierung
+              </p>
+            )}
           </div>
 
 
@@ -656,11 +652,7 @@ const Navbar = () => {
                         onClick={() => setIsActive(false)}>
                         Unsere Philosophie
                       </Link>
-                      <Link
-                        to="/kundenstimmen" className="my-2"
-                        onClick={() => setIsActive(false)}>
-                        Kundenstimmen
-                      </Link>
+
                       {/* <Link to="/team" className="my-2" onClick={() => setIsActive(false)}>
                         Turiya Yoga Team
                       </Link> */}
@@ -722,18 +714,18 @@ const Navbar = () => {
                   <li className="drop-menu mb-2">
                     <Link
                       to="/"
-                      className={`active-menu my-2 ${activeLink === "retreat" ? "active" : ""
+                      className={`active-menu my-2 ${activeLink === "kundenstimmen" ? "active" : ""
                         }`}
-                      onClick={() => handleLinkClick("retreat")}>
-                      Yoga Retreat <i className="bx bx-chevron-right"></i>
+                      onClick={() => handleLinkClick("kundenstimmen")}>
+                      Kundenstimmen <i className="bx bx-chevron-right"></i>
                     </Link>
                     <div
-                      className={`drop-menu-list ${activeLink === "retreat" ? "show" : ""
+                      className={`drop-menu-list ${activeLink === "kundenstimmen" ? "show" : ""
                         }`}>
                       <Link
-                        to="/yoga_retreat"
+                        to="/kundenstimmen" className="my-2"
                         onClick={() => setIsActive(false)}>
-                        YOGA RETREAT IN GOA INDIEN
+                        Kundenstimmen
                       </Link>
                     </div>
                   </li>
