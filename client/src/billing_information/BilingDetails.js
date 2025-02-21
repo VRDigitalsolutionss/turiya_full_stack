@@ -247,7 +247,6 @@ const BilingDetails = () => {
     if (roomPrice) {
       totalPrice += Number(roomPrice);
     }
-    console.log(typeof(roomPrice))
 
     if (mealPrice) {
       totalPrice += Number(mealPrice);
