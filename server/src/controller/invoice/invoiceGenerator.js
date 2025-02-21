@@ -97,16 +97,16 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     );
     console.log(alreadyPurchased)
 
-    // if (alreadyPurchased) {
-    //   console.log("Course already purchased!");
-    //   return res.status(400).json({ message: "Course already purchased!" });
-    // }
+    if (alreadyPurchased) {
+      console.log("Course already purchased!");
+      return res.status(400).json({ message: "Course already purchased!" });
+    }
 
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
 
-    console.log(parsedSelectedRoom)
-    console.log(parsedSelectedMeal)
+    // console.log(parsedSelectedRoom)
+    // console.log(parsedSelectedMeal)
 
     // Create new document instance
     const purchasedModule = new PurchasedModule({
@@ -822,12 +822,12 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     // console.log(req.body.userDetails)
 
-    // user.coursePurchased?.push({
-    //   course_id: productNumber,
-    //   order_id: savedModule._id
-    // });
+    user.coursePurchased?.push({
+      course_id: productNumber,
+      order_id: savedModule._id
+    });
 
-    // await user.save();
+    await user.save();
 
     res.status(200).json({
       message: "Invoice generated and saved successfully!",
@@ -905,20 +905,20 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       ],
     };
 
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //   if (error) {
-    //     console.error("Error sending email:", error);
-    //     return res.status(500).json({ error: "Email could not be sent" });
-    //   } else {
-    //     console.log("Email sent:", info.response);
-    //     // Clean up generated PDF
-    //     fs.unlinkSync(invoicePath);
-    //     fs.unlinkSync(contractPath);
-    //     return res
-    //       .status(200)
-    //       .json({ message: "Invoice PDF sent successfully!" });
-    //   }
-    // });
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+        return res.status(500).json({ error: "Email could not be sent" });
+      } else {
+        console.log("Email sent:", info.response);
+        // Clean up generated PDF
+        fs.unlinkSync(invoicePath);
+        fs.unlinkSync(contractPath);
+        return res
+          .status(200)
+          .json({ message: "Invoice PDF sent successfully!" });
+      }
+    });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "An error occurred" });
