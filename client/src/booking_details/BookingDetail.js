@@ -300,12 +300,13 @@ const BookingDetail = () => {
                       <div className="cart-total">
                         <h6>TOTAL</h6>
                         <p>
-                          €{" "}
-                          {calculatePriceWithTax(
-                            courseData.price,
-                            courseData.OfferEndDate,
-                            courseData.Offerprice
-                          )}
+                          {isOfferValid(courseData.OfferEndDate) && courseData.Offerprice > 0 ? (
+                            <span>
+                              € {Number(courseData.Offerprice) + Number(selectedMeal?.MealPrice && addMeal ? Number(selectedMeal?.MealPrice) : 0) + (selectedRoom?.RoomPrice && addRoom ? Number(selectedRoom?.RoomPrice) : 0)}
+                            </span>
+                          ) : (
+                            <span>€{Number(courseData.price) + Number(selectedMeal?.MealPrice && addRoom ? Number(selectedMeal?.MealPrice) : 0) + (selectedRoom?.RoomPrice && addRoom ? Number(selectedRoom?.RoomPrice) : 0)}</span>
+                          )} 
                         </p>
                       </div>
                     </div>

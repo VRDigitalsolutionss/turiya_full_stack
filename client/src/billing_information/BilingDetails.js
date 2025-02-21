@@ -243,14 +243,16 @@ const BilingDetails = () => {
     const priceToCalculate = isOfferStillValid ? offerPrice : price;
 
     let totalPrice = Number(priceToCalculate);
-
+    
     if (roomPrice) {
       totalPrice += Number(roomPrice);
     }
+    console.log(typeof(roomPrice))
 
     if (mealPrice) {
       totalPrice += Number(mealPrice);
     }
+
 
     if (userDetails.invoiceType !== "Private_Invoice") {
       const taxRate = 0.19;
