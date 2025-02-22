@@ -91,7 +91,7 @@ const Login = () => {
           }
         })
         .catch((error) => {
-          alert("Something went wrong");
+          alert(error?.response?.data?.msg || "Something went wrong");
           console.log("error", error);
         });
     } else {

@@ -57,7 +57,7 @@ const RegisteredUser = require("../model/Register");
 
 const loginController = (req, res) => {
   // Log the incoming request body
-  console.log("Request body:", req.body);
+  // console.log("Request body:", req.body);
 
   // Look for the user by email
   RegisteredUser.findOne({ email: req.body.email })
@@ -99,12 +99,12 @@ const loginController = (req, res) => {
           });
         } else {
           res.status(403).json({
-            msg: "Invalid credentials",
+            msg: "Du hast das falsche Passwort eingegeben",
           });
         }
       } else {
         res.status(404).json({
-          msg: "User is not registered",
+          msg: "Du hast die falsche E-Mail eingegeben.",
         });
       }
     })

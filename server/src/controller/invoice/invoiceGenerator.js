@@ -97,10 +97,10 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     );
     console.log(alreadyPurchased)
 
-    if (alreadyPurchased) {
-      console.log("Course already purchased!");
-      return res.status(400).json({ message: "Course already purchased!" });
-    }
+    // if (alreadyPurchased) {
+    //   console.log("Course already purchased!");
+    //   return res.status(400).json({ message: "Course already purchased!" });
+    // }
 
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
@@ -376,16 +376,15 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     <!-- Totals -->
     <div class="totals">
-        <p>Zwischensumme:  ${req.body.price} € </p>
-        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice} €</p>` : ''}
-        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice} €</p>` : ''}
+        <p>Zwischensumme:  ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} € </p>
         ${req.body.userDetails.invoiceType == 'Private_Invoice' ?
-        `<p>0% USt aus ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} €</p>` 
+        `<p>0% USt aus ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} €: 0€</p>` 
         : `<p>19% USt aus ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} €: ${((Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0))*0.19).toFixed(2)} €</p>`}
         <strong>Gesamtbetrag: <u> ${totalPrice} €</u></strong>
     </div>
 
-    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p><p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
+    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p>
+    ${req.body?.userDetails?.invoiceType === 'Private_Invoice' ? "<p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>" : ""}
     <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
     <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
 
@@ -632,17 +631,16 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     <!-- Totals -->
     <div class="totals">
-        <p>Zwischensumme:  ${req.body.price} € </p>
-        ${parsedSelectedRoom?.RoomPrice ? `<p>+ Zimmerpreis: ${parsedSelectedRoom.RoomPrice} €</p>` : ''}
-        ${parsedSelectedMeal?.MealPrice ? `<p>+ Verpflegungspreis: ${parsedSelectedMeal.MealPrice} €</p>` : ''}
+        <p>Zwischensumme:  ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} € </p>
         ${req.body.userDetails.invoiceType == 'Private_Invoice' ?
-        `<p>0% USt aus ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} €</p>` 
+        `<p>0% USt aus ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} €: 0€</p>` 
         : `<p>19% USt aus ${Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0)} €: ${((Number(req.body.price) + (parsedSelectedRoom?.RoomPrice ? Number(parsedSelectedRoom.RoomPrice) : 0) + (parsedSelectedMeal?.MealPrice ? Number(parsedSelectedMeal.MealPrice) : 0))*0.19).toFixed(2)} €</p>`}
         <strong>Gesamtbetrag: <u> ${totalPrice} €</u></strong>
     </div>
 
 
-    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p><p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
+    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p>
+    ${req.body?.userDetails?.invoiceType === 'Private_Invoice' ? "<p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>" : ""}
     <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
     <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
 
@@ -822,12 +820,12 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     // console.log(req.body.userDetails)
 
-    user.coursePurchased?.push({
-      course_id: productNumber,
-      order_id: savedModule._id
-    });
+    // user.coursePurchased?.push({
+    //   course_id: productNumber,
+    //   order_id: savedModule._id
+    // });
 
-    await user.save();
+    // await user.save();
 
     res.status(200).json({
       message: "Invoice generated and saved successfully!",
