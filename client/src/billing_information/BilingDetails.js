@@ -178,9 +178,13 @@ const BilingDetails = () => {
     setInvoiceLoading(true)
     axios
       .post(`${BASE_URL}/generateInvoice`, payload)
-      .then((response) => {
+      .then(async (response) => {
         console.log("response of invoice", response.data.data);
         reducePlace(id)
+        const cartItemId = localStorage.getItem("cartItemBooking");
+        if(cartItemId){
+          deleteCartData(cartItemId);
+        }
         navigate('/thank-you');
       })
       .catch((error) => {
@@ -189,6 +193,19 @@ const BilingDetails = () => {
         alert(error.response?.data?.message || "Some error occurred")
       });
   };
+
+  const deleteCartData = (id) => {
+      axios
+        .delete(BASE_URL + `/delete_cart/${id}`)
+        .then((response) => {
+          console.log("response od delete", response);
+          localStorage.removeItem("cartItemBooking")
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    };
 
   const reducePlace = (id) => {
     axios

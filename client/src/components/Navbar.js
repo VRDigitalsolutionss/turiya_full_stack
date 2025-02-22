@@ -298,9 +298,9 @@ const Navbar = () => {
                     <span className="me-1">
                       {cartFetchedData && cartFetchedData.length > 0
                         ? cartFetchedData.length
-                        : 0}
+                        : '0 [LEER]'}
                     </span>
-                    [LEER]
+                    
                   </p>
                 </Link>
                 {user ? (
@@ -311,7 +311,7 @@ const Navbar = () => {
                       className="registerLink"
                       style={{
                         cursor: "pointer",
-                        fontSize: "20px",
+                        fontSize: "16px",
                         textTransform: "capitalize",
                       }}>
                       <i className="bx bx-user" />
@@ -320,7 +320,7 @@ const Navbar = () => {
                     <p
                       style={{
                         cursor: "pointer",
-                        fontSize: "20px",
+                        fontSize: "16px",
                         textTransform: "capitalize",
                       }}
                       className="registerLink"
@@ -500,6 +500,7 @@ const Navbar = () => {
                             <div className="col-sm-10">
                               {user ? <button
                                 onClick={() => {
+                                  localStorage.setItem("cartItemBooking", item._id)
                                   navigate(`/course_booking/${module._id}`)
                                   closeSideber()
                                 }}
@@ -514,7 +515,7 @@ const Navbar = () => {
                                 }}
                                 className="triggerDialogBox"
                                 data-id={9}>
-                                Gehen Sie zur Kasse
+                                Gehe Sie Zur Kasse
                               </button> :
                                 <p>
                                   Bitte melden Sie sich an, um zur Kasse zu gehen.
@@ -572,8 +573,8 @@ const Navbar = () => {
               <i class='bx bx-shopping-bag'></i><span className="me-1">
                 {cartFetchedData && cartFetchedData.length > 0
                   ? cartFetchedData.length
-                  : 0}
-              </span>[LEER]
+                  : '0 [LEER]'}
+              </span>
             </a>
             {user ? (
               <>

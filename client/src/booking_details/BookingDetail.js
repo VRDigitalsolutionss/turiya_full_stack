@@ -596,7 +596,7 @@ const BookingDetail = () => {
                           type="button"
                           // name="booking_form"
                           onClick={generateInvoice}>
-                          Anmeldung Überprüfen
+                          Buchung fortsetzen
                         </button>
                       </div>
                     </form>
