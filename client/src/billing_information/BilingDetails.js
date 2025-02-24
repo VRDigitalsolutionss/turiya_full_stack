@@ -130,7 +130,7 @@ const BilingDetails = () => {
   const fetchModuleDetails = (e) => {
     e.preventDefault();
 
-    const requiredCheckboxes = document.querySelectorAll('.info_desc input[type="checkbox"]');
+    const requiredCheckboxes = document.querySelectorAll('.info_desc input[type="checkbox"][required]');
 
     // Check if all required checkboxes are checked
     const allChecked = Array.from(requiredCheckboxes).every(checkbox => checkbox.checked);
@@ -159,8 +159,8 @@ const BilingDetails = () => {
       customerNumber: userDetails._id,
       orderNumber: order_num,
       dueDate: due_date,
-      customerName: userDetails.company ? userDetails.company : userDetails.First_name,
-      customerAddress: `${userDetails.address}, ${userDetails.city}, ${userDetails.federal_state}, ${userDetails.postal_code}, ${userDetails.country}`,
+      customerName: userDetails.First_name + " " + userDetails.Last_name,
+      customerAddress: `${userDetails.address} <br/> ${userDetails.city}, ${userDetails.federal_state}, ${'Germany'} - ${userDetails.postal_code}`,
       productDescription: courseData.Ausbildung,
       quantity: 1,
       totalPrice: taxCalculationnewv,
@@ -323,11 +323,11 @@ const BilingDetails = () => {
                     </span>
                   </div>
                   {selectedRoom?.RoomPrice && <div className="cart_details__heading">
-                    <h6>Room</h6>
+                    <h6>Unterkunftskosten</h6>
                     <p>€{selectedRoom?.RoomPrice}</p>
                   </div>}
                   {selectedMeal?.MealPrice && <div className="cart_details__heading">
-                    <h6>Meal</h6>
+                    <h6>Verpflegung</h6>
                     <p>€{selectedMeal?.MealPrice}</p>
                   </div>}
                   {
@@ -557,7 +557,6 @@ const BilingDetails = () => {
                         <input
                           name="name2"
                           type="checkbox"
-                          required
                           defaultValue="Ich bin bereits selbständig und möchte Yoga mit ins Programm nehmen"
                         />
                         <label htmlFor>

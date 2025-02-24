@@ -90,6 +90,8 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // console.log(user)
+
     // console.log(req.body)
 
     const alreadyPurchased = user.coursePurchased?.some(
@@ -97,10 +99,10 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     );
     console.log(alreadyPurchased)
 
-    // if (alreadyPurchased) {
-    //   console.log("Course already purchased!");
-    //   return res.status(400).json({ message: "Course already purchased!" });
-    // }
+    if (alreadyPurchased) {
+      console.log("Course already purchased!");
+      return res.status(400).json({ message: "Course already purchased!" });
+    }
 
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
@@ -323,7 +325,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Content -->
     <h1>Rechnung vom  ${formatDate(req.body.dueDate)}</h1>
     <p>Hallo ${req.body.customerName},</p>
-    <p>vielen Dank für deine Anmeldung bei Turiya Yoga. gerne bestätigen wir deine Buchung wie folgt.</p>
+    <p>vielen Dank für deine Anmeldung bei Turiya Yoga. Gerne bestätigen wir deine Buchung wie folgt.</p>
 
     <!-- Table -->
     <table>
@@ -581,7 +583,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     <!-- Content -->
   
     <p>Hallo ${req.body.customerName},</p>
-    <p>vielen Dank für deine Anmeldung bei Turiya Yoga. gerne bestätigen wir deine Buchung wie folgt.</p>
+    <p>vielen Dank für deine Anmeldung bei Turiya Yoga. Gerne bestätigen wir deine Buchung wie folgt.</p>
 
     <!-- Table -->
     <table>
@@ -820,12 +822,12 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     // console.log(req.body.userDetails)
 
-    // user.coursePurchased?.push({
-    //   course_id: productNumber,
-    //   order_id: savedModule._id
-    // });
+    user.coursePurchased?.push({
+      course_id: productNumber,
+      order_id: savedModule._id
+    });
 
-    // await user.save();
+    await user.save();
 
     res.status(200).json({
       message: "Invoice generated and saved successfully!",

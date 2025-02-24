@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Gallery from "../gallery/Index";
 import { BASE_URL, BASE_URL_IMAGE } from "../../config.js";
+import bannerImg  from './unsere_philosophie.webp'
 
 const Ourphilosophy = () => {
 
@@ -79,7 +80,6 @@ const Ourphilosophy = () => {
 
   console.log("earlyData", earlyData);
 
-  const [bannerImg, setBannerImg] = useState("");
 
   const [data, setData] = useState("");
 
@@ -100,11 +100,33 @@ const Ourphilosophy = () => {
     meta_Title: "",
     status: "",
   });
+  const videoUrl = "https://www.youtube.com/embed/z6z4-bnDhws?si=Ta2BO26WIj6YIa-a";
   const [videoId, setVideoId] = useState("")
 
   useEffect(() => {
-    if (!videoId && Ourphilosophy && Ourphilosophy.Slider_videolink) {
-      setVideoId(Ourphilosophy.Slider_videolink)
+      // Function to handle resetting videoId for a specific modal
+      const attachModalEvent = (modalId, setVideoId,) => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          const handleModalClose = () => setVideoId(null);
+          modal.addEventListener("hidden.bs.modal", handleModalClose);
+  
+          // Cleanup event listener on component unmount
+          return () => modal.removeEventListener("hidden.bs.modal", handleModalClose);
+        }
+      };
+  
+      // Attach event listeners to modals
+      const cleanup1 = attachModalEvent("exampleModal-yt", setVideoId, videoUrl);
+  
+      return () => {
+        if (cleanup1) cleanup1();
+      };
+    }, []);
+
+  useEffect(() => {
+    if (!videoId) {
+      setVideoId(videoUrl)
     }
   }, [videoId])
 
@@ -163,7 +185,7 @@ const Ourphilosophy = () => {
             status: data.status,
           });
 
-          setVideoId(data.Slider_videolink)
+          setVideoId(videoUrl)
 
 
 
@@ -172,7 +194,7 @@ const Ourphilosophy = () => {
             ? BASE_URL_IMAGE + `/images/our_philoshpy/${data.Slide_Image}`
             : ""; // Fallback image or empty string
 
-          setBannerImg(imageUrlcustum);
+          // setBannerImg(imageUrlcustum);
         }
       })
       .catch((error) => {
@@ -189,46 +211,6 @@ const Ourphilosophy = () => {
 
   console.log("gallery data", data);
 
-  const images = [
-    img1,
-    img2,
-    img3,
-    img4,
-    img5,
-    img6,
-    img7,
-    img3,
-    img4,
-    img2,
-    img1,
-    img6,
-  ];
-
-  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleImgDialog = (index) => {
-    setCurrentIndex(index); // Set the clicked image index as current
-    setIsOverlayVisible(true);
-  };
-
-  const handleCloseOverlay = () => {
-    setIsOverlayVisible(false); // Hide the overlay
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length); // Move to the next image
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    ); // Move to the previous image
-  };
-
-  //   const pyload = {
-  // `<p>Selbstredend konnten wir unsere Philosophie als Yoga-Ausbildungsakademie nicht von unserer Lebensphilosophie trennen. In einer der größen Schriften des Yoga, den Patanjali Yoga Sutras, ist unsere Haltung gegenüber anderen und der Welt um uns herum durch das zu bestärken was man Yamas nennt</p><p>Gewaltlosigkeit und Wahrhaftigkeit.Für uns als Team geht es darum, ehrlich und sicher darin zu sein, was wir euch mitteilen und anbieten, sowie, was wir wissen und lehren. Wir bieten auch Transparenz darüber, wo sonst (oder mit wem sonst) ihr nach dem Kurs selbstständig lernen und wachsen könnt. Wir ermutigen euch darin, eure eigenen Flügel auszubreiten und die Reise fortzusetzen.</p><p>Nicht stehlen. Wir schätzen deine Zeit sehr und versprechen, sie niemals als selbstverständlich zu betrachten. In unseren Yogalehrerausbildungen, Kursen und in der Gemeinschaft bemühen wir uns, eure Erfahrungen zu optimieren. Eure Investition in persönliches Wachstum ist uns wichtig, deshalb planen wir jede Session sorgfältig, um das Beste daraus zu machen.</p><p>Brahmacharya wird oft nur mit Zölibat in Verbindung gebracht. Doch ein weiser Lehrer hat uns einmal gelehrt, dass es eigentlich bedeutet, alles mit vollem Herzen zu tun. Auf diese Weise wird jede Handlung zu einer Hingabe an das wahre Selbst oder wie auch immer du es nennen magst. Das bildet den Kern unserer Arbeit und ist stets unser Ziel.</p><p>Unsere Handlungen werden nicht von Gier geleitet. Obwohl wir Geld, Wohlstand und Komfort begrüßen, sind sie nicht der Hauptantrieb unserer Akademie. Wir streben jedoch nach herausragenden Standards, und Qualität erfordert natürlich auch Investitionen.</p>`
-  //   };
 
   function isOfferValid(offerEndDate) {
     if (!offerEndDate) return false;
@@ -252,7 +234,7 @@ const Ourphilosophy = () => {
             className="banner_bg"
             // style={{ backgroundImage: banner }}
             style={{
-              backgroundImage: bannerImg ? `url(${bannerImg})` : "none",
+              backgroundImage: `url(${bannerImg})`,
             }}>
             <div className="banner-content container">
               <div className="row">
@@ -262,14 +244,10 @@ const Ourphilosophy = () => {
                       className="animate__animated"
                       data-animation-in="animate__fadeInUp"
                       data-duration-in={1}>
-                      {Ourphilosophy.Slider_Heading}
+                      Unsere Philosophie als Yoga Akademie
                     </h1>
-
                     <p
-                      className="p-3"
-                      dangerouslySetInnerHTML={{
-                        __html: Ourphilosophy.Slider_Paragraph,
-                      }}></p>
+                      className="p-3">Hoher Standard, weil wir deine Zeit respektieren. Leidenschaft, weil wir uns nicht von Gier leiten lassen. Authentisch, weil wir eigenartig moderne und traditionelle Perspektiven kombinieren.</p>
                     <div
                       className="banner_bg__content-btn animate__animated"
                       data-animation-in="animate__fadeInUp"
@@ -337,23 +315,38 @@ const Ourphilosophy = () => {
             <div className="row">
               <div className="col-lg-9">
                 <div className="about_turiya__right">
-                  <h6>{Ourphilosophy.about_First_Section_heading}</h6>
-                  <h1> {Ourphilosophy.about_First_Section_Sub_Peragraph}</h1>
-                  <p
-                    style={{
-                      margin: "1rem 0px 6px",
-                      padding: 0,
-                      fontFamily: "Roboto, sans-serif",
-                      fontSize: 15,
-                      lineHeight: "1.8",
-                      color: "rgb(33, 37, 41)",
-                      backgroundColor: "rgb(249, 249, 249)",
-                    }}
-                    className="p-3"
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        Ourphilosophy.about_First_Section_Peragraph_Content,
-                    }}></p>
+                <h6 style={{ fontSize: "14px", fontWeight: "bold", color: "#555" }}>DIE TURIYA PHILOSOPHIE</h6>
+      <h1 style={{ fontSize: "28px", fontWeight: "bold", color: "#222", marginTop: "10px" }}>
+        Unsere Philosophie als Yoga Ausbildungs Akademie
+      </h1>
+      <p style={{ margin: "15px 0 10px", fontFamily: "Roboto, sans-serif", fontSize: "15px", lineHeight: "1.8", color: "#212529" }}>
+        Selbstredend konnten wir unsere Philosophie als Yoga-Ausbildungsakademie nicht von unserer Lebensphilosophie trennen. 
+        In einer der größten Schriften des Yoga, den Patanjali Yoga Sutras, ist unsere Haltung gegenüber anderen und der Welt um 
+        uns herum durch das zu bestärken, was man Yamas nennt:
+      </p>
+      <ul style={{ marginTop: "20px", padding: "0", fontFamily: "Roboto, sans-serif", color: "#212529", fontSize: "16px", backgroundColor: "#f9f9f9" }}>
+        <li style={{ marginBottom: "10px", fontSize: "15px", listStyle: "none", lineHeight: "1.8" }}>
+          <span style={{ fontWeight: "bold" }}>Gewaltlosigkeit und Wahrhaftigkeit. </span>
+          Für uns als Team geht es darum, ehrlich und sicher darin zu sein, was wir euch mitteilen und anbieten, sowie, was wir wissen und lehren. 
+          Wir bieten auch <span style={{ fontWeight: "bold" }}>Transparenz</span> darüber, wo sonst (oder mit wem sonst) ihr nach dem Kurs selbstständig 
+          lernen und wachsen könnt. Wir ermutigen euch darin, eure eigenen Flügel auszubreiten und die Reise fortzusetzen.
+        </li>
+        <li style={{ marginBottom: "10px", fontSize: "15px", listStyle: "none", lineHeight: "1.8" }}>
+          <span style={{ fontWeight: "bold" }}>Nicht stehlen. </span>
+          Wir schätzen deine Zeit sehr und versprechen, sie niemals als selbstverständlich zu betrachten. In unseren Yogalehrerausbildungen, Kursen und 
+          in der Gemeinschaft bemühen wir uns, eure Erfahrungen zu optimieren. Eure Investition in persönliches Wachstum ist uns wichtig, deshalb planen 
+          wir jede Session sorgfältig, um das Beste daraus zu machen.
+        </li>
+        <li style={{ marginBottom: "10px", fontSize: "15px", listStyle: "none", lineHeight: "1.8" }}>
+          Brahmacharya wird oft nur mit Zölibat in Verbindung gebracht. Doch ein weiser Lehrer hat uns einmal gelehrt, dass es eigentlich bedeutet, 
+          alles mit vollem Herzen zu tun. Auf diese Weise wird jede Handlung zu einer Hingabe an das wahre Selbst oder wie auch immer du es nennen magst. 
+          Das bildet den Kern unserer Arbeit und ist stets unser Ziel.
+        </li>
+        <li style={{ marginBottom: "10px", fontSize: "15px", listStyle: "none", lineHeight: "1.8" }}>
+          Unsere Handlungen werden nicht von Gier geleitet. Obwohl wir Geld, Wohlstand und Komfort begrüßen, sind sie nicht der Hauptantrieb unserer Akademie. 
+          Wir streben jedoch nach herausragenden Standards, und Qualität erfordert natürlich auch Investitionen.
+        </li>
+      </ul>
                   <div
                     className="slower_wrapper__center-icon"
                     data-aos="fade-up">

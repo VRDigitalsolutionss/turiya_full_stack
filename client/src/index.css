@@ -54,8 +54,7 @@ code {
     color: #ffffff;
     display: block;
     text-decoration: none;
-    width: auto !important;
-    padding: 10px 20px !important;
+    /* padding: 10px 20px !important; */
   }
 }
 
