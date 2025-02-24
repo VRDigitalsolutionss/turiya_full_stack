@@ -170,6 +170,7 @@ const deleteVideoTestimonial = async (req, res) => {
 
 const Videotestimonials = async (req, res) => {
   VideoTestimonial.find()
+    .sort({ createdAt: -1 })
     .then((data) => {
       res.status(200).json({ success: true, data });
     })
@@ -177,6 +178,7 @@ const Videotestimonials = async (req, res) => {
       res.status(500).json({ success: false, error: error.message });
     });
 };
+
 
 const Videotestimonial = async (req, res) => {
   try {

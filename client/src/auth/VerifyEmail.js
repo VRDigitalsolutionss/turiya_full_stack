@@ -32,7 +32,7 @@ const VerifyEmail = () => {
         <>
             <div className='text-center my-5' style={{height: '70vh'}}>
                 <h5>{message}</h5>
-                {verified && <NavLink className='back-to-home-button' to='/login'>Enlogin</NavLink>}
+                {!verified && <NavLink className='back-to-home-button' to='/login'>Enlogin</NavLink>}
             </div>
         </>
     )

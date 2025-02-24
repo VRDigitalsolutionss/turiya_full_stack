@@ -88,6 +88,7 @@ p.ql-align-center {
 
 .bottom_menu ul {
   display: flex;
+  align-items: center;
   gap: 2rem;
   height: 100%;
 }
@@ -96,6 +97,7 @@ p.ql-align-center {
   display: flex;
   align-items: center;
   height: 100%;
+  margin-bottom: 0;
 }
 
 .top_menu {
@@ -405,7 +407,7 @@ p.ql-align-center {
 }
 
 .banner_bg6 {
-  background-image: url("./assets/banner/bali.jpeg");
+  background-image: url("https://api.turiyayoga.de/uploads/images/modulewebpage/1740141528398-Highcompressed_663773172.jpg");
 }
 
 .banner_bg {

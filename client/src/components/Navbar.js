@@ -415,7 +415,7 @@ const Navbar = () => {
                   <li className="menu-item">
                     <Link to="/contact">
                       <i className="bx bx-envelope" />
-                      KONTAKT
+                      <span className="pt-1">KONTAKT</span>
                     </Link>
                   </li>
                   <li>
@@ -515,7 +515,7 @@ const Navbar = () => {
                                 }}
                                 className="triggerDialogBox"
                                 data-id={9}>
-                                Gehe Sie Zur Kasse
+                                Buchung fortsetzen
                               </button> :
                                 <p>
                                   Bitte melden Sie sich an, um zur Kasse zu gehen.
