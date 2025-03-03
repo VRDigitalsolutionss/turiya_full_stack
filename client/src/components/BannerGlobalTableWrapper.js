@@ -5,7 +5,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { BASE_URL, BASE_URL_IMAGE } from "../config";
 
-const BannerGlobalTableWrapper = () => {
+const BannerGlobalTableWrapper = ({updateCartNumber, setUpdateCartNumber}) => {
   const [data, setData] = useState("");
   const [isloginOpen, setisloginOpen] = useState(true);
   const navigate = useNavigate();
@@ -213,14 +213,11 @@ const BannerGlobalTableWrapper = () => {
       .post(BASE_URL + "/add_course_in_cart", payload)
       .then((response) => {
         console.log("response of cart", response.data.data);
+        setUpdateCartNumber(!updateCartNumber)
         Swal.fire({
-          title: "Danke!",
           text: "Kurs im Warenkorb hinzugefügt!",
           icon: "success"
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
       })
       .catch((error) => {
         console.log("error", error);
