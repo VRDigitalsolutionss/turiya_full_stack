@@ -293,8 +293,8 @@ const BookingDetail = () => {
                               " " +
                               "Plätze frei"}{" "}
                           </li>
-                          {addMeal && <li>Meal : € {selectedMeal?.MealPrice ? selectedMeal?.MealPrice : '00.00'}</li>}
-                          {addRoom && <li>Room : € {selectedRoom?.RoomPrice ? selectedRoom?.RoomPrice : '00.00'}</li>}
+                          {addMeal && <li>Verpflegung : € {selectedMeal?.MealPrice ? selectedMeal?.MealPrice : '00.00'}</li>}
+                          {addRoom && <li>Unterkunftskosten : € {selectedRoom?.RoomPrice ? selectedRoom?.RoomPrice : '00.00'}</li>}
                         </ul>
                       </div>
                       <div className="cart-total">
@@ -508,7 +508,7 @@ const BookingDetail = () => {
                             onChange={handleMealCheckboxChange}
                             className="me-3"
                           />
-                          Add Meal
+                          Add Verpflegung
                         </label>
                       </div>
                       <label>
@@ -518,7 +518,7 @@ const BookingDetail = () => {
                           className="me-3"
                           onChange={handleRoomCheckboxChange}
                         />
-                        Add Room
+                        Add Unterkunftskosten
                       </label>
 
                       {addRoom && <div>
@@ -526,8 +526,8 @@ const BookingDetail = () => {
                         <table class="table table-bordered">
                           <thead class="thead-dark">
                             <tr>
-                              <th>Room Offer</th>
-                              <th>Room Price (in €)</th>
+                              <th>Unterkunftskosten Offer</th>
+                              <th>Unterkunftskosten Price (in €)</th>
                               <th>Select</th>
                             </tr>
                           </thead>
@@ -560,8 +560,8 @@ const BookingDetail = () => {
                         <table class="table table-bordered">
                           <thead class="thead-dark">
                             <tr>
-                              <th>Meal Offer</th>
-                              <th>Meal Price (in €)</th>
+                              <th>Verpflegung Offer</th>
+                              <th>Verpflegung Price (in €)</th>
                               <th>Select</th>
                             </tr>
                           </thead>
