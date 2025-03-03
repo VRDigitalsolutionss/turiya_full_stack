@@ -14,14 +14,17 @@ import CheckWrapper from '../components/CheckWrapper';
 import ParalaxWrapper2 from '../components/ParalaxWrapper2';
 import NewsShelter from '../components/NewsShelter';
 
-const Home = () => {
+const Home = ({updateCartNumber, setUpdateCartNumber}) => {
   return (
       <>
       {/* <Navbar/> */}
        <Banner/>
       <BannerSlowerWrapper />
       <BannerGlobalWrapper />
-      <BannerGlobalTableWrapper />
+      <BannerGlobalTableWrapper 
+        updateCartNumber={updateCartNumber}
+        setUpdateCartNumber={setUpdateCartNumber}
+      />
       <BannerGlobalWrapper5 />
       <Testimonial />
       <ParralaxWrapper />

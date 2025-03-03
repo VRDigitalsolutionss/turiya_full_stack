@@ -345,7 +345,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
               <tr>
                 <td>1</td>
-                <td>${req.body.productDescription}</td>
+                <td>${req.body.productDescription}<br/>${formatDate(req.body.courseData.StartDate) + " - " + formatDate(req.body.courseData.EndDate)} (${req.body.courseData.Location})</td>
                 <td>${req.body.quantity}</td>
                 <td>Stk.</td>
                 <td>${req.body.price}€</td>
@@ -601,7 +601,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
         <tbody>
             <tr>
                 <td>1</td>
-                <td>${req.body.productDescription}</td>
+                <td>${req.body.productDescription}<br/>${formatDate(req.body.courseData.StartDate) + " - " + formatDate(req.body.courseData.EndDate)} (${req.body.courseData.Location})</td>
                 <td>${req.body.quantity}</td>
                 <td>Stk.</td>
                 <td>${req.body.price}€</td>

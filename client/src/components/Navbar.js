@@ -9,7 +9,7 @@ import { BASE_URL, BASE_URL_IMAGE } from "../config";
 import { IoMdArrowBack } from "react-icons/io";
 import './navbar.scss'
 
-const Navbar = () => {
+const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
   const [isActive, setIsActive] = useState(false); // State to manage active class
   const [token, setToken] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,7 +89,7 @@ const Navbar = () => {
 
   useEffect(() => {
     fetchCartData();
-  }, []);
+  }, [updateCartNumber]);
 
   const handleRedirect = () => {
     if (id) {

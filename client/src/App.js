@@ -64,6 +64,8 @@ const Demo = lazy(() => import('./components/demo/Index'));
 function App() {
   const [module_categories_option, setModule_categories_option] = useState("");
 
+  const [updateCartNumber, setUpdateCartNumber] = useState(false);
+
 
 
   const fetchmoduleCategories = () => {
@@ -89,8 +91,14 @@ function App() {
   return (
     <Suspense fallback={<div></div>}>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+        <Route path="/" element={<Layout 
+          updateCartNumber={updateCartNumber}
+          setUpdateCartNumber={setUpdateCartNumber}
+        />}>
+          <Route index element={<Home  
+            updateCartNumber={updateCartNumber}
+            setUpdateCartNumber={setUpdateCartNumber}
+          />} />
           <Route path="unsere-Geschichtetory" element={<OurStory />} />
           <Route path="unsere-Philosophie" element={<Ourphilosophy />} />
           <Route path="kundenstimmen" element={<CustomerTestimonials />} />
