@@ -5,6 +5,7 @@ import { BASE_URL } from "../config";
 
 const ContactPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasShownOnce, setHasShownOnce] = useState(false); // Track if popup has been shown
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -18,32 +19,24 @@ const ContactPopup = () => {
   const [captchaCode, setCaptchaCode] = useState("");
 
   useEffect(() => {
-    // const initialTimer = setTimeout(() => {
-    //   setIsOpen(true);
-    // }, 10000);
+    // Show popup only once after 30 seconds if it hasn't been shown yet
+    if (!hasShownOnce) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setHasShownOnce(true); // Mark as shown
+      }, 30000);
 
-    const interval = setInterval(() => {
-      setIsOpen(true);
-    }, 30000);
-
-    return () => {
-      // clearTimeout(initialTimer);
-      // clearInterval(interval);
-    };
-  }, []);
-
-  const startAutoCloseTimer = () => {
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 60000);
-  };
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [hasShownOnce]);
 
   const generateCaptcha = () => Math.floor(10000 + Math.random() * 90000).toString();
 
   useEffect(() => {
     if (isOpen) {
       setCaptchaCode(generateCaptcha());
-      // startAutoCloseTimer();
     }
   }, [isOpen]);
 
@@ -128,6 +121,7 @@ const ContactPopup = () => {
       padding: '1rem',
       transition: 'all 0.3s ease',
     }}>
+      {/* Rest of the JSX remains the same... */}
       <div style={{
         position: 'relative',
         background: 'white',
