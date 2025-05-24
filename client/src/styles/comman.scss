@@ -1,0 +1,151 @@
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+/* josefin fon-family */
+/* font-family: "Josefin Sans", sans-serif; */
+
+
+
+
+ul {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+li {
+    list-style: none !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+/* h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-bottom: 0 !important;
+} */
+
+:root {
+    --main-color: #9BBB59;
+}
+
+.global_btn {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    padding: 8px 22px;
+    font-size: 0.875rem;
+    line-height: 24px;
+    background-color: #9bbb59;
+    color: #FFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.fade-out {
+    opacity: 0;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+      .video-btn{
+     border-radius: 3px;
+    padding: 7px 17px;
+    background-color: var(--main-color);
+}
+.video-btn button{
+        font-size: 14px;
+    color: #fff !important;
+    line-height: 20px;
+    font-weight: 400;
+    /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);*/
+    text-transform: uppercase;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-family: "Josefin Sans", sans-serif;
+ background-color: var(--main-color);
+ outline: none;
+ border: none;
+}
+
+
+
+  
+
+
+  .swiper-button-next, .swiper-button-prev {
+
+ 
+    padding: 10px; /* Add some padding */
+    border-radius: 2px; /* Make it round */
+    padding: 29px 30px;
+    opacity: 0.8;
+
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-shadow: 0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.1);
+    font-size: 2.125rem;
+    width: 52px;
+    height: 52px;
+    background-color: rgba(0, 0, 0, 0.3);
+    line-height: 3.125rem;
+    transition: color .3s ease-in-out;
+    text-align: center;
+    z-index: 99;
+  }
+  
+ 
+  /* Optional: increase the size of the navigation buttons */
+  .swiper-button-next::after, .swiper-button-prev::after {
+    font-size: 23px !important; 
+    color: white;
+    font-weight: 500;
+    /* Change the arrow size */
+  }
+  
+
+  @media (max-width: 576px) {
+    .swiper-button-next, .swiper-button-prev {
+      padding: 10px; /* Simplify padding */
+      border-radius: 2px;
+      opacity: 0.8;
+      color: rgba(255, 255, 255, 0.8) !important;
+      text-shadow: 0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.1);
+      font-size: 12px !important; /* Smaller font size */
+      width: 42px !important; /* Smaller width */
+      height: 42px !important; /* Smaller height */
+      background-color: rgba(0, 0, 0, 0.3);
+      transition: color 0.3s ease-in-out;
+      z-index: 99;
+    }
+  
+    .swiper-button-next::after, .swiper-button-prev::after {
+      font-size: 20px !important; /* Reduce the arrow size */
+      color: white;
+    }
+  }
+ 
+
+
+// ====================================================================
+

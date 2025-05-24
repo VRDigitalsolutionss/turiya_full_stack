@@ -1,0 +1,333 @@
+#yoga_teacher{
+    h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-bottom: 0 !important;
+}
+
+.yoga_gallery {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.yoga_gallery img {
+    width: 420px;
+    height: 400px;
+    object-fit: cover;
+}
+
+.yoga-retreat-img p {
+    font-size: 15px;
+    color: #212529;
+    line-height: 1.8;
+    margin: 1rem 0 !important;
+}
+
+.yoga-retreat-img img {
+    width: 100%;
+}
+
+.yoga-parra p,
+.yoga-list p {
+    font-size: 15px;
+    color: #212529;
+    margin: 1rem 0 !important;
+    line-height: 1.8;
+}
+
+.yoga-list-img {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.yoga-list-img a {
+    font-size: 14px;
+    color: #e07542;
+    margin-bottom: 1rem;
+}
+
+.kurse_link {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.kurse_link a:hover {
+    background-color: var(--main-color);
+    color: #fff;
+    transition: .3s ease-in;
+}
+
+.kurse_link a {
+    transition: .3s ease-in;
+    padding: 8px 22px;
+    text-decoration: none !important;
+    color: #9bbb59;
+    border-color: #9bbb59;
+    height: inherit;
+    font-size: 15px;
+    margin-bottom: 1rem;
+    border: 2px solid var(--main-color);
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.kommende_table__two {
+    margin-top: 3rem;
+}
+
+.kommende_table__two h3,
+.kommende_table__three h3,
+.kommende_table__heading index-table h3 {
+    color: #9a9a9a;
+    font-family: "tubitha";
+    font-size: 32px;
+    margin-bottom: 1.2rem !important;
+}
+
+.kommende_table__three {
+    margin-top: 6rem;
+}
+
+/* yogalehrer-grid */
+
+.yogalehrer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.sampurna_wrapper {
+    padding-bottom: 80px;
+}
+
+.sampurna_wrapper__content p a {
+    color: #e07542;
+    font-weight: 500;
+}
+
+.sampurna_wrapper__content p,
+.sampurna_wrapper__content h6 {
+    margin: 1rem 0 !important;
+    font-size: 14px;
+    color: #212529;
+    line-height: 1.8;
+}
+
+.sampurna_wrapper__content h4 {
+    color: #9a9a9a;
+    font-family: "tubitha";
+    margin: 1rem 0 !important;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.sampurna_wrapper__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.sampurna_wrapper__grid-box {
+    overflow: hidden;
+}
+
+.sampurna_wrapper__grid-box img {
+    width: 100%;
+    height: 450px;
+    transition: .83s ease-in;
+    object-fit: cover;
+}
+
+.sampurna_wrapper__grid-box:hover img {
+    opacity: .8;
+    transition: .83s ease-in;
+    transform: scale(1.1);
+}
+
+.video-pop-pup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .3s ease-in;
+    max-width: max-content;
+    margin: 0 auto;
+}
+
+.video-pop-pup:hover img {
+    opacity: .87;
+    transition: .3s ease-in;
+}
+
+.video-pop-pup img {
+    height: 25rem;
+    object-fit: cover;
+}
+
+.sampurna_table {
+    background-color: #F9F9F9;
+}
+
+.malcora--grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.malcora_box {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.malcora--grid-content {
+    position: absolute;
+    left: 0;
+    bottom: -40%;
+    padding: 10px;
+    background-color: var(--main-color);
+    width: 100%;
+    transition: .3s ease-in;
+}
+
+.malcora_box:hover img {
+    opacity: .8;
+    transition: .3 ease-in;
+}
+
+.malcora_box:hover .malcora--grid-content {
+    bottom: 0;
+    transition: .3s ease-in;
+}
+
+.malcora--grid-content h3 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.sampurna_wrapper__content .yoga-retreat-img {
+    margin-top: 2rem;
+}
+
+.familien {
+    margin-top: 30px !important;
+}
+
+.right--img img {
+    width: 100%;
+}
+
+.vertical-img img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.my--table th {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.my--table td {
+    font-size: 14px;
+}
+
+.yoga_center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem !important;
+}
+
+.yoga_center h3,
+.yoga_center h5 {
+    color: #212529;
+    line-height: 1.8;
+    font-size: 15px !important;
+    margin: 6px 0 !important;
+}
+
+@media(max-width:992px) {
+    /* update css 992px responsive */
+    .yogalehrer-grid {
+        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .malcora--grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .yoga_gallery img {
+        height: 250px;
+    }
+}
+
+@media(max-width:768px) {
+    /* update css 768px responsive */
+    .yogalehrer-grid {
+        gap: 1rem;
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .kommende_table__three {
+        margin-top: 0;
+    }
+    .kommende_table__two h3,
+    .kommende_table__three h3,
+    .kommende_table__heading index-table h3 {
+        font-size: 22px;
+    }
+    .yoga-parra p,
+    .yoga-list p {
+        margin: 10px 0 !important;
+    }
+    .sampurna_wrapper__content p,
+    .sampurna_wrapper__content h6 {
+        margin: 6px 0 !important;
+    }
+    .sampurna_wrapper__grid-box img {
+        height: 250px;
+    }
+    .youtube_video .modal-dialog {
+        max-width: 100% !important;
+    }
+    .kurse_link a {
+        margin-bottom: 10px;
+    }
+    .kurse_link {
+        gap: 10px;
+    }
+    .about_wrapper__left h6 {
+        margin: 10px 0 !important;
+        font-size: 15px;
+    }
+}
+
+@media(max-width:576px) {
+    .yoga_gallery {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .yoga_gallery img {
+        width: 100%;
+    }
+    .malcora--grid,
+    .sampurna_wrapper__grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+}

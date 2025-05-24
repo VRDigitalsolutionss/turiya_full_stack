@@ -1,0 +1,31 @@
+/*!
+ * 
+ * Smarketer FAST.js Library
+ * 
+ * @copyright 2021 Smarketer GmbH (https://www.smarketer.de/)
+ * @author Smarketer GmbH (Bennett Hollstein)
+ * @license Proprietary, All Rights reserved
+ * 
+ * This software contains code from open-source projects:
+ * - core-js (https://github.com/zloirock/core-js) licensed under the MIT License
+ * - crypto-js (https://github.com/brix/crypto-js) licensed under the MIT License
+ * - fingerprintjs2 (https://github.com/fingerprintjs/fingerprintjs) licensed under the MIT License
+ * - imurmurhash (https://github.com/jensyt/imurmurhash-js) licensed under the MIT License
+ * - ua-parser-js (https://github.com/faisalman/ua-parser-js) licensed under the MIT License
+ * - notyf (https://github.com/caroso1222/notyf) licensed under the MIT License
+ * - webpack (https://github.com/webpack/webpack) licensed under the MIT License
+ * - regenerator-runtime (https://www.npmjs.com/package/regenerator-runtime) licensed under the MIT License
+ * 
+ * A copy of the MIT license can be found at https://opensource.org/licenses/MIT.
+ * A copy of the ISC license can be found at https://opensource.org/licenses/ISC.
+ * 
+ */!function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=166)}({0:function(t,e,n){"use strict";n.d(e,"a",(function(){return a}));var r=n(2),o=function(t,e,n){if(n||2===arguments.length)for(var r,o=0,i=e.length;o<i;o++)!r&&o in e||(r||(r=Array.prototype.slice.call(e,0,o)),r[o]=e[o]);return t.concat(r||Array.prototype.slice.call(e))},i={Lib:"#C32927",Loader:"#3498db","Browser ID":"#1abc9c",Shimmer:"#831abc",Sandbox:"#b6c71a","Conversion Layer Shim":"#c71a85"};function a(t){for(var e=[],n=1;n<arguments.length;n++)e[n-1]=arguments[n];if("true"==localStorage.debug_fast||!0===Object(r.a)("debug")){var a=i.Lib;for(var c in i)t.includes(c)&&(a=i[c]);var u=["%c".concat(t)];window.__FAST_IS_SANDBOX__&&(u[0]="%c🗔 Sandbox"+u[0],u.push("background: #212121; color: white; padding: 2px 3px; border-radius: 2px; font-size: 0.8em;margin-right: 5px;")),u.push("background: ".concat(a,"; color: white; padding: 2px 3px; border-radius: 2px; font-size: 0.8em;")),console.log.apply(console,o(o([],u,!0),e,!0))}var d=Object(r.a)("debugOutput");if(d){for(var f="",s=0,l=e;s<l.length;s++){var p=l[s];f+="string"==typeof p?p+" ":JSON.stringify(p,null,2)+" "}d.innerText+=f+"\n"}}},16:function(t,e,n){"use strict";var r,o;n.d(e,"a",(function(){return o})),r=window.document.documentMode?document.querySelector('script[src$="/fast.js"]'):document.currentScript,o=r&&r.src?r.src.replace("fast.js","").replace("out.js","").replace("lib.js",""):"https://fast.smarketer.de/api/js/",n.p=o},166:function(t,e,n){"use strict";n.r(e);var r=n(0);var o,i=n(16);
+/**
+ * FAST Loader
+ *
+ * Dynamisches Laden der FAST Bibliothek in verschiedenen Umgebungen
+ *
+ * @copyright 2021 Smarketer GmbH
+ * @author Smarketer GmbH
+ * @license Proprietary
+ */n.p=i.a,Object(r.a)("FAST Loader ⚓","Lade FAST über besten Loader"),o=function(){var t,e;window.fast_config=window.fast_config||{},Object(r.a)("FAST Loader ⚓","Nutzer direkten Loader"),window.fast_config.loader="direct",t=i.a,(e=document.createElement("script")).setAttribute("src",t+"lib.js"),e.defer=!0,e.async=!0,document.body.appendChild(e)},"complete"===document.readyState||"interactive"===document.readyState?setTimeout(o,1):document.addEventListener("DOMContentLoaded",o)},2:function(t,e,n){"use strict";n.d(e,"b",(function(){return i}));var r=n(0),o=function(){return(o=Object.assign||function(t){for(var e,n=1,r=arguments.length;n<r;n++)for(var o in e=arguments[n])Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o]);return t}).apply(this,arguments)},i=function(){Object(r.a)("FAST Config ⚙","Initializing config - current:",window.fast_config),window.fast_config=o({domainAlias:window.location.host},window.fast_config)};e.a=function(t,e){return void 0===e&&(e=void 0),void 0!==e&&(window.fast_config=window.fast_config||{},window.fast_config[t]=e),window.fast_config&&window.fast_config[t]}}});

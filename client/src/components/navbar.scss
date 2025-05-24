@@ -1,0 +1,48 @@
+// .mobile_menu {
+//     display: block; /* default state */
+//   }
+  
+//   .drop-menu .drop-menu-list {
+//     display: none; /* hidden by default */
+//   }
+  
+//   .drop-menu .drop-menu-list.show {
+//     display: block; /* visible when active */
+//   }
+  
+//   .mega_dropdown__list {
+//     display: none; /* hidden by default */
+//   }
+  
+//   .mega_dropdown__list.show {
+//     display: block; /* visible when active */
+//   }
+
+  .cancel-mega-menu  {
+    font-size: 16px;
+    color:#9BBB59;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cart_mobile_view{
+  padding: 0;
+    color: #88929e;
+    display: flex
+;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+}
+
+.empty_text{
+
+  font-family: "tabitha";
+}
+
+  @media (min-width: 640px) {
+    iframe {
+      height: 500px !important;
+    }
+  }

@@ -1,0 +1,84 @@
+/* CustomModal.css */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .custom-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .custom-modal-close:hover {
+    color: #e74c3c;
+  }
+  
+  .custom-modal-input {
+    margin-bottom: 15px;
+  }
+  
+  .custom-modal-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .custom-modal-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .custom-modal-btn:hover {
+    background-color: #2980b9;
+  }
+
+
+
+//   @media (max-width: 576px) {
+
+
+
+
+//   .account_text{
+//     color: #444;
+//     font-size: 21px;
+//     font-weight: 600;
+//   }
+// }
+
+
+@media (max-width: 576px) {
+  .account_text {
+    color: #444;
+    font-size: 15px; /* Adjusted font size for smaller screens */
+    font-weight: 600;
+  }
+}
