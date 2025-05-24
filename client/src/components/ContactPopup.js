@@ -18,17 +18,17 @@ const ContactPopup = () => {
   const [captchaCode, setCaptchaCode] = useState("");
 
   useEffect(() => {
-    const initialTimer = setTimeout(() => {
-      setIsOpen(true);
-    }, 10000);
+    // const initialTimer = setTimeout(() => {
+    //   setIsOpen(true);
+    // }, 10000);
 
     const interval = setInterval(() => {
       setIsOpen(true);
-    }, 10000);
+    }, 30000);
 
     return () => {
-      clearTimeout(initialTimer);
-      clearInterval(interval);
+      // clearTimeout(initialTimer);
+      // clearInterval(interval);
     };
   }, []);
 
@@ -43,7 +43,7 @@ const ContactPopup = () => {
   useEffect(() => {
     if (isOpen) {
       setCaptchaCode(generateCaptcha());
-      startAutoCloseTimer();
+      // startAutoCloseTimer();
     }
   }, [isOpen]);
 

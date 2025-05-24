@@ -620,7 +620,12 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
           )}
 
           <div class="hide_top_menu">
-            <a href="tel:+49(0)69-20134987"><i class='bx bxs-mobile'></i>+49(0)69-20134987</a>
+            {/* <a href="tel:+49(0)69-20134987"><i class='bx bxs-mobile'></i>+49(0)69-20134987</a> */}
+              <Link href="#" onClick={() => setIsPopupOpen(true)}>
+                <span className="flex items-center gap-2 cursor-pointer">
+                  <i className="bx bxs-mobile" /> Book Appointment
+                </span>
+              </Link>
             <a href="mailto:info@turiyayoga.de"><i class='bx bxs-envelope'></i> info@turiyayoga.de</a>
             <a href="javascript:void(0)" class="cart-menu" onClick={handleSidBar}>
               <i class='bx bx-shopping-bag'></i><span className="me-1">
