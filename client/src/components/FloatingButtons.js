@@ -99,7 +99,7 @@ const FloatingButtons = () => {
       {/* Floating Buttons */}
       <div style={floatingContainerStyle}>
         {/* Phone Button */}
-        <div style={{ width: 'fit-content', marginLeft: 'auto' }}>
+        {/* <div style={{ width: 'fit-content', marginLeft: 'auto' }}>
           <a
             href="tel:+49(0)69-20134987"
             style={{ ...buttonStyle }}
@@ -119,7 +119,7 @@ const FloatingButtons = () => {
             </div>
             <span style={labelStyle}>+49(0)69-20134987</span>
           </a>
-        </div>
+        </div> */}
 
         {/* Appointment Button */}
         <div style={{ width: 'fit-content', marginLeft: 'auto' }}>
@@ -154,7 +154,7 @@ const FloatingButtons = () => {
             </button>
             <div style={styles.iframeWrapper}>
               <iframe
-                src="https://calendly.com/codestrukdeveloper/30min" // <-- replace with your link
+                src="https://calendly.com/turiyayoga-info" // <-- replace with your link
                 frameBorder="0"
                 allowFullScreen
                 style={styles.iframe}
