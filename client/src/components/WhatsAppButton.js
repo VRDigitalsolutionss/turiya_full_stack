@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 
-function WhatsAppButton({ phoneNumber = "+49(0)69-20134987", defaultMessage = "Hello!" }) {
+function WhatsAppButton({ phoneNumber, defaultMessage = "Hello!" }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ function WhatsAppButton({ phoneNumber = "+49(0)69-20134987", defaultMessage = "H
           marginRight: '8px',
           transition: 'all 0.3s ease'
         }} />
-        Join
+        Chat
       </a>
     </div>
   );

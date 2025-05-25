@@ -154,7 +154,7 @@ const FloatingButtons = () => {
             </button>
             <div style={styles.iframeWrapper}>
               <iframe
-                src="https://calendly.com/turiyayoga-info" // <-- replace with your link
+                src="https://calendly.com/turiyayoga-info/30min" // <-- replace with your link
                 frameBorder="0"
                 allowFullScreen
                 style={styles.iframe}

@@ -362,8 +362,8 @@ const BannerGlobalWrapper5 = () => {
   useEffect(() => {
     fetchVideoTestimonials();
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleResize = () => {
@@ -404,7 +404,9 @@ const BannerGlobalWrapper5 = () => {
   useEffect(() => {
     if (videos.length > 0) {
       const interval = setInterval(() => {
-        const maxSlides = isMobile ? videos.length : Math.ceil(videos.length / 2);
+        const maxSlides = isMobile
+          ? videos.length
+          : Math.ceil(videos.length / 2);
         setCurrentSlide((prev) => (prev + 1) % maxSlides);
       }, 5000);
       return () => clearInterval(interval);
@@ -449,7 +451,7 @@ const BannerGlobalWrapper5 = () => {
                 data-aos="fade-up"
                 data-aos-delay={100}
                 style={{
-                  marginBottom: window.innerWidth < 992 ? "30px" : "0"
+                  marginBottom: window.innerWidth < 992 ? "30px" : "0",
                 }}
               >
                 <h3>AUSBILDUNG AUF HÖCHSTEM NIVEAU</h3>
@@ -470,14 +472,18 @@ const BannerGlobalWrapper5 = () => {
                   position: "relative",
                   width: "100%",
                   overflow: "hidden",
-                  borderRadius: "8px"
+                  borderRadius: "8px",
+                  minHeight: isMobile ? "auto" : "450px", // Increased minimum height for desktop
                 }}
               >
                 <div
                   style={{
                     display: "flex",
                     transition: "transform 0.5s ease",
-                    transform: `translateX(-${currentSlide * getSlideWidth()}%)`,
+                    transform: `translateX(-${
+                      currentSlide * getSlideWidth()
+                    }%)`,
+                    height: "100%",
                   }}
                 >
                   {videos.map((video, index) => {
@@ -489,27 +495,28 @@ const BannerGlobalWrapper5 = () => {
                           minWidth: isMobile ? "100%" : "50%",
                           padding: "0 8px",
                           flexShrink: 0,
+                          height: "100%",
                         }}
                         data-aos="fade-up"
                         data-aos-delay={200 + index * 100}
                       >
                         <div
                           style={{
-                            height: "100%",
+                            height: isMobile ? "auto" : "380px", // Fixed height for desktop videos
                             display: "flex",
                             flexDirection: "column",
                             borderRadius: "8px",
                             overflow: "hidden",
                             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                            backgroundColor: "#fff"
+                            backgroundColor: "#fff",
                           }}
                         >
                           <div
                             style={{
                               position: "relative",
-                              paddingBottom: "56.25%", // 16:9 aspect ratio
-                              height: "0",
-                              overflow: "hidden"
+                              paddingBottom: isMobile ? "56.25%" : "0", // Only use aspect ratio on mobile
+                              height: isMobile ? "0" : "300px", // Increased from 250px to 300px
+                              overflow: "hidden",
                             }}
                           >
                             <img
@@ -517,7 +524,7 @@ const BannerGlobalWrapper5 = () => {
                               className="img-fluid"
                               alt={`Video testimonial ${index}`}
                               style={{
-                                position: "absolute",
+                                position: isMobile ? "absolute" : "static",
                                 top: "0",
                                 left: "0",
                                 width: "100%",
@@ -533,13 +540,10 @@ const BannerGlobalWrapper5 = () => {
                                 left: "50%",
                                 transform: "translate(-50%, -50%)",
                                 cursor: "pointer",
-                                transition: "transform 0.3s ease"
                               }}
                               onClick={() => setVideoId(video.youtubeLink)}
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModalTestimonials"
-                              onMouseOver={(e) => e.target.style.transform = "translate(-50%, -50%) scale(1.1)"}
-                              onMouseOut={(e) => e.target.style.transform = "translate(-50%, -50%) scale(1)"}
                             >
                               <i
                                 className="bx bx-play"
@@ -549,12 +553,21 @@ const BannerGlobalWrapper5 = () => {
                                   background: "rgba(0,0,0,0.7)",
                                   borderRadius: "50%",
                                   padding: isMobile ? "8px" : "12px",
-                                  transition: "all 0.3s ease",
+                                  transition:
+                                    "background-color 0.3s ease, opacity 0.3s ease",
                                   display: "flex",
                                   alignItems: "center",
                                   justifyContent: "center",
                                   width: isMobile ? "56px" : "74px",
-                                  height: isMobile ? "56px" : "74px"
+                                  height: isMobile ? "56px" : "74px",
+                                }}
+                                onMouseOver={(e) => {
+                                  e.target.style.background = "rgba(0,0,0,0.9)";
+                                  e.target.style.opacity = "0.9";
+                                }}
+                                onMouseOut={(e) => {
+                                  e.target.style.background = "rgba(0,0,0,0.7)";
+                                  e.target.style.opacity = "1";
                                 }}
                               />
                             </div>
@@ -565,25 +578,31 @@ const BannerGlobalWrapper5 = () => {
                               background: "#fff",
                               padding: isMobile ? "15px" : "20px",
                               color: "#000",
+                              display: "flex",
+                              flexDirection: "column",
                             }}
                           >
-                            <p style={{
-                              fontSize: isMobile ? "14px" : "16px",
-                              lineHeight: "1.5",
-                              marginBottom: "10px",
-                              display: "-webkit-box",
-                              WebkitLineClamp: "3",
-                              WebkitBoxOrient: "vertical",
-                              overflow: "hidden"
-                            }}>
+                            <p
+                              style={{
+                                fontSize: isMobile ? "14px" : "16px",
+                                lineHeight: "1.5",
+                                marginBottom: "10px",
+                                display: "-webkit-box",
+                                WebkitLineClamp: isMobile ? "3" : "4",
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                              }}
+                            >
                               {video.feedbackContent}
                             </p>
-                            <h6 style={{
-                              fontSize: isMobile ? "14px" : "16px",
-                              fontWeight: "600",
-                              margin: "0",
-                              color: "#333"
-                            }}>
+                            <h6
+                              style={{
+                                fontSize: isMobile ? "14px" : "16px",
+                                fontWeight: "600",
+                                margin: "0",
+                                color: "#333",
+                              }}
+                            >
                               {video.name}
                             </h6>
                           </div>
@@ -612,10 +631,14 @@ const BannerGlobalWrapper5 = () => {
                     justifyContent: "center",
                     cursor: "pointer",
                     zIndex: 10,
-                    transition: "all 0.3s ease"
+                    transition: "background-color 0.3s ease",
                   }}
-                  onMouseOver={(e) => e.target.style.background = "rgba(0,0,0,0.8)"}
-                  onMouseOut={(e) => e.target.style.background = "rgba(0,0,0,0.6)"}
+                  onMouseOver={(e) =>
+                    (e.target.style.background = "rgba(0,0,0,0.8)")
+                  }
+                  onMouseOut={(e) =>
+                    (e.target.style.background = "rgba(0,0,0,0.6)")
+                  }
                 >
                   <i
                     className="bx bx-chevron-left"
@@ -640,10 +663,14 @@ const BannerGlobalWrapper5 = () => {
                     justifyContent: "center",
                     cursor: "pointer",
                     zIndex: 10,
-                    transition: "all 0.3s ease"
+                    transition: "background-color 0.3s ease",
                   }}
-                  onMouseOver={(e) => e.target.style.background = "rgba(0,0,0,0.8)"}
-                  onMouseOut={(e) => e.target.style.background = "rgba(0,0,0,0.6)"}
+                  onMouseOver={(e) =>
+                    (e.target.style.background = "rgba(0,0,0,0.8)")
+                  }
+                  onMouseOut={(e) =>
+                    (e.target.style.background = "rgba(0,0,0,0.6)")
+                  }
                 >
                   <i
                     className="bx bx-chevron-right"
@@ -657,7 +684,7 @@ const BannerGlobalWrapper5 = () => {
                     display: "flex",
                     justifyContent: "center",
                     marginTop: "20px",
-                    gap: "8px"
+                    gap: "8px",
                   }}
                 >
                   {Array.from({ length: getMaxSlides() }).map((_, index) => (
@@ -671,8 +698,7 @@ const BannerGlobalWrapper5 = () => {
                         background: index === currentSlide ? "#333" : "#ccc",
                         border: "none",
                         cursor: "pointer",
-                        transition: "all 0.3s ease",
-                        transform: index === currentSlide ? "scale(1.2)" : "scale(1)",
+                        transition: "background-color 0.3s ease",
                       }}
                     />
                   ))}
@@ -690,18 +716,27 @@ const BannerGlobalWrapper5 = () => {
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
-              <div className="modal-dialog modal-lg" style={{
-                maxWidth: isMobile ? "95%" : "800px",
-                margin: "1.75rem auto"
-              }}>
-                <div className="modal-content" style={{
-                  border: "none",
-                  borderRadius: "8px"
-                }}>
-                  <div className="modal-header" style={{
-                    borderBottom: "none",
-                    paddingBottom: "0"
-                  }}>
+              <div
+                className="modal-dialog modal-lg"
+                style={{
+                  maxWidth: isMobile ? "95%" : "800px",
+                  margin: "1.75rem auto",
+                }}
+              >
+                <div
+                  className="modal-content"
+                  style={{
+                    border: "none",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div
+                    className="modal-header"
+                    style={{
+                      borderBottom: "none",
+                      paddingBottom: "0",
+                    }}
+                  >
                     <button
                       type="button"
                       className="btn-close"
@@ -709,15 +744,20 @@ const BannerGlobalWrapper5 = () => {
                       aria-label="Close"
                     />
                   </div>
-                  <div className="modal-body" style={{
-                    padding: isMobile ? "0 15px 15px" : "0 20px 20px"
-                  }}>
-                    <div style={{
-                      position: "relative",
-                      paddingBottom: "56.25%",
-                      height: "0",
-                      overflow: "hidden"
-                    }}>
+                  <div
+                    className="modal-body"
+                    style={{
+                      padding: isMobile ? "0 15px 15px" : "0 20px 20px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: "relative",
+                        paddingBottom: "56.25%",
+                        height: "0",
+                        overflow: "hidden",
+                      }}
+                    >
                       <iframe
                         id="youtube-video"
                         style={{
@@ -725,7 +765,7 @@ const BannerGlobalWrapper5 = () => {
                           top: "0",
                           left: "0",
                           width: "100%",
-                          height: "100%"
+                          height: "100%",
                         }}
                         src={videoId}
                         title="YouTube video player"
