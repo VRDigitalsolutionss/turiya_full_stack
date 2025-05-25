@@ -473,7 +473,8 @@ const BannerGlobalWrapper5 = () => {
                   width: "100%",
                   overflow: "hidden",
                   borderRadius: "8px",
-                  minHeight: isMobile ? "auto" : "450px", // Increased minimum height for desktop
+                  minHeight: isMobile ? "auto" : "450px",
+                  padding: isMobile ? "0 15px" : "0", // Added horizontal padding for mobile
                 }}
               >
                 <div
@@ -502,7 +503,7 @@ const BannerGlobalWrapper5 = () => {
                       >
                         <div
                           style={{
-                            height: isMobile ? "auto" : "380px", // Fixed height for desktop videos
+                            height: isMobile ? "auto" : "400px", // Fixed height for desktop videos
                             display: "flex",
                             flexDirection: "column",
                             borderRadius: "8px",
@@ -515,7 +516,7 @@ const BannerGlobalWrapper5 = () => {
                             style={{
                               position: "relative",
                               paddingBottom: isMobile ? "56.25%" : "0", // Only use aspect ratio on mobile
-                              height: isMobile ? "0" : "300px", // Increased from 250px to 300px
+                              height: isMobile ? "0" : "320px", // Increased from 250px to 300px
                               overflow: "hidden",
                             }}
                           >
@@ -720,13 +721,14 @@ const BannerGlobalWrapper5 = () => {
                 className="modal-dialog modal-lg"
                 style={{
                   maxWidth: isMobile ? "95%" : "800px",
-                  margin: "1.75rem auto",
+                  margin: isMobile ? "1.75rem 15px" : "1.75rem auto", // Added horizontal margin for mobile
                 }}
               >
                 <div
                   className="modal-content"
                   style={{
                     border: "none",
+                    height: isMobile ? "300px" : "560px",
                     borderRadius: "8px",
                   }}
                 >
@@ -744,12 +746,7 @@ const BannerGlobalWrapper5 = () => {
                       aria-label="Close"
                     />
                   </div>
-                  <div
-                    className="modal-body"
-                    style={{
-                      padding: isMobile ? "0 15px 15px" : "0 20px 20px",
-                    }}
-                  >
+                  <div className="modal-body">
                     <div
                       style={{
                         position: "relative",

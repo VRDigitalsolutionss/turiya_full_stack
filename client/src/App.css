@@ -1162,7 +1162,7 @@ p.ql-align-center {
 
 .fifth_section__left h1 {
   font-family: "tabitha" ;
-  font-size: 5.5em;
+  font-size: 4rem;
   line-height: 1em;
   color: #9a9a9a;
   font-weight: 600;
@@ -1938,9 +1938,9 @@ p.ql-align-center {
     height: 700px !important;
   }
 
-  .fifth_section__left h1 {
-    font-size: 42px;
-  }
+  /* .fifth_section__left h1 {
+    font-size: 20px;
+  } */
 
   .fifth_section__bg-content p,
   .fifth_section__bg-content h6 {
