@@ -708,7 +708,7 @@ const BannerGlobalWrapper5 = () => {
             </div>
           </div>
 
-          {/* Modal for video playback */}
+          {/* Modal for video playback  */}
           <div className="youtube_video">
             <div
               className="modal fade"
