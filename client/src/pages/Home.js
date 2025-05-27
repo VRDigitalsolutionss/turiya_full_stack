@@ -13,7 +13,6 @@ import Contact from '../components/Contact';
 import CheckWrapper from '../components/CheckWrapper';
 import ParalaxWrapper2 from '../components/ParalaxWrapper2';
 import NewsShelter from '../components/NewsShelter';
-import FloatingButtons from '../components/FloatingButtons';
 import ContactPopup from '../components/ContactPopup';
 
 const Home = ({updateCartNumber, setUpdateCartNumber}) => {

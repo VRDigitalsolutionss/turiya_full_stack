@@ -20,8 +20,8 @@ const Footer = () => {
                     </Link>
                   </div>
                   <div className="connect">
-                    <Link to="tel:+ 49 (0)69 - 20134987">
-                      <i className="bx bxs-mobile" /> + 49 (0)69 - 20134987
+                    <Link to="tel:+919005505033">
+                      <i className="bx bxs-mobile" /> +91 90055 05033
                     </Link>
                     <Link to="mailto:INFO@TURIYAYOGA.DE">
                       <i className="bx bxs-envelope" />
