@@ -390,15 +390,33 @@ const BannerGlobalWrapper5 = () => {
     return match ? match[1] : null;
   };
 
-  useEffect(() => {
-    const modal = document.getElementById("exampleModalTestimonials");
-    if (modal) {
-      const handleModalClose = () => setVideoId(null);
-      modal.addEventListener("hidden.bs.modal", handleModalClose);
-      return () =>
-        modal.removeEventListener("hidden.bs.modal", handleModalClose);
-    }
-  }, []);
+useEffect(() => {
+  const modal = document.getElementById("exampleModalTestimonials");
+  if (modal) {
+    const handleModalClose = () => {
+      // Clear the video source to stop playback
+      setVideoId("");
+      // Also clear the iframe src directly as backup
+      const iframe = document.getElementById("youtube-video");
+      if (iframe) {
+        iframe.src = "";
+      }
+    };
+    
+    // Handle both close button click and backdrop click
+    const handleModalHide = () => {
+      handleModalClose();
+    };
+    
+    modal.addEventListener("hidden.bs.modal", handleModalHide);
+    modal.addEventListener("hide.bs.modal", handleModalClose);
+    
+    return () => {
+      modal.removeEventListener("hidden.bs.modal", handleModalHide);
+      modal.removeEventListener("hide.bs.modal", handleModalClose);
+    };
+  }
+}, []);
 
   // Auto-advance slides
   useEffect(() => {
@@ -710,13 +728,16 @@ const BannerGlobalWrapper5 = () => {
 
           {/* Modal for video playback  */}
           <div className="youtube_video">
-            <div
-              className="modal fade"
-              id="exampleModalTestimonials"
-              tabIndex={-1}
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
+           <div
+  className="modal fade"
+  id="exampleModalTestimonials"
+  tabIndex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+
               <div
                 className="modal-dialog modal-lg"
                 style={{
@@ -739,12 +760,19 @@ const BannerGlobalWrapper5 = () => {
                       paddingBottom: "0",
                     }}
                   >
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    />
+                   <button
+  type="button"
+  className="btn-close"
+  data-bs-dismiss="modal"
+  aria-label="Close"
+  onClick={() => {
+    setVideoId("");
+    const iframe = document.getElementById("youtube-video");
+    if (iframe) {
+      iframe.src = "";
+    }
+  }}
+/>
                   </div>
                   <div className="modal-body">
                     <div
@@ -755,21 +783,21 @@ const BannerGlobalWrapper5 = () => {
                         overflow: "hidden",
                       }}
                     >
-                      <iframe
-                        id="youtube-video"
-                        style={{
-                          position: "absolute",
-                          top: "0",
-                          left: "0",
-                          width: "100%",
-                          height: "100%",
-                        }}
-                        src={videoId}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                      />
+                    <iframe
+  id="youtube-video"
+  style={{
+    position: "absolute",
+    top: "0",
+    left: "0",
+    width: "100%",
+    height: "100%",
+  }}
+  src={videoId || ""}
+  title="YouTube video player"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerPolicy="strict-origin-when-cross-origin"
+  allowFullScreen
+/>
                     </div>
                   </div>
                 </div>

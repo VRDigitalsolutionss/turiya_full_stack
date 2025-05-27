@@ -166,7 +166,7 @@ const ContactPopup = () => {
           </h3>
           <div style={{
             height: '3px',
-            background: 'linear-gradient(to right, #3498db, #2ecc71)',
+            background: '#9BBB59',
             width: '50px',
             margin: '0 auto',
             borderRadius: '3px',
@@ -420,7 +420,7 @@ const ContactPopup = () => {
             style={{
               width: '100%',
               padding: '0.6rem',
-              background: 'linear-gradient(to right, #3498db, #2ecc71)',
+              background: '#9BBB59',
               color: 'white',
               border: 'none',
               borderRadius: '6px',

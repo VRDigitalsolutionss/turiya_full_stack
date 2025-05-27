@@ -14,9 +14,9 @@ root.render(
     <BrowserRouter>
       <App />
        <FloatingButtons />
-        <WhatsAppButton
+        {/* <WhatsAppButton
           phoneNumber="+919005505033"
-      />
+      /> */}
     </BrowserRouter>
     {/* <CookieConsent
       location="bottom"
