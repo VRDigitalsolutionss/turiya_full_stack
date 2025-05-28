@@ -756,17 +756,17 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                           Einzelmodule    <i className="bx bx-chevron-right" />
                         </Link>
                       </li>
-                      <li className="my-3">
+                      {/* <li className="my-3">
                         <Link to="/yin-yoga " style={{ fontSize: "12px" }}>60H Yin Yoga</Link>
                       </li>
                       <li className="my-3">
                         <Link to="/senioren-yoga" style={{ fontSize: "12px" }}>60H Senioren Yoga</Link>
-                      </li>
-                      <li className="my-2">
+                      </li> */}
+                      {/* <li className="my-2">
                         <Link to="/hybride_yogalehrer_ausbildung" style={{ fontSize: "12px" }}>
                           Hybride Wochenend Yogalehrer Ausbildung
                         </Link>
-                      </li>
+                      </li> */}
                     </div>
                   </li>
 
