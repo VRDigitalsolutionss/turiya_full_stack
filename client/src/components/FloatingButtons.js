@@ -56,15 +56,17 @@ const FloatingButtons = () => {
     },
   };
 
-  const floatingContainerStyle = {
+const floatingContainerStyle = {
     position: 'fixed',
-    right: 0,
-    top: '33%',
+    left: '50%',
+    right: '0px',
+    top: '50%',
+    // transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
     zIndex: 1000,
-  };
+};
 
   const buttonStyle = {
     display: 'flex',
