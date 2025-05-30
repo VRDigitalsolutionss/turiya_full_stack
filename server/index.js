@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+
+
 const cors = require("cors");
 const authRoute = require("./src/routes/authRoute");
 const testimonialRoute = require("./src/routes/testimonialRoute");
@@ -47,7 +49,15 @@ const transactionDetailRoute = require("./src/routes/transactionDetail");
 const imageUploadRoute = require("./src/routes/imageUploadRoutes");
 const adminLoginRoute = require("./src/routes/adminLogin");
 // const test = require('./uploads')
-app.use(cors());
+
+const corsSites=["www.turiyayoga.de","https://turiyayoga.de","turiyayoga.de","https://admin.turiyayoga.de", "www.admin.turiyayoga.de", "admin.turiyayoga.de"]
+app.use(cors({
+	origin:corsSites,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  
+}
+));
+
 app.use(express.json({limit: '10mb'}));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
