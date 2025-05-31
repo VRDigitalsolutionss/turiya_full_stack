@@ -40,7 +40,7 @@ const registerController = (req, res) => {
           });
       } else {
         res.status(401).json({
-          message: "Allready registered",
+          message: "Already registered",
         });
       }
     })

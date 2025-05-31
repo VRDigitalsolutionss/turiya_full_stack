@@ -58,10 +58,8 @@ const FloatingButtons = () => {
 
 const floatingContainerStyle = {
     position: 'fixed',
-    left: '50%',
     right: '0px',
     top: '50%',
-    // transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
@@ -129,7 +127,7 @@ const floatingContainerStyle = {
             onClick={() => setIsPopupOpen(true)}
             style={{ ...buttonStyle }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.width = '224px';
+              e.currentTarget.style.width = 'fit-content';
               const label = e.currentTarget.querySelector('span');
               if (label) label.style.opacity = 1;
             }}
@@ -142,7 +140,7 @@ const floatingContainerStyle = {
             <div style={iconStyle}>
               <FaCalendarAlt size={18} />
             </div>
-            <span style={labelStyle}>Book Appointment</span>
+            <span style={labelStyle}>Einen Termin Vereinbaren</span>
           </button>
         </div>
       </div>
