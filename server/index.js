@@ -49,8 +49,8 @@ const transactionDetailRoute = require("./src/routes/transactionDetail");
 const imageUploadRoute = require("./src/routes/imageUploadRoutes");
 const adminLoginRoute = require("./src/routes/adminLogin");
 // const test = require('./uploads')
-
-const corsSites=["www.turiyayoga.de","https://turiyayoga.de","turiyayoga.de","https://admin.turiyayoga.de", "www.admin.turiyayoga.de", "admin.turiyayoga.de"]
+//
+const corsSites=["www.turiyayoga.de","http://localhost:3000","http://localhost:3001","https://turiyayoga.de","turiyayoga.de","https://admin.turiyayoga.de", "www.admin.turiyayoga.de", "admin.turiyayoga.de"]
 app.use(cors({
 	origin:corsSites,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all methods
