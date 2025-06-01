@@ -7,10 +7,10 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { BASE_URL, BASE_URL_IMAGE } from "../config";
 import { IoMdArrowBack } from "react-icons/io";
-import './navbar.scss'
-import { FaCalendarAlt, FaPhoneAlt, FaTimes } from 'react-icons/fa';
+import "./navbar.scss";
+import { FaCalendarAlt, FaPhoneAlt, FaTimes } from "react-icons/fa";
 
-const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
+const Navbar = ({ updateCartNumber, setUpdateCartNumber }) => {
   const [isActive, setIsActive] = useState(false); // State to manage active class
   const [token, setToken] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +19,6 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
   const navigate = useNavigate();
   const headerRef = useRef(null);
   const id = localStorage.getItem("turiya_auth_id");
-
 
   const handleMobileNav = () => {
     setIsActive(!isActive);
@@ -111,55 +110,56 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
     }
   };
 
-
   const [megaDropdownVisible, setMegaDropdownVisible] = useState(false);
 
   const [showMegaDropdown, setShowMegaDropdown] = useState(false);
   const styles = {
     overlay: {
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      backdropFilter: 'blur(8px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backdropFilter: "blur(8px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       zIndex: 9999,
-      overflowY: 'auto',
+      overflowY: "auto",
     },
     modal: {
-      position: 'relative', // must be relative so closeButton positions correctly
-      backgroundColor: 'white',
-      borderRadius: '12px',
-      width: '95%',
-      maxWidth: '1000px',
-      margin: '32px',
-      boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-      overflow: 'hidden',
-      maxHeight: '90vh',
+      position: "relative", // must be relative so closeButton positions correctly
+      backgroundColor: "white",
+      borderRadius: "12px",
+      width: "95%",
+      maxWidth: "1000px",
+      margin: "32px",
+      boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+      overflow: "hidden",
+      maxHeight: "90vh",
     },
     closeButton: {
-      position: 'absolute',
-      top: '12px',
-      right: '12px',
-      background: 'transparent',
-      border: 'none',
-      fontSize: '24px',
-      color: '#333',
-      cursor: 'pointer',
+      position: "absolute",
+      top: "12px",
+      right: "12px",
+      background: "transparent",
+      border: "none",
+      fontSize: "24px",
+      color: "#333",
+      cursor: "pointer",
       zIndex: 100,
     },
     iframeWrapper: {
-      marginTop:'16px',
-      paddingTop: '32px', // space for close button
+      marginTop: "16px",
+      paddingTop: "32px", // space for close button
     },
     iframe: {
-      width: '100%',
-      height: '600px',
-      border: 'none',
+      width: "100%",
+      height: "600px",
+      border: "none",
     },
   };
-
 
   // References to the elements
   const mainListRef = useRef(null);
@@ -167,6 +167,29 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
 
   const yogalehrer_Ausbildung = useRef(null);
 
+  // Update the handler to use index
+  const handle_Yogalehrer_Ausbildung = (category, index) => {
+    if (
+      mainListRef.current &&
+      yogalehrer_Ausbildung.current &&
+      yogalehrer_Ausbildung.current[index]
+    ) {
+      mainListRef.current.style.display = "none";
+      yogalehrer_Ausbildung.current[index].style.display = "block";
+    }
+    setShowMegaDropdown(true);
+  };
+
+  const handleCancelyogalehrer_Ausbildung = (category, index) => {
+    if (
+      mainListRef.current &&
+      yogalehrer_Ausbildung.current &&
+      yogalehrer_Ausbildung.current[index]
+    ) {
+      mainListRef.current.style.display = "block";
+      yogalehrer_Ausbildung.current[index].style.display = "none";
+    }
+  };
   // Handle link click for the "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule"
   const handleEinzelmoduleClick = () => {
     // Hide the main list and show the mega dropdown
@@ -190,7 +213,9 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
       .get(BASE_URL + "/course_categories_latest")
       .then((response) => {
         console.log("response of course_categories_latest", response.data.data);
-        const activeCategories = response.data.data.filter(category => category.status === "active");
+        const activeCategories = response.data.data.filter(
+          (category) => category.status === "active"
+        );
         setcategoryData(activeCategories);
       })
       .catch((error) => {
@@ -227,9 +252,10 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
       .then((response) => {
         console.log("response od delete", response);
         // fetchCartData2();
-        const updatedCartData = cartFetchedData.filter(item => item._id !== id);
+        const updatedCartData = cartFetchedData.filter(
+          (item) => item._id !== id
+        );
         setcartFetchedData(updatedCartData);
-
       })
       .catch((error) => {
         console.log("error", error);
@@ -255,8 +281,7 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
   const [puchasedCourse, setPuchasedCourse] = useState("");
 
   const FetchedPurchased = () => {
-    console.log("Fetched cart id", id)
-
+    console.log("Fetched cart id", id);
 
     // console.log("BASE_URL of FetchedPurchased",BASE_URL + `/get_purchasedModule/${id}`)
     if (id) {
@@ -287,28 +312,25 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
     }
   };
 
-  const handle_Yogalehrer_Ausbildung = () => {
-    // Hide the main list and show the mega dropdown
-    if (mainListRef.current && yogalehrer_Ausbildung.current) {
-      mainListRef.current.style.display = "none"; // Hide the main list
-      yogalehrer_Ausbildung.current.style.display = "block"; // Show the mega dropdown
-    }
-    setShowMegaDropdown(true); // Track that mega dropdown should be visible
-  };
+  // const handle_Yogalehrer_Ausbildung = () => {
+  //   // Hide the main list and show the mega dropdown
+  //   if (mainListRef.current && yogalehrer_Ausbildung.current) {
+  //     mainListRef.current.style.display = "none"; // Hide the main list
+  //     yogalehrer_Ausbildung.current.style.display = "block"; // Show the mega dropdown
+  //   }
+  //   setShowMegaDropdown(true); // Track that mega dropdown should be visible
+  // };
 
-  // ==========================================================
+  // // ==========================================================
 
-  const handleCancelyogalehrer_Ausbildung = () => {
-    if (mainListRef.current && yogalehrer_Ausbildung.current) {
-      mainListRef.current.style.display = "block";
-      yogalehrer_Ausbildung.current.style.display = "none";
-    }
-  };
+  // const handleCancelyogalehrer_Ausbildung = () => {
+  //   if (mainListRef.current && yogalehrer_Ausbildung.current) {
+  //     mainListRef.current.style.display = "block";
+  //     yogalehrer_Ausbildung.current.style.display = "none";
+  //   }
+  // };
 
-
-  console.log("cart data length: ", cartFetchedData
-  );
-
+  console.log("cart data length: ", cartFetchedData);
 
   function isOfferValid(offerEndDate) {
     if (!offerEndDate) return false;
@@ -318,7 +340,6 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
 
     return today <= offerEnd; // Offer is valid if the current date is before or equal to the end date
   }
-
 
   return (
     <>
@@ -332,11 +353,11 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
             </div>
             <div className="myNav_content__right">
               <div className="top_menu">
-              <Link href="#" onClick={() => setIsPopupOpen(true)}>
-                <span className="flex items-center gap-2 cursor-pointer">
-                  <i className="bx bxs-mobile" /> Einen Termin Vereinbaren
-                </span>
-              </Link>
+                <Link href="#" onClick={() => setIsPopupOpen(true)}>
+                  <span className="flex items-center gap-2 cursor-pointer">
+                    <i className="bx bxs-mobile" /> Einen Termin Vereinbaren
+                  </span>
+                </Link>
 
                 {/* <Link to="tel:+49(0)69-20134987">
                   <i className="bx bxs-mobile" />
@@ -351,14 +372,12 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                     <span className="me-1">
                       {cartFetchedData && cartFetchedData.length > 0
                         ? cartFetchedData.length
-                        : '0 [LEER]'}
+                        : "0 [LEER]"}
                     </span>
-                    
                   </p>
                 </Link>
                 {user ? (
                   <>
-
                     <p
                       onClick={handleRedirect}
                       className="registerLink"
@@ -366,7 +385,8 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                         cursor: "pointer",
                         fontSize: "16px",
                         textTransform: "capitalize",
-                      }}>
+                      }}
+                    >
                       <i className="bx bx-user" />
                       {user && user}
                     </p>
@@ -382,15 +402,18 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                         localStorage.removeItem("turiya_auth_id");
                         localStorage.removeItem("turiya_auth_token");
                         localStorage.removeItem("user");
-                        navigate('/login')
+                        navigate("/login");
                       }}
-                    >Logout</p>
+                    >
+                      Logout
+                    </p>
                   </>
                 ) : (
                   <p
                     onClick={handleRedirect}
                     className="registerLink"
-                    style={{ cursor: "pointer" }}>
+                    style={{ cursor: "pointer" }}
+                  >
                     <i className="bx bx-user" />
                     Anmeldung/Registrierung
                   </p>
@@ -431,13 +454,22 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                           <Link to={`/category/${item.slug}`}>
                             {item.category}
                           </Link>
-                          {item.courseSubCategories.length > 0 && <i className="bx bx-chevron-right" />}
-                          {item.courseSubCategories.filter(sub => sub.status === "active").length > 0 && (
+                          {item.courseSubCategories.length > 0 && (
+                            <i className="bx bx-chevron-right" />
+                          )}
+                          {item.courseSubCategories.filter(
+                            (sub) => sub.status === "active"
+                          ).length > 0 && (
                             <>
                               <div className="mega_dropdown__list">
-                                <ul style={{ overflowY: 'scroll', maxHeight: '400px' }}>
+                                <ul
+                                  style={{
+                                    overflowY: "scroll",
+                                    maxHeight: "400px",
+                                  }}
+                                >
                                   {item.courseSubCategories
-                                    .filter(sub => sub.status === "active") // Filter only active subcategories
+                                    .filter((sub) => sub.status === "active") // Filter only active subcategories
                                     .map((subitem) => (
                                       <li key={subitem._id}>
                                         <Link to={`/module/${subitem.slug}`}>
@@ -455,11 +487,10 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                   </li>
                   <li className="dropdown_menu">
                     <Link to="#">
-                    Kundenstimmen
+                      Kundenstimmen
                       <i className="bx bx-chevron-down" />
                     </Link>
                     <ul className="dropdown_menu__list">
-
                       <li>
                         <Link to="/kundenstimmen">Kundenstimmen</Link>
                       </li>
@@ -498,17 +529,14 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
               <div class="cart-overlay-content px-3">
                 <IoMdClose className="closeIcon" onClick={closeSideber} />
 
-                {
-                  console.log("cartFetchedData map", cartFetchedData)
-                }
+                {console.log("cartFetchedData map", cartFetchedData)}
 
-
-
-                {cartFetchedData && cartFetchedData.length > 0 ?
+                {cartFetchedData && cartFetchedData.length > 0 ? (
                   cartFetchedData.map((item, index) => {
                     console.log("item of cart data", item);
                     const module = item.moduleId;
-                    const isValidOffer = module && isOfferValid(module.OfferEndDate);
+                    const isValidOffer =
+                      module && isOfferValid(module.OfferEndDate);
 
                     return (
                       <div key={index}>
@@ -523,7 +551,9 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                                 {isValidOffer && module.Offerprice > 0 ? (
                                   <>
                                     €{module.Offerprice}{" "}
-                                    <del style={{ color: '#c3c3c3' }}>€{module.price}</del>
+                                    <del style={{ color: "#c3c3c3" }}>
+                                      €{module.price}
+                                    </del>
                                   </>
                                 ) : (
                                   <>€{module?.price}</>
@@ -534,7 +564,8 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                               <ul>
                                 <li>
                                   <i className="bx bxs-calendar"></i>{" "}
-                                  {module && module.StartDate} - {module && module.EndDate}
+                                  {module && module.StartDate} -{" "}
+                                  {module && module.EndDate}
                                 </li>
                                 <li>{module && module.Location}</li>
                                 <li>{module && module.Place}</li>
@@ -551,29 +582,36 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                           </div>
                           <div className="row mt-3">
                             <div className="col-sm-10">
-                              {user ? <button
-                                onClick={() => {
-                                  localStorage.setItem("cartItemBooking", item._id)
-                                  navigate(`/course_booking/${module._id}`)
-                                  closeSideber()
-                                }}
-                                style={{
-                                  backgroundColor:
-                                    item.Place <= 3 ? "#FF5722" : "#9BBB59",
-                                  border: "0px solid",
-                                  position: 'relative',
-                                  width: 'fit-content',
-                                  padding: '5px 10px',
-                                  color: 'white'
-                                }}
-                                className="triggerDialogBox"
-                                data-id={9}>
-                                Buchung fortsetzen
-                              </button> :
+                              {user ? (
+                                <button
+                                  onClick={() => {
+                                    localStorage.setItem(
+                                      "cartItemBooking",
+                                      item._id
+                                    );
+                                    navigate(`/course_booking/${module._id}`);
+                                    closeSideber();
+                                  }}
+                                  style={{
+                                    backgroundColor:
+                                      item.Place <= 3 ? "#FF5722" : "#9BBB59",
+                                    border: "0px solid",
+                                    position: "relative",
+                                    width: "fit-content",
+                                    padding: "5px 10px",
+                                    color: "white",
+                                  }}
+                                  className="triggerDialogBox"
+                                  data-id={9}
+                                >
+                                  Buchung fortsetzen
+                                </button>
+                              ) : (
                                 <p>
-                                  Bitte melden Sie sich an, um zur Kasse zu gehen.
+                                  Bitte melden Sie sich an, um zur Kasse zu
+                                  gehen.
                                 </p>
-                              }
+                              )}
                             </div>
 
                             <div className="col-sm-2">
@@ -593,45 +631,45 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                         <hr />
                       </div>
                     );
-                  }) :
-
-
+                  })
+                ) : (
                   <div className="mt-4">
-
                     <div class="cart-overlay-heading" id="cart_content">
-
                       <div className="row mt-3">
                         <div className="col-sm-12 d-flex justify-content-center">
-
-                          <h4 className="empty_text">  Dein Warenkorb ist leer!</h4>
-
-
+                          <h4 className="empty_text">
+                            {" "}
+                            Dein Warenkorb ist leer!
+                          </h4>
                         </div>
-
-
                       </div>
                     </div>
-
                   </div>
-
-                }
+                )}
               </div>
             </div>
           )}
 
           <div class="hide_top_menu">
             {/* <a href="tel:+49(0)69-20134987"><i class='bx bxs-mobile'></i>+49(0)69-20134987</a> */}
-              <Link href="#" onClick={() => setIsPopupOpen(true)}>
-                <span className="flex items-center gap-2 cursor-pointer">
-                  <i className="bx bxs-mobile" /> Einen Termin Vereinbaren
-                </span>
-              </Link>
-            <a href="mailto:info@turiyayoga.de"><i class='bx bxs-envelope'></i> info@turiyayoga.de</a>
-            <a href="javascript:void(0)" class="cart-menu" onClick={handleSidBar}>
-              <i class='bx bx-shopping-bag'></i><span className="me-1">
+            <Link href="#" onClick={() => setIsPopupOpen(true)}>
+              <span className="flex items-center gap-2 cursor-pointer">
+                <i className="bx bxs-mobile" /> Einen Termin Vereinbaren
+              </span>
+            </Link>
+            <a href="mailto:info@turiyayoga.de">
+              <i class="bx bxs-envelope"></i> info@turiyayoga.de
+            </a>
+            <a
+              href="javascript:void(0)"
+              class="cart-menu"
+              onClick={handleSidBar}
+            >
+              <i class="bx bx-shopping-bag"></i>
+              <span className="me-1">
                 {cartFetchedData && cartFetchedData.length > 0
                   ? cartFetchedData.length
-                  : '0 [LEER]'}
+                  : "0 [LEER]"}
               </span>
             </a>
             {user ? (
@@ -643,7 +681,8 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                     cursor: "pointer",
                     fontSize: "16px",
                     textTransform: "capitalize",
-                  }}>
+                  }}
+                >
                   <i className="bx bx-user" />
                   {user && user}
                 </p>
@@ -659,21 +698,23 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                     localStorage.removeItem("turiya_auth_id");
                     localStorage.removeItem("turiya_auth_token");
                     localStorage.removeItem("user");
-                    navigate('/login')
+                    navigate("/login");
                   }}
-                >Logout</p>
+                >
+                  Logout
+                </p>
               </>
             ) : (
               <p
                 onClick={handleRedirect}
                 className="registerLink"
-                style={{ cursor: "pointer" }}>
+                style={{ cursor: "pointer" }}
+              >
                 <i className="bx bx-user" />
                 Anmeldung/Registrierung
               </p>
             )}
           </div>
-
 
           {/* mobile nav */}
           <div className={`mobile_nav ${isActive ? "active" : ""}`}>
@@ -693,97 +734,113 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                   <li className="drop-menu">
                     <Link
                       to="/"
-                      className={`active-menu my-2  ${activeLink === "about" ? "active" : ""
-                        }`}
-                      onClick={() => handleLinkClick("about")}>
+                      className={`active-menu my-2 ${
+                        activeLink === "about" ? "active" : ""
+                      }`}
+                      onClick={() => handleLinkClick("about")}
+                    >
                       ÜBER UNS <i className="bx bx-chevron-right"></i>
                     </Link>
                     <div
-                      className={`drop-menu-list ${activeLink === "about" ? "show" : ""
-                        }`}>
+                      className={`drop-menu-list ${
+                        activeLink === "about" ? "show" : ""
+                      }`}
+                    >
                       <Link
                         to="/unsere-Geschichtetory"
-                        onClick={() => setIsActive(false)} className="my-2"   >
+                        onClick={() => setIsActive(false)}
+                        className="my-2"
+                      >
                         Unsere Geschichte
                       </Link>
                       <Link
-                        to="/unsere-Philosophie" className="my-2"
-                        onClick={() => setIsActive(false)}>
+                        to="/unsere-Philosophie"
+                        onClick={() => setIsActive(false)}
+                        className="my-2"
+                      >
                         Unsere Philosophie
                       </Link>
-
-                      {/* <Link to="/team" className="my-2" onClick={() => setIsActive(false)}>
-                        Turiya Yoga Team
-                      </Link> */}
-                      <Link to="/blog" className="my-2" onClick={() => setIsActive(false)}>
+                      <Link
+                        to="/blog"
+                        onClick={() => setIsActive(false)}
+                        className="my-2"
+                      >
                         Turiya Yoga Blog
                       </Link>
                     </div>
                   </li>
 
-                  <li className="drop-menu" style={{ display: "inline" }}>
+                  <li className="drop-menu">
                     <Link
                       to="/"
-                      className={`active-menu ${activeLink === "yogaTraining" ? "active" : ""
-                        }`}
-                      onClick={() => handleLinkClick("yogaTraining")}>
+                      className={`active-menu my-2 ${
+                        activeLink === "yogaTraining" ? "active" : ""
+                      }`}
+                      onClick={() => handleLinkClick("yogaTraining")}
+                    >
                       Yogalehrer Ausbildungen{" "}
-                      <i className="bx bx-chevron-right" style={{ display: "inline" }}></i>
+                      <i className="bx bx-chevron-right"></i>
                     </Link>
                     <div
-                      className={`drop-menu-list ${activeLink === "yogaTraining" ? "show" : ""}`}>
-                      <Link to="/kommende-kurse" style={{ fontSize: "12px", marginBottom: '12px', marginTop: "12px" }} onClick={() => setIsActive(false)}>
-                        Alle Kommenden Kurse
-                      </Link>
-                      <li className="mega_dropdown my-3" style={{ display: 'inline' }}>
-                        <Link
-                          style={{ fontSize: "12px" }}
-                          onClick={() =>
-                            handle_Yogalehrer_Ausbildung(
-                              "200H AYA Yogalehrer Ausbildung - Intensiv"
+                      className={`drop-menu-list ${
+                        activeLink === "yogaTraining" ? "show" : ""
+                      }`}
+                    >
+                      {categoryData &&
+                        categoryData.map((item, index) => (
+                          <li className="mega_dropdown my-3" key={item._id}>
+                            {item.courseSubCategories.filter(
+                              (sub) => sub.status === "active"
+                            ).length > 0 ? (
+                              <>
+                                <Link
+                                  style={{ fontSize: "12px" }}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handle_Yogalehrer_Ausbildung(
+                                      item.category,
+                                      index
+                                    );
+                                  }}
+                                >
+                                  {item.category}{" "}
+                                  <i className="bx bx-chevron-right" />
+                                </Link>
+                              </>
+                            ) : (
+                              <Link
+                                to={`/category/${item.slug}`}
+                                style={{ fontSize: "12px" }}
+                                onClick={() => setIsActive(false)}
+                              >
+                                {item.category}
+                              </Link>
                             )}
-                        >
-                          200H AYA Yogalehrer Ausbildung - Intensiv <i className="bx bx-chevron-right" />
-                        </Link>
-                      </li>
-                      <li className="mega_dropdown my-3">
-                        <Link style={{ fontSize: "12px" }} onClick={() =>
-                          handleEinzelmoduleClick(
-                            "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule"
-                          )
-                        }>
-                          500H AYA Yogalehrer Blockausbildung | 100h
-                          Einzelmodule    <i className="bx bx-chevron-right" />
-                        </Link>
-                      </li>
-                      {/* <li className="my-3">
-                        <Link to="/yin-yoga " style={{ fontSize: "12px" }}>60H Yin Yoga</Link>
-                      </li>
-                      <li className="my-3">
-                        <Link to="/senioren-yoga" style={{ fontSize: "12px" }}>60H Senioren Yoga</Link>
-                      </li> */}
-                      {/* <li className="my-2">
-                        <Link to="/hybride_yogalehrer_ausbildung" style={{ fontSize: "12px" }}>
-                          Hybride Wochenend Yogalehrer Ausbildung
-                        </Link>
-                      </li> */}
+                          </li>
+                        ))}
                     </div>
                   </li>
 
                   <li className="drop-menu mb-2">
                     <Link
                       to="/"
-                      className={`active-menu my-2 ${activeLink === "kundenstimmen" ? "active" : ""
-                        }`}
-                      onClick={() => handleLinkClick("kundenstimmen")}>
+                      className={`active-menu my-2 ${
+                        activeLink === "kundenstimmen" ? "active" : ""
+                      }`}
+                      onClick={() => handleLinkClick("kundenstimmen")}
+                    >
                       Kundenstimmen <i className="bx bx-chevron-right"></i>
                     </Link>
                     <div
-                      className={`drop-menu-list ${activeLink === "kundenstimmen" ? "show" : ""
-                        }`}>
+                      className={`drop-menu-list ${
+                        activeLink === "kundenstimmen" ? "show" : ""
+                      }`}
+                    >
                       <Link
-                        to="/kundenstimmen" className="my-2"
-                        onClick={() => setIsActive(false)}>
+                        to="/kundenstimmen"
+                        onClick={() => setIsActive(false)}
+                        className="my-2"
+                      >
                         Kundenstimmen
                       </Link>
                     </div>
@@ -792,87 +849,62 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
                   <li>
                     <Link
                       to="/contact"
-                      className={`contact-mob ${activeLink === "contact" ? "active" : ""
-                        }`}
-                      onClick={() => handleLinkClick("contact")}>
+                      className={`contact-mob ${
+                        activeLink === "contact" ? "active" : ""
+                      }`}
+                      onClick={() => handleLinkClick("contact")}
+                    >
                       <i className="bx bx-envelope"></i> KONTAKT
                     </Link>
                   </li>
                 </ul>
 
-
-                {/* ========================================================================= */}
-
+                {/* Separate subcategory lists outside the main ul */}
                 {categoryData &&
-                  categoryData.map((item, index) => {
-
-                    if (item.category === "500H AYA Yogalehrer Blockausbildung | 100h Einzelmodule") {
-                      return <ul
-                        id="handleEinzelmoduleClick"
-                        ref={handleEinzelmoduleClickRef}
-                        style={{ display: "none" }}>
+                  categoryData.map((item, index) => (
+                    <ul
+                      key={`sub-${item._id}`}
+                      id={`yogalehrer_Ausbildung_${index}`}
+                      ref={(el) => {
+                        if (!yogalehrer_Ausbildung.current)
+                          yogalehrer_Ausbildung.current = [];
+                        yogalehrer_Ausbildung.current[index] = el;
+                      }}
+                      style={{ display: "none" }}
+                    >
+                      <li>
                         <p
                           className="cancel-mega-menu"
                           onClick={() =>
-                            handleCancelMegaMenu("yogalehrer_Ausbildung")
-                          }>
-                          {" "}
+                            handleCancelyogalehrer_Ausbildung(
+                              item.category,
+                              index
+                            )
+                          }
+                          style={{
+                            cursor: "pointer",
+                            borderBottom: "1px solid #eee",
+                          }}
+                        >
                           <IoMdArrowBack /> Go back
                         </p>
-                        {
-                          item.courseSubCategories &&
-                          item.courseSubCategories.map((subitem) => (
-                            <li className="my-3" key={subitem.slug}>
-                              <Link to={`/module/${subitem.slug}`} onClick={handleCancel}>
-                                {subitem.modulecategory}
-                              </Link>
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    }
-                  })}
-                {categoryData &&
-                  categoryData.map((item, index) => {
-
-                    if (item.category === "200H AYA Yogalehrer Ausbildung - Intensiv") {
-                      return <ul
-                        id="yogalehrer_Ausbildung"
-                        ref={yogalehrer_Ausbildung}
-                        style={{ display: "none" }}>
-                        <p
-                          className="cancel-mega-menu"
-                          onClick={() =>
-                            handleCancelyogalehrer_Ausbildung("yogalehrer_Ausbildung")
-                          }>
-                          {" "}
-                          <IoMdArrowBack /> Go back
-                        </p>
-                        {
-                          item.courseSubCategories &&
-                          item.courseSubCategories.map((subitem) => (
-                            <li className="my-3" key={subitem.slug}>
-                              <Link to={`/module/${subitem.slug}`} onClick={handleCancel}>
-                                {subitem.modulecategory}
-                              </Link>
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    }
-                  })}
-
-
-                {/* ============================================================================== */}
-
-
-
+                      </li>
+                      {item.courseSubCategories
+                        .filter((sub) => sub.status === "active")
+                        .map((subitem) => (
+                          <li className="my-3" key={subitem._id}>
+                            <Link
+                              to={`/module/${subitem.slug}`}
+                              onClick={handleCancel}
+                              style={{  display: "block" }}
+                            >
+                              {subitem.modulecategory}
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  ))}
               </div>
-
-              {/* =========================================================== */}
-
-
-              {/* ==================================================================== */}
             </div>
           </div>
         </div>
@@ -882,7 +914,10 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
       {isPopupOpen && (
         <div style={styles.overlay}>
           <div style={styles.modal}>
-            <button onClick={() => setIsPopupOpen(false)} style={styles.closeButton}>
+            <button
+              onClick={() => setIsPopupOpen(false)}
+              style={styles.closeButton}
+            >
               ×
             </button>
             <div style={styles.iframeWrapper}>
@@ -896,8 +931,6 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
           </div>
         </div>
       )}
-
-
     </>
   );
 };
@@ -905,5 +938,3 @@ const Navbar = ({updateCartNumber, setUpdateCartNumber}) => {
 export default Navbar;
 
 // ========================================================
-
-
