@@ -355,7 +355,7 @@ const Navbar = ({ updateCartNumber, setUpdateCartNumber }) => {
               <div className="top_menu">
                 <Link href="#" onClick={() => setIsPopupOpen(true)}>
                   <span className="flex items-center gap-2 cursor-pointer">
-                    <i className="bx bxs-mobile" /> Einen Termin Vereinbaren
+                    <i className="bx bxs-mobile" /> Info-Termin Vereinbaren
                   </span>
                 </Link>
 
@@ -654,7 +654,7 @@ const Navbar = ({ updateCartNumber, setUpdateCartNumber }) => {
             {/* <a href="tel:+49(0)69-20134987"><i class='bx bxs-mobile'></i>+49(0)69-20134987</a> */}
             <Link href="#" onClick={() => setIsPopupOpen(true)}>
               <span className="flex items-center gap-2 cursor-pointer">
-                <i className="bx bxs-mobile" /> Einen Termin Vereinbaren
+                <i className="bx bxs-mobile" /> Info-Termin Vereinbaren
               </span>
             </Link>
             <a href="mailto:info@turiyayoga.de">
