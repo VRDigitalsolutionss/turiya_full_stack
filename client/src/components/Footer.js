@@ -62,7 +62,7 @@ const Footer = () => {
                   <ul>
                     <li>
                       <span />
-                      <Link   to="/unsere-Geschichtetory"> ÜBER UNS </Link>
+                      <Link   to="/unsere-Geschichte"> ÜBER UNS </Link>
                     </li>
                     <li>
                       <span />

@@ -99,7 +99,7 @@ function App() {
             updateCartNumber={updateCartNumber}
             setUpdateCartNumber={setUpdateCartNumber}
           />} />
-          <Route path="unsere-Geschichtetory" element={<OurStory />} />
+          <Route path="unsere-Geschichte" element={<OurStory />} />
           <Route path="unsere-Philosophie" element={<Ourphilosophy />} />
           <Route path="kundenstimmen" element={<CustomerTestimonials />} />
           <Route path="team" element={<Team />} />

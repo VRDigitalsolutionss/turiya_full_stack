@@ -264,7 +264,7 @@ const BannerSlowerWrapper = () => {
                   </p>
                   <div className="blank-space" />
                   <div className="price aos-init" data-aos="fade-up">
-                    <Link to="/unsere-Geschichtetory">MEHR</Link>
+                    <Link to="/unsere-Geschichte">MEHR</Link>
                   </div>
                 </div>
               </div>

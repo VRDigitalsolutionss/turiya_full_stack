@@ -332,7 +332,7 @@ const Navbar = () => {
                     </Link>
                     <ul className="dropdown_menu__list">
                       <li>
-                        <Link to="/unsere-Geschichtetory">
+                        <Link to="/unsere-Geschichte">
                           Unsere Geschichte
                         </Link>
                       </li>
@@ -641,7 +641,7 @@ const Navbar = () => {
                       className={`drop-menu-list ${activeLink === "about" ? "show" : ""
                         }`}>
                       <Link
-                        to="/unsere-Geschichtetory"
+                        to="/unsere-Geschichte"
                         onClick={() => setIsActive(false)} className="my-2"   >
                         Unsere Geschichte
                       </Link>

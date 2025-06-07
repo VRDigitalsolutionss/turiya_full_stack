@@ -428,7 +428,7 @@ const Navbar = ({ updateCartNumber, setUpdateCartNumber }) => {
                     </Link>
                     <ul className="dropdown_menu__list">
                       <li>
-                        <Link to="/unsere-Geschichtetory">
+                        <Link to="/unsere-Geschichte">
                           Unsere Geschichte
                         </Link>
                       </li>
@@ -747,7 +747,7 @@ const Navbar = ({ updateCartNumber, setUpdateCartNumber }) => {
                       }`}
                     >
                       <Link
-                        to="/unsere-Geschichtetory"
+                        to="/unsere-Geschichte"
                         onClick={() => setIsActive(false)}
                         className="my-2"
                       >
