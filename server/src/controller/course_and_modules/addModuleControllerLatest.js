@@ -218,16 +218,20 @@ const getModuleByLocation = async (req, res) => {
 
     // Find data in MongoDB based on the location
     const modules = await Module.find({ Location: location });
-
-    if (modules.length === 0) {
-      return res.status(404).json({ message: 'No modules found for the specified location.' });
-    }
-
-    // Send the retrieved data as a response
-    res.status(200).json({
+ return res.status(200).json({
       success: true,
-      data: modules
+      data: modules,
+      message: modules.length === 0 ? 'No modules found for the specified location.' : undefined
     });
+    // if (modules.length === 0) {
+    //   return res.status(404).json({ message: 'No modules found for the specified location.' });
+    // }
+
+    // // Send the retrieved data as a response
+    // res.status(200).json({
+    //   success: true,
+    //   data: modules
+    // });
 
   } catch (error) {
     console.error('Error fetching modules by location:', error);

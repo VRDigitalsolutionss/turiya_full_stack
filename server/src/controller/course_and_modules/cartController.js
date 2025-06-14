@@ -64,13 +64,18 @@ const getAllModuleWithId = async (req, res) => {
     // Query to find Cart entries where userId matches the given parameter
     const references = await Cart.find({ userId }).populate("moduleId"); // Populate module data
 
-    if (references.length === 0) {
-      return res.status(404).json({ error: "No modules found for the given user." });
-    }
+    // if (references.length === 0) {
+    //   return res.status(404).json({ error: "No modules found for the given user." });
+    // }
 
-    res.status(200).json({
-      message: "Modules retrieved successfully.",
+    // res.status(200).json({
+    //   message: "Modules retrieved successfully.",
+    //   data: references,
+    // });
+     return res.status(200).json({
+      success: true,
       data: references,
+      message: references.length === 0 ? 'No modules found for the specified user.' : undefined
     });
   } catch (error) {
     console.error("Error retrieving modules:", error);
