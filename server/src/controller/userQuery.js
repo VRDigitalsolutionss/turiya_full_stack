@@ -24,7 +24,7 @@ const addUserQuery = async (req, res) => {
     });
 
     const mailOptions = {
-      from: `"Turiyoga Notifications" <${process.env.EMAIL_USER}>`,
+      from: `<${process.env.EMAIL_USER}>`,
       to: "info@turiyayoga.de",
       subject: 'New User Query Received',
       html: `

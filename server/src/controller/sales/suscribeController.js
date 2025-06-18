@@ -26,7 +26,7 @@ const addSubscription = async (req, res) => {
         });
 
         const adminMailOptions = {
-            from: `"Turiyoga Notifications" <${process.env.EMAIL_USER}>`,
+            from: `<${process.env.EMAIL_USER}>`,
             to: "info@turiyoga.com",
             subject: "New Subscription Alert",
             text: `A new user has subscribed to your newsletter. Subscriber email: ${email}`,
