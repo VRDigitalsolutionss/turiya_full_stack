@@ -163,7 +163,7 @@ const generateInvoicesAndSendEmail = async (req, res) => {
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            +49 (0)69 - 20134987<br>
+            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -397,7 +397,7 @@ const contractHTML = `
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            +49 (0)69 - 20134987<br>
+            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -510,7 +510,7 @@ const contractHTML = `
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            +49 (0)69 - 20134987<br>
+            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
