@@ -625,7 +625,7 @@ const contractHTML = `
      
       
           <p>Solltest Du weitere Informationen benötigen, zögere bitte nicht, uns zu kontaktieren.</p>
-       <p>Telefon: 069 2013 4987</p>
+    //    <p>Telefon: 069 2013 4987</p>
           <p>Mit freundlichen Grüßen,</p>
           <p><strong>Turiya Yoga Team</strong></p>
           <br>
