@@ -291,7 +291,6 @@ const generateInvoicesAndSendEmail = async (req, res) => {
             <p><b>Emanuel Wintermeyer</b><br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -549,7 +548,6 @@ const generateInvoicesAndSendEmail = async (req, res) => {
             <p><b>Emanuel Wintermeyer</b><br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -683,7 +681,6 @@ const generateInvoicesAndSendEmail = async (req, res) => {
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -876,7 +873,6 @@ const generateInvoicesAndSendEmail = async (req, res) => {
      
       
           <p>Solltest Du weitere Informationen benötigen, zögere bitte nicht, uns zu kontaktieren.</p>
-          // <p>Telefon: 069 2013 4987</p>
           <p>Mit freundlichen Grüßen,</p>
           <p><strong>Turiya Yoga Team</strong></p>
           <br>
@@ -1104,7 +1100,6 @@ const generateCancelInvoice = async (req, res) => {
             <p><b>Emanuel Wintermeyer</b><br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -1275,7 +1270,6 @@ const generateCancelInvoice = async (req, res) => {
           <p>Hallo ${savedModule.customerName},</p>
           <p>wir möchten Dich darüber informieren, dass wir Deine Rückerstattung bearbeitet haben. Anbei findest Du die Stornorechnung sowie weitere Informationen zu der Rückerstattung.</p>
           <p>Rückerstattungsbetrag: <strong>${amount} €</strong></p>
-          // <p>Telefon: 069 2013 4987</p>
           <p>Mit freundlichen Grüßen,</p>
           <p><strong>Turiya Yoga Team</strong></p>
           <br>

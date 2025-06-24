@@ -163,7 +163,6 @@ const generateInvoicesAndSendEmail = async (req, res) => {
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -397,7 +396,6 @@ const contractHTML = `
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -510,7 +508,6 @@ const contractHTML = `
             <p>Emanuel Wintermeyer<br>
             Herbartstrasse 12<br>
             60316 Frankfurt am Main<br>
-            // +49 (0)69 - 20134987<br>
             info@turiyayoga.de<br>
             St.-Nr.: 013/882/05939</p>
         </div>
@@ -625,7 +622,6 @@ const contractHTML = `
      
       
           <p>Solltest Du weitere Informationen benötigen, zögere bitte nicht, uns zu kontaktieren.</p>
-    //    <p>Telefon: 069 2013 4987</p>
           <p>Mit freundlichen Grüßen,</p>
           <p><strong>Turiya Yoga Team</strong></p>
           <br>
