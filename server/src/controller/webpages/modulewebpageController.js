@@ -334,7 +334,7 @@ const findModuleWebpagesByCategory = async (req, res) => {
                 data: response
             });
         } else {
-            res.status(404).json({
+            res.status(200).json({
                 success: false,
                 message: "No module webpages found for the given course category."
             });
