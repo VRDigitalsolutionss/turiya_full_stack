@@ -50,7 +50,7 @@ const imageUploadRoute = require("./src/routes/imageUploadRoutes");
 const adminLoginRoute = require("./src/routes/adminLogin");
 // const test = require('./uploads')
 //
-const corsSites=["www.turiyayoga.de","http://localhost:3000","http://localhost:3001","https://turiyayoga.de","turiyayoga.de","https://admin.turiyayoga.de", "www.admin.turiyayoga.de", "admin.turiyayoga.de", "https://turiyaprivate.vercel.app/", "https://turiyaprivate.vercel.app", "turiyaprivate.vercel.app", "https://turiyaprivate.vercel.app", "www.turiyaprivate.vercel.app"]
+const corsSites=["www.turiyayoga.de","http://localhost:3000","http://localhost:3001","https://turiyayoga.de","turiyayoga.de","https://admin.turiyayoga.de", "www.admin.turiyayoga.de", "admin.turiyayoga.de", "https://turiyaprivate.vercel.app/", "https://turiyaprivate.vercel.app", "turiyaprivate.vercel.app", "https://turiyaprivate.vercel.app", "www.turiyaprivate.vercel.app", "https://turiyaprivate-uizt.vercel.app/", "https://turiyaprivate-uizt.vercel.app", "turiyaprivate-uizt.vercel.app", "https://turiyaprivate-uizt.vercel.app", "www.turiyaprivate-uizt.vercel.app"]
 app.use(cors({
 	origin:corsSites,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all methods
