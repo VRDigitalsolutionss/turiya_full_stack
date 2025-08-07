@@ -151,7 +151,7 @@ const editBlog = async (req, res) => {
 // Get all blog posts
 const getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find().sort({ createdAt: -1 });
     res.status(200).json({
       success: true,
       message: 'Blog added successfully',
