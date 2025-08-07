@@ -99,10 +99,11 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     );
     console.log(alreadyPurchased)
 
-    if (alreadyPurchased) {
-      console.log("Course already purchased!");
-      return res.status(200).json({success: false, message: "Course already purchased!" });
-    }
+    // if (alreadyPurchased) {
+    //   console.log("Course already purchased!");
+    //   return res.status(200).json({success: false, message: "Course already purchased!" });
+    // }
+    
 
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
