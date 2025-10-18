@@ -49,6 +49,53 @@ const addUserQuery = async (req, res) => {
   }
 };
 
+const addUserQueryGermany = async (req, res) => {
+  try {
+    const { name, number, email, message } = req.body;
+
+    const newUserQuery = new UserQuery({
+      name,
+      number,
+      email,
+      message,
+    });
+
+    // Save to database
+    await newUserQuery.save();
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER_GERMANY,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: `<${process.env.EMAIL_USER}>`,
+      to: "info@turiyayoga.com",
+      subject: 'New User Query Received',
+      html: `
+          <h2>New User Query</h2>
+          <p><strong>Name: </strong> ${name}</p>
+          <p><strong>Number: </strong> ${number}</p>
+          <p><strong>Email: </strong> ${email}</p>
+          <p><strong>Message: </strong></p> ${message}
+          <p>This is an automated email. Please do not reply.</p>
+      `
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+
+    res.status(201).json({
+      message: 'User query added successfully!',
+      data: newUserQuery,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding user query', error: error.message });
+  }
+};
 
 const deleteUserQuery = async (req, res) => {
 
@@ -97,6 +144,7 @@ module.exports = {
   userQuery,
   addUserQuery,
   deleteUserQuery,
+  addUserQueryGermany,
   userQueries
 };
 
