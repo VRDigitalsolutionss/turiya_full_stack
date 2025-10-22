@@ -14,10 +14,58 @@ const getInvoice = async (req, res) => {
       .populate('selectedMeal')
       .populate('selectedRoom');
 
-    // console.log("purchased module invoice", purchasedModule);
+    console.log("Fetching invoice for ID:", id);
+    console.log("Module found:", !!purchasedModule);
+    console.log("Has invoice buffer:", !!purchasedModule?.invoice);
 
-    if (!purchasedModule || !purchasedModule.invoice) {
+    if (!purchasedModule) {
       return res.status(404).json({ message: "Invoice not found" });
+    }
+
+    // If PDF doesn't exist, try to regenerate it
+    if (!purchasedModule.invoice) {
+      console.log("PDF buffer missing, attempting to regenerate...");
+      
+      try {
+        // Import puppeteer for PDF regeneration
+        const puppeteer = require("puppeteer");
+        
+        const browser = await puppeteer.launch({
+          headless: 'new',
+          args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+          ],
+        });
+
+        const page = await browser.newPage();
+
+        // Generate invoice HTML using the same logic as in generateInvoicesAndSendEmail
+        const invoiceHTML = generateInvoiceHTMLFromModule(purchasedModule);
+        
+        await page.setContent(invoiceHTML, { waitUntil: "networkidle0" });
+        
+        const invoiceBuffer = await page.pdf({
+          format: "A4",
+          printBackground: true,
+        });
+
+        await browser.close();
+
+        // Save the regenerated PDF to the database
+        purchasedModule.invoice = Buffer.from(invoiceBuffer);
+        await purchasedModule.save();
+        
+        console.log("PDF regenerated and saved successfully");
+      } catch (regenerateError) {
+        console.error("Error regenerating PDF:", regenerateError);
+        return res.status(500).json({ 
+          message: "Invoice found but PDF generation failed. Please contact support.",
+          error: regenerateError.message 
+        });
+      }
     }
 
     res.set({
@@ -60,9 +108,12 @@ const getAgreement = async (req, res) => {
 };
 
 const generateInvoicesAndSendEmail = async (req, res) => {
+  let savedModule = null;
+  let user = null;
 
-  // console.log("req.body", req.body);
   try {
+    console.log("Starting invoice generation process...");
+    
     var {
       productNumber,
       invoiceNumber,
@@ -85,31 +136,21 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       ...extraFields
     } = req.body;
 
-    var user = await RegisteredUser.findById(req.body?.userDetails?._id);
+    // Find user
+    user = await RegisteredUser.findById(req.body?.userDetails?._id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // console.log(user)
-
-    // console.log(req.body)
+    console.log("User found:", user.email);
 
     const alreadyPurchased = user.coursePurchased?.some(
       (purchase) => purchase.course_id.toString() === productNumber.toString()
     );
-    console.log(alreadyPurchased)
-
-    // if (alreadyPurchased) {
-    //   console.log("Course already purchased!");
-    //   return res.status(200).json({success: false, message: "Course already purchased!" });
-    // }
-    
+    console.log("Already purchased:", alreadyPurchased);
 
     var parsedSelectedMeal = (selectedMeal && selectedMeal !== '00.00') ? JSON.parse(selectedMeal) : {};
     var parsedSelectedRoom = (selectedRoom && selectedRoom !== '00.00') ? JSON.parse(selectedRoom) : {};
-
-    // console.log(parsedSelectedRoom)
-    // console.log(parsedSelectedMeal)
 
     // Create new document instance
     const purchasedModule = new PurchasedModule({
@@ -119,28 +160,14 @@ const generateInvoicesAndSendEmail = async (req, res) => {
     });
 
     // Save to database
-    var savedModule = await purchasedModule.save();
+    savedModule = await purchasedModule.save();
+    console.log("Module saved to database:", savedModule._id);
 
-    // console.log("savedModule", savedModule)
-    var invoiceId = savedModule._id;
-    // res.status(201).json({
-    //   message: "Purchased module saved successfully",
-    //   data: savedModule,
-    // });
-  } catch (error) {
-    res.status(400).json({
-      message: "Error saving purchased module",
-      error: error.message,
-    });
-  }
+    // ============================================================================================
+    // PDF Generation and Email Sending
+    // ================================================================================================
 
-  // ============================================================================================
-
-  // Controller Function to Store Data
-
-  // ================================================================================================
-
-  try {
+    console.log("Starting PDF generation...");
     // Step 1: Start Puppeteer
     const browser = await puppeteer.launch({
       headless: 'new',  // Use 'new' instead of true for better compatibility
@@ -827,31 +854,18 @@ const generateInvoicesAndSendEmail = async (req, res) => {
 
     await user.save();
 
-    res.status(200).json({
-      message: "Invoice generated and saved successfully!",
-      invoiceId,
+    console.log("PDFs generated successfully, saving to database...");
+
+    // Update user's course purchased list
+    user.coursePurchased?.push({
+      course_id: productNumber,
+      order_id: savedModule._id
     });
+    await user.save();
+    console.log("User course list updated");
 
-    //   =======================================================================================
-
-    // // Generate Invoice PDF Buffer
-    // await page.setContent(invoiceHTML, { waitUntil: "networkidle0" });
-    // const invoiceBuffer = await page.pdf({ format: "A4", printBackground: true });
-
-    // // Generate Contract PDF Buffer
-    // await page.setContent(contractHTML, { waitUntil: "networkidle0" });
-    // const contractBuffer = await page.pdf({ format: "A4", printBackground: true });
-
-    // // Close Puppeteer
-    // await browser.close();
-
-    // // Save Buffers to Database
-    // savedModule.invoice = invoiceBuffer;
-    // savedModule.contract = contractBuffer;
-    //   await savedModule.save();
-
-    //   ================================================================================================================
     // Step 3: Send Email with PDFs using Nodemailer
+    console.log("Preparing to send email to:", email);
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -902,23 +916,71 @@ const generateInvoicesAndSendEmail = async (req, res) => {
       ],
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error("Error sending email:", error);
-        return res.status(500).json({ error: "Email could not be sent" });
-      } else {
-        console.log("Email sent:", info.response);
-        // Clean up generated PDF
-        fs.unlinkSync(invoicePath);
-        fs.unlinkSync(contractPath);
-        return res
-          .status(200)
-          .json({ message: "Invoice PDF sent successfully!" });
+    // Send email
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log("Email sent successfully:", info.response);
+      
+      // Clean up generated PDF files
+      try {
+        if (fs.existsSync(invoicePath)) {
+          fs.unlinkSync(invoicePath);
+        }
+        if (fs.existsSync(contractPath)) {
+          fs.unlinkSync(contractPath);
+        }
+        console.log("Temporary files cleaned up");
+      } catch (cleanupError) {
+        console.error("Error cleaning up files:", cleanupError);
       }
-    });
+      
+      return res.status(200).json({ 
+        message: "Invoice generated and email sent successfully!",
+        invoiceId: savedModule._id,
+        emailSent: true
+      });
+    } catch (emailError) {
+      console.error("Error sending email:", emailError);
+      return res.status(200).json({ 
+        message: "Invoice generated successfully but email failed to send",
+        invoiceId: savedModule._id,
+        emailSent: false,
+        warning: "Please contact support to resend the invoice"
+      });
+    }
   } catch (error) {
-    console.error("Error:", error);
-    return res.status(500).json({ error: "An error occurred" });
+    console.error("Error in invoice generation process:", error);
+    
+    // If we have a savedModule but PDF generation failed, 
+    // we should still return success but log the issue
+    if (savedModule) {
+      console.log("Module saved but PDF generation failed. Invoice ID:", savedModule._id);
+      
+      // Update user's course purchased list even if PDF generation failed
+      if (user) {
+        try {
+          user.coursePurchased?.push({
+            course_id: productNumber,
+            order_id: savedModule._id
+          });
+          await user.save();
+          console.log("User course list updated despite PDF failure");
+        } catch (userError) {
+          console.error("Error updating user course list:", userError);
+        }
+      }
+      
+      return res.status(200).json({
+        message: "Invoice saved successfully but PDF generation failed. PDF will be generated on-demand.",
+        invoiceId: savedModule._id,
+        warning: "PDF generation failed but invoice data is saved"
+      });
+    }
+    
+    return res.status(500).json({ 
+      error: "An error occurred during invoice generation",
+      details: error.message 
+    });
   }
 };
 
@@ -928,6 +990,266 @@ const generateInvoiceNumber = () => {
   const month = currentDate.getMonth() + 1; // Month is zero-based
   const randomNumber = Math.floor(1000 + Math.random() * 9000);
   return `TY-WEB-STO ${randomNumber}/${month}/${year}`;
+};
+
+// Helper function to generate invoice HTML from module data
+const generateInvoiceHTMLFromModule = (purchasedModule) => {
+  function formatDate(dateString) {
+    if (!dateString) return new Date().toISOString().split('T')[0];
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  }
+
+  function calculatePriceWithTax(price, invoiceType) {
+    if (invoiceType !== "Private_Invoice" && invoiceType !== "private") {
+      const price_number = Number(price);
+      const taxRate = 0.19;
+      const taxAmount = price_number * taxRate;
+      const finalPrice = price_number + taxAmount;
+      return finalPrice.toFixed(2);
+    } else {
+      return price;
+    }
+  }
+
+  const hasRoom = !!purchasedModule?.selectedRoom?.RoomOffers;
+  const hasMeal = !!purchasedModule?.selectedMeal?.MealOffers;
+
+  let footerMarginTop;
+  if (hasRoom && hasMeal) {
+    footerMarginTop = '70px';
+  } else if (hasRoom || hasMeal) {
+    footerMarginTop = '120px';
+  } else {
+    footerMarginTop = '170px';
+  }
+
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechnung PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+              border-bottom: 1px solid black;
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        .info {
+            text-align: right;
+            font-size: 12px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .totals {
+            margin-top: 60px;
+            text-align: right;
+             margin-bottom: 50px;
+        }
+
+        .totals strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: ${footerMarginTop};
+            font-size: 12px;
+        }
+            .footer a{
+             text-decoration: none;
+    color: black;
+            
+            }
+
+        .footer div {
+            flex: 1;
+        }
+
+        .footer div:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer div:nth-child(3) {
+            text-align: right;
+        }
+         
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/logo.jpg"  alt="Turiya Yoga Logo">
+        </div>
+        <div class="info">
+            <p><b>Emanuel Wintermeyer</b><br>
+            Herbartstrasse 12<br>
+            60316 Frankfurt am Main<br>
+            info@turiyayoga.de<br>
+            St.-Nr.: 013/882/05939</p>
+        </div>
+    </header>
+
+   <!-- Invoice Recipient and Details -->
+<div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+    <!-- Left Column -->
+    <div style="flex: 1;">
+        <strong style="margin-bottom:20px"> ${purchasedModule.customerName}</strong><br>
+         ${purchasedModule.customerAddress}<br>
+       
+    </div>
+
+    <!-- Right Column -->
+    <div style="flex: 1; text-align: right;">
+        <div>
+            <strong>RECHNUNG</strong>
+        </div>
+ <p>
+          <strong>Rechnungsnummer: </strong>${purchasedModule.invoiceNumber}<br>
+                <strong>Kundennummer: </strong>${purchasedModule.customerNumber}<br>
+                <strong>Bestellnummer: </strong>${purchasedModule.orderNumber}<br>
+                <strong>Fällig am: </strong>${formatDate(purchasedModule.dueDate)}<br>
+                <strong>Lieferdatum: </strong>${formatDate(purchasedModule.dueDate)}
+        </p>
+    </div>
+</div>
+
+
+    <!-- Content -->
+    <h1>Rechnung vom  ${formatDate(purchasedModule.dueDate)}</h1>
+    <p>Hallo ${purchasedModule.customerName},</p>
+    <p>vielen Dank für deine Anmeldung bei Turiya Yoga. Gerne bestätigen wir deine Buchung wie folgt.</p>
+
+    <!-- Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Pos.</th>
+                <th>Bezeichnung</th>
+                <th>Menge</th>
+                <th>Einheit</th>
+                <th>Preis (€)</th>
+                <th>Steuer</th>
+                <th>Gesamt</th>
+            </tr>
+        </thead>
+        <tbody>
+              <tr>
+                <td>1</td>
+                <td>${purchasedModule.productDescription}<br/>${purchasedModule.courseData?.StartDate ? formatDate(purchasedModule.courseData.StartDate) + " - " + formatDate(purchasedModule.courseData.EndDate) : ''} ${purchasedModule.courseData?.Location ? '(' + purchasedModule.courseData.Location + ')' : ''}</td>
+                <td>${purchasedModule.quantity}</td>
+                <td>Stk.</td>
+                <td>${purchasedModule.price}€</td>
+                <td>zzgl. ${(purchasedModule.userDetails?.invoiceType == 'Private_Invoice' || purchasedModule.invoiceType === 'private') ? '0%' : '19 %'}
+                               </td>
+                <td>${calculatePriceWithTax(purchasedModule.price, purchasedModule.userDetails?.invoiceType || purchasedModule.invoiceType)} €</td>
+              </tr>
+              ${purchasedModule?.selectedRoom?.RoomOffers ? `
+                <tr>
+                    <td>2</td>
+                    <td>Zimmer: ${purchasedModule.selectedRoom.RoomOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${purchasedModule.selectedRoom.RoomPrice}€</td>
+                    <td>zzgl. ${(purchasedModule.userDetails?.invoiceType == 'Private_Invoice' || purchasedModule.invoiceType === 'private') ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(purchasedModule.selectedRoom.RoomPrice, purchasedModule.userDetails?.invoiceType || purchasedModule.invoiceType)} €</td>
+                </tr>` : ''}
+              ${purchasedModule?.selectedMeal?.MealOffers ? `
+                <tr>
+                    <td>${purchasedModule?.selectedRoom?.RoomOffers ? '3' : '2'}</td>
+                    <td>Verpflegung: ${purchasedModule.selectedMeal.MealOffers}</td>
+                    <td>1</td>
+                    <td>Stk.</td>
+                    <td>${purchasedModule.selectedMeal.MealPrice}€</td>
+                    <td>zzgl. ${(purchasedModule.userDetails?.invoiceType == 'Private_Invoice' || purchasedModule.invoiceType === 'private') ? '0%' : '19 %'}</td>
+                    <td>${calculatePriceWithTax(purchasedModule.selectedMeal.MealPrice, purchasedModule.userDetails?.invoiceType || purchasedModule.invoiceType)} €</td>
+                </tr>` : ''}
+        </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="totals">
+        <p>Zwischensumme:  ${Number(purchasedModule.price) + (purchasedModule?.selectedRoom?.RoomPrice ? Number(purchasedModule.selectedRoom.RoomPrice) : 0) + (purchasedModule?.selectedMeal?.MealPrice ? Number(purchasedModule.selectedMeal.MealPrice) : 0)} € </p>
+        ${(purchasedModule.userDetails?.invoiceType == 'Private_Invoice' || purchasedModule.invoiceType === 'private') ?
+        `<p>0% USt aus ${Number(purchasedModule.price) + (purchasedModule?.selectedRoom?.RoomPrice ? Number(purchasedModule.selectedRoom.RoomPrice) : 0) + (purchasedModule?.selectedMeal?.MealPrice ? Number(purchasedModule.selectedMeal.MealPrice) : 0)} €: 0€</p>` 
+        : `<p>19% USt aus ${Number(purchasedModule.price) + (purchasedModule?.selectedRoom?.RoomPrice ? Number(purchasedModule.selectedRoom.RoomPrice) : 0) + (purchasedModule?.selectedMeal?.MealPrice ? Number(purchasedModule.selectedMeal.MealPrice) : 0)} €: ${((Number(purchasedModule.price) + (purchasedModule?.selectedRoom?.RoomPrice ? Number(purchasedModule.selectedRoom.RoomPrice) : 0) + (purchasedModule?.selectedMeal?.MealPrice ? Number(purchasedModule.selectedMeal.MealPrice) : 0))*0.19).toFixed(2)} €</p>`}
+        <strong>Gesamtbetrag: <u> ${purchasedModule.totalPrice} €</u></strong>
+    </div>
+
+    <p style="margin-top: 20px;">Zahlbar sofort rein netto.</p>
+    ${(purchasedModule?.userDetails?.invoiceType === 'Private_Invoice' || purchasedModule.invoiceType === 'private') ? "<p>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>" : ""}
+    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
+    <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
+
+    <!-- Footer -->
+    <div class="footer">
+        <!-- Column 1 -->
+        <div>
+            <p>Emanuel Wintermeyer<br>
+            Herbartstrasse 12<br>
+            60316 Frankfurt am Main</p>
+        </div>
+
+        <!-- Column 2 -->
+        <div>
+            <p>web. <a href="http://www.turiyayoga.de">www.turiyayoga.de</a><br>
+            Tel. (069) - 20134987<br>
+            Email: <a href="mailto:info@turiyayoga.de">info@turiyayoga.de</a></p>
+        </div>
+
+        <!-- Column 3 -->
+        <div>
+            <p>Kontoinhaber: Emanuel Wintermeyer<br>
+            IBAN: DE64 5005 0201 0200 6907 28<br>
+            Kreditinstitut: Frankfurter Sparkasse</p>
+        </div>
+    </div>
+</body>
+</html>
+`;
 };
 
 const getCurrentDate = () => {
@@ -1298,7 +1620,6 @@ const generateCancelInvoice = async (req, res) => {
     console.error("Error:", error);
     return res.status(500).json({ error: "An error occurred" });
   }
-
-}
+};
 
 module.exports = { generateInvoicesAndSendEmail, getInvoice, getAgreement, generateCancelInvoice };

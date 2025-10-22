@@ -38,6 +38,7 @@ const moduleCategoryLatestRoute = require("./src/routes/addModuleSubCategories")
 const courseCategoryLatestRoute = require("./src/routes/courseCategoriesLatestRoute");
 const registerRoute = require("./src/routes/registerRoute");
 const invoicegenerateRoutes = require("./src/routes/invoice");
+const invoicePdfRoutes = require("./src/routes/invoicePdfRoutes");
 const cartRoute = require("./src/routes/cartRoute");
 const profileRoute = require("./src/routes/profileRoute");
 const addInvoiceTypeRoutes = require("./src/routes/addInvoiceRoute");
@@ -101,6 +102,7 @@ app.use("/api", moduleCategoryLatestRoute);
 app.use("/api", courseCategoryLatestRoute);
 app.use("/api", faqLatestRoute);
 app.use("/api", invoicegenerateRoutes);
+app.use("/api", invoicePdfRoutes);
 app.use("/api", cartRoute);
 app.use("/api", profileRoute);
 app.use("/api", addInvoiceTypeRoutes);
