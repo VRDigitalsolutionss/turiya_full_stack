@@ -82,17 +82,410 @@ const getInvoice = async (req, res) => {
   }
 };
 
+// Helper function to regenerate agreement PDF
+const regenerateAgreementPDF = async (purchasedModule) => {
+  try {
+    const puppeteer = require('puppeteer');
+    
+    const contractHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vereinbarung PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid black;
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        .info {
+            text-align: right;
+            font-size: 12px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .totals {
+            margin-top: 60px;
+            text-align: right;
+            margin-bottom: 50px;
+        }
+
+        .totals strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .check-item img {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 70px;
+            font-size: 12px;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .footer div {
+            flex: 1;
+        }
+
+        .footer div:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer div:nth-child(3) {
+            text-align: right;
+        }
+
+        .logo {
+            height: 100px;
+            width: 200px;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .footer-with-high-marginTop {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+           <img src="https://api.turiyayoga.de/uploads/logo/header_logo_new.png" alt="Turiya Yoga Logo">
+        </div>
+        <div class="info">
+            <p>Emanuel Wintermeyer<br>
+            Herbartstrasse 12<br>
+            60316 Frankfurt am Main<br>
+            info@turiyayoga.de<br>
+            St.-Nr.: 013/882/05939</p>
+        </div>
+    </header>
+
+   <!-- Invoice Recipient and Details -->
+<div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+    <!-- Left Column -->
+    <div style="flex: 1;">
+    <h1>Vereinbarung vom ${new Date().toLocaleDateString('de-DE')}</h1>
+    <h1>Informationen zur Rechnungsstellung</h1>
+   
+    <h2>Rechnungsempfänger</h2>
+    <p><strong>${purchasedModule.customerName || 'N/A'}</strong><br>
+    ${purchasedModule.customerAddress || 'N/A'}</p>
+
+    <h2>Rechnungsdetails</h2>
+    <table>
+        <tr>
+            <td><strong>Rechnungsnummer:</strong></td>
+            <td>${purchasedModule.invoiceNumber || 'N/A'}</td>
+        </tr>
+        <tr>
+            <td><strong>Rechnungsdatum:</strong></td>
+            <td>${new Date().toLocaleDateString('de-DE')}</td>
+        </tr>
+        <tr>
+            <td><strong>Fälligkeitsdatum:</strong></td>
+            <td>${purchasedModule.dueDate ? new Date(purchasedModule.dueDate).toLocaleDateString('de-DE') : 'N/A'}</td>
+        </tr>
+        <tr>
+            <td><strong>Kundennummer:</strong></td>
+            <td>${purchasedModule.customerNumber || 'N/A'}</td>
+        </tr>
+    </table>
+
+    <h2>Leistungsbeschreibung</h2>
+    <table>
+        <tr>
+            <th>Beschreibung</th>
+            <th>Menge</th>
+            <th>Einzelpreis</th>
+            <th>Gesamtpreis</th>
+        </tr>
+        <tr>
+            <td>${purchasedModule.productDescription || 'N/A'}</td>
+            <td>${purchasedModule.quantity || 1}</td>
+            <td>${purchasedModule.price || 0}€</td>
+            <td>${purchasedModule.totalPrice || 0}€</td>
+        </tr>
+    </table>
+
+    <div class="totals">
+        <strong>Zwischensumme: ${purchasedModule.totalPrice || 0}€</strong>
+        <strong>Gesamtbetrag: <u>${purchasedModule.totalPrice || 0}€</u></strong>
+    </div>
+
+    <p style="margin-top: 20px;">Zahlbar sofort rein netto.<br>USt. Befreiung gemäß § 4 Nr. 21 UStG.</p>
+
+    <!-- Closing Message -->
+    <p>Wir freuen uns, dich bald bei uns begrüßen zu dürfen und wünschen dir bis dahin alles Gute.</p>
+    <p>Mit freundlichen Grüßen<br/>Emanuel Wintermeyer</p>
+
+    <!-- Footer -->
+    <div class="footer">
+        <!-- Column 1 -->
+        <div>
+            <p>Emanuel Wintermeyer<br>
+            Herbartstrasse 12<br>
+            60316 Frankfurt am Main</p>
+        </div>
+
+        <!-- Column 2 -->
+        <div>
+            <p>web. <a href="http://www.turiyayoga.de">www.turiyayoga.de</a><br>
+            Tel. (069) - 20134987<br>
+            Email: <a href="mailto:info@turiyayoga.de">info@turiyayoga.de</a></p>
+        </div>
+
+        <!-- Column 3 -->
+        <div>
+            <p>Kontoinhaber: Emanuel Wintermeyer<br>
+            IBAN: DE64 5005 0201 0200 6907 28<br>
+            Kreditinstitut: Frankfurter Sparkasse</p>
+        </div>
+    </div>
+
+    <!-- Page Break -->
+    <div class="page-break"></div>
+
+    <!-- Second Page Content -->
+    <header>
+        <div class="logo">
+            <img src="https://api.turiyayoga.de/uploads/logo/logo.jpg" alt="Turiya Yoga Logo">
+        </div>
+        <div class="info">
+            <p>Emanuel Wintermeyer<br>
+            Herbartstrasse 12<br>
+            60316 Frankfurt am Main<br>
+            info@turiyayoga.de<br>
+            St.-Nr.: 013/882/05939</p>
+        </div>
+    </header>
+
+   <div class="section">
+    <h2>Mein Ausbildungsstatus</h2>
+    <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <p style="margin: 0;">Ich bin bereits Yogalehrer</p>
+    </div>
+
+    <h2>Ausbildungserwartung</h2>
+    <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <p style="margin: 0;">Ich mache die Ausbildung als reine Freizeitbeschäftigung für mich</p>
+    </div>
+    <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <p style="margin: 0;">Ich bin bereits selbstständig und möchte Yoga mit ins Programm nehmen</p>
+    </div>
+    <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <p style="margin: 0;">Die Widerrufsbelehrung/AGB habe ich zur Kenntnis genommen. Die Widerrufsmöglichkeit beträgt ab dem Tag der Anmeldung 14 Tage.</p>
+    </div>
+    <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <p style="margin: 0;">
+            Ich akzeptiere die allgemeinen Geschäftsbedingungen, die Bestandteil dieser Vereinbarung sind.<br>
+            <em>"Die Ausbildung ist bei Privatpersonen inkl. MwSt. Nach Erhalt der Anmeldung/ Vereinbarung erhältst du von Turiya Yoga eine ordnungsgemäße Teilnahmebestätigung/Rechnung, die alle Zahlungsinformationen nochmals enthält. Für Firmen ist die MwSt. zusätzlich zu den Ausbildungsgebühren hinzuzurechnen."</em>
+        </p>
+    </div>
+    <p style="margin: 0; margin-bottom: 10px;">Nicht enthalten sind z. B. Pflichtbücher, Reisekosten zum Seminarort. Solche trägt der Teilnehmer zusätzlich.</p>
+    <div class="check-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="https://api.turiyayoga.de/uploads/logo/tick.png" alt="check" style="width: 20px; height: 20px; margin-right: 10px;">
+        <p style="margin: 0;">ICH STIMME DEN Turiya Yoga</p>
+    </div>
+</div>
+
+<div class="footer footer-with-high-marginTop">
+    <div>
+        <p>Emanuel Wintermeyer<br>
+        Herbartstrasse 12<br>
+        60316 Frankfurt am Main</p>
+    </div>
+    <div>
+        <p>web. <a href="http://www.turiyayoga.de">www.turiyayoga.de</a><br>
+        Tel. (069) - 20134987<br>
+        Email: <a href="mailto:info@turiyayoga.de">info@turiyayoga.de</a></p>
+    </div>
+    <div>
+        <p>Kontoinhaber: Emanuel Wintermeyer<br>
+        IBAN: DE64 5005 0201 0200 6907 28<br>
+        Kreditinstitut: Frankfurter Sparkasse</p>
+    </div>
+</div>
+</body>
+</html>`;
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    });
+    
+    const page = await browser.newPage();
+    
+    await page.setContent(contractHTML, { waitUntil: "networkidle0" });
+    const contractBuffer = await page.pdf({
+      format: "A4",
+      printBackground: true,
+    });
+    
+    await browser.close();
+    
+    // Validate PDF buffer
+    if (!contractBuffer || contractBuffer.length === 0) {
+      throw new Error("Generated PDF buffer is empty");
+    }
+    
+    // Check if it's a valid PDF (starts with %PDF)
+    const pdfHeader = String.fromCharCode(...contractBuffer.slice(0, 4));
+    if (pdfHeader !== '%PDF') {
+      throw new Error("Generated content is not a valid PDF");
+    }
+    
+    return Buffer.from(contractBuffer);
+    
+  } catch (error) {
+    console.error('Error regenerating agreement PDF:', error);
+    return null;
+  }
+};
+
 const getAgreement = async (req, res) => {
   try {
     const { id } = req.params; // Get the agreement ID from the request parameters
-    const purchasedModule = await PurchasedModule.findById(id);
-
-    // console.log("purchased module agreement", purchasedModule);
-
-    if (!purchasedModule || !purchasedModule.agreement) {
-      return res.status(404).json({ message: "Agreement not found" });
+    
+    console.log(`[getAgreement] Requested ID: ${id}`);
+    
+    // Validate ID format
+    if (!id || typeof id !== 'string' || id.trim() === '') {
+      console.log(`[getAgreement] Invalid ID format: ${id}`);
+      return res.status(400).json({ 
+        message: "Invalid ID format",
+        providedId: id 
+      });
     }
 
+    // Check if ID is a valid MongoDB ObjectId format
+    const mongoose = require('mongoose');
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log(`[getAgreement] Invalid MongoDB ObjectId: ${id}`);
+      return res.status(400).json({ 
+        message: "Invalid MongoDB ObjectId format",
+        providedId: id 
+      });
+    }
+
+    console.log(`[getAgreement] Searching for PurchasedModule with ID: ${id}`);
+    const purchasedModule = await PurchasedModule.findById(id);
+
+    if (!purchasedModule) {
+      console.log(`[getAgreement] PurchasedModule not found for ID: ${id}`);
+      return res.status(404).json({ 
+        message: "PurchasedModule not found",
+        providedId: id 
+      });
+    }
+
+    console.log(`[getAgreement] Found PurchasedModule:`, {
+      id: purchasedModule._id,
+      hasAgreement: !!purchasedModule.agreement,
+      agreementSize: purchasedModule.agreement ? purchasedModule.agreement.length : 0,
+      customerName: purchasedModule.customerName,
+      email: purchasedModule.email
+    });
+
+    if (!purchasedModule.agreement) {
+      console.log(`[getAgreement] Agreement field is null/undefined for ID: ${id}`);
+      
+      // Try to regenerate the agreement if it's missing
+      try {
+        console.log(`[getAgreement] Attempting to regenerate agreement for ID: ${id}`);
+        const regeneratedAgreement = await regenerateAgreementPDF(purchasedModule);
+        
+        if (regeneratedAgreement) {
+          console.log(`[getAgreement] Successfully regenerated agreement for ID: ${id}`);
+          // Update the record in database
+          purchasedModule.agreement = regeneratedAgreement;
+          await purchasedModule.save();
+          
+          // Send the regenerated PDF
+          res.set({
+            "Content-Type": "application/pdf",
+            "Content-Disposition": `attachment; filename=agreement_${id}.pdf`,
+          });
+          return res.send(regeneratedAgreement);
+        }
+      } catch (regenerateError) {
+        console.error(`[getAgreement] Failed to regenerate agreement for ID: ${id}:`, regenerateError);
+      }
+      
+      return res.status(404).json({ 
+        message: "Agreement PDF not found in database and could not be regenerated",
+        providedId: id,
+        purchasedModuleId: purchasedModule._id,
+        hasInvoice: !!purchasedModule.invoice
+      });
+    }
+
+    console.log(`[getAgreement] Sending agreement PDF for ID: ${id}`);
     res.set({
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename=agreement_${id}.pdf`,
@@ -100,10 +493,12 @@ const getAgreement = async (req, res) => {
 
     res.send(purchasedModule.agreement);
   } catch (error) {
-    console.error("Error fetching agreement:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching the agreement." });
+    console.error("[getAgreement] Error fetching agreement:", error);
+    res.status(500).json({ 
+      error: "An error occurred while fetching the agreement.",
+      details: error.message,
+      providedId: req.params.id
+    });
   }
 };
 
