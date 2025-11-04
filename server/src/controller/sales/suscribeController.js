@@ -27,16 +27,16 @@ const addSubscription = async (req, res) => {
 
         const adminMailOptions = {
             from: `<${process.env.EMAIL_USER}>`,
-            to: "info@turiyoga.com",
+            to: "info@turiyayoga.com",
             subject: "New Subscription Alert",
             text: `A new user has subscribed to your newsletter. Subscriber email: ${email}`,
         };
 
         const userMailOptions = {
-            from: `"Turiyoga Team" <${process.env.EMAIL_USER}>`,
+            from: `"Turiya Yoga Team" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Vielen Dank für Ihre Anmeldung!",
-            text: `Liebe/r Abonnent/in,\n\nVielen Dank, dass Sie sich für den Turiyoga-Newsletter angemeldet haben! Wir freuen uns darauf, Ihnen spannende Neuigkeiten und Updates zukommen zu lassen.\n\nMit herzlichen Grüßen,\nIhr Turiyoga-Team`,
+            text: `Liebe/r Abonnent/in,\n\nVielen Dank, dass Sie sich für den Turiya Yoga-Newsletter angemeldet haben! Wir freuen uns darauf, Ihnen spannende Neuigkeiten und Updates zukommen zu lassen.\n\nMit herzlichen Grüßen,\nIhr Turiya Yoga-Team`,
         };
 
         await transporter.sendMail(adminMailOptions);
